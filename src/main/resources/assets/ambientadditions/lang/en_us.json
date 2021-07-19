@@ -1,0 +1,23 @@
+{
+  "itemGroup.ambientadditions": "Ambient Additions",
+
+  "item.ambientadditions.crate": "Crate",
+  "item.ambientadditions.blowgun": "Blowgun",
+  "item.ambientadditions.dart": "Dart",
+
+  "item.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
+  "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
+  "item.ambientadditions.stag_beetle_bottle": "Bottle of Stag Beetle",
+
+  "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
+  "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
+  "item.ambientadditions.stag_beetle_spawn_egg": "Stag Beetle Spawn Egg",
+  "item.ambientadditions.nine_banded_armadillo_spawn_egg": "Nine Banded Armadillo Spawn Egg",
+  "item.ambientadditions.pink_fairy_armadillo_spawn_egg": "Pink Fairy Armadillo Spawn Egg",
+
+  "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
+  "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
+  "entity.ambientadditions.stag_beetle": "Stag Beetle",
+  "entity.ambientadditions.nine_banded_armadillo": "Nine Banded Armadillo",
+  "entity.ambientadditions.pink_fairy_armadillo": "Pink Fairy Armadillo"
+}

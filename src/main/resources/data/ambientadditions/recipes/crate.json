@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#O#",
+        "OCO",
+        "#O#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:iron_bars"
+        },
+        "C": {
+            "tag": "forge:chests/wooden"
+        },
+        "O": {
+            "tag": "minecraft:planks"
+        }
+    },
+    "result": {
+        "item": "ambientadditions:crate",
+        "count": 1
+    }
+}
