@@ -79,8 +79,6 @@ public class PinkFairyArmadilloModel<T extends Entity> extends AgeableModel<Pink
     public void setupAnim(PinkFairyArmadilloEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float speed = 1.9f;
         float degree = 0.75f;
-//        limbSwing = ageInTicks;
-//        limbSwingAmount = 0.5F;
         this.body.zRot = MathHelper.cos(1.0F + limbSwing * speed * 0.4F) * degree * 0.2F * limbSwingAmount;
         this.body.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.2F * limbSwingAmount;
         this.head.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.25F * limbSwingAmount + 0.01F;
