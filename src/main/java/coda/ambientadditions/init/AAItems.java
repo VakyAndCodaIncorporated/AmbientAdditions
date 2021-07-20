@@ -36,4 +36,5 @@ public class AAItems {
     public static final RegistryObject<Item> STAG_BEETLE_SPAWN_EGG = REGISTER.register("stag_beetle_spawn_egg", () -> new AASpawnEggItem(AAEntities.STAG_BEETLE, 0x412320, 0xa67124, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> NINE_BANDED_ARMADILLO_SPAWN_EGG = REGISTER.register("nine_banded_armadillo_spawn_egg", () -> new AASpawnEggItem(AAEntities.NINE_BANDED_ARMADILLO, 0x433634, 0xa08073, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> PINK_FAIRY_ARMADILLO_SPAWN_EGG = REGISTER.register("pink_fairy_armadillo_spawn_egg", () -> new AASpawnEggItem(AAEntities.PINK_FAIRY_ARMADILLO, 0xe5947b, 0xd9bc9b, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> VEILED_CHAMELEON_SPAWN_EGG = REGISTER.register("veiled_chameleon_spawn_egg", () -> new AASpawnEggItem(AAEntities.VEILED_CHAMELEON, 0x1ccf3d, 0x10a53e, new Item.Properties().tab(GROUP)));
 }

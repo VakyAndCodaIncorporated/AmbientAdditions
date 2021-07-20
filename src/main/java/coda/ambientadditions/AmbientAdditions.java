@@ -1,9 +1,6 @@
 package coda.ambientadditions;
 
-import coda.ambientadditions.common.entities.NineBandedArmadilloEntity;
-import coda.ambientadditions.common.entities.PinkFairyArmadilloEntity;
-import coda.ambientadditions.common.entities.StagBeetleEntity;
-import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
+import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.init.*;
 import coda.ambientadditions.client.ClientEvents;
 import net.minecraft.entity.EntityClassification;
@@ -49,6 +46,7 @@ public class AmbientAdditions {
         event.put(AAEntities.STAG_BEETLE.get(), StagBeetleEntity.createAttributes().build());
         event.put(AAEntities.NINE_BANDED_ARMADILLO.get(), NineBandedArmadilloEntity.createAttributes().build());
         event.put(AAEntities.PINK_FAIRY_ARMADILLO.get(), PinkFairyArmadilloEntity.createAttributes().build());
+        event.put(AAEntities.VEILED_CHAMELEON.get(), VeiledChameleonEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
