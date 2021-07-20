@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.LonghornCowfishModel;
-import coda.ambientadditions.entity.LonghornCowfishEntity;
+import coda.ambientadditions.common.entities.LonghornCowfishEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

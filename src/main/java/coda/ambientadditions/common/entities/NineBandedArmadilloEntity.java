@@ -1,4 +1,4 @@
-package coda.ambientadditions.entity;
+package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.init.AAEntities;
 import coda.ambientadditions.init.AAItems;
@@ -12,10 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -24,10 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Random;
-
-import static net.minecraft.util.EntityPredicates.NO_CREATIVE_OR_SPECTATOR;
 
 public class NineBandedArmadilloEntity extends AnimalEntity {
     // private static final DataParameter<Boolean> IS_BALL = EntityDataManager.defineId(NineBandedArmadilloEntity.class, DataSerializers.BOOLEAN);

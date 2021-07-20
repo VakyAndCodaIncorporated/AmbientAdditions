@@ -1,6 +1,7 @@
-package coda.ambientadditions.item;
+package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.init.AAItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -8,9 +9,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -31,8 +30,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-// Thanks to WolfShotz for letting me use (and murder) his code
-
 public class CrateItem extends Item {
     public static final String DATA_CREATURE = "CreatureData";
 
@@ -46,7 +43,7 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return ActionResultType.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof AnimalEntity || target instanceof WaterMobEntity)) {
+        if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity)) {
             if (!level.isClientSide) {
                 boolean more = stack.getCount() > 1;
                 ItemStack split = (more ? stack.split(1) : stack);
@@ -138,6 +135,7 @@ public class CrateItem extends Item {
 
     private static ActionResultType releaseEntity(World level, PlayerEntity player, ItemStack stack, BlockPos pos, Direction direction) {
         if (!containsEntity(stack)) return ActionResultType.PASS;
+        Hand hand = player.getUsedItemHand();
 
         CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
         EntityType<?> type = EntityType.byString(tag.getString("id")).orElse(null);
@@ -211,6 +209,7 @@ public class CrateItem extends Item {
                 itemstack.shrink(1);
             }
             context.getLevel().playSound(null, entity.blockPosition(), SoundEvents.BARREL_OPEN, SoundCategory.AMBIENT, 1, 1);
+            context.getPlayer().setItemInHand(context.getHand(), new ItemStack(AAItems.CRATE.get()));
 
             return ActionResultType.CONSUME;
         }

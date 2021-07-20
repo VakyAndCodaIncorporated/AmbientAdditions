@@ -1,4 +1,4 @@
-package coda.ambientadditions.item;
+package coda.ambientadditions.common.items;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

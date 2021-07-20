@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.NineBandedArmadilloModel;
-import coda.ambientadditions.entity.NineBandedArmadilloEntity;
+import coda.ambientadditions.common.entities.NineBandedArmadilloEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;

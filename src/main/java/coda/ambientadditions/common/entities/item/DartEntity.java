@@ -1,8 +1,8 @@
-package coda.ambientadditions.entity.item;
+package coda.ambientadditions.common.entities.item;
 
 import coda.ambientadditions.init.AAEntities;
 import coda.ambientadditions.init.AAItems;
-import coda.ambientadditions.item.DartItem;
+import coda.ambientadditions.common.items.DartItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

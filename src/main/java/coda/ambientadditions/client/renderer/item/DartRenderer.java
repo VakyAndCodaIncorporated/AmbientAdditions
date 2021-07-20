@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer.item;
 
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.entity.item.DartEntity;
+import coda.ambientadditions.common.entities.item.DartEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

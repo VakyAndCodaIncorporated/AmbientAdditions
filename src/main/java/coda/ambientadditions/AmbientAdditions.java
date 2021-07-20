@@ -1,12 +1,11 @@
 package coda.ambientadditions;
 
-import coda.ambientadditions.entity.NineBandedArmadilloEntity;
-import coda.ambientadditions.entity.PinkFairyArmadilloEntity;
-import coda.ambientadditions.entity.StagBeetleEntity;
-import coda.ambientadditions.entity.WhiteFruitBatEntity;
+import coda.ambientadditions.common.entities.NineBandedArmadilloEntity;
+import coda.ambientadditions.common.entities.PinkFairyArmadilloEntity;
+import coda.ambientadditions.common.entities.StagBeetleEntity;
+import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import coda.ambientadditions.init.*;
 import coda.ambientadditions.client.ClientEvents;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -78,7 +77,7 @@ public class AmbientAdditions {
         }
 
         if (event.getName().getPath().equals("warm_ocean")) {
-            event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(AAEntities.LONGHORN_COWFISH.get(), 10, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
         }
     }
 

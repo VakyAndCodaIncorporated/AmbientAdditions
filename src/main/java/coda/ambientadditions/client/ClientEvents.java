@@ -3,7 +3,7 @@ package coda.ambientadditions.client;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.renderer.*;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
-import coda.ambientadditions.item.AASpawnEggItem;
+import coda.ambientadditions.common.items.AASpawnEggItem;
 import coda.ambientadditions.init.AAEntities;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;

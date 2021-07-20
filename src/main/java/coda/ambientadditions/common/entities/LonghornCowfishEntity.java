@@ -1,4 +1,4 @@
-package coda.ambientadditions.entity;
+package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.init.AAItems;
 import net.minecraft.entity.EntityType;

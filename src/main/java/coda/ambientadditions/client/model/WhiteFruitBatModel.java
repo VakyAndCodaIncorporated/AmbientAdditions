@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.model;
 
-import coda.ambientadditions.entity.WhiteFruitBatEntity;
+import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

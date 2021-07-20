@@ -1,8 +1,8 @@
 package coda.ambientadditions.init;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.entity.*;
-import coda.ambientadditions.entity.item.DartEntity;
+import coda.ambientadditions.common.entities.*;
+import coda.ambientadditions.common.entities.item.DartEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;

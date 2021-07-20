@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.PinkFairyArmadilloModel;
-import coda.ambientadditions.entity.PinkFairyArmadilloEntity;
+import coda.ambientadditions.common.entities.PinkFairyArmadilloEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
