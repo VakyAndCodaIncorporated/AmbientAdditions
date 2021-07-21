@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class VeiledChameleonModel<T extends Entity> extends AgeableModel<VeiledChameleonEntity> {
+public class VeiledChameleonModel<T extends Entity> extends AgeableModel<T> {
     public ModelRenderer body;
     public ModelRenderer head;
     public ModelRenderer armLeft;
@@ -74,7 +74,7 @@ public class VeiledChameleonModel<T extends Entity> extends AgeableModel<VeiledC
     }
 
     @Override
-    public void setupAnim(VeiledChameleonEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.xRot = x;
