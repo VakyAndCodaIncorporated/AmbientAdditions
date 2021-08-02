@@ -1,0 +1,29 @@
+{
+  "armadillo.ambient": {
+    "subtitle": "ambientadditions.armadillo.ambient",
+    "sounds": [
+      {
+        "name": "ambientadditions:armadillo/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "armadillo.death": {
+    "subtitle": "ambientadditions.armadillo.death",
+    "sounds": [
+      {
+        "name": "ambientadditions:armadillo/death",
+        "stream": true
+      }
+    ]
+  },
+  "armadillo.hurt": {
+    "subtitle": "ambientadditions.armadillo.hurt",
+    "sounds": [
+      {
+        "name": "ambientadditions:armadillo/hurt",
+        "stream": true
+      }
+    ]
+  }
+}

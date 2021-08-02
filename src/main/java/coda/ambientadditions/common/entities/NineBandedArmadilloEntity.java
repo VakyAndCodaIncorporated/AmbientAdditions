@@ -2,6 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.init.AAEntities;
 import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.init.AASounds;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IWorld;
@@ -50,7 +52,25 @@ public class NineBandedArmadilloEntity extends AnimalEntity {
         return new ItemStack(AAItems.NINE_BANDED_ARMADILLO_SPAWN_EGG.get());
     }
 
-/*    @Override
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return AASounds.ARMADILLO_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+        return AASounds.ARMADILLO_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AASounds.ARMADILLO_DEATH.get();
+    }
+
+    /*    @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         List<PlayerEntity> list = level.getEntitiesOfClass(PlayerEntity.class, this.getBoundingBox().inflate(4.0D), NO_CREATIVE_OR_SPECTATOR);

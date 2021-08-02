@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -74,7 +75,24 @@ public class VeiledChameleonModel<T extends Entity> extends AgeableModel<T> {
     }
 
     @Override
-    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        float speed = 1f;
+        float degree = 1f;
+        this.body.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.2F * limbSwingAmount;
+        this.body.zRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.2F * limbSwingAmount;
+        this.armLeft.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.8F * limbSwingAmount;
+        this.armLeft.y = MathHelper.cos(1.0F + limbSwing * speed * 0.4F) * degree * 0.5F * limbSwingAmount + 1.5F;
+        this.armRight.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.8F * limbSwingAmount;
+        this.armRight.y = MathHelper.cos(1.0F + limbSwing * speed * 0.4F) * degree * -0.5F * limbSwingAmount + 1.5F;
+        this.legLeft.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.8F * limbSwingAmount;
+        this.legLeft.y = MathHelper.cos(10.0F + limbSwing * speed * 0.4F) * degree * 0.5F * limbSwingAmount + 1.5F;
+        this.legRight.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.8F * limbSwingAmount;
+        this.legRight.y = MathHelper.cos(10.0F + limbSwing * speed * 0.4F) * degree * -0.5F * limbSwingAmount + 1.5F;
+        this.tail.yRot = MathHelper.cos(-33.0F + limbSwing * speed * 0.4F) * degree * 0.3F * limbSwingAmount;
+        this.tail.zRot = MathHelper.cos(-3.0F + limbSwing * speed * 0.4F) * degree * 0.3F * limbSwingAmount;
+        this.head.zRot = MathHelper.cos(-1.0F + limbSwing * speed * 0.4F) * degree * 0.3F * limbSwingAmount;
+
+    }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.xRot = x;

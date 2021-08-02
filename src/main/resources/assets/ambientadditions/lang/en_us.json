@@ -6,6 +6,9 @@
   "item.ambientadditions.dart": "Dart",
 
   "item.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
+  "item.ambientadditions.worm": "Worm",
+  "item.ambientadditions.ant": "Ant",
+
   "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
   "item.ambientadditions.stag_beetle_bottle": "Bottle of Stag Beetle",
 
@@ -15,11 +18,13 @@
   "item.ambientadditions.nine_banded_armadillo_spawn_egg": "Nine Banded Armadillo Spawn Egg",
   "item.ambientadditions.pink_fairy_armadillo_spawn_egg": "Pink Fairy Armadillo Spawn Egg",
   "item.ambientadditions.veiled_chameleon_spawn_egg": "Veiled Chameleon Spawn Egg",
+  "item.ambientadditions.star_nosed_mole_spawn_egg": "Star Nosed Mole Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
   "entity.ambientadditions.stag_beetle": "Stag Beetle",
   "entity.ambientadditions.nine_banded_armadillo": "Nine Banded Armadillo",
   "entity.ambientadditions.pink_fairy_armadillo": "Pink Fairy Armadillo",
-  "entity.ambientadditions.veiled_chameleon": "Veiled Chameleon"
+  "entity.ambientadditions.veiled_chameleon": "Veiled Chameleon",
+  "entity.ambientadditions.star_nosed_mole": "Star Nosed Mole"
 }
