@@ -15,13 +15,17 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class VeiledChameleonEntity extends AnimalEntity {
     private static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(VeiledChameleonEntity.class, DataSerializers.INT);
@@ -47,6 +51,10 @@ public class VeiledChameleonEntity extends AnimalEntity {
         return new ItemStack(AAItems.VEILED_CHAMELEON_SPAWN_EGG.get());
     }
 
+    public static boolean checkChameleonSpawnRules(EntityType<? extends AnimalEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.LEAVES);
+    }
+
     @Override
     public boolean isFood(ItemStack p_70877_1_) {
         return p_70877_1_.getItem() == Items.SPIDER_EYE;
@@ -55,7 +63,10 @@ public class VeiledChameleonEntity extends AnimalEntity {
     @Nullable
     @Override
     public VeiledChameleonEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
-        return AAEntities.VEILED_CHAMELEON.get().create(world);
+        VeiledChameleonEntity chameleon = AAEntities.VEILED_CHAMELEON.get().create(world);
+        int i = random.nextInt(7);
+        chameleon.setVariant(i);
+        return chameleon;
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {

@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ambientadditions:item/mole_bucket_0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "ambientadditions:variant": 0
+      },
+      "model": "ambientadditions:item/mole_bucket"
+    },
+    {
+      "predicate": {
+        "ambientadditions:variant": 1
+      },
+      "model": "ambientadditions:item/mole_bucket_1"
+    },
+    {
+      "predicate": {
+        "ambientadditions:variant": 2
+      },
+      "model": "ambientadditions:item/mole_bucket_2"
+    }
+  ]
+}

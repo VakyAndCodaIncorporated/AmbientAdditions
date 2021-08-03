@@ -24,7 +24,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.NINE_BANDED_ARMADILLO.get(), NineBandedArmadilloRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.PINK_FAIRY_ARMADILLO.get(), PinkFairyArmadilloRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.VEILED_CHAMELEON.get(), VeiledChameleonRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AAEntities.STAR_NOSED_MOLE.get(), StarNosedMoleRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.MOLE.get(), MoleRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
     }

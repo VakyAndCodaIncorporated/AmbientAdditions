@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ambientadditions:item/ant"
+    "layer0": "ambientadditions:item/mole_bucket_2"
   }
 }

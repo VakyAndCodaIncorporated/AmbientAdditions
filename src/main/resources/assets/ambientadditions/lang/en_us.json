@@ -11,6 +11,7 @@
 
   "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
   "item.ambientadditions.stag_beetle_bottle": "Bottle of Stag Beetle",
+  "item.ambientadditions.mole_bucket": "Bucket of Mole",
 
   "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
   "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
@@ -18,7 +19,7 @@
   "item.ambientadditions.nine_banded_armadillo_spawn_egg": "Nine Banded Armadillo Spawn Egg",
   "item.ambientadditions.pink_fairy_armadillo_spawn_egg": "Pink Fairy Armadillo Spawn Egg",
   "item.ambientadditions.veiled_chameleon_spawn_egg": "Veiled Chameleon Spawn Egg",
-  "item.ambientadditions.star_nosed_mole_spawn_egg": "Star Nosed Mole Spawn Egg",
+  "item.ambientadditions.mole_spawn_egg": "Mole Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -26,5 +27,8 @@
   "entity.ambientadditions.nine_banded_armadillo": "Nine Banded Armadillo",
   "entity.ambientadditions.pink_fairy_armadillo": "Pink Fairy Armadillo",
   "entity.ambientadditions.veiled_chameleon": "Veiled Chameleon",
-  "entity.ambientadditions.star_nosed_mole": "Star Nosed Mole"
+  "entity.ambientadditions.mole": "Mole",
+
+  "entity.ambientadditions.mole.0": "Star Nosed Mole",
+  "entity.ambientadditions.mole.1": "Eastern Mole"
 }

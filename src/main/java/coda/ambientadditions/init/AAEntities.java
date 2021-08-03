@@ -20,7 +20,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<NineBandedArmadilloEntity>> NINE_BANDED_ARMADILLO = create("nine_banded_armadillo", EntityType.Builder.of(NineBandedArmadilloEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.45f));
     public static final RegistryObject<EntityType<PinkFairyArmadilloEntity>> PINK_FAIRY_ARMADILLO = create("pink_fairy_armadillo", EntityType.Builder.of(PinkFairyArmadilloEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.55f));
     public static final RegistryObject<EntityType<VeiledChameleonEntity>> VEILED_CHAMELEON = create("veiled_chameleon", EntityType.Builder.of(VeiledChameleonEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.55f));
-    public static final RegistryObject<EntityType<StarNosedMoleEntity>> STAR_NOSED_MOLE = create("star_nosed_mole", EntityType.Builder.of(StarNosedMoleEntity::new, EntityClassification.CREATURE).sized(0.55f, 0.35f));
+    public static final RegistryObject<EntityType<MoleEntity>> MOLE = create("mole", EntityType.Builder.of(MoleEntity::new, EntityClassification.CREATURE).sized(0.55f, 0.35f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

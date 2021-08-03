@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.model;
 
-import coda.ambientadditions.common.entities.StarNosedMoleEntity;
+import coda.ambientadditions.common.entities.MoleEntity;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class StarNosedMoleModel<T extends Entity> extends AgeableModel<StarNosedMoleEntity> {
+public class MoleModel<T extends Entity> extends AgeableModel<MoleEntity> {
     public ModelRenderer body;
     public ModelRenderer nose;
     public ModelRenderer armLeft;
@@ -22,8 +22,9 @@ public class StarNosedMoleModel<T extends Entity> extends AgeableModel<StarNosed
     public ModelRenderer tail;
     public ModelRenderer star;
     private float armYRot;
+    private float bodyXRot;
 
-    public StarNosedMoleModel() {
+    public MoleModel() {
         this.texWidth = 64;
         this.texHeight = 32;
         this.armLeft = new ModelRenderer(this, 0, 11);
@@ -43,7 +44,7 @@ public class StarNosedMoleModel<T extends Entity> extends AgeableModel<StarNosed
         this.armRight.setPos(-2.5F, 1.5F, -0.5F);
         this.armRight.addBox(-6.0F, -1.0F, -1.5F, 6.0F, 2.0F, 3.0F, 0.0F, 0.0F, 0.0F);
         this.nose = new ModelRenderer(this, 0, 21);
-        this.nose.setPos(0.0F, 0.0F, -4.0F);
+        this.nose.setPos(0.0F, 0.5F, -4.0F);
         this.nose.addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F, 0.0F, 0.0F, 0.0F);
         this.legLeft = new ModelRenderer(this, 0, 6);
         this.legLeft.mirror = true;
@@ -72,7 +73,7 @@ public class StarNosedMoleModel<T extends Entity> extends AgeableModel<StarNosed
     }
 
     @Override
-    public void setupAnim(StarNosedMoleEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(MoleEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float speed = 1.0f;
         float degree = 1.0f;
         limbSwingAmount = MathHelper.clamp(limbSwingAmount, -0.4F, 0.4F);
@@ -88,13 +89,15 @@ public class StarNosedMoleModel<T extends Entity> extends AgeableModel<StarNosed
         if (entityIn.eatAnimationTick > 4 && entityIn.eatAnimationTick <= 36) {
             this.armLeft.yRot = this.armYRot;
             this.armRight.yRot = -this.armYRot;
+            this.body.xRot = this.bodyXRot;
         }
     }
 
     @Override
-    public void prepareMobModel(StarNosedMoleEntity p_212843_1_, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
+    public void prepareMobModel(MoleEntity p_212843_1_, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
         super.prepareMobModel(p_212843_1_, p_212843_2_, p_212843_3_, p_212843_4_);
         this.armYRot = p_212843_1_.getHeadEatAngleScale(p_212843_4_) + 0.5F;
+        this.bodyXRot = p_212843_1_.getHeadEatAngleScale(p_212843_4_) + 0.5F;
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
