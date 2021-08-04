@@ -18,7 +18,7 @@ public class MoleRenderer extends MobRenderer<MoleEntity, MoleModel<MoleEntity>>
     public static final Map<Integer, ResourceLocation> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
         hashMap.put(0, new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/mole/star_nosed_mole.png"));
         hashMap.put(1, new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/mole/eastern_mole.png"));
-        hashMap.put(2, new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/mole/hairy_tail_mole.png"));
+        hashMap.put(2, new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/mole/hairy_tailed_mole.png"));
     });
 
     public MoleRenderer(EntityRendererManager p_i48864_1_) {

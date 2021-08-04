@@ -20,6 +20,7 @@
   "item.ambientadditions.pink_fairy_armadillo_spawn_egg": "Pink Fairy Armadillo Spawn Egg",
   "item.ambientadditions.veiled_chameleon_spawn_egg": "Veiled Chameleon Spawn Egg",
   "item.ambientadditions.mole_spawn_egg": "Mole Spawn Egg",
+  "item.ambientadditions.pembroke_corgi_spawn_egg": "Pembroke Corgi Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -28,7 +29,9 @@
   "entity.ambientadditions.pink_fairy_armadillo": "Pink Fairy Armadillo",
   "entity.ambientadditions.veiled_chameleon": "Veiled Chameleon",
   "entity.ambientadditions.mole": "Mole",
+  "entity.ambientadditions.pembroke_corgi": "Pembroke Corgi",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
-  "entity.ambientadditions.mole.1": "Eastern Mole"
+  "entity.ambientadditions.mole.1": "Eastern Mole",
+  "entity.ambientadditions.mole.2": "Hairy-tailed Mole"
 }

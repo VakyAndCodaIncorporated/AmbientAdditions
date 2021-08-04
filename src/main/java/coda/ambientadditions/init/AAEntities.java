@@ -21,6 +21,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<PinkFairyArmadilloEntity>> PINK_FAIRY_ARMADILLO = create("pink_fairy_armadillo", EntityType.Builder.of(PinkFairyArmadilloEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.55f));
     public static final RegistryObject<EntityType<VeiledChameleonEntity>> VEILED_CHAMELEON = create("veiled_chameleon", EntityType.Builder.of(VeiledChameleonEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.55f));
     public static final RegistryObject<EntityType<MoleEntity>> MOLE = create("mole", EntityType.Builder.of(MoleEntity::new, EntityClassification.CREATURE).sized(0.55f, 0.35f));
+    public static final RegistryObject<EntityType<PembrokeCorgiEntity>> PEMBROKE_CORGI = create("pembroke_corgi", EntityType.Builder.of(PembrokeCorgiEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.45f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

@@ -85,6 +85,7 @@ public class MoleModel<T extends Entity> extends AgeableModel<MoleEntity> {
         this.tail.yRot = MathHelper.cos(4.0F + limbSwing * speed * 0.35F) * degree * 0.5F * limbSwingAmount;
         this.legLeft.zRot = MathHelper.cos(limbSwing * speed * 0.35F) * degree * -0.2F * limbSwingAmount;
         this.legRight.zRot = MathHelper.cos(limbSwing * speed * 0.35F) * degree * -0.2F * limbSwingAmount;
+        this.body.xRot = 0.0F;
 
         if (entityIn.eatAnimationTick > 4 && entityIn.eatAnimationTick <= 36) {
             this.armLeft.yRot = this.armYRot;

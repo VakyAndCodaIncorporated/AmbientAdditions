@@ -73,7 +73,10 @@ public class MoleDiggingGoal extends Goal {
             }
             this.mole.ate();
              List<ItemStack> items = mole.level.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerWorld) mole.level).withRandom(mole.getRandom()).create(LootParameterSets.EMPTY));
-             InventoryHelper.dropContents(mole.level, blockpos, NonNullList.of(ItemStack.EMPTY, items.toArray(new ItemStack[0])));
+
+             if (mole.getRandom().nextBoolean()) {
+                InventoryHelper.dropContents(mole.level, blockpos, NonNullList.of(ItemStack.EMPTY, items.toArray(new ItemStack[0])));
+             }
          }
       }
    }
