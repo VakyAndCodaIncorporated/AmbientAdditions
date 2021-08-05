@@ -2,6 +2,7 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.CardiganCorgiModel;
+import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.common.entities.CardiganCorgiEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -17,6 +18,7 @@ public class CardiganCorgiRenderer extends MobRenderer<CardiganCorgiEntity, Card
 
     public CardiganCorgiRenderer(EntityRendererManager p_i48864_1_) {
         super(p_i48864_1_, new CardiganCorgiModel<>(), 0.4F);
+        this.addLayer(new CardiganCorgiCollarLayer(this));
     }
 
     public ResourceLocation getTextureLocation(CardiganCorgiEntity entity) {

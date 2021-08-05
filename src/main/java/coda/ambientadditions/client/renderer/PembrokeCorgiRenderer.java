@@ -2,6 +2,7 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.PembrokeCorgiModel;
+import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -15,6 +16,7 @@ public class PembrokeCorgiRenderer extends MobRenderer<PembrokeCorgiEntity, Pemb
 
     public PembrokeCorgiRenderer(EntityRendererManager p_i48864_1_) {
         super(p_i48864_1_, new PembrokeCorgiModel<>(), 0.4F);
+        this.addLayer(new PembrokeCorgiCollarLayer(this));
     }
 
     public ResourceLocation getTextureLocation(PembrokeCorgiEntity entity) {
