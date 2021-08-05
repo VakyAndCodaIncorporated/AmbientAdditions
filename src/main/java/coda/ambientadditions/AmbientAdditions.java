@@ -87,7 +87,6 @@ public class AmbientAdditions {
     }
 
     private void onBiomeLoading(BiomeLoadingEvent event) {
-        // TODO: pembroke corgi spawning
         if (event.getCategory() == Biome.Category.JUNGLE) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.WHITE_FRUIT_BAT.get(), 1, 3, 3));
         }
@@ -106,6 +105,7 @@ public class AmbientAdditions {
 
         if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOLE.get(), 2, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PEMBROKE_CORGI.get(), 4, 1, 1));
         }
 
         if (event.getCategory() == Biome.Category.SAVANNA) {
