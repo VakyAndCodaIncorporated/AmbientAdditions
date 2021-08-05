@@ -41,7 +41,7 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return ActionResultType.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity)) {
+        if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity) && player.isShiftKeyDown()) {
             if (!level.isClientSide) {
                 boolean more = stack.getCount() > 1;
                 ItemStack split = (more ? stack.split(1) : stack);

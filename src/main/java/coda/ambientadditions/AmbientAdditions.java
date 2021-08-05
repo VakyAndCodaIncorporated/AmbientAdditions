@@ -2,21 +2,26 @@ package coda.ambientadditions;
 
 import coda.ambientadditions.client.ClientEvents;
 import coda.ambientadditions.common.entities.*;
+import coda.ambientadditions.common.entities.goal.FollowCorgiGoal;
 import coda.ambientadditions.init.AAEntities;
 import coda.ambientadditions.init.AAItems;
 import coda.ambientadditions.init.AASounds;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 import net.minecraft.world.gen.feature.structure.VillageStructure;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -46,6 +51,7 @@ public class AmbientAdditions {
 
         forgeBus.addListener(this::entitySpawnInStructure);
         forgeBus.addListener(this::onBiomeLoading);
+        forgeBus.addListener(this::onEntityJoinWorld);
 
         AAItems.REGISTER.register(bus);
         AAEntities.REGISTER.register(bus);
@@ -61,6 +67,7 @@ public class AmbientAdditions {
         event.put(AAEntities.VEILED_CHAMELEON.get(), VeiledChameleonEntity.createAttributes().build());
         event.put(AAEntities.MOLE.get(), MoleEntity.createAttributes().build());
         event.put(AAEntities.PEMBROKE_CORGI.get(), PembrokeCorgiEntity.createAttributes().build());
+        event.put(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -72,6 +79,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.VEILED_CHAMELEON.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VeiledChameleonEntity::checkChameleonSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.MOLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::checkMoleSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PEMBROKE_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.CARDIGAN_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -79,6 +87,7 @@ public class AmbientAdditions {
     }
 
     private void onBiomeLoading(BiomeLoadingEvent event) {
+        // TODO: pembroke corgi spawning
         if (event.getCategory() == Biome.Category.JUNGLE) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.WHITE_FRUIT_BAT.get(), 1, 3, 3));
         }
@@ -107,13 +116,23 @@ public class AmbientAdditions {
             if (event.getName().getPath().equals("warm_ocean")) {
                 event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
             }
+
+            if (event.getName().getPath().equals("dark_forest")) {
+                event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CARDIGAN_CORGI.get(), 4, 1, 2));
+            }
         }
     }
 
     private void entitySpawnInStructure(StructureSpawnListGatherEvent event) {
-        // TODO Fix this
-        if (event.getStructure() == VillageStructure.VILLAGE) {
-            event.addEntitySpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AAEntities.PEMBROKE_CORGI.get(), 10, 1, 1));
+        if (event.getStructure() == Structure.WOODLAND_MANSION) {
+            event.addEntitySpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AAEntities.CARDIGAN_CORGI.get(), 8, 1, 1));
+        }
+    }
+
+    private void onEntityJoinWorld(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof SheepEntity) {
+            ((SheepEntity) entity).goalSelector.addGoal(1, new FollowCorgiGoal((SheepEntity) entity, 1.0D, 10.0F, 1.0F));
         }
     }
 

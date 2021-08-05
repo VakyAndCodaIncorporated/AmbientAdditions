@@ -27,10 +27,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.UUID;
 
-public class PembrokeCorgiEntity extends TameableEntity {
-   private static final DataParameter<Integer> DATA_COLLAR_COLOR = EntityDataManager.defineId(PembrokeCorgiEntity.class, DataSerializers.INT);
+public class CardiganCorgiEntity extends TameableEntity {
+   private static final DataParameter<Integer> DATA_COLLAR_COLOR = EntityDataManager.defineId(CardiganCorgiEntity.class, DataSerializers.INT);
 
-   public PembrokeCorgiEntity(EntityType<? extends PembrokeCorgiEntity> p_i50240_1_, World p_i50240_2_) {
+   public CardiganCorgiEntity(EntityType<? extends CardiganCorgiEntity> p_i50240_1_, World p_i50240_2_) {
       super(p_i50240_1_, p_i50240_2_);
       this.setTame(false);
    }
@@ -207,8 +207,8 @@ public class PembrokeCorgiEntity extends TameableEntity {
       this.entityData.set(DATA_COLLAR_COLOR, p_175547_1_.getId());
    }
 
-   public PembrokeCorgiEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-      PembrokeCorgiEntity corgi = AAEntities.PEMBROKE_CORGI.get().create(p_241840_1_);
+   public CardiganCorgiEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+      CardiganCorgiEntity corgi = AAEntities.CARDIGAN_CORGI.get().create(p_241840_1_);
       UUID uuid = this.getOwnerUUID();
       if (uuid != null) {
          corgi.setOwnerUUID(uuid);
@@ -225,6 +225,6 @@ public class PembrokeCorgiEntity extends TameableEntity {
 
    @Override
    public ItemStack getPickedResult(RayTraceResult target) {
-      return new ItemStack(AAItems.PEMBROKE_CORGI_SPAWN_EGG.get());
+      return new ItemStack(AAItems.CARDIGAN_CORGI_SPAWN_EGG.get());
    }
 }

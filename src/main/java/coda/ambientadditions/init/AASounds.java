@@ -14,4 +14,6 @@ public class AASounds {
     public static final RegistryObject<SoundEvent> ARMADILLO_DEATH = REGISTER.register("armadillo.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "armadillo.death")));
     public static final RegistryObject<SoundEvent> ARMADILLO_HURT = REGISTER.register("armadillo.hurt", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "armadillo.hurt")));
     public static final RegistryObject<SoundEvent> ARMADILLO_AMBIENT = REGISTER.register("armadillo.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "armadillo.ambient")));
+
+    public static final RegistryObject<SoundEvent> CORGI_AMBIENT = REGISTER.register("corgi.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "corgi.ambient")));
 }

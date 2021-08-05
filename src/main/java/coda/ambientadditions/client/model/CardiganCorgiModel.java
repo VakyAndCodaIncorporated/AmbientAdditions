@@ -1,16 +1,10 @@
 package coda.ambientadditions.client.model;
 
-import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
+import coda.ambientadditions.common.entities.CardiganCorgiEntity;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.AgeableModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class PembrokeCorgiModel<T extends Entity> extends AgeableModel<PembrokeCorgiEntity> {
+public class CardiganCorgiModel<T extends Entity> extends AgeableModel<CardiganCorgiEntity> {
     public ModelRenderer body;
     public ModelRenderer head;
     public ModelRenderer legLeft;
@@ -30,7 +24,7 @@ public class PembrokeCorgiModel<T extends Entity> extends AgeableModel<PembrokeC
     public ModelRenderer earLeft;
     public ModelRenderer earRight;
 
-    public PembrokeCorgiModel() {
+    public CardiganCorgiModel() {
         this.texWidth = 32;
         this.texHeight = 32;
         this.legRight = new ModelRenderer(this, 22, 21);
@@ -88,7 +82,7 @@ public class PembrokeCorgiModel<T extends Entity> extends AgeableModel<PembrokeC
     }
 
     @Override
-    public void setupAnim(PembrokeCorgiEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(CardiganCorgiEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180F);
         this.tail.xRot = ageInTicks;

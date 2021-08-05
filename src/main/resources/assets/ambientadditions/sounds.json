@@ -25,5 +25,22 @@
         "stream": true
       }
     ]
+  },
+  "corgi.ambient": {
+    "subtitle": "ambientadditions.corgi.ambient",
+    "sounds": [
+      {
+        "name": "ambientadditions:corgi/ambient_1",
+        "stream": true
+      },
+      {
+        "name": "ambientadditions:corgi/ambient_2",
+        "stream": true
+      },
+      {
+        "name": "ambientadditions:corgi/ambient_3",
+        "stream": true
+      }
+    ]
   }
 }

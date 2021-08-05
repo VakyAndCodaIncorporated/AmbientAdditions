@@ -3,8 +3,6 @@ package coda.ambientadditions.client.renderer;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.PembrokeCorgiModel;
 import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -21,11 +19,6 @@ public class PembrokeCorgiRenderer extends MobRenderer<PembrokeCorgiEntity, Pemb
 
     public ResourceLocation getTextureLocation(PembrokeCorgiEntity entity) {
         return TEXTURE;
-    }
-
-    @Override
-    public void render(PembrokeCorgiEntity p_225623_1_, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_, IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
-        super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
     }
 
     @Override
