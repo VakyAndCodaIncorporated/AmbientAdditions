@@ -1,5 +1,6 @@
 package coda.ambientadditions.client.model;
 
+import coda.ambientadditions.common.entities.NakedMoleRatEntity;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -67,7 +68,7 @@ public class NakedMoleRatModel<T extends Entity> extends AgeableModel<NakedMoleR
 
     @Override
     public void setupAnim(NakedMoleRatEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float speed = 1.0f;
+        float speed = 1.8f;
         float degree = 1.0f;
         this.body.xRot = MathHelper.cos(-1.0F + limbSwing * speed * 0.4F) * degree * 0.1F * limbSwingAmount;
         this.body.zRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.05F * limbSwingAmount;

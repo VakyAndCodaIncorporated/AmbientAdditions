@@ -39,7 +39,7 @@ public class NakedMoleRatEntity extends AnimalEntity {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.SPIDER_EYE), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.POTATO), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
@@ -73,18 +73,18 @@ public class NakedMoleRatEntity extends AnimalEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AASounds.ARMADILLO_AMBIENT.get();
+        return AASounds.RAT_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
-        return AASounds.ARMADILLO_HURT.get();
+        return AASounds.RAT_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AASounds.ARMADILLO_DEATH.get();
+        return AASounds.RAT_DEATH.get();
     }
 }

@@ -18,6 +18,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -110,6 +111,10 @@ public class AmbientAdditions {
 
         if (event.getCategory() == Biome.Category.SAVANNA) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.VEILED_CHAMELEON.get(), 2, 1, 1));
+        }
+
+        if (event.getScale() > 0F) {
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
         }
 
         if (event.getName() != null) {
