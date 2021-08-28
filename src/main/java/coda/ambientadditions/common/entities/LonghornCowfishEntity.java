@@ -1,6 +1,6 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.item.ItemStack;

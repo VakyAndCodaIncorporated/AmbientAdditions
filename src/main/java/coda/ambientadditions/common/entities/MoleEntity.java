@@ -1,8 +1,8 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.goal.MoleDiggingGoal;
-import coda.ambientadditions.init.AAEntities;
-import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;

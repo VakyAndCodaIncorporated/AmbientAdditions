@@ -35,5 +35,13 @@
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
-  "entity.ambientadditions.mole.2": "Hairy-tailed Mole"
+  "entity.ambientadditions.mole.2": "Hairy-tailed Mole",
+
+  "ambientadditions.armadillo.ambient": "Armadillo squeals",
+  "ambientadditions.armadillo.hurt": "Armadillo hurts",
+  "ambientadditions.armadillo.death": "Armadillo dies",
+  "ambientadditions.corgi.ambient": "Corgi barks",
+  "ambientadditions.rat.ambient": "Rat squeaks",
+  "ambientadditions.rat.hurt": "Rat hurts",
+  "ambientadditions.rat.death": "Rat dies"
 }

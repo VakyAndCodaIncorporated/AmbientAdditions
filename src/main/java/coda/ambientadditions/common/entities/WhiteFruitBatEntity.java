@@ -1,6 +1,6 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;

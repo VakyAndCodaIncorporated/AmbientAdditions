@@ -1,4 +1,4 @@
-package coda.ambientadditions.init;
+package coda.ambientadditions.common.init;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.items.*;
@@ -42,4 +42,5 @@ public class AAItems {
     public static final RegistryObject<Item> MOLE_SPAWN_EGG = REGISTER.register("mole_spawn_egg", () -> new AASpawnEggItem(AAEntities.MOLE, 0x493f3d, 0xffa8a5, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> PEMBROKE_CORGI_SPAWN_EGG = REGISTER.register("pembroke_corgi_spawn_egg", () -> new AASpawnEggItem(AAEntities.PEMBROKE_CORGI, 0xd57832, 0xdfbf97, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> CARDIGAN_CORGI_SPAWN_EGG = REGISTER.register("cardigan_corgi_spawn_egg", () -> new AASpawnEggItem(AAEntities.CARDIGAN_CORGI, 0x312a23, 0xf1debd, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> NAKED_MOLE_RAT_SPAWN_EGG = REGISTER.register("naked_mole_rat_spawn_egg", () -> new AASpawnEggItem(AAEntities.NAKED_MOLE_RAT, 0xf1bc9d, 0xdf826a, new Item.Properties().tab(GROUP)));
 }

@@ -4,7 +4,7 @@ import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.renderer.*;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.common.items.AASpawnEggItem;
-import coda.ambientadditions.init.AAEntities;
+import coda.ambientadditions.common.init.AAEntities;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,6 +27,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.MOLE.get(), MoleRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.PEMBROKE_CORGI.get(), PembrokeCorgiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
     }

@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -45,7 +45,7 @@ public class CrateItem extends Item {
             if (!level.isClientSide) {
                 boolean more = stack.getCount() > 1;
                 ItemStack split = (more ? stack.split(1) : stack);
-                //if (more && !player.inventory.add(stack)) player.drop(stack, true);;
+//                if (more && !player.inventory.add(stack)) player.drop(stack, true);
                 if (player.getItemInHand(hand).isEmpty()) {
                     player.setItemInHand(hand, split);
                 } else if (more && !player.inventory.add(split)) {

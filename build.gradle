@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = 'beta3'
+version = 'beta4'
 group = 'coda.ambientadditions' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ambientadditions'
 

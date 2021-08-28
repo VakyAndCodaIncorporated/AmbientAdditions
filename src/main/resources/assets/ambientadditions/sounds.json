@@ -42,5 +42,32 @@
         "stream": true
       }
     ]
+  },
+  "rat.ambient": {
+    "subtitle": "ambientadditions.rat.ambient",
+    "sounds": [
+      {
+        "name": "ambientadditions:rat/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "rat.death": {
+    "subtitle": "ambientadditions.rat.death",
+    "sounds": [
+      {
+        "name": "ambientadditions:rat/death",
+        "stream": true
+      }
+    ]
+  },
+  "rat.hurt": {
+    "subtitle": "ambientadditions.rat.hurt",
+    "sounds": [
+      {
+        "name": "ambientadditions:rat/hurt",
+        "stream": true
+      }
+    ]
   }
 }

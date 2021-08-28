@@ -1,4 +1,4 @@
-package coda.ambientadditions.init;
+package coda.ambientadditions.common.init;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.*;
@@ -23,6 +23,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<MoleEntity>> MOLE = create("mole", EntityType.Builder.of(MoleEntity::new, EntityClassification.CREATURE).sized(0.55f, 0.35f));
     public static final RegistryObject<EntityType<PembrokeCorgiEntity>> PEMBROKE_CORGI = create("pembroke_corgi", EntityType.Builder.of(PembrokeCorgiEntity::new, EntityClassification.CREATURE).sized(0.65f, 0.55f));
     public static final RegistryObject<EntityType<CardiganCorgiEntity>> CARDIGAN_CORGI = create("cardigan_corgi", EntityType.Builder.of(CardiganCorgiEntity::new, EntityClassification.CREATURE).sized(0.7f, 0.6f));
+    public static final RegistryObject<EntityType<NakedMoleRatEntity>> NAKED_MOLE_RAT = create("naked_mole_rat", EntityType.Builder.of(NakedMoleRatEntity::new, EntityClassification.CREATURE).sized(0.4f, 0.3f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

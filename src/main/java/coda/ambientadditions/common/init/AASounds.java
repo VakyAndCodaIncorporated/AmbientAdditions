@@ -1,4 +1,4 @@
-package coda.ambientadditions.init;
+package coda.ambientadditions.common.init;
 
 import coda.ambientadditions.AmbientAdditions;
 import net.minecraft.util.ResourceLocation;

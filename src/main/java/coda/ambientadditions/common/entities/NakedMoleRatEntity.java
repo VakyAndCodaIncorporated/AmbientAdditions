@@ -3,9 +3,11 @@ package coda.ambientadditions.common.entities;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -14,17 +16,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
-public class PinkFairyArmadilloEntity extends AnimalEntity {
+public class NakedMoleRatEntity extends AnimalEntity {
 
-    public PinkFairyArmadilloEntity(EntityType<? extends AnimalEntity> p_i48568_1_, World p_i48568_2_) {
+    public NakedMoleRatEntity(EntityType<? extends AnimalEntity> p_i48568_1_, World p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
     }
 
@@ -42,22 +48,26 @@ public class PinkFairyArmadilloEntity extends AnimalEntity {
 
     @Override
     public ItemStack getPickedResult(RayTraceResult target) {
-        return new ItemStack(AAItems.PINK_FAIRY_ARMADILLO_SPAWN_EGG.get());
+        return new ItemStack(AAItems.NAKED_MOLE_RAT_SPAWN_EGG.get());
     }
 
     @Override
     public boolean isFood(ItemStack p_70877_1_) {
-        return p_70877_1_.getItem() == Items.SPIDER_EYE;
+        return p_70877_1_.getItem() == Items.POTATO;
     }
 
     @Nullable
     @Override
-    public PinkFairyArmadilloEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
-        return AAEntities.PINK_FAIRY_ARMADILLO.get().create(world);
+    public NakedMoleRatEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
+        return AAEntities.NAKED_MOLE_RAT.get().create(world);
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
         return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.2D);
+    }
+
+    public static boolean checkAnimalSpawnRules(EntityType<? extends AnimalEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.BASE_STONE_OVERWORLD);
     }
 
     @Nullable

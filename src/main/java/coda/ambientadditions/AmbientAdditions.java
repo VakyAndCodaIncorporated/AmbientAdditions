@@ -3,13 +3,14 @@ package coda.ambientadditions;
 import coda.ambientadditions.client.ClientEvents;
 import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.common.entities.goal.FollowCorgiGoal;
-import coda.ambientadditions.init.AAEntities;
-import coda.ambientadditions.init.AAItems;
-import coda.ambientadditions.init.AASounds;
+import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.common.init.AASounds;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
@@ -17,8 +18,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
-import net.minecraft.world.gen.feature.structure.VillageStructure;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -68,6 +67,7 @@ public class AmbientAdditions {
         event.put(AAEntities.MOLE.get(), MoleEntity.createAttributes().build());
         event.put(AAEntities.PEMBROKE_CORGI.get(), PembrokeCorgiEntity.createAttributes().build());
         event.put(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiEntity.createAttributes().build());
+        event.put(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -79,7 +79,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.VEILED_CHAMELEON.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VeiledChameleonEntity::checkChameleonSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.MOLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::checkMoleSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PEMBROKE_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.CARDIGAN_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.NAKED_MOLE_RAT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NakedMoleRatEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);

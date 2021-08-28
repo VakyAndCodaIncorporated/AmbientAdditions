@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.common.entities.item.DartEntity;
-import coda.ambientadditions.init.AAItems;
+import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
