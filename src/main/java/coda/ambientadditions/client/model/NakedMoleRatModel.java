@@ -82,7 +82,6 @@ public class NakedMoleRatModel<T extends Entity> extends AgeableModel<NakedMoleR
         this.backLegLeft.xRot = MathHelper.cos(-3.0F + limbSwing * speed * 0.4F) * degree * 0.8F * limbSwingAmount;
         this.backLegLeft.y = MathHelper.cos(-2.0F + limbSwing * speed * 0.4F) * degree * 0.03F * limbSwingAmount + 2.0F;;
         this.head.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.1F * limbSwingAmount + 0.5F;
-
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
