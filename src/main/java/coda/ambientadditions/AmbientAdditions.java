@@ -70,6 +70,7 @@ public class AmbientAdditions {
         event.put(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiEntity.createAttributes().build());
         event.put(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatEntity.createAttributes().build());
         event.put(AAEntities.MOUSTACHED_TAMARIN.get(), MoustachedTamarinEntity.createAttributes().build());
+        event.put(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -82,7 +83,8 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.MOLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::checkMoleSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PEMBROKE_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.NAKED_MOLE_RAT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NakedMoleRatEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.MOUSTACHED_TAMARIN.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoustachedTamarinEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.MOUSTACHED_TAMARIN.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, MoustachedTamarinEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.NAPOLEON_WRASSE.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -92,7 +94,7 @@ public class AmbientAdditions {
     private void onBiomeLoading(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.JUNGLE) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.WHITE_FRUIT_BAT.get(), 1, 3, 3));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOUSTACHED_TAMARIN.get(), 2, 3, 5));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
         }
 
         if (event.getCategory() == Biome.Category.TAIGA) {
@@ -123,6 +125,7 @@ public class AmbientAdditions {
         if (event.getName() != null) {
             if (event.getName().getPath().equals("warm_ocean")) {
                 event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
             }
 
             if (event.getName().getPath().equals("dark_forest")) {

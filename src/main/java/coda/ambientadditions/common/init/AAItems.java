@@ -44,4 +44,5 @@ public class AAItems {
     public static final RegistryObject<Item> CARDIGAN_CORGI_SPAWN_EGG = REGISTER.register("cardigan_corgi_spawn_egg", () -> new AASpawnEggItem(AAEntities.CARDIGAN_CORGI, 0x312a23, 0xf1debd, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> NAKED_MOLE_RAT_SPAWN_EGG = REGISTER.register("naked_mole_rat_spawn_egg", () -> new AASpawnEggItem(AAEntities.NAKED_MOLE_RAT, 0xf1bc9d, 0xdf826a, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> MOUSTACHED_TAMARIN_SPAWN_EGG = REGISTER.register("moustached_tamarin_spawn_egg", () -> new AASpawnEggItem(AAEntities.MOUSTACHED_TAMARIN, 0x5c4339, 0xdbc7c9, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> NAPOLEON_WRASSE_SPAWN_EGG = REGISTER.register("napoleon_wrasse_spawn_egg", () -> new AASpawnEggItem(AAEntities.NAPOLEON_WRASSE, 0xbcdb51, 0x04658e, new Item.Properties().tab(GROUP)));
 }

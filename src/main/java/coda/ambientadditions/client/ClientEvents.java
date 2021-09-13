@@ -29,6 +29,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.MOUSTACHED_TAMARIN.get(), MoustachedTamarinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
     }

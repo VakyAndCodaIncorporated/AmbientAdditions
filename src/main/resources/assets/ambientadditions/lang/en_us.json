@@ -24,6 +24,7 @@
   "item.ambientadditions.cardigan_corgi_spawn_egg": "Cardigan Corgi Spawn Egg",
   "item.ambientadditions.naked_mole_rat_spawn_egg": "Naked Mole Rat Spawn Egg",
   "item.ambientadditions.moustached_tamarin_spawn_egg": "Moustached Tamarin Spawn Egg",
+  "item.ambientadditions.napoleon_wrasse_spawn_egg": "Napoleon Wrasse Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -36,6 +37,7 @@
   "entity.ambientadditions.cardigan_corgi": "Cardigan Corgi",
   "entity.ambientadditions.naked_mole_rat": "Naked Mole Rat",
   "entity.ambientadditions.moustached_tamarin": "Moustached Tamarin",
+  "entity.ambientadditions.napoleon_wrasse": "Napoleon Wrasse",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
