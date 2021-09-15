@@ -58,8 +58,8 @@ public class MoustachedTamarinEntity extends AnimalEntity {
 
     @Nullable
     @Override
-    public NakedMoleRatEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
-        return AAEntities.NAKED_MOLE_RAT.get().create(world);
+    public MoustachedTamarinEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
+        return AAEntities.MOUSTACHED_TAMARIN.get().create(world);
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
