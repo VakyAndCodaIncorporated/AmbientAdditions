@@ -14,7 +14,7 @@ public class AAItems {
     public final static ItemGroup GROUP = new ItemGroup(AmbientAdditions.MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(AAItems.WHITE_FRUIT_BAT_SPAWN_EGG.get());
+            return new ItemStack(AAItems.DART.get());
         }
     };
 
@@ -31,6 +31,7 @@ public class AAItems {
     public static final RegistryObject<Item> STAG_BEETLE_BOTTLE = REGISTER.register("stag_beetle_bottle", () -> new AACatchableItem(AAEntities.STAG_BEETLE::get, Items.GLASS_BOTTLE, false, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> CRATE = REGISTER.register("crate", () -> new CrateItem(new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> MOLE_BUCKET = REGISTER.register("mole_bucket", () -> new AACatchableItem(AAEntities.MOLE::get, Items.BUCKET, true, new Item.Properties().tab(GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> PINOCCHIO_ANOLE_POT = REGISTER.register("pinocchio_anole_pot", () -> new AACatchableItem(AAEntities.PINOCCHIO_ANOLE::get, Items.FLOWER_POT, false, new Item.Properties().tab(GROUP).stacksTo(1)));
 
     // Spawn Eggs
     public static final RegistryObject<Item> WHITE_FRUIT_BAT_SPAWN_EGG = REGISTER.register("white_fruit_bat_spawn_egg", () -> new AASpawnEggItem(AAEntities.WHITE_FRUIT_BAT, 0xf9f5e5, 0xffd000, new Item.Properties().tab(GROUP)));
@@ -46,4 +47,5 @@ public class AAItems {
     public static final RegistryObject<Item> MOUSTACHED_TAMARIN_SPAWN_EGG = REGISTER.register("moustached_tamarin_spawn_egg", () -> new AASpawnEggItem(AAEntities.MOUSTACHED_TAMARIN, 0x5c4339, 0xdbc7c9, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> NAPOLEON_WRASSE_SPAWN_EGG = REGISTER.register("napoleon_wrasse_spawn_egg", () -> new AASpawnEggItem(AAEntities.NAPOLEON_WRASSE, 0xbcdb51, 0x04658e, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> HAWAIIAN_HONEYCREEPER_SPAWN_EGG = REGISTER.register("hawaiian_honeycreeper_spawn_egg", () -> new AASpawnEggItem(AAEntities.HAWAIIAN_HONEYCREEPER, 0xce321c, 0x242424, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> PINOCCHIO_ANOLE_SPAWN_EGG = REGISTER.register("pinocchio_anole_spawn_egg", () -> new AASpawnEggItem(AAEntities.PINOCCHIO_ANOLE, 0x898734, 0xd0a850, new Item.Properties().tab(GROUP)));
 }

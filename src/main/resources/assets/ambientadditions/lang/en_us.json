@@ -7,11 +7,11 @@
 
   "item.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
   "item.ambientadditions.worm": "Worm",
-  "item.ambientadditions.ant": "Ant",
 
   "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
   "item.ambientadditions.stag_beetle_bottle": "Bottle of Stag Beetle",
   "item.ambientadditions.mole_bucket": "Bucket of Mole",
+  "item.ambientadditions.pinocchio_anole_pot": "Pot of Pinocchio Anole",
 
   "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
   "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
@@ -26,6 +26,7 @@
   "item.ambientadditions.moustached_tamarin_spawn_egg": "Moustached Tamarin Spawn Egg",
   "item.ambientadditions.napoleon_wrasse_spawn_egg": "Napoleon Wrasse Spawn Egg",
   "item.ambientadditions.hawaiian_honeycreeper_spawn_egg": "Hawaiian Honeycreeper Spawn Egg",
+  "item.ambientadditions.pinocchio_anole_spawn_egg": "Pinocchio Anole Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -40,6 +41,7 @@
   "entity.ambientadditions.moustached_tamarin": "Moustached Tamarin",
   "entity.ambientadditions.napoleon_wrasse": "Napoleon Wrasse",
   "entity.ambientadditions.hawaiian_honeycreeper": "Hawaiian Honeycreeper",
+  "entity.ambientadditions.pinocchio_anole": "Pinocchio Anole",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
