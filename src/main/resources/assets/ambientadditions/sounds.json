@@ -70,29 +70,29 @@
       }
     ]
   },
-  "hawaiian_honeycreeper.ambient": {
-    "subtitle": "ambientadditions.hawaiian_honeycreeper.ambient",
+  "honeycreeper.ambient": {
+    "subtitle": "ambientadditions.honeycreeper.ambient",
     "sounds": [
       {
-        "name": "ambientadditions:hawaiian_honeycreeper/ambient",
+        "name": "ambientadditions:honeycreeper/ambient",
         "stream": true
       }
     ]
   },
-  "hawaiian_honeycreeper.death": {
-    "subtitle": "ambientadditions.hawaiian_honeycreeper.death",
+  "honeycreeper.death": {
+    "subtitle": "ambientadditions.honeycreeper.death",
     "sounds": [
       {
-        "name": "ambientadditions:hawaiian_honeycreeper/death",
+        "name": "ambientadditions:honeycreeper/death",
         "stream": true
       }
     ]
   },
-  "hawaiian_honeycreeper.hurt": {
-    "subtitle": "ambientadditions.hawaiian_honeycreeper.hurt",
+  "honeycreeper.hurt": {
+    "subtitle": "ambientadditions.honeycreeper.hurt",
     "sounds": [
       {
-        "name": "ambientadditions:hawaiian_honeycreeper/hurt",
+        "name": "ambientadditions:honeycreeper/hurt",
         "stream": true
       }
     ]
