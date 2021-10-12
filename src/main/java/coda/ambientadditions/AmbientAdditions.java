@@ -71,6 +71,7 @@ public class AmbientAdditions {
         event.put(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseEntity.createAttributes().build());
         event.put(AAEntities.HAWAIIAN_HONEYCREEPER.get(), HawaiianHoneycreeperEntity.createAttributes().build());
         event.put(AAEntities.PINOCCHIO_ANOLE.get(), PinocchioAnoleEntity.createAttributes().build());
+        event.put(AAEntities.AYE_AYE.get(), AyeAyeEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -87,6 +88,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.NAPOLEON_WRASSE.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.HAWAIIAN_HONEYCREEPER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, HawaiianHoneycreeperEntity::checkHoneycreeperSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PINOCCHIO_ANOLE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.AYE_AYE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -99,6 +101,7 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HAWAIIAN_HONEYCREEPER.get(), 35, 2, 3));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.AYE_AYE.get(), 30, 1, 2));
         }
 
         if (event.getCategory() == Biome.Category.TAIGA) {

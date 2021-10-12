@@ -1,7 +1,6 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
-import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -13,7 +12,6 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.passive.ShoulderRidingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +20,7 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,10 +36,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.Set;
 
 public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements IFlyingAnimal {
-   private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.HONEY_BOTTLE);
    public float flap;
    public float flapSpeed;
    public float oFlapSpeed;
@@ -120,7 +117,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
 
    public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
       ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
-      if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
+      if (!this.isTame() && itemstack.getItem().is(ItemTags.FLOWERS)) {
          if (!p_230254_1_.abilities.instabuild) {
             itemstack.shrink(1);
             p_230254_1_.inventory.add(new ItemStack(Items.GLASS_BOTTLE));

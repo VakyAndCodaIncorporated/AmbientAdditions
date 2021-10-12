@@ -27,6 +27,7 @@
   "item.ambientadditions.napoleon_wrasse_spawn_egg": "Napoleon Wrasse Spawn Egg",
   "item.ambientadditions.hawaiian_honeycreeper_spawn_egg": "Hawaiian Honeycreeper Spawn Egg",
   "item.ambientadditions.pinocchio_anole_spawn_egg": "Pinocchio Anole Spawn Egg",
+  "item.ambientadditions.aye_aye_spawn_egg": "Aye Aye Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -42,6 +43,7 @@
   "entity.ambientadditions.napoleon_wrasse": "Napoleon Wrasse",
   "entity.ambientadditions.hawaiian_honeycreeper": "Hawaiian Honeycreeper",
   "entity.ambientadditions.pinocchio_anole": "Pinocchio Anole",
+  "entity.ambientadditions.aye_aye": "Aye Aye",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",

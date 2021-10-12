@@ -5,5 +5,5 @@ license="All rights reserved"
 modId="ambientadditions" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Ambient Additions" #mandatory
-credits="Coda, VakyPanda" #optional
-description='''Love this animals'''
+credits="Coda, VakyPanda, Ninni" #optional
+description='''Adds more ambient wildlife to your world!'''

@@ -28,6 +28,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<NapoleonWrasseEntity>> NAPOLEON_WRASSE = create("napoleon_wrasse", EntityType.Builder.of(NapoleonWrasseEntity::new, EntityClassification.WATER_CREATURE).sized(0.9f, 0.6f));
     public static final RegistryObject<EntityType<HawaiianHoneycreeperEntity>> HAWAIIAN_HONEYCREEPER = create("hawaiian_honeycreeper", EntityType.Builder.of(HawaiianHoneycreeperEntity::new, EntityClassification.CREATURE).sized(0.4f, 0.55f));
     public static final RegistryObject<EntityType<PinocchioAnoleEntity>> PINOCCHIO_ANOLE = create("pinocchio_anole", EntityType.Builder.of(PinocchioAnoleEntity::new, EntityClassification.CREATURE).sized(0.4f, 0.25f));
+    public static final RegistryObject<EntityType<AyeAyeEntity>> AYE_AYE = create("aye_aye", EntityType.Builder.of(AyeAyeEntity::new, EntityClassification.CREATURE).sized(0.7f, 0.55f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

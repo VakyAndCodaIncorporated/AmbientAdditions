@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class PinocchioAnoleEntity  extends CreatureEntity {
+public class PinocchioAnoleEntity extends CreatureEntity {
 
     public PinocchioAnoleEntity(EntityType<? extends CreatureEntity> type, World world) {
         super(type, world);
@@ -43,7 +43,7 @@ public class PinocchioAnoleEntity  extends CreatureEntity {
         return new ItemStack(AAItems.PINOCCHIO_ANOLE_SPAWN_EGG.get());
     }
 
-    public static boolean checkAnimalSpawnRules(EntityType<? extends PinocchioAnoleEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+    public static boolean checkAnimalSpawnRules(EntityType<? extends CreatureEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
         return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.LEAVES) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS);
     }
 

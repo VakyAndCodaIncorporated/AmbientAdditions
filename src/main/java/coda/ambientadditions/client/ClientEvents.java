@@ -26,6 +26,7 @@ import java.util.Map;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
 public class ClientEvents {
 
+    @OnlyIn(Dist.CLIENT)
     public static void clientSetup() {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.WHITE_FRUIT_BAT.get(), WhiteFruitBatRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.LONGHORN_COWFISH.get(), LonghornCowfishRenderer::new);
@@ -41,6 +42,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.HAWAIIAN_HONEYCREEPER.get(), HawaiianHoneycreeperRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.PINOCCHIO_ANOLE.get(), PinocchioAnoleRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.AYE_AYE.get(), AyeAyeRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 
