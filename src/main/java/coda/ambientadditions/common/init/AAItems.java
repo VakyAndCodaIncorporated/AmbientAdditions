@@ -49,4 +49,6 @@ public class AAItems {
     public static final RegistryObject<Item> HAWAIIAN_HONEYCREEPER_SPAWN_EGG = REGISTER.register("hawaiian_honeycreeper_spawn_egg", () -> new AASpawnEggItem(AAEntities.HAWAIIAN_HONEYCREEPER, 0xce321c, 0x242424, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> PINOCCHIO_ANOLE_SPAWN_EGG = REGISTER.register("pinocchio_anole_spawn_egg", () -> new AASpawnEggItem(AAEntities.PINOCCHIO_ANOLE, 0x898734, 0xd0a850, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> AYE_AYE_SPAWN_EGG = REGISTER.register("aye_aye_spawn_egg", () -> new AASpawnEggItem(AAEntities.AYE_AYE, 0x2f2c25, 0xd1aba6, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> RING_TAILED_LEMUR_SPAWN_EGG = REGISTER.register("ring_tailed_lemur_spawn_egg", () -> new AASpawnEggItem(AAEntities.RING_TAILED_LEMUR, 0x2f2c25, 0xd1aba6, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> SIAMANG_GIBBON_SPAWN_EGG = REGISTER.register("siamang_gibbon_spawn_egg", () -> new AASpawnEggItem(AAEntities.SIAMANG_GIBBON, 0x2c2a2a, 0x171212, new Item.Properties().tab(GROUP)));
 }

@@ -96,5 +96,77 @@
         "stream": true
       }
     ]
+  },
+  "siamang_gibbon.ambient": {
+    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.ambient",
+    "sounds": [
+      {
+        "name": "lawofthejungle:siamang_gibbon/ambient_1",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/ambient_2",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/ambient_3",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/ambient_4",
+        "stream": true
+      }
+    ]
+  },
+  "siamang_gibbon.hurt": {
+    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.hurt",
+    "sounds": [
+      {
+        "name": "lawofthejungle:siamang_gibbon/hurt_1",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/hurt_2",
+        "stream": true
+      }
+    ]
+  },
+  "siamang_gibbon.death": {
+    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.death",
+    "sounds": [
+      {
+        "name": "lawofthejungle:siamang_gibbon/death_1",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/death_2",
+        "stream": true
+      }
+    ]
+  },
+  "siamang_gibbon.booming": {
+    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.booming",
+    "sounds": [
+      {
+        "name": "lawofthejungle:siamang_gibbon/booming_1",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/booming_2",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/booming_3",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/booming_4",
+        "stream": true
+      },
+      {
+        "name": "lawofthejungle:siamang_gibbon/booming_5",
+        "stream": true
+      }
+    ]
   }
 }

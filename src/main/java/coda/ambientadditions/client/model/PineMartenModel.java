@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PineMartenModel<T extends PineMartenEntity> extends EntityModel<T> {
+public class PineMartenModel<T extends Entity> extends EntityModel<T> {
     public ModelRenderer body;
     public ModelRenderer armLeft;
     public ModelRenderer armRight;

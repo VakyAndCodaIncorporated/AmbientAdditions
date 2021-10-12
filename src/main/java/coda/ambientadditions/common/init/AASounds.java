@@ -20,4 +20,9 @@ public class AASounds {
     public static final RegistryObject<SoundEvent> RAT_DEATH = REGISTER.register("rat.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "rat.death")));
     public static final RegistryObject<SoundEvent> RAT_HURT = REGISTER.register("rat.hurt", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "rat.hurt")));
     public static final RegistryObject<SoundEvent> RAT_AMBIENT = REGISTER.register("rat.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "rat.ambient")));
+
+   public static final RegistryObject<SoundEvent> SIAMANG_DEATH = REGISTER.register("siamang.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "siamang.death")));
+   public static final RegistryObject<SoundEvent> SIAMANG_HURT = REGISTER.register("siamang.hurt", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "siamang.hurt")));
+   public static final RegistryObject<SoundEvent> SIAMANG_AMBIENT = REGISTER.register("siamang.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "siamang.ambient")));
+   public static final RegistryObject<SoundEvent> SIAMANG_BOOMING = REGISTER.register("siamang.booming", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "siamang.booming")));
 }

@@ -89,6 +89,8 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.HAWAIIAN_HONEYCREEPER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, HawaiianHoneycreeperEntity::checkHoneycreeperSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PINOCCHIO_ANOLE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.AYE_AYE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.RING_TAILED_LEMUR.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.SIAMANG_GIBBON.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);

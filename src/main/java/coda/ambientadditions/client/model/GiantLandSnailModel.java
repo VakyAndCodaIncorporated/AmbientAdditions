@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GiantLandSnailModel<T extends GiantLandSnailEntity> extends EntityModel<T> {
+public class GiantLandSnailModel<T extends Entity> extends EntityModel<T> {
     public ModelRenderer body;
     public ModelRenderer mouth;
     public ModelRenderer eyes;

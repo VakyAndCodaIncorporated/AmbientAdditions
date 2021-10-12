@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GoldenElephantSnailModel<T extends GoldenElephantSnailEntity> extends EntityModel<T> {
+public class GoldenElephantSnailModel<T extends Entity> extends EntityModel<T> {
     public ModelRenderer shell1;
     public ModelRenderer shell2;
     public ModelRenderer head;
