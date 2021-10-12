@@ -72,6 +72,8 @@ public class AmbientAdditions {
         event.put(AAEntities.HAWAIIAN_HONEYCREEPER.get(), HawaiianHoneycreeperEntity.createAttributes().build());
         event.put(AAEntities.PINOCCHIO_ANOLE.get(), PinocchioAnoleEntity.createAttributes().build());
         event.put(AAEntities.AYE_AYE.get(), AyeAyeEntity.createAttributes().build());
+        event.put(AAEntities.SIAMANG_GIBBON.get(), SiamangGibbonEntity.createAttributes().build());
+        event.put(AAEntities.RING_TAILED_LEMUR.get(), RingTailedLemurEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -104,6 +106,8 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HAWAIIAN_HONEYCREEPER.get(), 35, 2, 3));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.AYE_AYE.get(), 30, 1, 2));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.SIAMANG_GIBBON.get(), 30, 3, 6));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.RING_TAILED_LEMUR.get(), 30, 4, 8));
         }
 
         if (event.getCategory() == Biome.Category.TAIGA) {
