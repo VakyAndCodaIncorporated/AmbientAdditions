@@ -102,17 +102,17 @@ public class RingTailedLemurModel<T extends RingTailedLemurEntity> extends Ageab
         this.right_leg.xRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 1.0F * limbSwingAmount - 0.1F;
         this.tail.xRot = MathHelper.cos(1.0F + limbSwing * speed * 0.4F) * degree * 0.4F * limbSwingAmount + 2.8F;
         this.tail_tip.xRot = limbSwingAmount - 1.5708F;
-        this.head.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.05F * limbSwingAmount - 2.0F;
+        this.head.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.05F * limbSwingAmount - 2.0F;
         this.body.zRot = MathHelper.cos(limbSwing * speed * 0.2F) * degree * -0.2F * limbSwingAmount;
         this.left_leg.zRot = MathHelper.cos(limbSwing * speed * 0.2F) * degree * 0.2F * limbSwingAmount;
         this.right_leg.zRot = MathHelper.cos(limbSwing * speed * 0.2F) * degree * 0.2F * limbSwingAmount;
         this.left_arm.zRot = MathHelper.cos(limbSwing * speed * 0.2F) * degree * 0.2F * limbSwingAmount;
         this.right_arm.zRot = MathHelper.cos(limbSwing * speed * 0.2F) * degree * 0.2F * limbSwingAmount;
-        this.body.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.05F * limbSwingAmount + 17.0F;
-        this.left_arm.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.6F;
-        this.right_arm.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.6F;
-        this.left_leg.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.5F;
-        this.right_leg.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.5F;
+        this.body.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.05F * limbSwingAmount + 17.0F;
+        this.left_arm.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.6F;
+        this.right_arm.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.6F;
+        this.left_leg.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.5F;
+        this.right_leg.y = MathHelper.cos(limbSwing * speed * 0.4F) * degree * -0.05F * limbSwingAmount + 0.5F;
         this.tail.zRot = MathHelper.cos(-1.0F + limbSwing * speed * 0.2F) * degree * 0.8F * limbSwingAmount;
     }
 

@@ -97,74 +97,74 @@
       }
     ]
   },
-  "siamang_gibbon.ambient": {
-    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.ambient",
+  "siamang.ambient": {
+    "subtitle": "subtitle.ambientadditions.siamang.ambient",
     "sounds": [
       {
-        "name": "lawofthejungle:siamang_gibbon/ambient_1",
+        "name": "ambientadditions:siamang/ambient_1",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/ambient_2",
+        "name": "ambientadditions:siamang/ambient_2",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/ambient_3",
+        "name": "ambientadditions:siamang/ambient_3",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/ambient_4",
+        "name": "ambientadditions:siamang/ambient_4",
         "stream": true
       }
     ]
   },
-  "siamang_gibbon.hurt": {
-    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.hurt",
+  "siamang.hurt": {
+    "subtitle": "subtitle.ambientadditions.siamang.hurt",
     "sounds": [
       {
-        "name": "lawofthejungle:siamang_gibbon/hurt_1",
+        "name": "ambientadditions:siamang/hurt_1",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/hurt_2",
+        "name": "ambientadditions:siamang/hurt_2",
         "stream": true
       }
     ]
   },
-  "siamang_gibbon.death": {
-    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.death",
+  "siamang.death": {
+    "subtitle": "subtitle.ambientadditions.siamang.death",
     "sounds": [
       {
-        "name": "lawofthejungle:siamang_gibbon/death_1",
+        "name": "ambientadditions:siamang/death_1",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/death_2",
+        "name": "ambientadditions:siamang/death_2",
         "stream": true
       }
     ]
   },
-  "siamang_gibbon.booming": {
-    "subtitle": "subtitle.lawofthejungle.siamang_gibbon.booming",
+  "siamang.booming": {
+    "subtitle": "subtitle.ambientadditions.siamang.booming",
     "sounds": [
       {
-        "name": "lawofthejungle:siamang_gibbon/booming_1",
+        "name": "ambientadditions:siamang/booming_1",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/booming_2",
+        "name": "ambientadditions:siamang/booming_2",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/booming_3",
+        "name": "ambientadditions:siamang/booming_3",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/booming_4",
+        "name": "ambientadditions:siamang/booming_4",
         "stream": true
       },
       {
-        "name": "lawofthejungle:siamang_gibbon/booming_5",
+        "name": "ambientadditions:siamang/booming_5",
         "stream": true
       }
     ]

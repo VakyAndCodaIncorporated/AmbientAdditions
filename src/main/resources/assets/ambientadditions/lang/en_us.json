@@ -28,6 +28,8 @@
   "item.ambientadditions.hawaiian_honeycreeper_spawn_egg": "Hawaiian Honeycreeper Spawn Egg",
   "item.ambientadditions.pinocchio_anole_spawn_egg": "Pinocchio Anole Spawn Egg",
   "item.ambientadditions.aye_aye_spawn_egg": "Aye Aye Spawn Egg",
+  "item.ambientadditions.ring_tailed_lemur_spawn_egg": "Ring Tailed Lemur Spawn Egg",
+  "item.ambientadditions.siamang_gibbon_spawn_egg": "Siamang Gibbon Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -44,6 +46,8 @@
   "entity.ambientadditions.hawaiian_honeycreeper": "Hawaiian Honeycreeper",
   "entity.ambientadditions.pinocchio_anole": "Pinocchio Anole",
   "entity.ambientadditions.aye_aye": "Aye Aye",
+  "entity.ambientadditions.ring_tailed_lemur": "Ring Tailed Lemur",
+  "entity.ambientadditions.siamang_gibbon": "Siamang Gibbon",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
@@ -58,5 +62,9 @@
   "ambientadditions.rat.death": "Rat dies",
   "ambientadditions.hawaiian_honeycreeper.ambient": "Hawaiian Honeycreeper chatters",
   "ambientadditions.hawaiian_honeycreeper.hurt": "Hawaiian Honeycreeper hurts",
-  "ambientadditions.hawaiian_honeycreeper.death": "Hawaiian Honeycreeper dies"
+  "ambientadditions.hawaiian_honeycreeper.death": "Hawaiian Honeycreeper dies",
+  "ambientadditions.siamang.ambient": "Siamang Gibbon vocalizes",
+  "ambientadditions.siamang.hurt": "Siamang Gibbon hurts",
+  "ambientadditions.siamang.death": "Siamang Gibbon dies",
+  "ambientadditions.siamang.booming": "Siamang Gibbon booms"
 }

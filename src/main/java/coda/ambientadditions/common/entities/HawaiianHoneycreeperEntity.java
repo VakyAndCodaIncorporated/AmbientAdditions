@@ -1,6 +1,7 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.common.init.AASounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -196,15 +197,15 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
 
    @Nullable
    public SoundEvent getAmbientSound() {
-      return SoundEvents.PARROT_AMBIENT;
+      return AASounds.HONEYCREEPER_AMBIENT.get();
    }
 
    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
-      return SoundEvents.PARROT_HURT;
+      return AASounds.HONEYCREEPER_HURT.get();
    }
 
    protected SoundEvent getDeathSound() {
-      return SoundEvents.PARROT_DEATH;
+      return AASounds.HONEYCREEPER_DEATH.get();
    }
 
    protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
