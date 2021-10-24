@@ -96,7 +96,6 @@ public class PineMartenModel<T extends Entity> extends EntityModel<T> {
         this.tail.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 0.3F * f1 - 0.4F;
         this.tail2.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 0.2F * f1 + 0.45F;
         this.ears.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 0.4F * f1 + 0.1F;
-
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {

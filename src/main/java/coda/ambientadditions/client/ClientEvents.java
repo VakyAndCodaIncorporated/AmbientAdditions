@@ -45,6 +45,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.AYE_AYE.get(), AyeAyeRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.RING_TAILED_LEMUR.get(), RingTailedLemurRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.SIAMANG_GIBBON.get(), SiamangGibbonRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.PINE_MARTEN.get(), PineMartenRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 

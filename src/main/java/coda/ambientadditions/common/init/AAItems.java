@@ -51,4 +51,7 @@ public class AAItems {
     public static final RegistryObject<Item> AYE_AYE_SPAWN_EGG = REGISTER.register("aye_aye_spawn_egg", () -> new AASpawnEggItem(AAEntities.AYE_AYE, 0x2f2c25, 0xd1aba6, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> RING_TAILED_LEMUR_SPAWN_EGG = REGISTER.register("ring_tailed_lemur_spawn_egg", () -> new AASpawnEggItem(AAEntities.RING_TAILED_LEMUR, 0x544e4a, 0xcac5bc, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> SIAMANG_GIBBON_SPAWN_EGG = REGISTER.register("siamang_gibbon_spawn_egg", () -> new AASpawnEggItem(AAEntities.SIAMANG_GIBBON, 0x2c2a2a, 0x171212, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> PINE_MARTEN_SPAWN_EGG = REGISTER.register("pine_marten_spawn_egg", () -> new AASpawnEggItem(AAEntities.PINE_MARTEN, 0x321612, 0xa38a60, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> GIANT_LAND_SNAIL_SPAWN_EGG = REGISTER.register("giant_land_snail_spawn_egg", () -> new AASpawnEggItem(AAEntities.GIANT_LAND_SNAIL, 0x7c5e49, 0xc4b78d, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> GOLDEN_ELEPHANT_SNAIL_SPAWN_EGG = REGISTER.register("golden_elephant_snail_spawn_egg", () -> new AASpawnEggItem(AAEntities.GOLDEN_ELEPHANT_SNAIL, 0x443230, 0xfccf2e, new Item.Properties().tab(GROUP)));
 }

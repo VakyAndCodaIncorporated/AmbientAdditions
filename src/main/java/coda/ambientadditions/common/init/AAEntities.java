@@ -31,6 +31,9 @@ public class AAEntities {
     public static final RegistryObject<EntityType<AyeAyeEntity>> AYE_AYE = create("aye_aye", EntityType.Builder.of(AyeAyeEntity::new, EntityClassification.CREATURE).sized(0.7f, 0.55f));
     public static final RegistryObject<EntityType<RingTailedLemurEntity>> RING_TAILED_LEMUR = create("ring_tailed_lemur", EntityType.Builder.of(RingTailedLemurEntity::new, EntityClassification.CREATURE).sized(0.7f, 0.55f));
     public static final RegistryObject<EntityType<SiamangGibbonEntity>> SIAMANG_GIBBON = create("siamang_gibbon", EntityType.Builder.of(SiamangGibbonEntity::new, EntityClassification.CREATURE).sized(0.5f, 0.7f));
+    public static final RegistryObject<EntityType<GiantLandSnailEntity>> GIANT_LAND_SNAIL = create("giant_land_snail", EntityType.Builder.of(GiantLandSnailEntity::new, EntityClassification.CREATURE).sized(0.4f, 0.35f));
+    public static final RegistryObject<EntityType<GoldenElephantSnailEntity>> GOLDEN_ELEPHANT_SNAIL = create("golden_elephant_snail", EntityType.Builder.of(GoldenElephantSnailEntity::new, EntityClassification.CREATURE).sized(0.45f, 0.4f));
+    public static final RegistryObject<EntityType<PineMartenEntity>> PINE_MARTEN = create("pine_marten", EntityType.Builder.of(PineMartenEntity::new, EntityClassification.CREATURE).sized(0.75f, 0.5f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

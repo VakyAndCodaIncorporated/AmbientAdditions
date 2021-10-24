@@ -74,6 +74,7 @@ public class AmbientAdditions {
         event.put(AAEntities.AYE_AYE.get(), AyeAyeEntity.createAttributes().build());
         event.put(AAEntities.SIAMANG_GIBBON.get(), SiamangGibbonEntity.createAttributes().build());
         event.put(AAEntities.RING_TAILED_LEMUR.get(), RingTailedLemurEntity.createAttributes().build());
+        event.put(AAEntities.PINE_MARTEN.get(), PineMartenEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -93,6 +94,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.AYE_AYE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.RING_TAILED_LEMUR.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.SIAMANG_GIBBON.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.PINE_MARTEN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, AnimalEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -112,6 +114,7 @@ public class AmbientAdditions {
 
         if (event.getCategory() == Biome.Category.TAIGA) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.STAG_BEETLE.get(), 40, 1, 2));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINE_MARTEN.get(), 30, 1, 2));
         }
 
         if (event.getCategory() == Biome.Category.MESA) {
