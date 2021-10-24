@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -65,7 +66,7 @@ public class GiantLandSnailEntity extends AnimalEntity {
     }
 
     public boolean isFood(ItemStack stack) {
-        return stack.getItem() == Items.BROWN_MUSHROOM;
+        return stack.getItem().is(ItemTags.LEAVES);
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {

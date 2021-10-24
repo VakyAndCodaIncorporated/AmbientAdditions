@@ -25,7 +25,7 @@ public class PineMartenModel<T extends Entity> extends EntityModel<T> {
     public ModelRenderer ears;
 
     public PineMartenModel() {
-        this.texWidth = 64;
+        this.texWidth = 32;
         this.texHeight = 32;
         this.tail = new ModelRenderer(this, 0, 18);
         this.tail.setPos(0.0F, -1.5F, 2.0F);

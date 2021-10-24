@@ -3,6 +3,7 @@ package coda.ambientadditions.client.model;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -10,8 +11,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Collections;
+
 @OnlyIn(Dist.CLIENT)
-public class GiantLandSnailModel<T extends Entity> extends EntityModel<T> {
+public class GiantLandSnailModel<T extends Entity> extends AgeableModel<T> {
     public ModelRenderer body;
     public ModelRenderer mouth;
     public ModelRenderer eyes;
@@ -43,10 +46,13 @@ public class GiantLandSnailModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-        ImmutableList.of(this.body).forEach((modelRenderer) -> { 
-            modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        });
+    protected Iterable<ModelRenderer> headParts() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    protected Iterable<ModelRenderer> bodyParts() {
+        return ImmutableList.of(body);
     }
 
     @Override

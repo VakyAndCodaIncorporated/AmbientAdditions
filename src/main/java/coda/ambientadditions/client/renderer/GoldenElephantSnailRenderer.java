@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class GoldenElephantSnailRenderer extends MobRenderer<GoldenElephantSnailEntity, GoldenElephantSnailModel<GoldenElephantSnailEntity>> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/giant_land_snail.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/golden_elephant_snail.png");
 
     public GoldenElephantSnailRenderer(EntityRendererManager p_i48864_1_) {
         super(p_i48864_1_, new GoldenElephantSnailModel<>(), 0.2F);

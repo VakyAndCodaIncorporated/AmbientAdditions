@@ -30,6 +30,9 @@
   "item.ambientadditions.aye_aye_spawn_egg": "Aye Aye Spawn Egg",
   "item.ambientadditions.ring_tailed_lemur_spawn_egg": "Ring Tailed Lemur Spawn Egg",
   "item.ambientadditions.siamang_gibbon_spawn_egg": "Siamang Gibbon Spawn Egg",
+  "item.ambientadditions.pine_marten_spawn_egg": "Pine Marten Spawn Egg",
+  "item.ambientadditions.giant_land_snail_spawn_egg": "Giant Land Spawn Egg Snail",
+  "item.ambientadditions.golden_elephant_snail_spawn_egg": "Golden Elephant Spawn Egg Snail",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -48,6 +51,9 @@
   "entity.ambientadditions.aye_aye": "Aye Aye",
   "entity.ambientadditions.ring_tailed_lemur": "Ring Tailed Lemur",
   "entity.ambientadditions.siamang_gibbon": "Siamang Gibbon",
+  "entity.ambientadditions.pine_marten": "Pine Marten",
+  "entity.ambientadditions.giant_land_snail": "Giant Land Snail",
+  "entity.ambientadditions.golden_elephant_snail": "Golden Elephant Snail",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",

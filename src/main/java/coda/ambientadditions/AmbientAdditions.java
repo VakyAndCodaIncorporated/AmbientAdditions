@@ -75,6 +75,8 @@ public class AmbientAdditions {
         event.put(AAEntities.SIAMANG_GIBBON.get(), SiamangGibbonEntity.createAttributes().build());
         event.put(AAEntities.RING_TAILED_LEMUR.get(), RingTailedLemurEntity.createAttributes().build());
         event.put(AAEntities.PINE_MARTEN.get(), PineMartenEntity.createAttributes().build());
+        event.put(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), GoldenElephantSnailEntity.createAttributes().build());
+        event.put(AAEntities.GIANT_LAND_SNAIL.get(), GiantLandSnailEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -132,6 +134,11 @@ public class AmbientAdditions {
 
         if (event.getCategory() == Biome.Category.SAVANNA) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.VEILED_CHAMELEON.get(), 10, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GIANT_LAND_SNAIL.get(), 25, 1, 2));
+        }
+
+        if (event.getCategory() == Biome.Category.RIVER) {
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 10, 1, 1));
         }
 
         if (event.getScale() > 0F) {
