@@ -42,25 +42,31 @@ public class CrateItem extends Item {
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
         if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity) && player.isShiftKeyDown()) {
-            if (!level.isClientSide) {
-                boolean more = stack.getCount() > 1;
-                ItemStack split = (more ? stack.split(1) : stack);
-//                if (more && !player.inventory.add(stack)) player.drop(stack, true);
-                if (player.getItemInHand(hand).isEmpty()) {
-                    player.setItemInHand(hand, split);
-                } else if (more && !player.inventory.add(split)) {
-                    player.drop(split, true);
-                }
 
-                CompoundNBT tag = stack.getOrCreateTag();
-                CompoundNBT targetTag = target.serializeNBT();
-                targetTag.putString("OwnerName", player.getName().getString());
-                tag.put(DATA_CREATURE, targetTag);
-                stack.setTag(tag);
-                target.remove();
-                player.setItemInHand(hand, stack);
-                level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
+            ItemStack stack1 = player.getItemInHand(hand);
+
+            boolean more = false;
+
+            if (stack.getCount() > 1) {
+                stack1 = new ItemStack(AAItems.CRATE.get());
+                stack.shrink(1);
+
+                more = true;
             }
+
+            CompoundNBT targetTag = target.serializeNBT();
+            targetTag.putString("OwnerName", player.getName().getString());
+            CompoundNBT tag = stack1.getOrCreateTag();
+            tag.put(DATA_CREATURE, targetTag);
+            stack1.setTag(tag);
+
+            if (more) {
+                player.addItem(stack1);
+            }
+
+            target.remove();
+
+            level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
 
             else {
                 double width = target.getBbWidth();
