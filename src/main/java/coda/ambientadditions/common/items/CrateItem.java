@@ -42,32 +42,34 @@ public class CrateItem extends Item {
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
         if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity) && player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
 
-            ItemStack stack1 = player.getItemInHand(hand);
+                ItemStack stack1 = player.getItemInHand(hand);
 
-            boolean more = false;
+                boolean more = false;
 
-            if (stack.getCount() > 1) {
-                stack1 = new ItemStack(AAItems.CRATE.get());
-                stack.shrink(1);
+                if (stack.getCount() > 1) {
+                    stack1 = new ItemStack(AAItems.CRATE.get());
+                    stack.shrink(1);
 
-                more = true;
+                    more = true;
+                }
+
+                CompoundNBT targetTag = target.serializeNBT();
+                targetTag.putString("OwnerName", player.getName().getString());
+                CompoundNBT tag = stack1.getOrCreateTag();
+                tag.put(DATA_CREATURE, targetTag);
+                stack1.setTag(tag);
+
+                if (more) {
+                    player.addItem(stack1);
+                }
+
+                target.remove();
+
+                level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
+
             }
-
-            CompoundNBT targetTag = target.serializeNBT();
-            targetTag.putString("OwnerName", player.getName().getString());
-            CompoundNBT tag = stack1.getOrCreateTag();
-            tag.put(DATA_CREATURE, targetTag);
-            stack1.setTag(tag);
-
-            if (more) {
-                player.addItem(stack1);
-            }
-
-            target.remove();
-
-            level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
-
             else {
                 double width = target.getBbWidth();
                 for (int i = 0; i <= Math.floor(width) * 25; ++i) {

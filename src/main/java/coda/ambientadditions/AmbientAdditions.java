@@ -97,6 +97,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.RING_TAILED_LEMUR.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.SIAMANG_GIBBON.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.PINE_MARTEN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, AnimalEntity::checkAnimalSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, GoldenElephantSnailEntity::checkSnailSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -138,7 +139,7 @@ public class AmbientAdditions {
         }
 
         if (event.getCategory() == Biome.Category.RIVER) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 10, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 6, 1, 1));
         }
 
         if (event.getScale() > 0F) {
