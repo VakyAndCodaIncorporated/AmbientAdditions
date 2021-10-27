@@ -8,7 +8,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class AASounds {
-
     public static final DeferredRegister<SoundEvent> REGISTER = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, AmbientAdditions.MOD_ID);
 
     public static final RegistryObject<SoundEvent> ARMADILLO_DEATH = REGISTER.register("armadillo.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "armadillo.death")));
