@@ -139,7 +139,7 @@ public class AmbientAdditions {
         }
 
         if (event.getCategory() == Biome.Category.RIVER) {
-            event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 6, 1, 1));
+            event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 2, 1, 1));
         }
 
         if (event.getScale() > 0F) {
