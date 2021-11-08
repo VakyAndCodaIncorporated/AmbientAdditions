@@ -13,12 +13,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -46,7 +48,7 @@ public class CrateItem extends Item {
 
                 ItemStack stack1 = player.getItemInHand(hand);
 
-                boolean more = false;
+                boolean more = stack.getCount() > 1;
 
                 if (stack.getCount() > 1) {
                     stack1 = new ItemStack(AAItems.CRATE.get());
@@ -62,15 +64,16 @@ public class CrateItem extends Item {
                 stack1.setTag(tag);
 
                 if (more) {
-                    player.addItem(stack1);
+                    if (!player.inventory.add(stack1)) player.drop(stack1, true);
+                    else player.addItem(stack1);
                 }
 
                 target.remove();
 
                 level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
-
             }
-            else {
+
+            if (level.isClientSide) {
                 double width = target.getBbWidth();
                 for (int i = 0; i <= Math.floor(width) * 25; ++i) {
                     double x = target.getX();
@@ -83,7 +86,10 @@ public class CrateItem extends Item {
                         level.addParticle(ParticleTypes.CRIT, x + random.nextFloat() / 1.5F, y + 0.25F + (random.nextFloat() / 2.0F), z + random.nextFloat() / -1.5F, 5.0E-5D, 5.0E-5D, 5.0E-5D);
                     }
                 }
+
             }
+            return ActionResultType.SUCCESS;
+
         }
 
         return ActionResultType.sidedSuccess(true);
@@ -141,7 +147,6 @@ public class CrateItem extends Item {
 
     private static ActionResultType releaseEntity(World level, PlayerEntity player, ItemStack stack, BlockPos pos, Direction direction) {
         if (!containsEntity(stack)) return ActionResultType.PASS;
-        Hand hand = player.getUsedItemHand();
 
         CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
         EntityType<?> type = EntityType.byString(tag.getString("id")).orElse(null);
