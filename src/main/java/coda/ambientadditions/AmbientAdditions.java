@@ -6,6 +6,7 @@ import coda.ambientadditions.common.entities.goal.FollowCorgiGoal;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
+import coda.ambientadditions.common.init.AATags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
@@ -19,22 +20,20 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -233,6 +232,15 @@ public class AmbientAdditions {
                 }
 
                 entity.moveTo(pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F);
+                world.addFreshEntity(entity);
+            }
+
+            if (state.is(AATags.STRIPPABLE_LOGS) && world.random.nextBoolean()) {
+                ItemStack stack = new ItemStack(AAItems.BARK.get());
+                ItemEntity entity = EntityType.ITEM.create(world);
+
+                entity.setItem(stack);
+                entity.moveTo(pos.getX(), pos.getY(), pos.getZ());
                 world.addFreshEntity(entity);
             }
         }
