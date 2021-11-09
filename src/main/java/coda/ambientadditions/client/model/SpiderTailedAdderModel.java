@@ -75,6 +75,7 @@ public class SpiderTailedAdderModel<T extends SpiderTailedAdderEntity> extends A
         this.body1.yRot = MathHelper.cos(-1.0F + limbSwing * speed * 0.4F) * degree * 0.6F * limbSwingAmount;
         this.body2.yRot = MathHelper.cos(-4.0F + limbSwing * speed * 0.4F) * degree * 1.0F * limbSwingAmount;
         this.body3.yRot = MathHelper.cos(-4.0F + limbSwing * speed * 0.4F) * degree * 1.0F * limbSwingAmount;
+        this.tongue.visible = false;
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
