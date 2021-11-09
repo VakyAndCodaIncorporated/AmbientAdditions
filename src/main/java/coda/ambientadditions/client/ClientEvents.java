@@ -48,6 +48,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.PINE_MARTEN.get(), PineMartenRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.GIANT_LAND_SNAIL.get(), GiantLandSnailRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), GoldenElephantSnailRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.SPIDER_TAILED_ADDER.get(), SpiderTailedAdderRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 
