@@ -6,10 +6,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -46,8 +44,10 @@ public class HarlequinShrimpEntity extends WaterMobEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, PlayerEntity.class, 8.0F, 2.2D, 2.2D));
         this.goalSelector.addGoal(1, new RandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
         this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ChocolateChipStarfishEntity.class, false));
     }
 
     protected PathNavigator createNavigation(World world) {
@@ -77,7 +77,7 @@ public class HarlequinShrimpEntity extends WaterMobEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4).add(Attributes.MOVEMENT_SPEED, 0.15D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Nullable
@@ -95,8 +95,22 @@ public class HarlequinShrimpEntity extends WaterMobEntity {
         return new ItemStack(AAItems.HARLEQUIN_SHRIMP_SPAWN_EGG.get());
     }
 
-    @Override
+    public void baseTick() {
+        int i = this.getAirSupply();
+        super.baseTick();
+        this.handleAirSupply(i);
+    }
+
     protected void handleAirSupply(int p_209207_1_) {
+        if (this.isAlive() && !this.isInWaterOrBubble()) {
+            this.setAirSupply(p_209207_1_ - 1);
+            if (this.getAirSupply() == -20) {
+                this.setAirSupply(0);
+                this.hurt(DamageSource.DROWN, 2.0F);
+            }
+        } else {
+            this.setAirSupply(300);
+        }
     }
 
     public boolean requiresCustomPersistence() {

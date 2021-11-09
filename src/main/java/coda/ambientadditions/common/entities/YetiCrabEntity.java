@@ -63,6 +63,12 @@ public class YetiCrabEntity extends WaterMobEntity {
         }
     }
 
+    public void baseTick() {
+        int i = this.getAirSupply();
+        super.baseTick();
+        this.handleAirSupply(i);
+    }
+
     @Override
     public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
@@ -96,10 +102,19 @@ public class YetiCrabEntity extends WaterMobEntity {
         return new ItemStack(AAItems.YETI_CRAB_SPAWN_EGG.get());
     }
 
-    @Override
-    protected void handleAirSupply(int p_209207_1_) {
-    }
+    protected
+    void handleAirSupply(int p_209207_1_) {
+        if (this.isAlive() && !this.isInWaterOrBubble()) {
+            this.setAirSupply(p_209207_1_ - 1);
+            if (this.getAirSupply() == -20) {
+                this.setAirSupply(0);
+                this.hurt(DamageSource.DROWN, 2.0F);
+            }
+        } else {
+            this.setAirSupply(300);
+        }
 
+    }
     public boolean requiresCustomPersistence() {
         if (this.isFromBucket()) {
             return false;
