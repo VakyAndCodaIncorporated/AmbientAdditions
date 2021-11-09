@@ -168,5 +168,32 @@
         "stream": true
       }
     ]
+  },
+  "snake.ambient": {
+    "subtitle": "subtitle.ambientadditions.snake.ambient",
+    "sounds": [
+      {
+        "name": "ambientadditions:snake/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "snake.hurt": {
+    "subtitle": "subtitle.ambientadditions.snake.hurt",
+    "sounds": [
+      {
+        "name": "ambientadditions:snake/hurt",
+        "stream": true
+      }
+    ]
+  },
+  "snake.death": {
+    "subtitle": "subtitle.ambientadditions.snake.death",
+    "sounds": [
+      {
+        "name": "ambientadditions:snake/death",
+        "stream": true
+      }
+    ]
   }
 }

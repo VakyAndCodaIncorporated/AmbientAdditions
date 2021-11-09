@@ -33,6 +33,7 @@
   "item.ambientadditions.pine_marten_spawn_egg": "Pine Marten Spawn Egg",
   "item.ambientadditions.giant_land_snail_spawn_egg": "Giant Land Snail Spawn Egg",
   "item.ambientadditions.golden_elephant_snail_spawn_egg": "Golden Elephant Snail Spawn Egg",
+  "item.ambientadditions.spider_tailed_adder_spawn_egg": "Spider-Tailed Adder Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -54,6 +55,7 @@
   "entity.ambientadditions.pine_marten": "Pine Marten",
   "entity.ambientadditions.giant_land_snail": "Giant Land Snail",
   "entity.ambientadditions.golden_elephant_snail": "Golden Elephant Snail",
+  "entity.ambientadditions.spider_tailed_adder": "Spider-Tailed Adder",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
@@ -72,5 +74,8 @@
   "ambientadditions.siamang.ambient": "Siamang Gibbon vocalizes",
   "ambientadditions.siamang.hurt": "Siamang Gibbon hurts",
   "ambientadditions.siamang.death": "Siamang Gibbon dies",
-  "ambientadditions.siamang.booming": "Siamang Gibbon booms"
+  "ambientadditions.siamang.booming": "Siamang Gibbon booms",
+  "ambientadditions.snake.ambient": "Snake hisses",
+  "ambientadditions.snake.hurt": "Snake hurts",
+  "ambientadditions.snake.death": "Snake dies"
 }
