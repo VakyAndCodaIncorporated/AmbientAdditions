@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "S S"
+  ],
+  "key": {
+    "#": {
+      "item": "ambientadditions:rubber_ducky_isopod_molt"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "ambientadditions:ducky_mask",
+    "count": 1
+  }
+}

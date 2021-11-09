@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "S S",
+    "S S"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "S": {
+      "item": "ambientadditions:yeti_crab_fluff"
+    }
+  },
+  "result": {
+    "item": "ambientadditions:yeti_arm_warmers",
+    "count": 1
+  }
+}

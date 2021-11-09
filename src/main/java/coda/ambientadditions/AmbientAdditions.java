@@ -6,13 +6,23 @@ import coda.ambientadditions.common.entities.goal.FollowCorgiGoal;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
@@ -20,9 +30,11 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -50,6 +62,7 @@ public class AmbientAdditions {
         forgeBus.addListener(this::entitySpawnInStructure);
         forgeBus.addListener(this::onBiomeLoading);
         forgeBus.addListener(this::onEntityJoinWorld);
+        forgeBus.addListener(this::onLogStripped);
 
         AAItems.REGISTER.register(bus);
         AAEntities.REGISTER.register(bus);
@@ -78,6 +91,9 @@ public class AmbientAdditions {
         event.put(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), GoldenElephantSnailEntity.createAttributes().build());
         event.put(AAEntities.GIANT_LAND_SNAIL.get(), GiantLandSnailEntity.createAttributes().build());
         event.put(AAEntities.SPIDER_TAILED_ADDER.get(), SpiderTailedAdderEntity.createAttributes().build());
+        event.put(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), ChocolateChipStarfishEntity.createAttributes().build());
+        event.put(AAEntities.RUBBER_DUCKY_ISOPOD.get(), RubberDuckyIsopodEntity.createAttributes().build());
+        event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -100,6 +116,8 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.PINE_MARTEN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, AnimalEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, GoldenElephantSnailEntity::checkSnailSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.SPIDER_TAILED_ADDER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, SpiderTailedAdderEntity::checkSnakeSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.YETI_CRAB.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -155,6 +173,14 @@ public class AmbientAdditions {
                 event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
             }
 
+            if (event.getName().getPath().equals("lukewarm_ocean")) {
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 7, 2, 5));
+            }
+
+            if (event.getName().getPath().equals("deep_ocean")) {
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.YETI_CRAB.get(), 6, 2, 3));
+            }
+
             if (event.getName().getPath().equals("dark_forest")) {
                 event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CARDIGAN_CORGI.get(), 4, 1, 2));
             }
@@ -171,6 +197,41 @@ public class AmbientAdditions {
         Entity entity = event.getEntity();
         if (entity instanceof SheepEntity) {
             ((SheepEntity) entity).goalSelector.addGoal(1, new FollowCorgiGoal((SheepEntity) entity, 1.0D, 10.0F, 1.0F));
+        }
+    }
+
+    private void onLogStripped(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getItemStack().getItem() instanceof AxeItem) {
+            World world = event.getWorld();
+            BlockPos pos = event.getPos();
+            BlockState state = world.getBlockState(pos);
+
+            if (state.is(Blocks.JUNGLE_LOG) && world.random.nextFloat() > 0.99F) {
+                RubberDuckyIsopodEntity entity = AAEntities.RUBBER_DUCKY_ISOPOD.get().create(world);
+
+                // this is a horrible way to do this, but it works
+                if (world.getBlockState(pos.above()).is(Blocks.AIR)) {
+                    pos = pos.above();
+                }
+                else if (world.getBlockState(pos.below()).is(Blocks.AIR)) {
+                    pos = pos.below();
+                }
+                else if (world.getBlockState(pos.north()).is(Blocks.AIR)) {
+                    pos = pos.north();
+                }
+                else if (world.getBlockState(pos.south()).is(Blocks.AIR)) {
+                    pos = pos.south();
+                }
+                else if (world.getBlockState(pos.east()).is(Blocks.AIR)) {
+                    pos = pos.east();
+                }
+                else if (world.getBlockState(pos.west()).is(Blocks.AIR)) {
+                    pos = pos.west();
+                }
+
+                entity.moveTo(pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F);
+                world.addFreshEntity(entity);
+            }
         }
     }
 

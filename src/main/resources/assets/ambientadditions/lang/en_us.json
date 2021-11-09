@@ -4,14 +4,20 @@
   "item.ambientadditions.crate": "Crate",
   "item.ambientadditions.blowgun": "Blowgun",
   "item.ambientadditions.dart": "Dart",
+  "item.ambientadditions.ducky_mask": "Ducky Mask",
+  "item.ambientadditions.yeti_arm_warmers": "Yeti Arm Warmers",
 
   "item.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
   "item.ambientadditions.worm": "Worm",
+  "item.ambientadditions.bark": "Bark",
+  "item.ambientadditions.rubber_ducky_isopod_molt": "Rubber Ducky Isopod Molt",
+  "item.ambientadditions.yeti_crab_fluff": "Yeti Crab Fluff",
 
   "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
   "item.ambientadditions.stag_beetle_bottle": "Bottle of Stag Beetle",
   "item.ambientadditions.mole_bucket": "Bucket of Mole",
   "item.ambientadditions.pinocchio_anole_pot": "Pot of Pinocchio Anole",
+  "item.ambientadditions.yeti_crab_bucket": "Bucket of Yeti Crab",
 
   "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
   "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
@@ -34,6 +40,9 @@
   "item.ambientadditions.giant_land_snail_spawn_egg": "Giant Land Snail Spawn Egg",
   "item.ambientadditions.golden_elephant_snail_spawn_egg": "Golden Elephant Snail Spawn Egg",
   "item.ambientadditions.spider_tailed_adder_spawn_egg": "Spider-Tailed Adder Spawn Egg",
+  "item.ambientadditions.chocolate_chip_starfish_spawn_egg": "Chocolate Chip Starfish Spawn Egg",
+  "item.ambientadditions.yeti_crab_spawn_egg": "Yeti Crab Spawn Egg",
+  "item.ambientadditions.rubber_ducky_isopod_spawn_egg": "Rubber Ducky Isopod Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -56,6 +65,9 @@
   "entity.ambientadditions.giant_land_snail": "Giant Land Snail",
   "entity.ambientadditions.golden_elephant_snail": "Golden Elephant Snail",
   "entity.ambientadditions.spider_tailed_adder": "Spider-Tailed Adder",
+  "entity.ambientadditions.chocolate_chip_starfish": "Chocolate Chip Starfish",
+  "entity.ambientadditions.yeti_crab": "Yeti Crab",
+  "entity.ambientadditions.rubber_ducky_isopod": "Rubber Ducky Isopod",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
