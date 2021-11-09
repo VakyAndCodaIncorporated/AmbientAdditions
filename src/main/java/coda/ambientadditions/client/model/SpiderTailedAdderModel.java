@@ -68,7 +68,7 @@ public class SpiderTailedAdderModel<T extends SpiderTailedAdderEntity> extends A
 
     @Override
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float speed = 1.0f;
+        float speed = 0.65f;
         float degree = 1.0f;
         this.head.yRot = MathHelper.cos(1.0F + limbSwing * speed * 0.4F) * degree * 0.5F * limbSwingAmount;
         this.neck.yRot = MathHelper.cos(limbSwing * speed * 0.4F) * degree * 0.4F * limbSwingAmount;

@@ -52,6 +52,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.RUBBER_DUCKY_ISOPOD.get(), RubberDuckyIsopodRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.YETI_CRAB.get(), YetiCrabRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), ChocolateChipStarfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ambientadditions:item/chocolate_chip_starfish_bucket"
+  }
+}

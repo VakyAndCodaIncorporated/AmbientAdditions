@@ -2,9 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -29,18 +27,19 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class YetiCrabEntity extends WaterMobEntity {
-    private static final DataParameter<Boolean> FROM_BUCKET = EntityDataManager.defineId(YetiCrabEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> SHEARED = EntityDataManager.defineId(YetiCrabEntity.class, DataSerializers.BOOLEAN);
+public class HarlequinShrimpEntity extends WaterMobEntity {
+    private static final DataParameter<Boolean> FROM_BUCKET = EntityDataManager.defineId(HarlequinShrimpEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(ChocolateChipStarfishEntity.class, DataSerializers.INT);
 
-    public YetiCrabEntity(EntityType<? extends WaterMobEntity> type, World world) {
+    public HarlequinShrimpEntity(EntityType<? extends WaterMobEntity> type, World world) {
         super(type, world);
         this.moveControl = new MoveHelperController(this);
-        this.maxUpStep = 0.7f;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class YetiCrabEntity extends WaterMobEntity {
     }
 
     protected ItemStack getFishBucket() {
-        return new ItemStack(AAItems.YETI_CRAB_BUCKET.get());
+        return new ItemStack(AAItems.HARLEQUIN_SHRIMP_BUCKET.get());
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
@@ -93,7 +92,7 @@ public class YetiCrabEntity extends WaterMobEntity {
 
     @Override
     public ItemStack getPickedResult(RayTraceResult target) {
-        return new ItemStack(AAItems.YETI_CRAB_SPAWN_EGG.get());
+        return new ItemStack(AAItems.HARLEQUIN_SHRIMP_SPAWN_EGG.get());
     }
 
     @Override
@@ -111,7 +110,7 @@ public class YetiCrabEntity extends WaterMobEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(FROM_BUCKET, false);
-        this.entityData.define(SHEARED, false);
+        this.entityData.define(VARIANT, 0);
     }
 
     private boolean isFromBucket() {
@@ -122,21 +121,41 @@ public class YetiCrabEntity extends WaterMobEntity {
         this.entityData.set(FROM_BUCKET, p_203706_1_);
     }
 
+    public int getVariant() {
+        return this.entityData.get(VARIANT);
+    }
+
+    private void setVariant(int variant) {
+        this.entityData.set(VARIANT, variant);
+    }
+
     public void addAdditionalSaveData(CompoundNBT compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("FromBucket", this.isFromBucket());
-        compound.putBoolean("Sheared", this.isSheared());
+        compound.putInt("Variant", this.getVariant());
     }
 
     public void readAdditionalSaveData(CompoundNBT compound) {
         super.readAdditionalSaveData(compound);
-        this.setSheared(compound.getBoolean("Sheared"));
-        this.setFromBucket(compound.getBoolean("FromBucket"));
+        setFromBucket(compound.getBoolean("FromBucket"));
+        setVariant(compound.getInt("Variant"));
+    }
+
+    @Nullable
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        if (dataTag != null && dataTag.contains("Variant", 3)) {
+            this.setVariant(dataTag.getInt("Variant"));
+        }
+        else {
+            setVariant(random.nextInt(3));
+        }
+
+        return spawnDataIn;
     }
 
     protected ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
         ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
-        Item item = itemstack.getItem();
         if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
             this.playSound(SoundEvents.BUCKET_FILL_FISH, 1.0F, 1.0F);
             itemstack.shrink(1);
@@ -154,51 +173,22 @@ public class YetiCrabEntity extends WaterMobEntity {
 
             this.remove();
             return ActionResultType.sidedSuccess(this.level.isClientSide);
-        } else if (itemstack.getItem() == Items.SEAGRASS) {
-            if (random.nextFloat() > 0.9F) {
-                this.setSheared(false);
-            }
-            p_230254_1_.swing(p_230254_2_);
-            if (!p_230254_1_.abilities.instabuild) {
-                itemstack.shrink(1);
-            }
-        }
-        else if (!isSheared() && item == Items.SHEARS && !level.isClientSide && !isBaby()) {
-            shear();
-            playSound(SoundEvents.SHEEP_SHEAR, getSoundVolume(), 1);
-            p_230254_1_.getItemInHand(p_230254_2_).hurtAndBreak(1, p_230254_1_, (p_213613_1_) -> {
-                p_213613_1_.broadcastBreakEvent(p_230254_2_);
-            });
-            spawnAtLocation(new ItemStack(AAItems.YETI_CRAB_FLUFF.get(), random.nextInt(2) + 1), 1);
-            return ActionResultType.SUCCESS;
         }
         return super.mobInteract(p_230254_1_, p_230254_2_);
-    }
-
-    public void shear() {
-        if (!level.isClientSide) {
-            setSheared(true);
-        }
     }
 
     protected void setBucketData(ItemStack bucket) {
         if (this.hasCustomName()) {
             bucket.setHoverName(this.getCustomName());
         }
-    }
-
-    public boolean isSheared() {
-        return this.entityData.get(SHEARED);
-    }
-
-    public void setSheared(boolean sheared) {
-        this.entityData.set(SHEARED, sheared);
+        CompoundNBT compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Variant", this.getVariant());
     }
 
     static class MoveHelperController extends MovementController {
-        private final YetiCrabEntity crab;
+        private final HarlequinShrimpEntity crab;
 
-        MoveHelperController(YetiCrabEntity crab) {
+        MoveHelperController(HarlequinShrimpEntity crab) {
             super(crab);
             this.crab = crab;
         }

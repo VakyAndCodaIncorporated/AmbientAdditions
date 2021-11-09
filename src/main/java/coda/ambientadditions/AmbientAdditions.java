@@ -94,6 +94,7 @@ public class AmbientAdditions {
         event.put(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), ChocolateChipStarfishEntity.createAttributes().build());
         event.put(AAEntities.RUBBER_DUCKY_ISOPOD.get(), RubberDuckyIsopodEntity.createAttributes().build());
         event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
+        event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -118,6 +119,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.SPIDER_TAILED_ADDER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, SpiderTailedAdderEntity::checkSnakeSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.YETI_CRAB.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.HARLEQUIN_SHRIMP.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -175,6 +177,7 @@ public class AmbientAdditions {
 
             if (event.getName().getPath().equals("lukewarm_ocean")) {
                 event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 7, 2, 5));
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HARLEQUIN_SHRIMP.get(), 6    , 1, 1));
             }
 
             if (event.getName().getPath().equals("deep_ocean")) {

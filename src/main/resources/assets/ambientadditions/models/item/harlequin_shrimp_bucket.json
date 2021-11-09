@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ambientadditions:item/ant"
+    "layer0": "ambientadditions:item/harlequin_shrimp_bucket"
   }
 }

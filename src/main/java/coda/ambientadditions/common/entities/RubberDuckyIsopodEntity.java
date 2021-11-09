@@ -1,6 +1,7 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -34,6 +35,11 @@ public class RubberDuckyIsopodEntity extends CreatureEntity {
         this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+    }
+
+    @Override
+    public CreatureAttribute getMobType() {
+        return CreatureAttribute.ARTHROPOD;
     }
 
     @Override
