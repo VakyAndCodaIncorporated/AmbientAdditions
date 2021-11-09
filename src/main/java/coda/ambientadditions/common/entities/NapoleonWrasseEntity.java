@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.goal.BigFishMoveHelperController;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityType;
@@ -19,6 +20,7 @@ public class NapoleonWrasseEntity extends AbstractFishEntity {
 
     public NapoleonWrasseEntity(EntityType<? extends AbstractFishEntity> p_i48855_1_, World p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
+        this.moveControl = new BigFishMoveHelperController(this);
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
