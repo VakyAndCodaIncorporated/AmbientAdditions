@@ -77,6 +77,7 @@ public class AmbientAdditions {
         event.put(AAEntities.PINE_MARTEN.get(), PineMartenEntity.createAttributes().build());
         event.put(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), GoldenElephantSnailEntity.createAttributes().build());
         event.put(AAEntities.GIANT_LAND_SNAIL.get(), GiantLandSnailEntity.createAttributes().build());
+        event.put(AAEntities.SPIDER_TAILED_ADDER.get(), SpiderTailedAdderEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
