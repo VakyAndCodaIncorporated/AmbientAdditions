@@ -208,7 +208,7 @@ public class AmbientAdditions {
             BlockPos pos = event.getPos();
             BlockState state = world.getBlockState(pos);
 
-            if (state.is(Blocks.JUNGLE_LOG) && world.random.nextFloat() > 0.99F) {
+            if (state.is(Blocks.JUNGLE_LOG) && world.random.nextFloat() > 0.95F) {
                 RubberDuckyIsopodEntity entity = AAEntities.RUBBER_DUCKY_ISOPOD.get().create(world);
 
                 // this is a horrible way to do this, but it works

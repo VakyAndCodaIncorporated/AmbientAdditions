@@ -67,11 +67,6 @@ public class HarlequinShrimpEntity extends WaterMobEntity {
         return CreatureAttribute.ARTHROPOD;
     }
 
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return !isFromBucket();
-    }
-
     protected ItemStack getFishBucket() {
         return new ItemStack(AAItems.HARLEQUIN_SHRIMP_BUCKET.get());
     }

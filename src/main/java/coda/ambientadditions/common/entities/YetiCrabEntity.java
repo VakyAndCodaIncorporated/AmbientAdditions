@@ -74,11 +74,6 @@ public class YetiCrabEntity extends WaterMobEntity {
         return CreatureAttribute.ARTHROPOD;
     }
 
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return !isFromBucket();
-    }
-
     protected ItemStack getFishBucket() {
         return new ItemStack(AAItems.YETI_CRAB_BUCKET.get());
     }
