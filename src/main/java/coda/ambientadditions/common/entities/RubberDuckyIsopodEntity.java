@@ -38,6 +38,11 @@ public class RubberDuckyIsopodEntity extends CreatureEntity {
     }
 
     @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+    @Override
     public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
