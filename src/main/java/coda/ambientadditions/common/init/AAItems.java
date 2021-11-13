@@ -68,4 +68,5 @@ public class AAItems {
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_SPAWN_EGG = REGISTER.register("rubber_ducky_isopod_spawn_egg", () -> new AASpawnEggItem(AAEntities.RUBBER_DUCKY_ISOPOD, 0x625949, 0xefcc63, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_SPAWN_EGG = REGISTER.register("yeti_crab_spawn_egg", () -> new AASpawnEggItem(AAEntities.YETI_CRAB, 0xe7d0bb, 0xb19b77, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> HARLEQUIN_SHRIMP_SPAWN_EGG = REGISTER.register("harlequin_shrimp_spawn_egg", () -> new AASpawnEggItem(AAEntities.HARLEQUIN_SHRIMP, 0xe1e1f9, 0x667ce6, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> LEAF_FROG_SPAWN_EGG = REGISTER.register("leaf_frog_spawn_egg", () -> new AASpawnEggItem(AAEntities.LEAF_FROG, 0x783e29, 0x44241a, new Item.Properties().tab(GROUP)));
 }

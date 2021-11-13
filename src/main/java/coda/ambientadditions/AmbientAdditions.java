@@ -2,7 +2,7 @@ package coda.ambientadditions;
 
 import coda.ambientadditions.client.ClientEvents;
 import coda.ambientadditions.common.entities.*;
-import coda.ambientadditions.common.entities.goal.FollowCorgiGoal;
+import coda.ambientadditions.common.entities.ai.goal.FollowCorgiGoal;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
@@ -27,7 +27,6 @@ import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -94,6 +93,7 @@ public class AmbientAdditions {
         event.put(AAEntities.RUBBER_DUCKY_ISOPOD.get(), RubberDuckyIsopodEntity.createAttributes().build());
         event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
         event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
+        event.put(AAEntities.LEAF_FROG.get(), LeafFrogEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {

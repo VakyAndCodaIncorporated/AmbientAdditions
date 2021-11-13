@@ -1,4 +1,4 @@
-package coda.ambientadditions.common.entities.goal;
+package coda.ambientadditions.common.entities.ai.goal;
 
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;

@@ -1,4 +1,4 @@
-package coda.ambientadditions.common.entities.goal;
+package coda.ambientadditions.common.entities.ai.goal;
 
 import coda.ambientadditions.AmbientAdditions;
 import net.minecraft.block.Block;

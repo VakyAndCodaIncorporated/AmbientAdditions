@@ -1,15 +1,13 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.goal.BigFishMoveHelperController;
+import coda.ambientadditions.common.entities.ai.goal.BigFishMoveHelperController;
 import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.*;

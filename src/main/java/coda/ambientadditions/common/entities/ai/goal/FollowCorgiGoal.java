@@ -1,14 +1,11 @@
-package coda.ambientadditions.common.entities.goal;
+package coda.ambientadditions.common.entities.ai.goal;
 
 import coda.ambientadditions.common.entities.CardiganCorgiEntity;
 import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.realms.action.CreateWorldRealmsAction;
-import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 import java.util.List;
