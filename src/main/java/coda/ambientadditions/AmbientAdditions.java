@@ -2,7 +2,7 @@ package coda.ambientadditions;
 
 import coda.ambientadditions.client.ClientEvents;
 import coda.ambientadditions.common.entities.*;
-import coda.ambientadditions.common.entities.ai.goal.FollowCorgiGoal;
+import coda.ambientadditions.common.entities.ai.goal.SheepFollowCorgiGoal;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
@@ -198,7 +198,7 @@ public class AmbientAdditions {
     private void onEntityJoinWorld(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof SheepEntity) {
-            ((SheepEntity) entity).goalSelector.addGoal(1, new FollowCorgiGoal((SheepEntity) entity, 1.0D, 10.0F, 1.0F));
+            ((SheepEntity) entity).goalSelector.addGoal(1, new SheepFollowCorgiGoal((SheepEntity) entity, 1.0D, 10.0F, 1.0F));
         }
     }
 

@@ -10,7 +10,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import java.util.EnumSet;
 import java.util.List;
 
-public class FollowCorgiGoal extends Goal {
+public class SheepFollowCorgiGoal extends Goal {
     private final SheepEntity sheep;
     private final double speedModifier;
     private final PathNavigator navigation;
@@ -19,7 +19,7 @@ public class FollowCorgiGoal extends Goal {
     private final float startDistance;
     private float oldWaterCost;
 
-    public FollowCorgiGoal(SheepEntity p_i225711_1_, double p_i225711_2_, float p_i225711_4_, float p_i225711_5_) {
+    public SheepFollowCorgiGoal(SheepEntity p_i225711_1_, double p_i225711_2_, float p_i225711_4_, float p_i225711_5_) {
         this.sheep = p_i225711_1_;
         this.speedModifier = p_i225711_2_;
         this.navigation = p_i225711_1_.getNavigation();
