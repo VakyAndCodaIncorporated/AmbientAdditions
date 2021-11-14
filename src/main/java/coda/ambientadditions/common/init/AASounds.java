@@ -32,4 +32,8 @@ public class AASounds {
     public static final RegistryObject<SoundEvent> SNAKE_DEATH = REGISTER.register("snake.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "snake.death")));
     public static final RegistryObject<SoundEvent> SNAKE_HURT = REGISTER.register("snake.hurt", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "snake.hurt")));
     public static final RegistryObject<SoundEvent> SNAKE_AMBIENT = REGISTER.register("snake.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "snake.ambient")));
+
+    public static final RegistryObject<SoundEvent> FROG_DEATH = REGISTER.register("frog.death", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "frog.death")));
+    public static final RegistryObject<SoundEvent> FROG_HURT = REGISTER.register("frog.hurt", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "frog.hurt")));
+    public static final RegistryObject<SoundEvent> FROG_AMBIENT = REGISTER.register("frog.ambient", () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, "frog.ambient")));
 }

@@ -195,5 +195,29 @@
         "stream": true
       }
     ]
+  },
+  "frog.ambient": {
+    "subtitle": "subtitle.ambientadditions.frog.ambient",
+    "sounds": [
+      {
+        "name": "ambientadditions:frog/ambient"
+      }
+    ]
+  },
+  "frog.death": {
+    "subtitle": "subtitle.ambientadditions.frog.death",
+    "sounds": [
+      {
+        "name": "ambientadditions:frog/death"
+      }
+    ]
+  },
+  "frog.hurt": {
+    "subtitle": "subtitle.ambientadditions.frog.hurt",
+    "sounds": [
+      {
+        "name": "ambientadditions:frog/hurt"
+      }
+    ]
   }
 }

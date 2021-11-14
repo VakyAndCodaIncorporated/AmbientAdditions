@@ -31,6 +31,7 @@ public class AAItems {
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = REGISTER.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = REGISTER.register("yeti_crab_fluff", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> STARFISH_ARM = REGISTER.register("starfish_arm", () -> new StarfishArmItem(new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> LEAF_FROG_EGG = REGISTER.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG::get, new Item.Properties().tab(GROUP).stacksTo(16)));
 
     // Buckets & Catching Items
     public static final RegistryObject<Item> LONGHORN_COWFISH_BUCKET = REGISTER.register("longhorn_cowfish_bucket", () -> new FishBucketItem(AAEntities.LONGHORN_COWFISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
@@ -41,6 +42,7 @@ public class AAItems {
     public static final RegistryObject<Item> YETI_CRAB_BUCKET = REGISTER.register("yeti_crab_bucket", () -> new AABucketItem(AAEntities.YETI_CRAB, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> CHOCOLATE_CHIP_STARFISH_BUCKET = REGISTER.register("chocolate_chip_starfish_bucket", () -> new AABucketItem(AAEntities.CHOCOLATE_CHIP_STARFISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> HARLEQUIN_SHRIMP_BUCKET = REGISTER.register("harlequin_shrimp_bucket", () -> new AABucketItem(AAEntities.HARLEQUIN_SHRIMP, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> LEAF_FROG_BOWL = REGISTER.register("leaf_frog_bowl", () -> new AACatchableItem(AAEntities.LEAF_FROG::get, Items.BOWL, false, new Item.Properties().tab(GROUP).stacksTo(1)));
 
     // Spawn Eggs
     public static final RegistryObject<Item> WHITE_FRUIT_BAT_SPAWN_EGG = REGISTER.register("white_fruit_bat_spawn_egg", () -> new AASpawnEggItem(AAEntities.WHITE_FRUIT_BAT, 0xf9f5e5, 0xffd000, new Item.Properties().tab(GROUP)));
