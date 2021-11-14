@@ -28,7 +28,6 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
     public ModelRenderer footRight;
     public ModelRenderer tailTadpole;
     public ModelRenderer bodyTadpole;
-    int legExtensionTimer;
 
     public LeafFrogModel() {
         setAngles();

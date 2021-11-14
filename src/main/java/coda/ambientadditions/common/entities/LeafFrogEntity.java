@@ -5,6 +5,7 @@ import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -252,8 +253,12 @@ public class LeafFrogEntity extends AnimalEntity {
         }
 
         public void tick() {
-            if (this.frog.isEyeInFluid(FluidTags.WATER)) {
+            if (this.frog.isEyeInFluid(FluidTags.WATER) && this.frog.isBaby()) {
                 this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            }
+
+            if (this.frog.isBaby() && this.frog.horizontalCollision && this.frog.level.getBlockState(this.frog.blockPosition().above()).getBlock() == Blocks.WATER) {
+                this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, 0.025D, 0.0D));
             }
 
             if (this.operation == MovementController.Action.MOVE_TO && !this.frog.getNavigation().isDone()) {
