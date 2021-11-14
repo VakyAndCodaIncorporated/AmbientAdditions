@@ -28,6 +28,7 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
     public ModelRenderer footRight;
     public ModelRenderer tailTadpole;
     public ModelRenderer bodyTadpole;
+    int legExtensionTimer;
 
     public LeafFrogModel() {
         setAngles();
@@ -44,20 +45,22 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
     public void setupAnim(T entityIn, float f, float f1, float ageInTicks, float netHeadYaw, float headPitch) {
         float speed = 3.0f;
         float degree = 1.0f;
+
         f1 = MathHelper.clamp(f1, -0.45F, -0.45F);
+
         if (entityIn.isBaby()) {
             this.tailTadpole.yRot = MathHelper.cos(2.0F + ageInTicks * 0.3F) * 0.7F;
         }
         else {
             if (entityIn.getDeltaMovement().x() == 0.0D && entityIn.getDeltaMovement().z() == 0.0D) {
                 this.body.y = 21.5F;
-                this.body.xRot = 0.0F;
-                this.legLeft.xRot = 0.0F;
-                this.legRight.xRot = 0.0F;
-                this.armLeft.xRot = 0.0F;
-                this.armRight.xRot = 0.0F;
-                this.head.y = - 0.5F;
-                this.body.zRot =  0.0F;
+                this.body.xRot = f1 + 0.45F;
+                this.legLeft.xRot = f1 + 0.45F;
+                this.legRight.xRot = f1 + 0.45F;
+                this.armLeft.xRot = f1 + 0.45F;
+                this.armRight.xRot = f1 + 0.45F;
+                this.head.y = -0.5F;
+                this.body.zRot = f1 + 0.45F;
             }
             else {
                 this.body.y = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 4.0F * f1 + 19.5F;
