@@ -98,5 +98,8 @@
   "ambientadditions.siamang.booming": "Siamang Gibbon booms",
   "ambientadditions.snake.ambient": "Snake hisses",
   "ambientadditions.snake.hurt": "Snake hurts",
-  "ambientadditions.snake.death": "Snake dies"
+  "ambientadditions.snake.death": "Snake dies",
+  "ambientadditions.frog.ambient": "Frog croaks",
+  "ambientadditions.frog.hurt": "Frog hurts",
+  "ambientadditions.frog.death": "Frog dies"
 }
