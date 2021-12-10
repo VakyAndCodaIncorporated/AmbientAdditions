@@ -50,7 +50,7 @@ public class CrateItem extends Item {
 
                 boolean more = stack.getCount() > 1;
 
-                if (stack.getCount() > 1) {
+                if (more) {
                     stack1 = new ItemStack(AAItems.CRATE.get());
                     stack.shrink(1);
 
