@@ -97,7 +97,7 @@ public class AmbientAdditions {
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
-        EntitySpawnPlacementRegistry.register(AAEntities.WHITE_FRUIT_BAT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhiteFruitBatEntity::checkBatSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.WHITE_FRUIT_BAT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, WhiteFruitBatEntity::checkBatSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.LONGHORN_COWFISH.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.STAG_BEETLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, StagBeetleEntity::checkBeetleSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.NINE_BANDED_ARMADILLO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NineBandedArmadilloEntity::checkSpawnRules);
