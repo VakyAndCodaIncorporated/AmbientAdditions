@@ -2,14 +2,9 @@ package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.common.entities.LeafFrogEntity;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -28,6 +23,7 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
     public ModelRenderer footRight;
     public ModelRenderer tailTadpole;
     public ModelRenderer bodyTadpole;
+    private float idleAmount;
 
     public LeafFrogModel() {
         setAngles();
@@ -45,13 +41,19 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
         float speed = 3.0f;
         float degree = 1.0f;
 
+        if (!entityIn.isIdle()) {
+            f = ageInTicks * 0.75F;
+        }
+
         f1 = MathHelper.clamp(f1, -0.45F, -0.45F);
 
         if (entityIn.isBaby()) {
             this.tailTadpole.yRot = MathHelper.cos(2.0F + ageInTicks * 0.3F) * 0.7F;
         }
         else {
-            if (entityIn.getDeltaMovement().x() == 0.0D && entityIn.getDeltaMovement().z() == 0.0D) {
+            hopAnimation(f, f1, speed, degree);
+
+            if (idleAmount > 0.0F) {
                 this.body.y = 21.5F;
                 this.body.xRot = f1 + 0.45F;
                 this.legLeft.xRot = f1 + 0.45F;
@@ -61,16 +63,35 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
                 this.head.y = -0.5F;
                 this.body.zRot = f1 + 0.45F;
             }
-            else {
-                this.body.y = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 4.0F * f1 + 19.5F;
-                this.body.xRot = MathHelper.cos(-3.0F + f * speed * 0.4F) * degree * 0.8F * f1;
-                this.legLeft.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 2.0F * f1;
-                this.legRight.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 1.5F * f1;
-                this.armLeft.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 1.5F * f1 - 0.4F;
-                this.armRight.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 2.0F * f1 - 0.4F;
-                this.head.y = MathHelper.cos(1.0F + f * speed * 0.4F) * degree * 1.0F * f1 - 0.5F;
-                this.body.zRot = MathHelper.cos(f * speed * 0.4F) * degree * 0.2F * f1;
-            }
+        }
+    }
+
+    private void hopAnimation(float f, float f1, float speed, float degree) {
+        this.body.y = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 4.0F * f1 + 19.5F;
+        this.body.xRot = MathHelper.cos(-3.0F + f * speed * 0.4F) * degree * 0.8F * f1;
+        this.legLeft.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 2.0F * f1;
+        this.legRight.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 1.5F * f1;
+        this.armLeft.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 1.5F * f1 - 0.4F;
+        this.armRight.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 2.0F * f1 - 0.4F;
+        this.head.y = MathHelper.cos(1.0F + f * speed * 0.4F) * degree * 1.0F * f1 - 0.5F;
+        this.body.zRot = MathHelper.cos(f * speed * 0.4F) * degree * 0.2F * f1;
+    }
+
+    @Override
+    public void prepareMobModel(T entity, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
+        this.idleAmount = entity.getIdleAmount(p_212843_4_);
+        if (entity.isBaby()) return;
+        if (this.idleAmount <= 0.0F) {
+            this.head.xRot = 0.0F;
+            this.head.zRot = 0.0F;
+            this.legLeft.xRot = 0.0F;
+            this.legLeft.zRot = 0.0F;
+            this.legRight.xRot = 0.0F;
+            this.legRight.zRot = 0.0F;
+            this.armLeft.xRot = 0.0F;
+            this.armLeft.zRot= 0.0F;
+            this.armRight.xRot = 0.0F;
+            this.armRight.zRot = 0.0F;
         }
     }
 

@@ -18,6 +18,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
@@ -26,15 +29,20 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Set;
 
 public class LeafFrogEntity extends AnimalEntity {
+    private static final DataParameter<Boolean> IS_IDLE = EntityDataManager.defineId(LeafFrogEntity.class, DataSerializers.BOOLEAN);
     private Goal swimGoal;
     private boolean wasOnGround;
     private int currentMoveTypeDuration;
+    private float idleAmount;
+    private float idleAmountO;
 
     public LeafFrogEntity(EntityType<? extends LeafFrogEntity> type, World world) {
         super(type, world);
@@ -93,6 +101,43 @@ public class LeafFrogEntity extends AnimalEntity {
         int lvt_1_1_ = this.getAirSupply();
         super.baseTick();
         this.updateAir(lvt_1_1_);
+
+        this.updateIdleAmount();
+        if (getDeltaMovement().x() == 0D && getDeltaMovement().z() == 0D) {
+            setIdle(true);
+        }
+        else {
+            setIdle(false);
+        }
+    }
+
+    public void setIdle(boolean p_213419_1_) {
+        this.entityData.set(IS_IDLE, p_213419_1_);
+    }
+
+    public boolean isIdle() {
+        return this.entityData.get(IS_IDLE);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_IDLE, false);
+    }
+
+    private void updateIdleAmount() {
+        this.idleAmountO = this.idleAmount;
+        if (this.isIdle()) {
+            this.idleAmount = Math.min(1.0F, this.idleAmount + 0.15F);
+        } else {
+            this.idleAmount = Math.max(0.0F, this.idleAmount - 0.22F);
+        }
+
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public float getIdleAmount(float p_213408_1_) {
+        return MathHelper.lerp(p_213408_1_, this.idleAmountO, this.idleAmount);
     }
 
     public void customServerAiStep() {
