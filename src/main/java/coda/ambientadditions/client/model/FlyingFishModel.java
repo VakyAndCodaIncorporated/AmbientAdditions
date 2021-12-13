@@ -1,5 +1,6 @@
 package coda.ambientadditions.client.model;
 
+import coda.ambientadditions.common.entities.FlyingFishEntity;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -10,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class FlyingFishModel<T extends Entity> extends EntityModel<T> {
+public class FlyingFishModel<T extends FlyingFishEntity> extends EntityModel<T> {
     public ModelRenderer body;
     public ModelRenderer tail;
     public ModelRenderer wingLeft;
@@ -62,8 +63,10 @@ public class FlyingFishModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.body.xRot = headPitch * ((float)Math.PI / 180F);
-        this.body.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        if (entityIn.isInWater() || entityIn.isFlying()) {
+            this.body.xRot = headPitch * ((float)Math.PI / 180F);
+            this.body.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        }
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {

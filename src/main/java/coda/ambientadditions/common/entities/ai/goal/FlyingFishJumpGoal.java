@@ -61,7 +61,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
    public void start() {
       Direction direction = this.fish.getMotionDirection();
-      this.fish.setDeltaMovement(this.fish.getDeltaMovement().add((double)direction.getStepX() * 2D, 1.2D, (double)direction.getStepZ() * 2D));
+      this.fish.setDeltaMovement(this.fish.getDeltaMovement().add((double)direction.getStepX() * 2D, 1.0D, (double)direction.getStepZ() * 2D));
       this.fish.setDeltaMovement(this.fish.getDeltaMovement().multiply(2, 1, 2));
       this.fish.getNavigation().stop();
       this.fish.setFlying(true);

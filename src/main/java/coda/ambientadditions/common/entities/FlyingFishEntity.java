@@ -66,7 +66,11 @@ public class FlyingFishEntity extends AbstractGroupFishEntity {
     public void tick() {
         super.tick();
         if (isFlying() && getDeltaMovement().y() < 0.0F) {
-            setDeltaMovement(getDeltaMovement().multiply(1.0F, 0.2F, 1.0F));
+            double xz = -Math.abs(Math.max(getDeltaMovement().x(), getDeltaMovement().z()));
+            double clamped = MathHelper.clamp(xz, -0.5F, 0.5F);
+            double y = (0.5 * clamped + 0.05F) * 10;
+
+            setDeltaMovement(getDeltaMovement().multiply(1.0F, xz, 1.0F));
         }
     }
 
