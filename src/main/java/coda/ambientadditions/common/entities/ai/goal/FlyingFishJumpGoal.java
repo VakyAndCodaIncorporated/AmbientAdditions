@@ -61,9 +61,10 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
    public void start() {
       Direction direction = this.fish.getMotionDirection();
-      this.fish.setDeltaMovement(this.fish.getDeltaMovement().add((double)direction.getStepX() * 2D, 0.7D, (double)direction.getStepZ() * 2D));
+      this.fish.setDeltaMovement(this.fish.getDeltaMovement().add((double)direction.getStepX() * 2D, 1.2D, (double)direction.getStepZ() * 2D));
+      this.fish.setDeltaMovement(this.fish.getDeltaMovement().multiply(2, 1, 2));
       this.fish.getNavigation().stop();
-
+      this.fish.setFlying(true);
    }
 
    public void stop() {
@@ -80,7 +81,6 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
       if (this.breached && !flag) {
          this.fish.playSound(SoundEvents.DOLPHIN_JUMP, 1.0F, 1.0F);
-         this.fish.setFlying(true);
       }
 
       Vector3d vector3d = this.fish.getDeltaMovement();

@@ -61,7 +61,10 @@ public class FlyingFishModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+    public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.body.xRot = headPitch * ((float)Math.PI / 180F);
+        this.body.yRot = netHeadYaw * ((float)Math.PI / 180F);
+    }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.xRot = x;

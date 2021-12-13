@@ -4,9 +4,11 @@ import coda.ambientadditions.common.entities.ai.goal.BigFishMoveHelperController
 import coda.ambientadditions.common.entities.ai.goal.FlyingFishJumpGoal;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.controller.DolphinLookController;
 import net.minecraft.entity.ai.goal.DolphinJumpGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
+import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -16,16 +18,18 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 // TODO - make them stop flying once they hit the water
-public class FlyingFishEntity extends AbstractFishEntity {
+public class FlyingFishEntity extends AbstractGroupFishEntity {
     private static final DataParameter<Boolean> IS_FLYING = EntityDataManager.defineId(FlyingFishEntity.class, DataSerializers.BOOLEAN);
 
-    public FlyingFishEntity(EntityType<? extends AbstractFishEntity> p_i48855_1_, World p_i48855_2_) {
+    public FlyingFishEntity(EntityType<? extends AbstractGroupFishEntity> p_i48855_1_, World p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
         this.moveControl = new BigFishMoveHelperController(this);
+        this.lookControl = new DolphinLookController(this, 10);
         this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
     }
 
@@ -62,7 +66,6 @@ public class FlyingFishEntity extends AbstractFishEntity {
     public void tick() {
         super.tick();
         if (isFlying() && getDeltaMovement().y() < 0.0F) {
-            if (tickCount % 20 == 0) setDeltaMovement(getDeltaMovement().multiply(2.0F, 1.0F, 2.0F));
             setDeltaMovement(getDeltaMovement().multiply(1.0F, 0.2F, 1.0F));
         }
     }
