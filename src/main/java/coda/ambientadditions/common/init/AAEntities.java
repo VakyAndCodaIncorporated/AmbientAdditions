@@ -40,6 +40,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<YetiCrabEntity>> YETI_CRAB = create("yeti_crab", EntityType.Builder.of(YetiCrabEntity::new, EntityClassification.WATER_CREATURE).sized(0.7f, 0.2f));
     public static final RegistryObject<EntityType<HarlequinShrimpEntity>> HARLEQUIN_SHRIMP = create("harlequin_shrimp", EntityType.Builder.of(HarlequinShrimpEntity::new, EntityClassification.WATER_CREATURE).sized(0.5f, 0.4f));
     public static final RegistryObject<EntityType<LeafFrogEntity>> LEAF_FROG = create("leaf_frog", EntityType.Builder.of(LeafFrogEntity::new, EntityClassification.CREATURE).sized(0.4f, 0.35f));
+    public static final RegistryObject<EntityType<FlyingFishEntity>> FLYING_FISH = create("flying_fish", EntityType.Builder.of(FlyingFishEntity::new, EntityClassification.WATER_AMBIENT).sized(0.6f, 0.35f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));

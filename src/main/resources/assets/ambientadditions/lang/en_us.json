@@ -23,6 +23,7 @@
   "item.ambientadditions.chocolate_chip_starfish_bucket": "Bucket of Chocolate Chip Starfish",
   "item.ambientadditions.harlequin_shrimp_bucket": "Bucket of Harlequin Shrimp",
   "item.ambientadditions.leaf_frog_bowl": "Bowl of Leaf Frog",
+  "item.ambientadditions.flying_fish_bucket": "Bucket of Flying Fish",
 
   "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
   "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
@@ -50,6 +51,7 @@
   "item.ambientadditions.rubber_ducky_isopod_spawn_egg": "Rubber Ducky Isopod Spawn Egg",
   "item.ambientadditions.harlequin_shrimp_spawn_egg": "Harlequin Shrimp Spawn Egg",
   "item.ambientadditions.leaf_frog_spawn_egg": "Leaf Frog Spawn Egg",
+  "item.ambientadditions.flying_fish_spawn_egg": "Flying Fish Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -77,6 +79,7 @@
   "entity.ambientadditions.rubber_ducky_isopod": "Rubber Ducky Isopod",
   "entity.ambientadditions.harlequin_shrimp": "Harlequin Shrimp",
   "entity.ambientadditions.leaf_frog": "Leaf Frog",
+  "entity.ambientadditions.flying_fish": "Flying Fish",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",

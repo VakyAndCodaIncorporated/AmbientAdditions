@@ -94,6 +94,7 @@ public class AmbientAdditions {
         event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
         event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG.get(), LeafFrogEntity.createAttributes().build());
+        event.put(AAEntities.FLYING_FISH.get(), AbstractFishEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -119,6 +120,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.YETI_CRAB.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.HARLEQUIN_SHRIMP.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.FLYING_FISH.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
