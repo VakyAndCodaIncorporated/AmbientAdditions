@@ -41,10 +41,6 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
         float speed = 3.0f;
         float degree = 1.0f;
 
-        if (!entityIn.isIdle()) {
-            f = ageInTicks * 0.75F;
-        }
-
         f1 = MathHelper.clamp(f1, -0.45F, -0.45F);
 
         if (entityIn.isBaby()) {
@@ -53,7 +49,7 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
         else {
             hopAnimation(f, f1, speed, degree);
 
-            if (idleAmount > 0.0F) {
+            /*if (idleAmount > 0.0F) {
                 this.body.y = 21.5F;
                 this.body.xRot = f1 + 0.45F;
                 this.legLeft.xRot = f1 + 0.45F;
@@ -62,37 +58,25 @@ public abstract class LeafFrogModel<T extends LeafFrogEntity> extends SegmentedM
                 this.armRight.xRot = f1 + 0.45F;
                 this.head.y = -0.5F;
                 this.body.zRot = f1 + 0.45F;
-            }
+            }*/
         }
     }
 
     private void hopAnimation(float f, float f1, float speed, float degree) {
-        this.body.y = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 4.0F * f1 + 19.5F;
-        this.body.xRot = MathHelper.cos(-3.0F + f * speed * 0.4F) * degree * 0.8F * f1;
-        this.legLeft.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 2.0F * f1;
-        this.legRight.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 1.5F * f1;
-        this.armLeft.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 1.5F * f1 - 0.4F;
-        this.armRight.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 2.0F * f1 - 0.4F;
-        this.head.y = MathHelper.cos(1.0F + f * speed * 0.4F) * degree * 1.0F * f1 - 0.5F;
-        this.body.zRot = MathHelper.cos(f * speed * 0.4F) * degree * 0.2F * f1;
+
+        this.body.y = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 4.0F * f1 + 22.5F;
+        this.body.xRot = MathHelper.cos(-3.0F + f * speed * 0.4F) * degree * 0.8F * f1 - 0.35F;
+        this.legLeft.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 2.0F * f1 - 0.45F;
+        this.legRight.xRot = MathHelper.cos(-2.0F + f * speed * 0.4F) * degree * 1.5F * f1 - 0.3F;
+        this.armLeft.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 1.5F * f1 + 0.35F;
+        this.armRight.xRot = MathHelper.cos(-1.0F + f * speed * 0.4F) * degree * 2.0F * f1 + 0.5F;
+        this.head.y = MathHelper.cos(1.0F + f * speed * 0.4F) * degree * 1.0F * f1 - 0.25F;
+        this.body.zRot = MathHelper.cos(f * speed * 0.4F) * degree * 0.2F * f1 + 0.1F;
     }
 
     @Override
     public void prepareMobModel(T entity, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
-        this.idleAmount = entity.getIdleAmount(p_212843_4_);
-        if (entity.isBaby()) return;
-        if (this.idleAmount <= 0.0F) {
-            this.head.xRot = 0.0F;
-            this.head.zRot = 0.0F;
-            this.legLeft.xRot = 0.0F;
-            this.legLeft.zRot = 0.0F;
-            this.legRight.xRot = 0.0F;
-            this.legRight.zRot = 0.0F;
-            this.armLeft.xRot = 0.0F;
-            this.armLeft.zRot= 0.0F;
-            this.armRight.xRot = 0.0F;
-            this.armRight.zRot = 0.0F;
-        }
+
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {

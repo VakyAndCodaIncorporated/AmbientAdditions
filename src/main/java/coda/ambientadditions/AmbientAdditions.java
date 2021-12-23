@@ -95,6 +95,7 @@ public class AmbientAdditions {
         event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG.get(), LeafFrogEntity.createAttributes().build());
         event.put(AAEntities.FLYING_FISH.get(), AbstractFishEntity.createAttributes().build());
+        event.put(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -176,9 +177,10 @@ public class AmbientAdditions {
                 event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
             }
 
-            if (event.getName().getPath().equals("lukewarm_ocean")) {
+            if (event.getName().getPath().equals("lukewarm_ocean") || event.getName().getPath().equals("deep_lukewarm_ocean")) {
                 event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 7, 2, 5));
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HARLEQUIN_SHRIMP.get(), 6    , 1, 1));
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HARLEQUIN_SHRIMP.get(), 6, 1, 1));
+                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.SHAME_FACED_CRAB.get(), 4, 1, 2));
             }
 
             if (event.getName().getPath().equals("deep_ocean")) {

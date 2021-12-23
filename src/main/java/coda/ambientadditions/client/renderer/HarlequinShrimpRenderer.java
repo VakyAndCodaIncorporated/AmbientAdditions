@@ -30,12 +30,6 @@ public class HarlequinShrimpRenderer extends MobRenderer<HarlequinShrimpEntity, 
     public ResourceLocation getTextureLocation(HarlequinShrimpEntity entity) {
         return TEXTURES.getOrDefault(entity.getVariant(), TEXTURES.get(0));
     }
-
-    @Override
-    public void render(HarlequinShrimpEntity p_225623_1_, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_, IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
-        p_225623_4_.scale(1.15F, 1.15F, 1.15F);
-        super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
-    }
 }
 
 

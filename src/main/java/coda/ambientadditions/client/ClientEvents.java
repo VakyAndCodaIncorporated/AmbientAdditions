@@ -55,6 +55,7 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.LEAF_FROG.get(), LeafFrogRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.FLYING_FISH.get(), FlyingFishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 
