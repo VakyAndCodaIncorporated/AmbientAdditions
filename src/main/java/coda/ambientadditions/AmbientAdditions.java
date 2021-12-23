@@ -15,11 +15,14 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.MerchantOffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -30,6 +33,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,8 +44,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Mod(AmbientAdditions.MOD_ID)
 public class AmbientAdditions {
@@ -61,6 +67,7 @@ public class AmbientAdditions {
         forgeBus.addListener(this::onBiomeLoading);
         forgeBus.addListener(this::onEntityJoinWorld);
         forgeBus.addListener(this::onLogStripped);
+        forgeBus.addListener(this::addWanderingTrades);
 
         AAItems.REGISTER.register(bus);
         AAEntities.REGISTER.register(bus);
@@ -247,6 +254,42 @@ public class AmbientAdditions {
                 entity.moveTo(pos.getX(), pos.getY(), pos.getZ());
                 world.addFreshEntity(entity);
             }
+        }
+    }
+
+    private void addWanderingTrades(WandererTradesEvent event) {
+        List<VillagerTrades.ITrade> trades = event.getGenericTrades();
+
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(AAItems.HARLEQUIN_SHRIMP_BUCKET.get()), 3, 4, 1.5f));
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(AAItems.MOLE_BUCKET.get()), 3, 4, 1.5f));
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(AAItems.CHOCOLATE_CHIP_STARFISH_BUCKET.get()), 3, 4, 1.5f));
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(AAItems.SHAME_FACED_CRAB_BUCKET.get()), 3, 4, 1.5f));
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 7), new ItemStack(AAItems.LONGHORN_COWFISH_BUCKET.get()), 3, 4, 1.5f));
+        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(AAItems.LEAF_FROG_BOWL.get()), 3, 4, 1.5f));
+    }
+
+    private static class ItemsForItemsTrade implements VillagerTrades.ITrade {
+        private final ItemStack buying1, buying2, selling;
+        private final int maxUses, xp;
+        private final float priceMultiplier;
+
+        public ItemsForItemsTrade(ItemStack buying1, ItemStack buying2, ItemStack selling, int maxUses, int xp, float priceMultiplier) {
+            this.buying1 = buying1;
+            this.buying2 = buying2;
+            this.selling = selling;
+            this.maxUses = maxUses;
+            this.xp = xp;
+            this.priceMultiplier = priceMultiplier;
+        }
+
+        public ItemsForItemsTrade(ItemStack buying1, ItemStack selling, int maxUses, int xp, float priceMultiplier) {
+            this(buying1, ItemStack.EMPTY, selling, maxUses, xp, priceMultiplier);
+        }
+
+        @Nullable
+        @Override
+        public MerchantOffer getOffer(Entity trader, Random rand) {
+            return new MerchantOffer(buying1, buying2, selling, maxUses, xp, priceMultiplier);
         }
     }
 
