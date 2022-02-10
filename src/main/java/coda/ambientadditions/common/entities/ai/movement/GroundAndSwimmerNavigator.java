@@ -1,17 +1,17 @@
 
 package coda.ambientadditions.common.entities.ai.movement;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.pathfinding.WalkAndSwimNodeProcessor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.level.pathfinder.TurtleNodeEvaluator;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
-public class GroundAndSwimmerNavigator extends SwimmerPathNavigator {
-    public GroundAndSwimmerNavigator(MobEntity entity, World world) {
+public class GroundAndSwimmerNavigator extends WaterBoundPathNavigation {
+    public GroundAndSwimmerNavigator(Mob entity, Level world) {
         super(entity, world);
     }
 
@@ -22,7 +22,7 @@ public class GroundAndSwimmerNavigator extends SwimmerPathNavigator {
 
     @Override
     protected PathFinder createPathFinder(int p_179679_1_) {
-        this.nodeEvaluator = new WalkAndSwimNodeProcessor();
+        this.nodeEvaluator = new TurtleNodeEvaluator();
         return new PathFinder(this.nodeEvaluator, p_179679_1_);
     }
 

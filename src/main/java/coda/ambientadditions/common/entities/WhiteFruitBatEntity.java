@@ -1,72 +1,77 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.DolphinLookController;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
-public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
-    private static final DataParameter<Byte> DATA_ID_FLAGS = EntityDataManager.defineId(WhiteFruitBatEntity.class, DataSerializers.BYTE);
-    private static final EntityPredicate BAT_RESTING_TARGETING = (new EntityPredicate()).range(4.0D).allowSameTeam();
+public class WhiteFruitBatEntity extends Animal implements FlyingAnimal {
+    private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(WhiteFruitBatEntity.class, EntityDataSerializers.BYTE);
+    private static final TargetingConditions BAT_RESTING_TARGETING =TargetingConditions.forNonCombat().range(4.0D);
     private BlockPos targetPosition;
     public float prevTilt;
     public float tilt;
 
-    public WhiteFruitBatEntity(EntityType<? extends WhiteFruitBatEntity> type, World worldIn) {
+    public WhiteFruitBatEntity(EntityType<? extends WhiteFruitBatEntity> type, Level worldIn) {
         super(type, worldIn);
         this.setResting(true);
         this.moveControl = new MoveHelperController(this, false);
-        this.lookControl = new DolphinLookController(this, 10);
+        this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
-    public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.FLYING_SPEED, 0.55D);
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.FLYING_SPEED, 0.55D);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
-        this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
     }
 
     @Override
-    public ItemStack getPickedResult(RayTraceResult target) {
+    public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.WHITE_FRUIT_BAT_SPAWN_EGG.get());
     }
 
-    public static boolean checkBatSpawnRules(EntityType<? extends AnimalEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+    public static boolean checkBatSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
         return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.LEAVES);
     }
 
     @Override
-    protected PathNavigator createNavigation(World worldIn) {
-        FlyingPathNavigator flyingpathnavigator = new FlyingPathNavigator(this, worldIn) {
+    protected PathNavigation createNavigation(Level worldIn) {
+        FlyingPathNavigation flyingpathnavigator = new FlyingPathNavigation(this, worldIn) {
             public boolean isStableDestination(BlockPos pos) {
                 return !this.level.getBlockState(pos.below()).isAir();
             }
@@ -78,7 +83,7 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
         return false;
     }
 
@@ -107,12 +112,12 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
     }
 
     @Override
-    public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
         return null;
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 0.3F;
     }
 
@@ -162,13 +167,13 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT p_70037_1_) {
+    public void readAdditionalSaveData(CompoundTag p_70037_1_) {
         super.readAdditionalSaveData(p_70037_1_);
         this.entityData.set(DATA_ID_FLAGS, p_70037_1_.getByte("BatFlags"));
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT p_213281_1_) {
+    public void addAdditionalSaveData(CompoundTag p_213281_1_) {
         super.addAdditionalSaveData(p_213281_1_);
         p_213281_1_.putByte("BatFlags", this.entityData.get(DATA_ID_FLAGS));
     }
@@ -177,8 +182,8 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
     public void tick() {
         super.tick();
         if (this.isResting()) {
-            this.setDeltaMovement(Vector3d.ZERO);
-            this.setPosRaw(this.getX(), MathHelper.floor(this.getY()), this.getZ());
+            this.setDeltaMovement(Vec3.ZERO);
+            this.setPosRaw(this.getX(), Mth.floor(this.getY()), this.getZ());
         } else {
             this.setDeltaMovement(this.getDeltaMovement().multiply(1.0D, 0.6D, 1.0D));
         }
@@ -189,7 +194,7 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
         super.aiStep();
         prevTilt = tilt;
         if (!isOnGround()) {
-            final float v = MathHelper.degreesDifference(yRot, yRotO);
+            final float v = Mth.degreesDifference(this.getYRot(), yRotO);
             if (Math.abs(v) > 1) {
                 if (Math.abs(tilt) < 25) {
                     tilt += Math.signum(v);
@@ -244,20 +249,25 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
             double d2 = (double)this.targetPosition.getX() + 0.5D - this.getX();
             double d0 = (double)this.targetPosition.getY() + 0.1D - this.getY();
             double d1 = (double)this.targetPosition.getZ() + 0.5D - this.getZ();
-            Vector3d vector3d = this.getDeltaMovement();
-            Vector3d vector3d1 = vector3d.add((Math.signum(d2) * 0.5D - vector3d.x) * (double)0.1F, (Math.signum(d0) * (double)0.7F - vector3d.y) * (double)0.1F, (Math.signum(d1) * 0.5D - vector3d.z) * (double)0.1F);
+            Vec3 vector3d = this.getDeltaMovement();
+            Vec3 vector3d1 = vector3d.add((Math.signum(d2) * 0.5D - vector3d.x) * (double)0.1F, (Math.signum(d0) * (double)0.7F - vector3d.y) * (double)0.1F, (Math.signum(d1) * 0.5D - vector3d.z) * (double)0.1F);
             this.setDeltaMovement(vector3d1);
-            float f = (float)(MathHelper.atan2(vector3d1.z, vector3d1.x) * (double)(180F / (float)Math.PI)) - 90.0F;
-            float f1 = MathHelper.wrapDegrees(f - this.yRot);
+            float f = (float)(Mth.atan2(vector3d1.z, vector3d1.x) * (double)(180F / (float)Math.PI)) - 90.0F;
+            float f1 = Mth.wrapDegrees(f - this.getYRot());
             this.zza = 0.5F;
-            this.yRot += f1;
+            this.setYRot(this.getYRot() + f1);
             if (this.random.nextInt(100) == 0 && this.level.getBlockState(blockpos1).isRedstoneConductor(this.level, blockpos1)) {
                 this.setResting(true);
             }
         }
     }
 
-    public class MoveHelperController extends MovementController {
+    @Override
+    public boolean isFlying() {
+        return !this.isResting() && !this.isOnGround();
+    }
+
+    public class MoveHelperController extends MoveControl {
         private final boolean hoversInPlace;
         private final WhiteFruitBatEntity entity;
 
@@ -268,8 +278,8 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
         }
 
         public void tick() {
-            if (this.operation == MovementController.Action.MOVE_TO) {
-                this.operation = MovementController.Action.WAIT;
+            if (this.operation == MoveControl.Operation.MOVE_TO) {
+                this.operation = MoveControl.Operation.WAIT;
                 this.mob.setNoGravity(true);
                 double d0 = this.wantedX - this.entity.getX();
                 double d1 = this.wantedY - this.entity.getY();
@@ -278,18 +288,18 @@ public class WhiteFruitBatEntity extends AnimalEntity implements IFlyingAnimal {
                 if (d3 < (double)2.5000003E-7F) {
                     this.mob.setZza(0.0F);
                 } else {
-                    float f = (float)(MathHelper.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-                    this.entity.yRot = this.rotlerp(this.entity.yRot, f, 10.0F);
-                    this.entity.yBodyRot = this.entity.yRot;
-                    this.entity.yHeadRot = this.entity.yRot;
+                    float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
+                    this.entity.setYRot(this.rotlerp(this.entity.getYRot(), f, 10.0F));
+                    this.entity.yBodyRot = this.entity.getYRot();
+                    this.entity.yHeadRot = this.entity.getYRot();
                     float f1 = (float)(this.speedModifier * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED));
                     if (this.entity.isInWater()) {
                         this.entity.setSpeed(f1 * 0.02F);
-                        float f2 = -((float)(MathHelper.atan2(d1, (double)MathHelper.sqrt(d0 * d0 + d2 * d2)) * (double)(180F / (float)Math.PI)));
-                        f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
-                        this.entity.xRot = this.rotlerp(this.entity.xRot, f2, 5.0F);
-                        float f3 = MathHelper.cos(this.entity.xRot * ((float)Math.PI / 180F));
-                        float f4 = MathHelper.sin(this.entity.xRot * ((float)Math.PI / 180F));
+                        float f2 = -((float)(Mth.atan2(d1, (double)Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double)(180F / (float)Math.PI)));
+                        f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
+                        this.entity.setXRot(this.rotlerp(this.entity.getXRot(), f2, 5.0F));
+                        float f3 = Mth.cos(this.entity.getXRot() * ((float)Math.PI / 180F));
+                        float f4 = Mth.sin(this.entity.getXRot() * ((float)Math.PI / 180F));
                         this.entity.zza = f3 * f1;
                         this.entity.yya = -f4 * f1;
                     } else {

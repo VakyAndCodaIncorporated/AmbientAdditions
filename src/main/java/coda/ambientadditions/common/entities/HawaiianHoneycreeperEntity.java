@@ -2,94 +2,99 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.passive.ShoulderRidingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.ShoulderRidingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements IFlyingAnimal {
+public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements FlyingAnimal {
    public float flap;
    public float flapSpeed;
    public float oFlapSpeed;
    public float oFlap;
    private float flapping = 1.0F;
 
-   public HawaiianHoneycreeperEntity(EntityType<? extends HawaiianHoneycreeperEntity> p_i50251_1_, World p_i50251_2_) {
+   public HawaiianHoneycreeperEntity(EntityType<? extends HawaiianHoneycreeperEntity> p_i50251_1_, Level p_i50251_2_) {
       super(p_i50251_1_, p_i50251_2_);
-      this.moveControl = new FlyingMovementController(this, 10, false);
-      this.setPathfindingMalus(PathNodeType.DANGER_FIRE, -1.0F);
-      this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, -1.0F);
+      this.moveControl = new FlyingMoveControl(this, 10, false);
+      this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+      this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
    }
 
    @Nullable
-   public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_213386_1_, DifficultyInstance p_213386_2_, MobSpawnType p_213386_3_, @Nullable SpawnGroupData p_213386_4_, @Nullable CompoundTag p_213386_5_) {
       if (p_213386_4_ == null) {
-         p_213386_4_ = new AgeableEntity.AgeableData(false);
+         p_213386_4_ = new AgeableMob.AgeableMobGroupData(false);
       }
 
       return super.finalizeSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
    }
 
    @Override
-   public ItemStack getPickedResult(RayTraceResult target) {
+   public ItemStack getPickedResult(HitResult target) {
       return new ItemStack(AAItems.HAWAIIAN_HONEYCREEPER_SPAWN_EGG.get());
    }
 
    protected void registerGoals() {
       this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-      this.goalSelector.addGoal(0, new SwimGoal(this));
-      this.goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-      this.goalSelector.addGoal(2, new SitGoal(this));
+      this.goalSelector.addGoal(0, new FloatGoal(this));
+      this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
+      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
       this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
       this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
       this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
       this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
    }
 
-   public static AttributeModifierMap.MutableAttribute createAttributes() {
-      return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
+   public static AttributeSupplier.Builder createAttributes() {
+      return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.FLYING_SPEED, 0.4F).add(Attributes.MOVEMENT_SPEED, 0.2F);
    }
 
-   protected PathNavigator createNavigation(World p_175447_1_) {
-      FlyingPathNavigator flyingpathnavigator = new FlyingPathNavigator(this, p_175447_1_);
+   protected PathNavigation createNavigation(Level p_175447_1_) {
+      FlyingPathNavigation flyingpathnavigator = new FlyingPathNavigation(this, p_175447_1_);
       flyingpathnavigator.setCanOpenDoors(false);
       flyingpathnavigator.setCanFloat(true);
       flyingpathnavigator.setCanPassDoors(true);
       return flyingpathnavigator;
    }
 
-   protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+   protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
       return p_213348_2_.height * 0.75F;
    }
 
@@ -102,13 +107,13 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       this.oFlap = this.flap;
       this.oFlapSpeed = this.flapSpeed;
       this.flapSpeed = (float)((double)this.flapSpeed + (double)(!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
-      this.flapSpeed = MathHelper.clamp(this.flapSpeed, 0.0F, 1.0F);
+      this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
       if (!this.onGround && this.flapping < 1.0F) {
          this.flapping = 1.0F;
       }
 
       this.flapping = (float)((double)this.flapping * 0.9D);
-      Vector3d vector3d = this.getDeltaMovement();
+      Vec3 vector3d = this.getDeltaMovement();
       if (!this.onGround && vector3d.y < 0.0D) {
          this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
       }
@@ -116,12 +121,12 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       this.flap += this.flapping * 2.0F;
    }
 
-   public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+   public InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
       ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
-      if (!this.isTame() && itemstack.getItem().is(ItemTags.FLOWERS)) {
-         if (!p_230254_1_.abilities.instabuild) {
+      if (!this.isTame() && itemstack.is(ItemTags.FLOWERS)) {
+         if (!p_230254_1_.getAbilities().instabuild) {
             itemstack.shrink(1);
-            p_230254_1_.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+            p_230254_1_.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
          }
 
          if (!this.isSilent()) {
@@ -137,19 +142,19 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
             }
          }
 
-         return ActionResultType.sidedSuccess(this.level.isClientSide);
+         return InteractionResult.sidedSuccess(this.level.isClientSide);
       } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(p_230254_1_)) {
          if (!this.level.isClientSide) {
             this.setOrderedToSit(!this.isOrderedToSit());
          }
 
-         return ActionResultType.sidedSuccess(this.level.isClientSide);
+         return InteractionResult.sidedSuccess(this.level.isClientSide);
       } else if (itemstack.getItem() == Items.HONEY_BOTTLE && isTame() && getHealth() < getMaxHealth()) {
          this.heal(4);
 
-         if (!p_230254_1_.abilities.instabuild) {
+         if (!p_230254_1_.getAbilities().instabuild) {
             itemstack.shrink(1);
-            p_230254_1_.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+            p_230254_1_.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
          }
 
          double d0 = this.random.nextGaussian() * 0.02D;
@@ -159,7 +164,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
             this.level.addParticle(ParticleTypes.HEART, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
          }
 
-         return ActionResultType.sidedSuccess(this.level.isClientSide);
+         return InteractionResult.sidedSuccess(this.level.isClientSide);
       } else {
          return super.mobInteract(p_230254_1_, p_230254_2_);
       }
@@ -169,7 +174,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       return false;
    }
 
-   public static boolean checkHoneycreeperSpawnRules(EntityType<HawaiianHoneycreeperEntity> p_223317_0_, IWorld p_223317_1_, SpawnReason p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
+   public static boolean checkHoneycreeperSpawnRules(EntityType<HawaiianHoneycreeperEntity> p_223317_0_, LevelAccessor p_223317_1_, MobSpawnType p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
       BlockState blockstate = p_223317_1_.getBlockState(p_223317_3_.below());
       return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS) || blockstate.is(Blocks.AIR)) && p_223317_1_.getRawBrightness(p_223317_3_, 0) > 8;
    }
@@ -182,12 +187,12 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
    }
 
    @Override
-   public boolean canMate(AnimalEntity p_70878_1_) {
+   public boolean canMate(Animal p_70878_1_) {
       return false;
    }
 
    @Nullable
-   public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+   public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
       return null;
    }
 
@@ -221,7 +226,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       return true;
    }
 
-   protected float getVoicePitch() {
+   public float getVoicePitch() {
       return getPitch(this.random);
    }
 
@@ -229,8 +234,8 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       return (p_192000_0_.nextFloat() - p_192000_0_.nextFloat()) * 0.2F + 1.0F;
    }
 
-   public SoundCategory getSoundSource() {
-      return SoundCategory.NEUTRAL;
+   public SoundSource getSoundSource() {
+      return SoundSource.NEUTRAL;
    }
 
    public boolean isPushable() {
@@ -238,7 +243,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
    }
 
    protected void doPush(Entity p_82167_1_) {
-      if (!(p_82167_1_ instanceof PlayerEntity)) {
+      if (!(p_82167_1_ instanceof Player)) {
          super.doPush(p_82167_1_);
       }
    }
@@ -257,7 +262,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
    }
 
    @OnlyIn(Dist.CLIENT)
-   public Vector3d getLeashOffset() {
-      return new Vector3d(0.0D, (0.5F * this.getEyeHeight()), this.getBbWidth() * 0.4F);
+   public Vec3 getLeashOffset() {
+      return new Vec3(0.0D, (0.5F * this.getEyeHeight()), this.getBbWidth() * 0.4F);
    }
 }

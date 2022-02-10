@@ -1,30 +1,32 @@
 package coda.ambientadditions.common.entities.ai.goal;
 
 import coda.ambientadditions.AmbientAdditions;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.EnumSet;
 import java.util.List;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class MoleDiggingGoal extends Goal {
     private static final ResourceLocation DIGGING_LOOT = new ResourceLocation(AmbientAdditions.MOD_ID, "gameplay/mole_digging");
-   private final MobEntity mole;
-   private final World level;
+   private final Mob mole;
+   private final Level level;
    private int eatAnimationTick;
 
-   public MoleDiggingGoal(MobEntity p_i45314_1_) {
+   public MoleDiggingGoal(Mob p_i45314_1_) {
       this.mole = p_i45314_1_;
       this.level = p_i45314_1_.level;
       this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
@@ -72,10 +74,10 @@ public class MoleDiggingGoal extends Goal {
                this.level.levelEvent(2001, blockpos, Block.getId(Blocks.COARSE_DIRT.defaultBlockState()));
             }
             this.mole.ate();
-             List<ItemStack> items = mole.level.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerWorld) mole.level).withRandom(mole.getRandom()).create(LootParameterSets.EMPTY));
+             List<ItemStack> items = mole.level.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerLevel) mole.level).withRandom(mole.getRandom()).create(LootContextParamSets.EMPTY));
 
              if (mole.getRandom().nextBoolean()) {
-                InventoryHelper.dropContents(mole.level, blockpos, NonNullList.of(ItemStack.EMPTY, items.toArray(new ItemStack[0])));
+                Containers.dropContents(mole.level, blockpos, NonNullList.of(ItemStack.EMPTY, items.toArray(new ItemStack[0])));
              }
          }
       }
