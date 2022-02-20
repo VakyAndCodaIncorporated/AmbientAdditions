@@ -29,11 +29,42 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ChocolateChipStarfishEntity extends WaterAnimal {
+public class ChocolateChipStarfishEntity extends WaterAnimal implements IAnimatable {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chocolate_chip_starfish.move", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chocolate_chip_starfish.idle", true));
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    private AnimationFactory factory = new AnimationFactory(this);
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(ChocolateChipStarfishEntity.class, EntityDataSerializers.INT);
 
     public ChocolateChipStarfishEntity(EntityType<? extends WaterAnimal> p_i48568_1_, Level p_i48568_2_) {

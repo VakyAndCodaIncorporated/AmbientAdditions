@@ -9,8 +9,39 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class LonghornCowfishEntity extends AbstractFish {
+public class LonghornCowfishEntity extends AbstractFish implements IAnimatable {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.longhorn_cowfish.swim", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.longhorn_cowfish.idle", true));
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    private AnimationFactory factory = new AnimationFactory(this);
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
     public LonghornCowfishEntity(EntityType<? extends AbstractFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
     }

@@ -27,10 +27,43 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class PembrokeCorgiEntity extends TamableAnimal {
+public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
+   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+      // TODO: animation.corgi.sploot
+
+      boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+      if (walking){
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.walk", true));
+      } else {
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.idle", true));
+      }
+
+      return PlayState.CONTINUE;
+   }
+
+   @Override
+   public void registerControllers(AnimationData data) {
+      data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+   }
+
+   private AnimationFactory factory = new AnimationFactory(this);
+   @Override
+   public AnimationFactory getFactory() {
+      return factory;
+   }
+
+   ///////////////////////////////////////////////////////////////////
+
    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(PembrokeCorgiEntity.class, EntityDataSerializers.INT);
 
    public PembrokeCorgiEntity(EntityType<? extends PembrokeCorgiEntity> p_i50240_1_, Level p_i50240_2_) {

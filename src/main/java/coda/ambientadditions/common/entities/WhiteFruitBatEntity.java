@@ -32,10 +32,40 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.Random;
 
-public class WhiteFruitBatEntity extends Animal implements FlyingAnimal {
+public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimatable {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (this.isFlying()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.honduran_white_bat.fly", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.honduran_white_bat.idle", true));
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    private AnimationFactory factory = new AnimationFactory(this);
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(WhiteFruitBatEntity.class, EntityDataSerializers.BYTE);
     private static final TargetingConditions BAT_RESTING_TARGETING =TargetingConditions.forNonCombat().range(4.0D);
     private BlockPos targetPosition;

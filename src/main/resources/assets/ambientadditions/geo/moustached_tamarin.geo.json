@@ -1,0 +1,104 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.moustached_tamarin",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 4, -0.5],
+					"cubes": [
+						{"origin": [-2, 2, -2.5], "size": [4, 3, 5], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 5, -2],
+					"cubes": [
+						{"origin": [-1.5, 3.5, -4.5], "size": [3, 3, 3], "uv": [0, 8]}
+					]
+				},
+				{
+					"name": "moustacheLeft",
+					"parent": "head",
+					"pivot": [0.5, 4, -4.5],
+					"rotation": [0, 2, 0],
+					"cubes": [
+						{"origin": [0.5, 2.5, -4.5], "size": [2, 2, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "moustacheRight",
+					"parent": "head",
+					"pivot": [-0.5, 4, -4.5],
+					"rotation": [0, -2, 0],
+					"cubes": [
+						{"origin": [-2.5, 2.5, -4.5], "size": [2, 2, 0], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "ears",
+					"parent": "head",
+					"pivot": [0, 5, -3],
+					"cubes": [
+						{"origin": [-2.5, 5, -3], "size": [5, 1, 0], "uv": [0, 20]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 5, 2.5],
+					"rotation": [-35, 0, 0],
+					"cubes": [
+						{"origin": [-0.5, 4, 2.5], "size": [1, 1, 5], "uv": [0, 14]}
+					]
+				},
+				{
+					"name": "leftArm",
+					"parent": "root",
+					"pivot": [-1.5, 2, -1.5],
+					"cubes": [
+						{"origin": [-2, 0, -2], "size": [1, 2, 1], "uv": [0, 2]}
+					]
+				},
+				{
+					"name": "leftLeg",
+					"parent": "root",
+					"pivot": [-1.5, 2, 2],
+					"cubes": [
+						{"origin": [-2, 0, 1.5], "size": [1, 2, 1], "uv": [0, 2]}
+					]
+				},
+				{
+					"name": "rightArm",
+					"parent": "root",
+					"pivot": [1.5, 2, -1.5],
+					"cubes": [
+						{"origin": [1, 0, -2], "size": [1, 2, 1], "uv": [0, 2]}
+					]
+				},
+				{
+					"name": "rightLeg",
+					"parent": "root",
+					"pivot": [1.5, 2, 2],
+					"cubes": [
+						{"origin": [1, 0, 1.5], "size": [1, 2, 1], "uv": [0, 2]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,68 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.longhorn_cowfish.idle": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*180)*2.5", 0]
+					}
+				},
+				"dorsalFin": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*180)*5", 0]
+					}
+				},
+				"pectoralFinLeft": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*180)*5", 0]
+					}
+				},
+				"pectoralFinRight": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*180)*5", 0]
+					}
+				},
+				"caudalFin": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*180)*10", 0]
+					}
+				}
+			}
+		},
+		"animation.longhorn_cowfish.swim": {
+			"loop": true,
+			"animation_length": 1.5,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*480)*5", 0]
+					}
+				},
+				"dorsalFin": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*480)*5", 0]
+					}
+				},
+				"pectoralFinLeft": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*480)*5", 0]
+					}
+				},
+				"pectoralFinRight": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*480)*5", 0]
+					}
+				},
+				"caudalFin": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*480)*10", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

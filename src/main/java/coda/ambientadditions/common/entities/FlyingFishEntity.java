@@ -18,9 +18,40 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 // TODO - make them stop flying once they hit the water
-public class FlyingFishEntity extends AbstractSchoolingFish {
+public class FlyingFishEntity extends AbstractSchoolingFish implements IAnimatable {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.flying_fish.swim", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.flying_fish.idle", true));
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    private AnimationFactory factory = new AnimationFactory(this);
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
     private static final EntityDataAccessor<Boolean> IS_FLYING = SynchedEntityData.defineId(FlyingFishEntity.class, EntityDataSerializers.BOOLEAN);
 
     public FlyingFishEntity(EntityType<? extends AbstractSchoolingFish> p_i48855_1_, Level p_i48855_2_) {

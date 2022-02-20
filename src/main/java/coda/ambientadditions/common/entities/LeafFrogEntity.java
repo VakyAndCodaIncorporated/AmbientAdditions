@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -36,12 +37,44 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class LeafFrogEntity extends Animal {
+public class LeafFrogEntity extends Animal implements IAnimatable {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            // TODO: know when its hopping dont just loop it randomly
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.hop", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.idle", true));
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    private AnimationFactory factory = new AnimationFactory(this);
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
     private static final EntityDataAccessor<Boolean> IS_IDLE = SynchedEntityData.defineId(LeafFrogEntity.class, EntityDataSerializers.BOOLEAN);
     private Goal swimGoal;
     private boolean wasOnGround;
@@ -393,7 +426,7 @@ public class LeafFrogEntity extends Animal {
 
         @Override
         protected Vec3 getPosition() {
-            if (mob.isBaby()) return LandRandomPos.getPos(this.mob, 10, 7);
+            if (mob.isBaby()) return DefaultRandomPos.getPos(this.mob, 10, 7);
             return super.getPosition();
         }
     }

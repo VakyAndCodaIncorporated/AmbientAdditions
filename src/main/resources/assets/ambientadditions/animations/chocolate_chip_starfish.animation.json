@@ -1,0 +1,78 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.chocolate_chip_starfish.idle": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"Middle": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*90)*1", 0]
+					}
+				},
+				"Arm1": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-216+query.anim_time*90)*2.5)", "math.cos(-216+query.anim_time*90)*2.5", 0]
+					}
+				},
+				"Arm2": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-288+query.anim_time*90)*2.5)", "math.cos(-288+query.anim_time*90)*2.5", 0]
+					}
+				},
+				"Arm3": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(query.anim_time*90)*2.5)", "math.cos(query.anim_time*90)*2.5", 0]
+					}
+				},
+				"Arm4": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-72+query.anim_time*90)*2.5)", "math.cos(-72+query.anim_time*90)*2.5", 0]
+					}
+				},
+				"Arm5": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-144+query.anim_time*90)*2.5)", "math.cos(-144+query.anim_time*90)*2.5", 0]
+					}
+				}
+			}
+		},
+		"animation.chocolate_chip_starfish.move": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"Middle": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*180)*-2", 0]
+					}
+				},
+				"Arm1": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-216+query.anim_time*180)*2.5)", "math.cos(-216+query.anim_time*180)*2.5", 0]
+					}
+				},
+				"Arm2": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-288+query.anim_time*180)*2.5)", "math.cos(-288+query.anim_time*180)*2.5", 0]
+					}
+				},
+				"Arm3": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(query.anim_time*180)*2.5)", "math.cos(query.anim_time*180)*2.5", 0]
+					}
+				},
+				"Arm4": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-72+query.anim_time*180)*2.5)", "math.cos(-72+query.anim_time*180)*2.5", 0]
+					}
+				},
+				"Arm5": {
+					"rotation": {
+						"vector": ["math.max(0,math.sin(-144+query.anim_time*180)*2.5)", "math.cos(-144+query.anim_time*180)*2.5", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

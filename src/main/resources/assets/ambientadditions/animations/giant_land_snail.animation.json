@@ -1,0 +1,53 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.giant_land_snail.idle": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"mouth": {
+					"rotation": {
+						"vector": [0, "math.sin(72+query.anim_time*90)*2.5", 0]
+					}
+				},
+				"eyes": {
+					"rotation": {
+						"vector": [0, 0, "math.sin(query.anim_time*90)*2.5"]
+					}
+				},
+				"shell1": {
+					"rotation": {
+						"vector": [0, "math.sin(query.anim_time*90)*1", "math.sin(72+query.anim_time*90)*1"]
+					}
+				}
+			}
+		},
+		"animation.giant_land_snail.move": {
+			"loop": true,
+			"animation_length": 1.5,
+			"bones": {
+				"body": {
+					"position": {
+						"vector": [0, 0, "-0.25+math.sin(query.anim_time*240)*-0.25"]
+					}
+				},
+				"mouth": {
+					"rotation": {
+						"vector": ["math.sin(-36+query.anim_time*240)*-2.5", 0, 0]
+					}
+				},
+				"eyes": {
+					"rotation": {
+						"vector": ["math.sin(-36+query.anim_time*240)*-6", 0, 0]
+					}
+				},
+				"shell1": {
+					"position": {
+						"vector": [0, 0, "-0.25+math.sin(query.anim_time*240)*0.1"]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
