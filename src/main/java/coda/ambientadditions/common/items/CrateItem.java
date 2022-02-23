@@ -2,46 +2,41 @@ package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class CrateItem extends Item {
     public static final String DATA_CREATURE = "CreatureData";
@@ -49,6 +44,8 @@ public class CrateItem extends Item {
     public CrateItem(Properties properties) {
         super(properties);
     }
+
+    static Random random = new Random();
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
@@ -77,11 +74,11 @@ public class CrateItem extends Item {
                 stack1.setTag(tag);
 
                 if (more) {
-                    if (!player.inventory.add(stack1)) player.drop(stack1, true);
+                    if (!player.getInventory().add(stack1)) player.drop(stack1, true);
                     else player.addItem(stack1);
                 }
 
-                target.remove();
+                target.discard();
 
                 level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
             }
@@ -185,7 +182,7 @@ public class CrateItem extends Item {
             UUID id = entity.getUUID();
             entity.deserializeNBT(tag);
             entity.setUUID(id);
-            entity.moveTo(pos.getX(), pos.getY() + direction.getStepY() + 1.0, pos.getZ(), player.yRot, 0f);
+            entity.moveTo(pos.getX(), pos.getY() + direction.getStepY() + 1.0, pos.getZ(), player.getYRot(), 0f);
 
             if (stack.hasCustomHoverName()) entity.setCustomName(stack.getHoverName());
             stack.removeTagKey(DATA_CREATURE);
@@ -224,7 +221,7 @@ public class CrateItem extends Item {
             entity.deserializeNBT(tag);
             entity.setUUID(id);
 
-            entity.moveTo(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5, context.getPlayer().yRot, 0f);
+            entity.moveTo(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5, context.getPlayer().getYRot(), 0f);
 
             if (stack.hasCustomHoverName()) entity.setCustomName(stack.getHoverName());
             stack.removeTagKey(DATA_CREATURE);

@@ -1,8 +1,6 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.model.DuckyMaskModel;
-import coda.ambientadditions.client.model.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -23,6 +21,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
 
@@ -50,11 +49,14 @@ public class DuckyMaskArmorItem extends ArmorItem {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Nullable
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-        return (A) DuckyMaskModel.INSTANCE;
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
+        consumer.accept(new YetiArmWarmersItem.ModelSupplier());
+    }
+
+    static class ModelSupplier implements IItemRenderProperties {
+        public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+            return (A) YetiArmWarmersModel.INSTANCE;
+        }
     }
 }

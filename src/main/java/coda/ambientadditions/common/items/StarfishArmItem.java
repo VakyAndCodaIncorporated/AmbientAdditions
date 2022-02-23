@@ -2,31 +2,29 @@ package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.common.entities.ChocolateChipStarfishEntity;
 import coda.ambientadditions.common.init.AAEntities;
-import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item.Properties;
+import java.util.Random;
 
 public class StarfishArmItem extends Item {
     public StarfishArmItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
+
+    static Random random = new Random();
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -58,7 +56,7 @@ public class StarfishArmItem extends Item {
 
             player.awardStat(Stats.ITEM_USED.get(this));
 
-            if (!player.abilities.instabuild) {
+            if (!player.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
         }

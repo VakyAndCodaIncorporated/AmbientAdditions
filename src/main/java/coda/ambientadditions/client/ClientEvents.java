@@ -3,12 +3,19 @@ package coda.ambientadditions.client;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.geo.*;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
+import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
+import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
+import coda.ambientadditions.client.renderer.layer.HawaiianHoneycreeperShoulderLayer;
+import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.items.AASpawnEggItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,18 +47,31 @@ public class ClientEvents {
             make(type, type.getRegistryName().getPath());
         }
 
-        make(AAEntities.PEMBROKE_CORGI.get(), "corgi/pembroke_corgi");
-        make(AAEntities.CARDIGAN_CORGI.get(), "corgi/cardigan_corgi");
+        EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
+            GenericGeoRenderer<PembrokeCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi/pembroke_corgi"));
+            render.addLayer(new PembrokeCorgiCollarLayer(render));
+            return render;
+        });
 
-        EntityRenderers.register(AAEntities.VEILED_CHAMELEON.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
-            TextureVarientModel<VeiledChameleonEntity> model = new TextureVarientModel<>(AAEntities.VEILED_CHAMELEON.get().getRegistryName().getPath());
-            ArrayList<ResourceLocation> textures = new ArrayList<>();
-            for (int i=1;i<=7;i++){
-                textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_" + i + ".png"));
-            }
-            model.setTextures(VeiledChameleonEntity::getVariant, textures);
-            return model;
-        }));
+        EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), (ctx) -> {
+            GenericGeoRenderer<CardiganCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi/cardigan_corgi"));
+            render.addLayer(new CardiganCorgiCollarLayer(render));
+            return render;
+        });
+
+        EntityRenderers.register(AAEntities.VEILED_CHAMELEON.get(), (ctx) -> {
+            GenericGeoRenderer<VeiledChameleonEntity> render = new GenericGeoRenderer(ctx, () -> {
+                TextureVarientModel<VeiledChameleonEntity> model = new TextureVarientModel<>(AAEntities.VEILED_CHAMELEON.get().getRegistryName().getPath());
+                ArrayList<ResourceLocation> textures = new ArrayList<>();
+                for (int i=1;i<=7;i++){
+                    textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_" + i + ".png"));
+                }
+                model.setTextures(VeiledChameleonEntity::getVariant, textures);
+                return model;
+            });
+            render.addLayer(new ChameleonBrightnessLayer(render));
+            return render;
+        });
 
         EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
             TextureVarientModel<ChocolateChipStarfishEntity> model = new TextureVarientModel<>(AAEntities.CHOCOLATE_CHIP_STARFISH.get().getRegistryName().getPath());
@@ -121,12 +141,10 @@ public class ClientEvents {
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
 
-        // TODO: shoulder layer renderers
-
-        //        PlayerRenderer managerDefault = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
-        //        PlayerRenderer managerSlim = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
-        //        managerDefault.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerDefault));
-        //        managerSlim.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerSlim));
+        PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
+        PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
+        managerDefault.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerDefault));
+        managerSlim.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerSlim));
     }
 
     @SubscribeEvent

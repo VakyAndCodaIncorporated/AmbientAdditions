@@ -53,7 +53,7 @@ public class FrogEggItem extends Item {
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        if (!player.abilities.instabuild) {
+        if (!player.getAbilities().instabuild) {
             itemstack.shrink(1);
         }
 

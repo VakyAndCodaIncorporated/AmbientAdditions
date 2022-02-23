@@ -1,23 +1,30 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
@@ -26,18 +33,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
-
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 
 public class AACatchableItem extends BucketItem {
     private final Supplier<? extends EntityType<?>> entityType;
@@ -49,7 +44,7 @@ public class AACatchableItem extends BucketItem {
         this.entityType = entityType;
         this.item1 = item;
         this.hasTooltip = hasTooltip;
-        DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AmbientAdditions.CALLBACKS.add(() -> ItemProperties.register(this, new ResourceLocation(AmbientAdditions.MOD_ID, "variant"), (stack, world, player) -> stack.hasTag() ? stack.getTag().getInt("Variant") : 0)));
+        DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> AmbientAdditions.CALLBACKS.add(() -> ItemProperties.register(this, new ResourceLocation(AmbientAdditions.MOD_ID, "variant"), (stack, world, player, i) -> stack.hasTag() ? stack.getTag().getInt("Variant") : 0)));
     }
 
     public InteractionResult useOn(UseOnContext context) {
@@ -73,7 +68,7 @@ public class AACatchableItem extends BucketItem {
             Supplier<? extends EntityType<?>> entitytype = entityType;
             Entity entityType = entitytype.get().spawn((ServerLevel) world, itemstack, context.getPlayer(), blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
             if (entityType != null) {
-                if(!context.getPlayer().abilities.instabuild) {
+                if(!context.getPlayer().getAbilities().instabuild) {
                     itemstack.shrink(1);
                     context.getPlayer().addItem(new ItemStack(item1));
                 }
