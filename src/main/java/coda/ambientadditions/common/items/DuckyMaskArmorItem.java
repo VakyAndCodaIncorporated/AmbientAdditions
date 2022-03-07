@@ -1,9 +1,12 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.client.armor.DuckyMaskModel;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -49,14 +52,17 @@ public class DuckyMaskArmorItem extends ArmorItem {
         }
     }
 
+
     @Override
     public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
-        consumer.accept(new YetiArmWarmersItem.ModelSupplier());
+        consumer.accept(new DuckyMaskArmorItem.ModelSupplier());
     }
 
     static class ModelSupplier implements IItemRenderProperties {
+        DuckyMaskModel INSTANCE;
         public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-            return (A) YetiArmWarmersModel.INSTANCE;
+            if (INSTANCE == null) INSTANCE = new DuckyMaskModel(Minecraft.getInstance().getEntityModels().bakeLayer(DuckyMaskModel.LAYER_LOCATION));
+            return (A) INSTANCE;
         }
     }
 }

@@ -1,7 +1,9 @@
 package coda.ambientadditions.client;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.client.armor.DuckyMaskModel;
 import coda.ambientadditions.client.geo.*;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
@@ -13,7 +15,6 @@ import coda.ambientadditions.common.items.AASpawnEggItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -21,8 +22,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,13 +53,13 @@ public class ClientEvents {
         }
 
         EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
-            GenericGeoRenderer<PembrokeCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi/pembroke_corgi"));
+            GenericGeoRenderer<PembrokeCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi", "corgi/pembroke_corgi"));
             render.addLayer(new PembrokeCorgiCollarLayer(render));
             return render;
         });
 
         EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), (ctx) -> {
-            GenericGeoRenderer<CardiganCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi/cardigan_corgi"));
+            GenericGeoRenderer<CardiganCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi", "corgi/cardigan_corgi"));
             render.addLayer(new CardiganCorgiCollarLayer(render));
             return render;
         });
@@ -112,6 +117,17 @@ public class ClientEvents {
             return model;
         }));
 
+        EntityRenderers.register(AAEntities.SIAMANG_GIBBON.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
+            TextureVarientModel<SiamangGibbonEntity> model = new TextureVarientModel<>(AAEntities.SIAMANG_GIBBON.get().getRegistryName().getPath());
+            model.setTextures((e) -> e.isBooming() ? 1 : 0, Arrays.asList(
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/siamang_gibbon/normal.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/siamang_gibbon/booming.png")
+            ));
+            return model;
+        }));
+
+
+
         EntityRenderers.register(AAEntities.LEAF_FROG.get(), (ctx) -> new LeafFrogRenderer(ctx, () -> {
             TextureVarientModel<LeafFrogEntity> model = new TextureVarientModel<>(AAEntities.LEAF_FROG.get().getRegistryName().getPath());
             model.setTextures((e) -> e.isBaby() ? 1 : 0, Arrays.asList(
@@ -133,18 +149,15 @@ public class ClientEvents {
         EntityRenderers.register(AAEntities.YETI_CRAB.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVarientModel<YetiCrabEntity> model = new TextureVarientModel<>(AAEntities.YETI_CRAB.get().getRegistryName().getPath());
             model.setTextures((e) -> e.isSheared() ? 1 : 0, Arrays.asList(
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/yeti_crab.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/sheared.png")
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/yeti_crab/yeti_crab.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/yeti_crab/sheared.png")
             ));
             return model;
         }));
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
 
-        PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
-        PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
-        managerDefault.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerDefault));
-        managerSlim.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerSlim));
+        didPlayerLayers = false;
     }
 
     @SubscribeEvent
@@ -153,5 +166,28 @@ public class ClientEvents {
         ItemColors handler = event.getItemColors();
         ItemColor eggColor = (stack, tintIndex) -> ((AASpawnEggItem) stack.getItem()).getColor(tintIndex);
         for (AASpawnEggItem e : AASpawnEggItem.UNADDED_EGGS) handler.register(eggColor, e);
+    }
+
+    @SubscribeEvent
+    public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event){
+        event.registerLayerDefinition(YetiArmWarmersModel.LAYER_LOCATION, YetiArmWarmersModel::createBodyLayer);
+        event.registerLayerDefinition(DuckyMaskModel.LAYER_LOCATION, DuckyMaskModel::createBodyLayer);
+    }
+
+    static boolean didPlayerLayers = false;
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID)
+    static class ModForgeEvents {
+        // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
+        @SubscribeEvent
+        public static void playerLayers(RenderPlayerEvent event){
+            if (!didPlayerLayers) {
+                System.out.println("playerlayer");
+                PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
+                PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
+                managerDefault.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerDefault));
+                managerSlim.addLayer(new HawaiianHoneycreeperShoulderLayer<>(managerSlim));
+            }
+        }
     }
 }

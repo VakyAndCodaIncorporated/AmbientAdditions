@@ -27,17 +27,17 @@ public class BigFishMoveHelperController extends MoveControl {
                 this.mob.setZza(0.0F);
             } else {
                 float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-                this.entity.yRot = this.rotlerp(this.entity.yRot, f, 10.0F);
-                this.entity.yBodyRot = this.entity.yRot;
-                this.entity.yHeadRot = this.entity.yRot;
+                this.entity.setYRot(this.rotlerp(this.entity.getYRot(), f, 10.0F));
+                this.entity.yBodyRot = this.entity.getYRot();
+                this.entity.yHeadRot = this.entity.getYRot();
                 float f1 = (float)(this.speedModifier * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED));
                 if (this.entity.isInWater()) {
                     this.entity.setSpeed(f1 * 0.02F);
-                    float f2 = -((float)(Mth.atan2(d1, (double)Mth.sqrt(d0 * d0 + d2 * d2)) * (double)(180F / (float)Math.PI)));
+                    float f2 = -((float)(Mth.atan2(d1, (double)Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double)(180F / (float)Math.PI)));
                     f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
-                    this.entity.xRot = this.rotlerp(this.entity.xRot, f2, 5.0F);
-                    float f3 = Mth.cos(this.entity.xRot * ((float)Math.PI / 180F));
-                    float f4 = Mth.sin(this.entity.xRot * ((float)Math.PI / 180F));
+                    this.entity.setXRot(this.rotlerp(this.entity.getXRot(), f2, 5.0F));
+                    float f3 = Mth.cos(this.entity.getXRot() * ((float)Math.PI / 180F));
+                    float f4 = Mth.sin(this.entity.getXRot() * ((float)Math.PI / 180F));
                     this.entity.zza = f3 * f1;
                     this.entity.yya = -f4 * f1;
                 } else {

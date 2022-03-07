@@ -1,8 +1,9 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.model.YetiArmWarmersModel;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,11 +15,8 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class YetiArmWarmersItem extends ArmorItem {
@@ -51,8 +49,10 @@ public class YetiArmWarmersItem extends ArmorItem {
     }
 
     static class ModelSupplier implements IItemRenderProperties {
+        YetiArmWarmersModel INSTANCE;
         public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-            return (A) YetiArmWarmersModel.INSTANCE;
+            if (INSTANCE == null) INSTANCE = new YetiArmWarmersModel(Minecraft.getInstance().getEntityModels().bakeLayer(YetiArmWarmersModel.LAYER_LOCATION));
+            return (A) INSTANCE;
         }
     }
 }

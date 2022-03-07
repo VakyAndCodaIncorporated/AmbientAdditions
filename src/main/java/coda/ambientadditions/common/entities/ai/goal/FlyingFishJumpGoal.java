@@ -52,7 +52,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
    public boolean canContinueToUse() {
       double d0 = this.fish.getDeltaMovement().y;
-      return (!(d0 * d0 < (double)0.03F) || this.fish.xRot == 0.0F || !(Math.abs(this.fish.xRot) < 10.0F) || !this.fish.isInWater()) && !this.fish.isOnGround();
+      return (!(d0 * d0 < (double)0.03F) || this.fish.getXRot() == 0.0F || !(Math.abs(this.fish.getXRot()) < 10.0F) || !this.fish.isInWater()) && !this.fish.isOnGround();
    }
 
    public boolean isInterruptable() {
@@ -68,7 +68,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
    }
 
    public void stop() {
-      this.fish.xRot = 0.0F;
+      this.fish.setXRot(0.0F);
       this.fish.setFlying(false);
    }
 
@@ -84,12 +84,12 @@ public class FlyingFishJumpGoal extends JumpGoal {
       }
 
       Vec3 vector3d = this.fish.getDeltaMovement();
-      if (vector3d.y * vector3d.y < (double)0.03F && this.fish.xRot != 0.0F) {
-         this.fish.xRot = Mth.rotlerp(this.fish.xRot, 0.0F, 0.2F);
+      if (vector3d.y * vector3d.y < (double)0.03F && this.fish.getXRot() != 0.0F) {
+         this.fish.setXRot(Mth.rotlerp(this.fish.getXRot(), 0.0F, 0.2F));
       } else {
-         double d0 = Math.sqrt(Entity.getHorizontalDistanceSqr(vector3d));
+         double d0 = vector3d.horizontalDistanceSqr();
          double d1 = Math.signum(-vector3d.y) * Math.acos(d0 / vector3d.length()) * (double)(180F / (float)Math.PI);
-         this.fish.xRot = (float)d1;
+         this.fish.setXRot((float) d1);
       }
 
    }

@@ -4,6 +4,7 @@ import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.HawaiianHoneycreeperEntity;
 import coda.ambientadditions.common.init.AAEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -44,7 +45,9 @@ public class HawaiianHoneycreeperShoulderLayer<T extends Player> extends RenderL
          }
 
          // TODO: 0,0,0 are offsets. 0F is parameter of entity render but seems to not be passed into the payers
-         Minecraft.getInstance().getEntityRenderDispatcher().render(shoulder, 0, 0, 0, 0F, p_229136_7_, p_229136_1_, p_229136_2_, p_229136_3_);
+         float yOffset = 1; // larger number renders it lower
+         p_229136_1_.mulPose(Vector3f.YP.rotationDegrees(180));
+         Minecraft.getInstance().getEntityRenderDispatcher().render(shoulder, 0, yOffset, 0, 0F, p_229136_7_, p_229136_1_, p_229136_2_, p_229136_3_);
 
          p_229136_1_.popPose();
       }

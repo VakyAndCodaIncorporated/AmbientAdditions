@@ -37,7 +37,14 @@ import java.util.Random;
 
 public class StagBeetleEntity extends PathfinderMob implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        return PlayState.STOP;
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.StagBeetleModel.walk", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.StagBeetleModel.idle", true));
+        }
+
+        return PlayState.CONTINUE;
     }
 
     @Override

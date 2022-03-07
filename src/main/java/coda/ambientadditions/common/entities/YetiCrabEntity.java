@@ -46,7 +46,15 @@ import javax.annotation.Nullable;
 
 public class YetiCrabEntity extends WaterAnimal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        return PlayState.STOP;
+
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        if (walking){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.YetiCrabModel.walk", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.YetiCrabModel.idle", true));
+        }
+
+        return PlayState.CONTINUE;
     }
 
     @Override
