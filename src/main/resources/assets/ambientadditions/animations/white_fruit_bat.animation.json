@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.honduran_white_bat.idle": {
+		"animation.white_fruit_bat.idle": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {
@@ -37,7 +37,7 @@
 				}
 			}
 		},
-		"animation.honduran_white_bat.fly": {
+		"animation.white_fruit_bat.fly": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

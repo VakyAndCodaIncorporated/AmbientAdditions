@@ -39,11 +39,15 @@ import java.util.UUID;
 
 public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-      // TODO: animation.corgi.sploot
 
       boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-      if (walking){
+
+      if (isInSittingPose()) {
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.sploot", true));
+      }
+      else if (walking) {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.walk", true));
+         event.getController().setAnimationSpeed(2.5);
       } else {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.idle", true));
       }
@@ -53,7 +57,7 @@ public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
 
    @Override
    public void registerControllers(AnimationData data) {
-      data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+      data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
    }
 
    private AnimationFactory factory = new AnimationFactory(this);

@@ -1,8 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.armor.DuckyMaskModel;
-import coda.ambientadditions.client.armor.YetiArmWarmersModel;
+import coda.ambientadditions.client.geo.armor.DuckyMaskModel;
 import coda.ambientadditions.common.init.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -22,15 +21,9 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class DuckyMaskArmorItem extends ArmorItem {
     public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":ducky",  4, new int[]{1, 2, 3, 1}, 12, SoundEvents.ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.of(Items.IRON_INGOT));
@@ -60,9 +53,9 @@ public class DuckyMaskArmorItem extends ArmorItem {
 
     static class ModelSupplier implements IItemRenderProperties {
         DuckyMaskModel INSTANCE;
-        public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+        public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
             if (INSTANCE == null) INSTANCE = new DuckyMaskModel(Minecraft.getInstance().getEntityModels().bakeLayer(DuckyMaskModel.LAYER_LOCATION));
-            return (A) INSTANCE;
+            return INSTANCE;
         }
     }
 }

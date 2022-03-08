@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,7 +50,7 @@ public class StagBeetleEntity extends PathfinderMob implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 
     private AnimationFactory factory = new AnimationFactory(this);
@@ -111,7 +112,7 @@ public class StagBeetleEntity extends PathfinderMob implements IAnimatable {
     }
 
     public static boolean checkBeetleSpawnRules(EntityType<? extends PathfinderMob> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_.below()).is(Tags.Blocks.DIRT) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS);
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.DIRT) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS);
     }
 
     @Override

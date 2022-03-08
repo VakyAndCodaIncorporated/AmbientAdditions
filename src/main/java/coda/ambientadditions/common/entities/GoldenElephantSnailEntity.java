@@ -46,7 +46,7 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 
     private AnimationFactory factory = new AnimationFactory(this);
@@ -56,7 +56,6 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
     }
 
     ///////////////////////////////////////////////////////////////////
-
 
     public GoldenElephantSnailEntity(EntityType<? extends WaterAnimal> type, Level worldIn) {
         super(type, worldIn);

@@ -32,6 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -44,10 +45,11 @@ import java.util.Random;
 
 public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.isFlying()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.honduran_white_bat.fly", true));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.honduran_white_bat.idle", true));
+        if (this.isFlying()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.white_fruit_bat.fly", true));
+            event.getController().setAnimationSpeed(2.0D);
+        } else if (this.isResting()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.white_fruit_bat.idle", true));
         }
 
         return PlayState.CONTINUE;
@@ -55,7 +57,7 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 
     private AnimationFactory factory = new AnimationFactory(this);
@@ -96,7 +98,7 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
     }
 
     public static boolean checkBatSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.LEAVES);
+        return p_223316_1_.getLightEmission(p_223316_3_) > 8;
     }
 
     @Override
@@ -254,13 +256,6 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
                 if (this.random.nextInt(200) == 0) {
                     this.yHeadRot = (float)this.random.nextInt(360);
                 }
-
-                if (this.level.getNearestPlayer(BAT_RESTING_TARGETING, this) != null) {
-                    this.setResting(false);
-                    if (!flag) {
-                        this.level.levelEvent(null, 1025, blockpos, 0);
-                    }
-                }
             } else {
                 this.setResting(false);
                 if (!flag) {
@@ -286,7 +281,7 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
             float f1 = Mth.wrapDegrees(f - this.getYRot());
             this.zza = 0.5F;
             this.setYRot(this.getYRot() + f1);
-            if (this.random.nextInt(100) == 0 && this.level.getBlockState(blockpos1).isRedstoneConductor(this.level, blockpos1)) {
+            if (this.level.getBlockState(blockpos1).is(BlockTags.LEAVES)) {
                 this.setResting(true);
             }
         }

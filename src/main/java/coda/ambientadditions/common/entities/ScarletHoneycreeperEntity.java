@@ -50,12 +50,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements FlyingAnimal, IAnimatable {
+public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements FlyingAnimal, IAnimatable {
    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
       if (this.isFlying()){
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hawaiian_honey_creeper.fly", true));
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.fly", true));
       } else {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.hawaiian_honey_creeper.idle", true));
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.idle", true));
       }
 
       return PlayState.CONTINUE;
@@ -63,7 +63,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
 
    @Override
    public void registerControllers(AnimationData data) {
-      data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+      data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
    }
 
    private AnimationFactory factory = new AnimationFactory(this);
@@ -80,7 +80,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
    public float oFlap;
    private float flapping = 1.0F;
 
-   public HawaiianHoneycreeperEntity(EntityType<? extends HawaiianHoneycreeperEntity> p_i50251_1_, Level p_i50251_2_) {
+   public ScarletHoneycreeperEntity(EntityType<? extends ScarletHoneycreeperEntity> p_i50251_1_, Level p_i50251_2_) {
       super(p_i50251_1_, p_i50251_2_);
       this.moveControl = new FlyingMoveControl(this, 10, false);
       this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
@@ -98,7 +98,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
 
    @Override
    public ItemStack getPickedResult(HitResult target) {
-      return new ItemStack(AAItems.HAWAIIAN_HONEYCREEPER_SPAWN_EGG.get());
+      return new ItemStack(AAItems.SCARLET_HONEYCREEPER_SPAWN_EGG.get());
    }
 
    protected void registerGoals() {
@@ -204,7 +204,7 @@ public class HawaiianHoneycreeperEntity extends ShoulderRidingEntity implements 
       return false;
    }
 
-   public static boolean checkHoneycreeperSpawnRules(EntityType<HawaiianHoneycreeperEntity> p_223317_0_, LevelAccessor p_223317_1_, MobSpawnType p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
+   public static boolean checkHoneycreeperSpawnRules(EntityType<ScarletHoneycreeperEntity> p_223317_0_, LevelAccessor p_223317_1_, MobSpawnType p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
       BlockState blockstate = p_223317_1_.getBlockState(p_223317_3_.below());
       return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS) || blockstate.is(Blocks.AIR)) && p_223317_1_.getRawBrightness(p_223317_3_, 0) > 8;
    }

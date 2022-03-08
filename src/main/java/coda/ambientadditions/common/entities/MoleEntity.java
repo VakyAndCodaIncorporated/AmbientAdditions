@@ -69,7 +69,7 @@ public class MoleEntity extends Animal implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 
     private AnimationFactory factory = new AnimationFactory(this);

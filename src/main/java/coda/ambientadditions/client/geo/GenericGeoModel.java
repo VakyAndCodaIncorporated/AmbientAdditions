@@ -1,6 +1,7 @@
 package coda.ambientadditions.client.geo;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.common.entities.LeafFrogEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -26,6 +27,9 @@ public class GenericGeoModel<E extends IAnimatable> extends AnimatedGeoModel<E> 
 
     @Override
     public ResourceLocation getModelLocation(E object) {
+        if (object instanceof LeafFrogEntity frog) return frog.isBaby() ?
+                new ResourceLocation(AmbientAdditions.MOD_ID, "geo/tadpole.geo.json") :
+                new ResourceLocation(AmbientAdditions.MOD_ID, "geo/leaf_frog.geo.json");
         return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/" + model + ".geo.json");
     }
 

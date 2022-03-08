@@ -1,7 +1,7 @@
 package coda.ambientadditions.client.renderer.layer;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.common.entities.HawaiianHoneycreeperEntity;
+import coda.ambientadditions.common.entities.ScarletHoneycreeperEntity;
 import coda.ambientadditions.common.init.AAEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -18,12 +18,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class HawaiianHoneycreeperShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
-   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/hawaiian_honeycreeper.geo.json");
+public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
+   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/scarlet_honeycreeper.geo.json"); //todo - remove?
 
    RenderLayerParent<T, PlayerModel<T>> renderer;
 
-   public HawaiianHoneycreeperShoulderLayer(RenderLayerParent<T, PlayerModel<T>> p_i50929_1_) {
+   public ScarletHoneycreeperShoulderLayer(RenderLayerParent<T, PlayerModel<T>> p_i50929_1_) {
       super(p_i50929_1_);
       this.renderer = p_i50929_1_;
    }
@@ -36,12 +36,12 @@ public class HawaiianHoneycreeperShoulderLayer<T extends Player> extends RenderL
    Entity shoulder;
    private void render(PoseStack p_229136_1_, MultiBufferSource p_229136_2_, int p_229136_3_, T p_229136_4_, float p_229136_5_, float p_229136_6_, float p_229136_7_, float p_229136_8_, boolean p_229136_9_) {
       CompoundTag compoundnbt = p_229136_9_ ? p_229136_4_.getShoulderEntityLeft() : p_229136_4_.getShoulderEntityRight();
-      if (compoundnbt.getString("id").equals(AAEntities.HAWAIIAN_HONEYCREEPER.get().getRegistryName().toString())) {
+      if (compoundnbt.getString("id").equals(AAEntities.SCARLET_HONEYCREEPER.get().getRegistryName().toString())) {
          p_229136_1_.pushPose();
          p_229136_1_.translate(p_229136_9_ ? (double)0.4F : (double)-0.4F, p_229136_4_.isCrouching() ? (double)-1.3F : -1.5D, 0.0D);
 
          if (shoulder == null){
-            shoulder = new HawaiianHoneycreeperEntity(AAEntities.HAWAIIAN_HONEYCREEPER.get(), Minecraft.getInstance().level);
+            shoulder = new ScarletHoneycreeperEntity(AAEntities.SCARLET_HONEYCREEPER.get(), Minecraft.getInstance().level);
          }
 
          // TODO: 0,0,0 are offsets. 0F is parameter of entity render but seems to not be passed into the payers

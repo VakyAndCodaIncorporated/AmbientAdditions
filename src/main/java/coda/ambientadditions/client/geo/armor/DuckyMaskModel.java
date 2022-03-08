@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.armor;// Made with Blockbench 4.1.4
+package coda.ambientadditions.client.geo.armor;// Made with Blockbench 4.1.4
 // Exported for Minecraft version 1.17 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 

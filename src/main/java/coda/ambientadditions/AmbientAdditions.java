@@ -91,7 +91,7 @@ public class AmbientAdditions {
         event.put(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatEntity.createAttributes().build());
         event.put(AAEntities.MOUSTACHED_TAMARIN.get(), MoustachedTamarinEntity.createAttributes().build());
         event.put(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseEntity.createAttributes().build());
-        event.put(AAEntities.HAWAIIAN_HONEYCREEPER.get(), HawaiianHoneycreeperEntity.createAttributes().build());
+        event.put(AAEntities.SCARLET_HONEYCREEPER.get(), ScarletHoneycreeperEntity.createAttributes().build());
         event.put(AAEntities.PINOCCHIO_ANOLE.get(), PinocchioAnoleEntity.createAttributes().build());
         event.put(AAEntities.AYE_AYE.get(), AyeAyeEntity.createAttributes().build());
         event.put(AAEntities.SIAMANG_GIBBON.get(), SiamangGibbonEntity.createAttributes().build());
@@ -121,7 +121,7 @@ public class AmbientAdditions {
         SpawnPlacements.register(AAEntities.NAKED_MOLE_RAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, NakedMoleRatEntity::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.MOUSTACHED_TAMARIN.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, MoustachedTamarinEntity::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.NAPOLEON_WRASSE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
-        SpawnPlacements.register(AAEntities.HAWAIIAN_HONEYCREEPER.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, HawaiianHoneycreeperEntity::checkHoneycreeperSpawnRules);
+        SpawnPlacements.register(AAEntities.SCARLET_HONEYCREEPER.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ScarletHoneycreeperEntity::checkHoneycreeperSpawnRules);
         SpawnPlacements.register(AAEntities.PINOCCHIO_ANOLE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.AYE_AYE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.RING_TAILED_LEMUR.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
@@ -143,7 +143,7 @@ public class AmbientAdditions {
         if (event.getCategory() == Biome.BiomeCategory.JUNGLE) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.WHITE_FRUIT_BAT.get(), 20, 3, 3));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.HAWAIIAN_HONEYCREEPER.get(), 35, 2, 3));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SCARLET_HONEYCREEPER.get(), 35, 2, 3));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.AYE_AYE.get(), 30, 1, 2));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SIAMANG_GIBBON.get(), 30, 3, 6));

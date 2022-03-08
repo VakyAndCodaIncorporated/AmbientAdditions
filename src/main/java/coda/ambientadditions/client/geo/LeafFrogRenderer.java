@@ -5,14 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
 import java.util.function.Supplier;
 
-public class LeafFrogRenderer extends GenericGeoRenderer<LeafFrogEntity>{
+public class LeafFrogRenderer extends GenericGeoRenderer<LeafFrogEntity> {
     public LeafFrogRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<LeafFrogEntity>> model) {
         super(renderManager, model);
     }

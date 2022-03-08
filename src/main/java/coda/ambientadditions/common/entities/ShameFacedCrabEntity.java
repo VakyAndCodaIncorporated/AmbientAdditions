@@ -53,7 +53,7 @@ public class ShameFacedCrabEntity extends WaterAnimal  implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 
     private AnimationFactory factory = new AnimationFactory(this);
@@ -82,14 +82,6 @@ public class ShameFacedCrabEntity extends WaterAnimal  implements IAnimatable {
 
     protected PathNavigation createNavigation(Level world) {
         return new GroundPathNavigation(this, world);
-    }
-
-    @Override
-    public void travel(Vec3 p_213352_1_) {
-        super.travel(p_213352_1_);
-        if (isInWater()) {
-            setSpeed(this.getSpeed() * 1.5F);
-        }
     }
 
     @Override

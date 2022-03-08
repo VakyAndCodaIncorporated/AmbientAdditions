@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.armor.YetiArmWarmersModel;
+import coda.ambientadditions.client.geo.armor.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -50,9 +50,9 @@ public class YetiArmWarmersItem extends ArmorItem {
 
     static class ModelSupplier implements IItemRenderProperties {
         YetiArmWarmersModel INSTANCE;
-        public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+        public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
             if (INSTANCE == null) INSTANCE = new YetiArmWarmersModel(Minecraft.getInstance().getEntityModels().bakeLayer(YetiArmWarmersModel.LAYER_LOCATION));
-            return (A) INSTANCE;
+            return INSTANCE;
         }
     }
 }

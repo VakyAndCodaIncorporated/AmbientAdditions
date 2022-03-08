@@ -26,7 +26,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<NakedMoleRatEntity>> NAKED_MOLE_RAT = create("naked_mole_rat", EntityType.Builder.of(NakedMoleRatEntity::new, MobCategory.CREATURE).sized(0.4f, 0.3f));
     public static final RegistryObject<EntityType<MoustachedTamarinEntity>> MOUSTACHED_TAMARIN = create("moustached_tamarin", EntityType.Builder.of(MoustachedTamarinEntity::new, MobCategory.CREATURE).sized(0.4f, 0.4f));
     public static final RegistryObject<EntityType<NapoleonWrasseEntity>> NAPOLEON_WRASSE = create("napoleon_wrasse", EntityType.Builder.of(NapoleonWrasseEntity::new, MobCategory.WATER_CREATURE).sized(0.9f, 0.6f));
-    public static final RegistryObject<EntityType<HawaiianHoneycreeperEntity>> HAWAIIAN_HONEYCREEPER = create("hawaiian_honeycreeper", EntityType.Builder.of(HawaiianHoneycreeperEntity::new, MobCategory.CREATURE).sized(0.4f, 0.55f));
+    public static final RegistryObject<EntityType<ScarletHoneycreeperEntity>> SCARLET_HONEYCREEPER = create("scarlet_honeycreeper", EntityType.Builder.of(ScarletHoneycreeperEntity::new, MobCategory.CREATURE).sized(0.4f, 0.55f));
     public static final RegistryObject<EntityType<PinocchioAnoleEntity>> PINOCCHIO_ANOLE = create("pinocchio_anole", EntityType.Builder.of(PinocchioAnoleEntity::new, MobCategory.CREATURE).sized(0.4f, 0.25f));
     public static final RegistryObject<EntityType<AyeAyeEntity>> AYE_AYE = create("aye_aye", EntityType.Builder.of(AyeAyeEntity::new, MobCategory.CREATURE).sized(0.7f, 0.55f));
     public static final RegistryObject<EntityType<RingTailedLemurEntity>> RING_TAILED_LEMUR = create("ring_tailed_lemur", EntityType.Builder.of(RingTailedLemurEntity::new, MobCategory.CREATURE).sized(0.7f, 0.55f));
