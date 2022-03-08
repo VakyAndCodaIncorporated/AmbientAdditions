@@ -1,25 +1,22 @@
 package coda.ambientadditions.client.renderer.layer;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.model.VeiledChameleonModel;
-import coda.ambientadditions.client.renderer.VeiledChameleonRenderer;
 import coda.ambientadditions.common.entities.VeiledChameleonEntity;
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.LivingRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
+import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
 import java.util.Map;
 
-public class ChameleonBrightnessLayer<T extends VeiledChameleonEntity, M extends VeiledChameleonModel<T>>  extends LayerRenderer<T, M> {
+public class ChameleonBrightnessLayer extends GeoLayerRenderer<VeiledChameleonEntity> {
     public static final Map<Integer, RenderType> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
         hashMap.put(0, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_1.png")));
         hashMap.put(1, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_2.png")));
@@ -29,14 +26,17 @@ public class ChameleonBrightnessLayer<T extends VeiledChameleonEntity, M extends
         hashMap.put(5, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_6.png")));
         hashMap.put(6, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_7.png")));
     });
+    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/veiled_chameleon.geo.json");
 
-    public ChameleonBrightnessLayer(IEntityRenderer<T, M> rendererIn) {
-        super(rendererIn);
+    public ChameleonBrightnessLayer(IGeoRenderer<VeiledChameleonEntity> entityRendererIn) {
+        super(entityRendererIn);
     }
 
     @Override
-    public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        IVertexBuilder ivertexbuilder = bufferIn.getBuffer(TEXTURES.getOrDefault(entity.getVariant(), TEXTURES.get(0)));
+    public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, VeiledChameleonEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        RenderType renderType = TEXTURES.getOrDefault(entity.getVariant(), TEXTURES.get(0));
+
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(renderType);
         float health = entity.getHealth();
         float darkness;
         if (entity.getHealth() >= 5) {
@@ -46,10 +46,10 @@ public class ChameleonBrightnessLayer<T extends VeiledChameleonEntity, M extends
             darkness = 0.5F;
         }
 
-        darkness = MathHelper.clamp(darkness, 0.0F, 1.0F);
+        darkness = Mth.clamp(darkness, 0.0F, 1.0F);
 
         if (!entity.isInvisible()) {
-            this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 175, LivingRenderer.getOverlayCoords(entity, 0.0F), darkness, darkness, darkness, 1.0F);
+            this.getRenderer().render(this.getEntityModel().getModel(MODEL), entity, partialTicks, renderType, matrixStackIn, bufferIn, ivertexbuilder, packedLightIn, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), darkness, darkness, darkness, 1f);
         }
     }
 }

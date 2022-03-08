@@ -1,18 +1,24 @@
 package coda.ambientadditions.common.items;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
+
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 
 public class FrogEggItem extends Item {
     private final Supplier<EntityType<?>> entityTypeSupplier;
@@ -23,14 +29,14 @@ public class FrogEggItem extends Item {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
-        Hand hand = context.getHand();
-        World world = context.getLevel();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
+        Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Direction direction = context.getClickedFace();
         ItemStack itemstack = player.getItemInHand(hand);
-        AnimalEntity frog = (AnimalEntity) entityTypeSupplier.get().create(world);
+        Animal frog = (Animal) entityTypeSupplier.get().create(world);
         BlockState blockstate = world.getBlockState(pos);
 
         if (!world.isClientSide && frog != null) {
@@ -43,14 +49,14 @@ public class FrogEggItem extends Item {
             frog.setAge(-24000);
             frog.setPos(blockpos1.getX() + 0.5F, blockpos1.getY() + 0.5F, blockpos1.getZ() + 0.5F);
             world.addFreshEntity(frog);
-            world.playSound(player, player.blockPosition(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            world.playSound(player, player.blockPosition(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.NEUTRAL, 1.0F, 1.0F);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        if (!player.abilities.instabuild) {
+        if (!player.getAbilities().instabuild) {
             itemstack.shrink(1);
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

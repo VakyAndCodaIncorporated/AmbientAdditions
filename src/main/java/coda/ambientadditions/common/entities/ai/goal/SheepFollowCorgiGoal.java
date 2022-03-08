@@ -2,24 +2,24 @@ package coda.ambientadditions.common.entities.ai.goal;
 
 import coda.ambientadditions.common.entities.CardiganCorgiEntity;
 import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.EnumSet;
 import java.util.List;
 
 public class SheepFollowCorgiGoal extends Goal {
-    private final SheepEntity sheep;
+    private final Sheep sheep;
     private final double speedModifier;
-    private final PathNavigator navigation;
+    private final PathNavigation navigation;
     private int timeToRecalcPath;
     private final float stopDistance;
     private final float startDistance;
     private float oldWaterCost;
 
-    public SheepFollowCorgiGoal(SheepEntity p_i225711_1_, double p_i225711_2_, float p_i225711_4_, float p_i225711_5_) {
+    public SheepFollowCorgiGoal(Sheep p_i225711_1_, double p_i225711_2_, float p_i225711_4_, float p_i225711_5_) {
         this.sheep = p_i225711_1_;
         this.speedModifier = p_i225711_2_;
         this.navigation = p_i225711_1_.getNavigation();
@@ -53,13 +53,13 @@ public class SheepFollowCorgiGoal extends Goal {
 
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.sheep.getPathfindingMalus(PathNodeType.WATER);
-        this.sheep.setPathfindingMalus(PathNodeType.WATER, 0.0F);
+        this.oldWaterCost = this.sheep.getPathfindingMalus(BlockPathTypes.WATER);
+        this.sheep.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
     public void stop() {
         this.navigation.stop();
-        this.sheep.setPathfindingMalus(PathNodeType.WATER, this.oldWaterCost);
+        this.sheep.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
     }
 
     public void tick() {

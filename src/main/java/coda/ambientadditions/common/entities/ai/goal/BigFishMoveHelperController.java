@@ -1,14 +1,14 @@
 package coda.ambientadditions.common.entities.ai.goal;
 
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.util.Mth;
 
-public class BigFishMoveHelperController extends MovementController {
-    private final AbstractFishEntity entity;
+public class BigFishMoveHelperController extends MoveControl {
+    private final AbstractFish entity;
 
-    public BigFishMoveHelperController(AbstractFishEntity entity) {
+    public BigFishMoveHelperController(AbstractFish entity) {
         super(entity);
         this.entity = entity;
     }
@@ -18,7 +18,7 @@ public class BigFishMoveHelperController extends MovementController {
             this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
         }
 
-        if (this.operation == MovementController.Action.MOVE_TO && !this.entity.getNavigation().isDone()) {
+        if (this.operation == MoveControl.Operation.MOVE_TO && !this.entity.getNavigation().isDone()) {
             double d0 = this.wantedX - this.entity.getX();
             double d1 = this.wantedY - this.entity.getY();
             double d2 = this.wantedZ - this.entity.getZ();
@@ -26,18 +26,18 @@ public class BigFishMoveHelperController extends MovementController {
             if (d3 < (double)2.5000003E-7F) {
                 this.mob.setZza(0.0F);
             } else {
-                float f = (float)(MathHelper.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-                this.entity.yRot = this.rotlerp(this.entity.yRot, f, 10.0F);
-                this.entity.yBodyRot = this.entity.yRot;
-                this.entity.yHeadRot = this.entity.yRot;
+                float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
+                this.entity.setYRot(this.rotlerp(this.entity.getYRot(), f, 10.0F));
+                this.entity.yBodyRot = this.entity.getYRot();
+                this.entity.yHeadRot = this.entity.getYRot();
                 float f1 = (float)(this.speedModifier * this.entity.getAttributeValue(Attributes.MOVEMENT_SPEED));
                 if (this.entity.isInWater()) {
                     this.entity.setSpeed(f1 * 0.02F);
-                    float f2 = -((float)(MathHelper.atan2(d1, (double)MathHelper.sqrt(d0 * d0 + d2 * d2)) * (double)(180F / (float)Math.PI)));
-                    f2 = MathHelper.clamp(MathHelper.wrapDegrees(f2), -85.0F, 85.0F);
-                    this.entity.xRot = this.rotlerp(this.entity.xRot, f2, 5.0F);
-                    float f3 = MathHelper.cos(this.entity.xRot * ((float)Math.PI / 180F));
-                    float f4 = MathHelper.sin(this.entity.xRot * ((float)Math.PI / 180F));
+                    float f2 = -((float)(Mth.atan2(d1, (double)Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double)(180F / (float)Math.PI)));
+                    f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
+                    this.entity.setXRot(this.rotlerp(this.entity.getXRot(), f2, 5.0F));
+                    float f3 = Mth.cos(this.entity.getXRot() * ((float)Math.PI / 180F));
+                    float f4 = Mth.sin(this.entity.getXRot() * ((float)Math.PI / 180F));
                     this.entity.zza = f3 * f1;
                     this.entity.yya = -f4 * f1;
                 } else {

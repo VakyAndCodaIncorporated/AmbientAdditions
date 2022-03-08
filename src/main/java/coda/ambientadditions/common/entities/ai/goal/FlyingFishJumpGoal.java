@@ -1,15 +1,15 @@
 package coda.ambientadditions.common.entities.ai.goal;
 
 import coda.ambientadditions.common.entities.FlyingFishEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.goal.JumpGoal;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.goal.JumpGoal;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 public class FlyingFishJumpGoal extends JumpGoal {
    private static final int[] STEPS_TO_CHECK = new int[]{0, 1, 4, 5, 6, 7};
@@ -52,7 +52,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
    public boolean canContinueToUse() {
       double d0 = this.fish.getDeltaMovement().y;
-      return (!(d0 * d0 < (double)0.03F) || this.fish.xRot == 0.0F || !(Math.abs(this.fish.xRot) < 10.0F) || !this.fish.isInWater()) && !this.fish.isOnGround();
+      return (!(d0 * d0 < (double)0.03F) || this.fish.getXRot() == 0.0F || !(Math.abs(this.fish.getXRot()) < 10.0F) || !this.fish.isInWater()) && !this.fish.isOnGround();
    }
 
    public boolean isInterruptable() {
@@ -68,7 +68,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
    }
 
    public void stop() {
-      this.fish.xRot = 0.0F;
+      this.fish.setXRot(0.0F);
       this.fish.setFlying(false);
    }
 
@@ -83,13 +83,13 @@ public class FlyingFishJumpGoal extends JumpGoal {
          this.fish.playSound(SoundEvents.DOLPHIN_JUMP, 1.0F, 1.0F);
       }
 
-      Vector3d vector3d = this.fish.getDeltaMovement();
-      if (vector3d.y * vector3d.y < (double)0.03F && this.fish.xRot != 0.0F) {
-         this.fish.xRot = MathHelper.rotlerp(this.fish.xRot, 0.0F, 0.2F);
+      Vec3 vector3d = this.fish.getDeltaMovement();
+      if (vector3d.y * vector3d.y < (double)0.03F && this.fish.getXRot() != 0.0F) {
+         this.fish.setXRot(Mth.rotlerp(this.fish.getXRot(), 0.0F, 0.2F));
       } else {
-         double d0 = Math.sqrt(Entity.getHorizontalDistanceSqr(vector3d));
+         double d0 = vector3d.horizontalDistanceSqr();
          double d1 = Math.signum(-vector3d.y) * Math.acos(d0 / vector3d.length()) * (double)(180F / (float)Math.PI);
-         this.fish.xRot = (float)d1;
+         this.fish.setXRot((float) d1);
       }
 
    }

@@ -2,32 +2,40 @@ package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class CrateItem extends Item {
@@ -37,13 +45,15 @@ public class CrateItem extends Item {
         super(properties);
     }
 
+    static Random random = new Random();
+
     @Override
-    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
-        World level = player.level;
-        if (containsEntity(stack)) return ActionResultType.PASS;
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+        Level level = player.level;
+        if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(Effects.MOVEMENT_SLOWDOWN) && (target instanceof CreatureEntity) && player.isShiftKeyDown()) {
+        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob) && player.isShiftKeyDown()) {
             if (!level.isClientSide) {
 
                 ItemStack stack1 = player.getItemInHand(hand);
@@ -57,20 +67,20 @@ public class CrateItem extends Item {
                     more = true;
                 }
 
-                CompoundNBT targetTag = target.serializeNBT();
+                CompoundTag targetTag = target.serializeNBT();
                 targetTag.putString("OwnerName", player.getName().getString());
-                CompoundNBT tag = stack1.getOrCreateTag();
+                CompoundTag tag = stack1.getOrCreateTag();
                 tag.put(DATA_CREATURE, targetTag);
                 stack1.setTag(tag);
 
                 if (more) {
-                    if (!player.inventory.add(stack1)) player.drop(stack1, true);
+                    if (!player.getInventory().add(stack1)) player.drop(stack1, true);
                     else player.addItem(stack1);
                 }
 
-                target.remove();
+                target.discard();
 
-                level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundCategory.AMBIENT, 1, 1);
+                level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
             }
 
             if (level.isClientSide) {
@@ -88,33 +98,33 @@ public class CrateItem extends Item {
                 }
 
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
 
         }
 
-        return ActionResultType.sidedSuccess(true);
+        return InteractionResult.sidedSuccess(true);
     }
 
     @Override
-    public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
-        BlockRayTraceResult rt = getPlayerPOVHitResult(level, player, RayTraceContext.FluidMode.SOURCE_ONLY);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        BlockHitResult rt = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         ItemStack stack = player.getItemInHand(hand);
-        if (rt.getType() == RayTraceResult.Type.MISS) return ActionResult.pass(stack);
+        if (rt.getType() == HitResult.Type.MISS) return InteractionResultHolder.pass(stack);
         BlockPos pos = rt.getBlockPos();
-        if (!(level.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) return ActionResult.success(stack);
-        return new ActionResult<>(releaseEntity(level, player, stack, pos, rt.getDirection()), stack);
+        if (!(level.getBlockState(pos).getBlock() instanceof LiquidBlock)) return InteractionResultHolder.success(stack);
+        return new InteractionResultHolder<>(releaseEntity(level, player, stack, pos, rt.getDirection()), stack);
     }
 
     @Override
-    public ITextComponent getName(ItemStack stack) {
-        TranslationTextComponent name = (TranslationTextComponent) super.getName(stack);
-        ITextComponent name2;
+    public Component getName(ItemStack stack) {
+        TranslatableComponent name = (TranslatableComponent) super.getName(stack);
+        Component name2;
 
         if (containsEntity(stack)) {
-            CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
+            CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
 
             if (tag.contains("CustomName")) {
-                name2 = ITextComponent.Serializer.fromJson(tag.getString("CustomName"));
+                name2 = Component.Serializer.fromJson(tag.getString("CustomName"));
             }
             else {
                 name2 = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
@@ -126,13 +136,13 @@ public class CrateItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
         if (containsEntity(stack)) {
-            CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
-            ITextComponent name;
+            CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
+            Component name;
 
             name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
-            tooltip.add(name.copy().withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+            tooltip.add(name.copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
     }
 
@@ -145,49 +155,49 @@ public class CrateItem extends Item {
         return stack.hasTag() && stack.getTag().contains(DATA_CREATURE);
     }
 
-    private static ActionResultType releaseEntity(World level, PlayerEntity player, ItemStack stack, BlockPos pos, Direction direction) {
-        if (!containsEntity(stack)) return ActionResultType.PASS;
+    private static InteractionResult releaseEntity(Level level, Player player, ItemStack stack, BlockPos pos, Direction direction) {
+        if (!containsEntity(stack)) return InteractionResult.PASS;
 
-        CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
+        CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
         EntityType<?> type = EntityType.byString(tag.getString("id")).orElse(null);
         LivingEntity entity;
 
         if (type == null || (entity = (LivingEntity) type.create(level)) == null) {
             AmbientAdditions.LOGGER.error("Something went wrong releasing an animal from a Crate!");
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        EntitySize size = entity.getDimensions(entity.getPose());
+        EntityDimensions size = entity.getDimensions(entity.getPose());
         if (!level.getBlockState(pos).getCollisionShape(level, pos).isEmpty())
             pos = pos.relative(direction, (int) (direction.getAxis().isHorizontal() ? size.width : 1));
 
         entity.absMoveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-        AxisAlignedBB aabb = entity.getBoundingBox();
+        AABB aabb = entity.getBoundingBox();
 
-        if (!level.noCollision(entity, new AxisAlignedBB(aabb.minX, entity.getEyeY() - 0.35, aabb.minZ, aabb.maxX, entity.getEyeY() + 1.0, aabb.maxZ))) {
-            return ActionResultType.FAIL;
+        if (!level.noCollision(entity, new AABB(aabb.minX, entity.getEyeY() - 0.35, aabb.minZ, aabb.maxX, entity.getEyeY() + 1.0, aabb.maxZ))) {
+            return InteractionResult.FAIL;
         }
 
         if (!level.isClientSide) {
             UUID id = entity.getUUID();
             entity.deserializeNBT(tag);
             entity.setUUID(id);
-            entity.moveTo(pos.getX(), pos.getY() + direction.getStepY() + 1.0, pos.getZ(), player.yRot, 0f);
+            entity.moveTo(pos.getX(), pos.getY() + direction.getStepY() + 1.0, pos.getZ(), player.getYRot(), 0f);
 
             if (stack.hasCustomHoverName()) entity.setCustomName(stack.getHoverName());
             stack.removeTagKey(DATA_CREATURE);
             level.addFreshEntity(entity);
-            level.playSound(null, entity.blockPosition(), SoundEvents.BARREL_OPEN, SoundCategory.AMBIENT, 1, 1);
+            level.playSound(null, entity.blockPosition(), SoundEvents.BARREL_OPEN, SoundSource.AMBIENT, 1, 1);
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        World world = context.getLevel();
-        if (!(world instanceof ServerWorld)) {
-            return ActionResultType.SUCCESS;
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        if (!(world instanceof ServerLevel)) {
+            return InteractionResult.SUCCESS;
         } else if (context.getItemInHand().hasTag()) {
             ItemStack itemstack = context.getItemInHand();
             BlockPos blockpos = context.getClickedPos();
@@ -202,16 +212,16 @@ public class CrateItem extends Item {
             }
 
             ItemStack stack = context.getItemInHand();
-            CompoundNBT tag = stack.getTag().getCompound(DATA_CREATURE);
+            CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
             EntityType<?> type = EntityType.byString(tag.getString("id")).orElse(null);
             LivingEntity entity = (LivingEntity) type.create(context.getLevel());
-            if (entity == null) return ActionResultType.FAIL;
+            if (entity == null) return InteractionResult.FAIL;
 
             UUID id = entity.getUUID();
             entity.deserializeNBT(tag);
             entity.setUUID(id);
 
-            entity.moveTo(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5, context.getPlayer().yRot, 0f);
+            entity.moveTo(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5, context.getPlayer().getYRot(), 0f);
 
             if (stack.hasCustomHoverName()) entity.setCustomName(stack.getHoverName());
             stack.removeTagKey(DATA_CREATURE);
@@ -219,10 +229,10 @@ public class CrateItem extends Item {
             if (context.getLevel().addFreshEntity(entity)) {
                 itemstack.shrink(1);
             }
-            context.getLevel().playSound(null, entity.blockPosition(), SoundEvents.BARREL_OPEN, SoundCategory.AMBIENT, 1, 1);
+            context.getLevel().playSound(null, entity.blockPosition(), SoundEvents.BARREL_OPEN, SoundSource.AMBIENT, 1, 1);
             context.getPlayer().setItemInHand(context.getHand(), new ItemStack(AAItems.CRATE.get()));
 
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
         else {
             return super.useOn(context);

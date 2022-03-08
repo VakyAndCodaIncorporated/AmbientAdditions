@@ -1,35 +1,37 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.model.YetiArmWarmersModel;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
 
-import javax.annotation.Nullable;
+import java.util.Random;
 
 public class YetiArmWarmersItem extends ArmorItem {
-    public static final IArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_arm_warmers",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
+    public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_arm_warmers",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
 
-    public YetiArmWarmersItem(EquipmentSlotType slot) {
+    public YetiArmWarmersItem(EquipmentSlot slot) {
         super(MATERIAL, slot, new Properties().tab(AAItems.GROUP));
     }
 
+    static Random random = new Random();
+
     @Override
-    public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
+    public void onArmorTick(ItemStack stack, Level world, Player player) {
         if (player.isInWaterOrRain()) {
-            FoodStats foodStats = player.getFoodData();
+            FoodData foodStats = player.getFoodData();
             if (player.tickCount % 20 == 0 && random.nextFloat() > 0.75F) {
                 if (foodStats.getFoodLevel() >= 20) {
                     foodStats.setSaturation(foodStats.getSaturationLevel() + 0.1F);
@@ -41,11 +43,16 @@ public class YetiArmWarmersItem extends ArmorItem {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Nullable
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        return (A) YetiArmWarmersModel.INSTANCE;
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
+        consumer.accept(new ModelSupplier());
+    }
+
+    static class ModelSupplier implements IItemRenderProperties {
+        YetiArmWarmersModel INSTANCE;
+        public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+            if (INSTANCE == null) INSTANCE = new YetiArmWarmersModel(Minecraft.getInstance().getEntityModels().bakeLayer(YetiArmWarmersModel.LAYER_LOCATION));
+            return (A) INSTANCE;
+        }
     }
 }

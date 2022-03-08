@@ -7,28 +7,29 @@ import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
 import coda.ambientadditions.common.init.AATags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib3.GeckoLib;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -72,11 +74,13 @@ public class AmbientAdditions {
         AAItems.REGISTER.register(bus);
         AAEntities.REGISTER.register(bus);
         AASounds.REGISTER.register(bus);
+
+        GeckoLib.initialize();
     }
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(AAEntities.WHITE_FRUIT_BAT.get(), WhiteFruitBatEntity.createAttributes().build());
-        event.put(AAEntities.LONGHORN_COWFISH.get(), AbstractFishEntity.createAttributes().build());
+        event.put(AAEntities.LONGHORN_COWFISH.get(), AbstractFish.createAttributes().build());
         event.put(AAEntities.STAG_BEETLE.get(), StagBeetleEntity.createAttributes().build());
         event.put(AAEntities.NINE_BANDED_ARMADILLO.get(), NineBandedArmadilloEntity.createAttributes().build());
         event.put(AAEntities.PINK_FAIRY_ARMADILLO.get(), PinkFairyArmadilloEntity.createAttributes().build());
@@ -101,34 +105,34 @@ public class AmbientAdditions {
         event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
         event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG.get(), LeafFrogEntity.createAttributes().build());
-        event.put(AAEntities.FLYING_FISH.get(), AbstractFishEntity.createAttributes().build());
+        event.put(AAEntities.FLYING_FISH.get(), AbstractFish.createAttributes().build());
         event.put(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
-        EntitySpawnPlacementRegistry.register(AAEntities.WHITE_FRUIT_BAT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, WhiteFruitBatEntity::checkBatSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.LONGHORN_COWFISH.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.STAG_BEETLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, StagBeetleEntity::checkBeetleSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.NINE_BANDED_ARMADILLO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NineBandedArmadilloEntity::checkSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.PINK_FAIRY_ARMADILLO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SpiderTailedAdderEntity::checkSnakeSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.VEILED_CHAMELEON.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VeiledChameleonEntity::checkChameleonSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.MOLE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::checkMoleSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.PEMBROKE_CORGI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.NAKED_MOLE_RAT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NakedMoleRatEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.MOUSTACHED_TAMARIN.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, MoustachedTamarinEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.NAPOLEON_WRASSE.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.HAWAIIAN_HONEYCREEPER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, HawaiianHoneycreeperEntity::checkHoneycreeperSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.PINOCCHIO_ANOLE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.AYE_AYE.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.RING_TAILED_LEMUR.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.SIAMANG_GIBBON.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.PINE_MARTEN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, AnimalEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, GoldenElephantSnailEntity::checkSnailSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.SPIDER_TAILED_ADDER.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, SpiderTailedAdderEntity::checkSnakeSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.YETI_CRAB.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.HARLEQUIN_SHRIMP.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.FLYING_FISH.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
+        SpawnPlacements.register(AAEntities.WHITE_FRUIT_BAT.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, WhiteFruitBatEntity::checkBatSpawnRules);
+        SpawnPlacements.register(AAEntities.LONGHORN_COWFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.STAG_BEETLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StagBeetleEntity::checkBeetleSpawnRules);
+        SpawnPlacements.register(AAEntities.NINE_BANDED_ARMADILLO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, NineBandedArmadilloEntity::checkSpawnRules);
+        SpawnPlacements.register(AAEntities.PINK_FAIRY_ARMADILLO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpiderTailedAdderEntity::checkSnakeSpawnRules);
+        SpawnPlacements.register(AAEntities.VEILED_CHAMELEON.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, VeiledChameleonEntity::checkChameleonSpawnRules);
+        SpawnPlacements.register(AAEntities.MOLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MoleEntity::checkMoleSpawnRules);
+        SpawnPlacements.register(AAEntities.PEMBROKE_CORGI.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.NAKED_MOLE_RAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, NakedMoleRatEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.MOUSTACHED_TAMARIN.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, MoustachedTamarinEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.NAPOLEON_WRASSE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.HAWAIIAN_HONEYCREEPER.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, HawaiianHoneycreeperEntity::checkHoneycreeperSpawnRules);
+        SpawnPlacements.register(AAEntities.PINOCCHIO_ANOLE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.AYE_AYE.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.RING_TAILED_LEMUR.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.SIAMANG_GIBBON.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, PinocchioAnoleEntity::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.PINE_MARTEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, GoldenElephantSnailEntity::checkSnailSpawnRules);
+        SpawnPlacements.register(AAEntities.SPIDER_TAILED_ADDER.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, SpiderTailedAdderEntity::checkSnakeSpawnRules);
+        SpawnPlacements.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        SpawnPlacements.register(AAEntities.YETI_CRAB.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        SpawnPlacements.register(AAEntities.HARLEQUIN_SHRIMP.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        SpawnPlacements.register(AAEntities.FLYING_FISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -136,86 +140,87 @@ public class AmbientAdditions {
     }
 
     private void onBiomeLoading(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.Category.JUNGLE) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.WHITE_FRUIT_BAT.get(), 20, 3, 3));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HAWAIIAN_HONEYCREEPER.get(), 35, 2, 3));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.AYE_AYE.get(), 30, 1, 2));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.SIAMANG_GIBBON.get(), 30, 3, 6));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.RING_TAILED_LEMUR.get(), 30, 4, 8));
+        if (event.getCategory() == Biome.BiomeCategory.JUNGLE) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.WHITE_FRUIT_BAT.get(), 20, 3, 3));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.HAWAIIAN_HONEYCREEPER.get(), 35, 2, 3));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.AYE_AYE.get(), 30, 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SIAMANG_GIBBON.get(), 30, 3, 6));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RING_TAILED_LEMUR.get(), 30, 4, 8));
         }
 
-        if (event.getCategory() == Biome.Category.TAIGA) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.STAG_BEETLE.get(), 40, 1, 2));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINE_MARTEN.get(), 30, 1, 2));
+        if (event.getCategory() == Biome.BiomeCategory.TAIGA) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.STAG_BEETLE.get(), 40, 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINE_MARTEN.get(), 30, 1, 2));
         }
 
-        if (event.getCategory() == Biome.Category.MESA) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NINE_BANDED_ARMADILLO.get(), 5, 2, 4));
+        if (event.getCategory() == Biome.BiomeCategory.MESA) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NINE_BANDED_ARMADILLO.get(), 5, 2, 4));
         }
 
-        if (event.getCategory() == Biome.Category.DESERT) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PINK_FAIRY_ARMADILLO.get(), 3, 1, 1));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.SPIDER_TAILED_ADDER.get(), 4, 1, 1));
+        if (event.getCategory() == Biome.BiomeCategory.DESERT) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINK_FAIRY_ARMADILLO.get(), 3, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SPIDER_TAILED_ADDER.get(), 4, 1, 1));
         }
 
-        if (event.getCategory() == Biome.Category.PLAINS || event.getCategory() == Biome.Category.FOREST) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.MOLE.get(), 10, 1, 1));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.PEMBROKE_CORGI.get(), 4, 1, 1));
+        if (event.getCategory() == Biome.BiomeCategory.PLAINS || event.getCategory() == Biome.BiomeCategory.FOREST) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOLE.get(), 10, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PEMBROKE_CORGI.get(), 4, 1, 1));
         }
 
-        if (event.getCategory() == Biome.Category.SAVANNA) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.VEILED_CHAMELEON.get(), 10, 1, 1));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GIANT_LAND_SNAIL.get(), 25, 1, 2));
+        if (event.getCategory() == Biome.BiomeCategory.SAVANNA) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), 10, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), 25, 1, 2));
         }
 
-        if (event.getCategory() == Biome.Category.RIVER) {
-            event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 2, 1, 1));
+        if (event.getCategory() == Biome.BiomeCategory.RIVER) {
+            event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 2, 1, 1));
         }
 
-        if (event.getScale() > 0F) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
-        }
+        // scale doesnt exist anymore? TODO
+        //if (event.getScale() > 0F) {
+        event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
+        //}
 
         if (event.getName() != null) {
             if (event.getName().getPath().equals("warm_ocean")) {
-                event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
             }
 
             if (event.getName().getPath().equals("lukewarm_ocean") || event.getName().getPath().equals("deep_lukewarm_ocean")) {
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 7, 2, 5));
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.HARLEQUIN_SHRIMP.get(), 6, 1, 1));
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.SHAME_FACED_CRAB.get(), 4, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 7, 2, 5));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.HARLEQUIN_SHRIMP.get(), 6, 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SHAME_FACED_CRAB.get(), 4, 1, 2));
             }
 
             if (event.getName().getPath().equals("deep_ocean")) {
-                event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.YETI_CRAB.get(), 6, 2, 3));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.YETI_CRAB.get(), 6, 2, 3));
             }
 
             if (event.getName().getPath().equals("dark_forest")) {
-                event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.CARDIGAN_CORGI.get(), 4, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), 4, 1, 2));
             }
         }
     }
 
     private void entitySpawnInStructure(StructureSpawnListGatherEvent event) {
-        if (event.getStructure() == Structure.WOODLAND_MANSION) {
-            event.addEntitySpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AAEntities.CARDIGAN_CORGI.get(), 8, 1, 1));
+        if (event.getStructure() == StructureFeature.WOODLAND_MANSION) {
+            event.addEntitySpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), 8, 1, 1));
         }
     }
 
     private void onEntityJoinWorld(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
-        if (entity instanceof SheepEntity) {
-            ((SheepEntity) entity).goalSelector.addGoal(1, new SheepFollowCorgiGoal((SheepEntity) entity, 1.0D, 10.0F, 1.0F));
+        if (entity instanceof Sheep) {
+            ((Sheep) entity).goalSelector.addGoal(1, new SheepFollowCorgiGoal((Sheep) entity, 1.0D, 10.0F, 1.0F));
         }
     }
 
     private void onLogStripped(PlayerInteractEvent.RightClickBlock event) {
         if (event.getItemStack().getItem() instanceof AxeItem) {
-            World world = event.getWorld();
+            Level world = event.getWorld();
             BlockPos pos = event.getPos();
             BlockState state = world.getBlockState(pos);
 
@@ -258,7 +263,7 @@ public class AmbientAdditions {
     }
 
     private void addWanderingTrades(WandererTradesEvent event) {
-        List<VillagerTrades.ITrade> trades = event.getGenericTrades();
+        List<VillagerTrades.ItemListing> trades = event.getGenericTrades();
 
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(AAItems.HARLEQUIN_SHRIMP_BUCKET.get()), 3, 4, 1.5f));
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(AAItems.MOLE_BUCKET.get()), 3, 4, 1.5f));
@@ -268,7 +273,7 @@ public class AmbientAdditions {
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(AAItems.LEAF_FROG_BOWL.get()), 3, 4, 1.5f));
     }
 
-    private static class ItemsForItemsTrade implements VillagerTrades.ITrade {
+    private static class ItemsForItemsTrade implements VillagerTrades.ItemListing {
         private final ItemStack buying1, buying2, selling;
         private final int maxUses, xp;
         private final float priceMultiplier;

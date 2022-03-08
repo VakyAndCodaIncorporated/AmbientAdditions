@@ -3,52 +3,88 @@ package coda.ambientadditions.common.entities;
 import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class CardiganCorgiEntity extends TameableEntity {
-   private static final DataParameter<Integer> DATA_COLLAR_COLOR = EntityDataManager.defineId(CardiganCorgiEntity.class, DataSerializers.INT);
+public class CardiganCorgiEntity extends TamableAnimal implements IAnimatable {
+   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+      // TODO: animation.corgi.sploot
 
-   public CardiganCorgiEntity(EntityType<? extends CardiganCorgiEntity> p_i50240_1_, World p_i50240_2_) {
+      boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+      if (walking){
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.walk", true));
+      } else {
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.idle", true));
+      }
+
+      return PlayState.CONTINUE;
+   }
+
+   @Override
+   public void registerControllers(AnimationData data) {
+      data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+   }
+
+   private AnimationFactory factory = new AnimationFactory(this);
+   @Override
+   public AnimationFactory getFactory() {
+      return factory;
+   }
+
+   ///////////////////////////////////////////////////////////////////
+
+   private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(CardiganCorgiEntity.class, EntityDataSerializers.INT);
+
+   public CardiganCorgiEntity(EntityType<? extends CardiganCorgiEntity> p_i50240_1_, Level p_i50240_2_) {
       super(p_i50240_1_, p_i50240_2_);
       this.setTame(false);
    }
 
    protected void registerGoals() {
-      this.goalSelector.addGoal(1, new SwimGoal(this));
-      this.goalSelector.addGoal(2, new SitGoal(this));
+      this.goalSelector.addGoal(1, new FloatGoal(this));
+      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
       this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4F));
       this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
       this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
       this.goalSelector.addGoal(6, new BreedGoal(this, 1.0D));
-      this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-      this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-      this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+      this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+      this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+      this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
    }
 
-   public static AttributeModifierMap.MutableAttribute createAttributes() {
-      return MobEntity.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.MAX_HEALTH, 10.0D);
+   public static AttributeSupplier.Builder createAttributes() {
+      return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.MAX_HEALTH, 10.0D);
    }
 
    protected void defineSynchedData() {
@@ -60,12 +96,12 @@ public class CardiganCorgiEntity extends TameableEntity {
       this.playSound(SoundEvents.WOLF_STEP, 0.15F, 1.0F);
    }
 
-   public void addAdditionalSaveData(CompoundNBT p_213281_1_) {
+   public void addAdditionalSaveData(CompoundTag p_213281_1_) {
       super.addAdditionalSaveData(p_213281_1_);
       p_213281_1_.putByte("CollarColor", (byte)this.getCollarColor().getId());
    }
 
-   public void readAdditionalSaveData(CompoundNBT p_70037_1_) {
+   public void readAdditionalSaveData(CompoundTag p_70037_1_) {
       super.readAdditionalSaveData(p_70037_1_);
       if (p_70037_1_.contains("CollarColor", 99)) {
          this.setCollarColor(DyeColor.byId(p_70037_1_.getInt("CollarColor")));
@@ -88,7 +124,7 @@ public class CardiganCorgiEntity extends TameableEntity {
       return 0.4F;
    }
 
-   protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
+   protected float getStandingEyeHeight(Pose p_213348_1_, EntityDimensions p_213348_2_) {
       return p_213348_2_.height * 0.8F;
    }
 
@@ -102,7 +138,7 @@ public class CardiganCorgiEntity extends TameableEntity {
       } else {
          Entity entity = p_70097_1_.getEntity();
          this.setOrderedToSit(false);
-         if (entity != null && !(entity instanceof PlayerEntity) && !(entity instanceof AbstractArrowEntity)) {
+         if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
             p_70097_2_ = (p_70097_2_ + 1.0F) / 2.0F;
          }
 
@@ -129,30 +165,30 @@ public class CardiganCorgiEntity extends TameableEntity {
       }
    }
 
-   public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+   public InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
       ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
       Item item = itemstack.getItem();
       if (this.level.isClientSide) {
          boolean flag = this.isOwnedBy(p_230254_1_) || this.isTame() || item == Items.BONE && !this.isTame();
-         return flag ? ActionResultType.CONSUME : ActionResultType.PASS;
+         return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
       } else {
          if (this.isTame()) {
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-               if (!p_230254_1_.abilities.instabuild) {
+               if (!p_230254_1_.getAbilities().instabuild) {
                   itemstack.shrink(1);
                }
 
                this.heal((float)item.getFoodProperties().getNutrition());
-               return ActionResultType.SUCCESS;
+               return InteractionResult.SUCCESS;
             }
 
             if (!(item instanceof DyeItem)) {
-               ActionResultType actionresulttype = super.mobInteract(p_230254_1_, p_230254_2_);
+               InteractionResult actionresulttype = super.mobInteract(p_230254_1_, p_230254_2_);
                if ((!actionresulttype.consumesAction() || this.isBaby()) && this.isOwnedBy(p_230254_1_)) {
                   this.setOrderedToSit(!this.isOrderedToSit());
                   this.jumping = false;
                   this.navigation.stop();
-                  return ActionResultType.SUCCESS;
+                  return InteractionResult.SUCCESS;
                }
 
                return actionresulttype;
@@ -161,14 +197,14 @@ public class CardiganCorgiEntity extends TameableEntity {
             DyeColor dyecolor = ((DyeItem)item).getDyeColor();
             if (dyecolor != this.getCollarColor()) {
                this.setCollarColor(dyecolor);
-               if (!p_230254_1_.abilities.instabuild) {
+               if (!p_230254_1_.getAbilities().instabuild) {
                   itemstack.shrink(1);
                }
 
-               return ActionResultType.SUCCESS;
+               return InteractionResult.SUCCESS;
             }
          } else if (item == Items.PUMPKIN_PIE) {
-            if (!p_230254_1_.abilities.instabuild) {
+            if (!p_230254_1_.getAbilities().instabuild) {
                itemstack.shrink(1);
             }
 
@@ -182,7 +218,7 @@ public class CardiganCorgiEntity extends TameableEntity {
                this.level.broadcastEntityEvent(this, (byte)6);
             }
 
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
          }
 
          return super.mobInteract(p_230254_1_, p_230254_2_);
@@ -207,7 +243,7 @@ public class CardiganCorgiEntity extends TameableEntity {
       this.entityData.set(DATA_COLLAR_COLOR, p_175547_1_.getId());
    }
 
-   public CardiganCorgiEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+   public CardiganCorgiEntity getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
       CardiganCorgiEntity corgi = AAEntities.CARDIGAN_CORGI.get().create(p_241840_1_);
       UUID uuid = this.getOwnerUUID();
       if (uuid != null) {
@@ -219,12 +255,12 @@ public class CardiganCorgiEntity extends TameableEntity {
    }
 
    @OnlyIn(Dist.CLIENT)
-   public Vector3d getLeashOffset() {
-      return new Vector3d(0.0D, (0.6F * this.getEyeHeight()), (this.getBbWidth() * 0.4F));
+   public Vec3 getLeashOffset() {
+      return new Vec3(0.0D, (0.6F * this.getEyeHeight()), (this.getBbWidth() * 0.4F));
    }
 
    @Override
-   public ItemStack getPickedResult(RayTraceResult target) {
+   public ItemStack getPickedResult(HitResult target) {
       return new ItemStack(AAItems.CARDIGAN_CORGI_SPAWN_EGG.get());
    }
 }

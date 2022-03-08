@@ -1,10 +1,10 @@
 modLoader="javafml" #mandatory
-loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[38,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license="All rights reserved"
 [[mods]] #mandatory
 modId="ambientadditions" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Ambient Additions" #mandatory
 credits="VakyPanda, Graustreif2004, Ninni, MightyGoat42" #optional
-authors="Coda"
+authors="Coda, LukeGrahamLandry#6888"
 description='''Adds more ambient wildlife to your world!'''

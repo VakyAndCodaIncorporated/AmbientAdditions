@@ -2,16 +2,22 @@ package coda.ambientadditions.common.init;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.items.*;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import net.minecraft.world.food.FoodProperties;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
+
 public class AAItems {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, AmbientAdditions.MOD_ID);
-    public final static ItemGroup GROUP = new ItemGroup(AmbientAdditions.MOD_ID) {
+    public final static CreativeModeTab GROUP = new CreativeModeTab(AmbientAdditions.MOD_ID) {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(AAItems.DART.get());
@@ -21,21 +27,21 @@ public class AAItems {
     // Gear
     public static final RegistryObject<Item> DART = REGISTER.register("dart", () -> new DartItem(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> BLOWGUN = REGISTER.register("blowgun", () -> new BlowgunItem(new Item.Properties().tab(GROUP).stacksTo(1).durability(72)));
-    public static final RegistryObject<Item> DUCKY_MASK = REGISTER.register("ducky_mask", () -> new DuckyMaskArmorItem(EquipmentSlotType.HEAD));
-    public static final RegistryObject<Item> YETI_ARM_WARMERS = REGISTER.register("yeti_arm_warmers", () -> new YetiArmWarmersItem(EquipmentSlotType.CHEST));
+    public static final RegistryObject<Item> DUCKY_MASK = REGISTER.register("ducky_mask", () -> new DuckyMaskArmorItem(EquipmentSlot.HEAD));
+    public static final RegistryObject<Item> YETI_ARM_WARMERS = REGISTER.register("yeti_arm_warmers", () -> new YetiArmWarmersItem(EquipmentSlot.CHEST));
 
     // Drops & Materials
-    public static final RegistryObject<Item> LONGHORN_COWFISH = REGISTER.register("longhorn_cowfish", () -> new Item(new Item.Properties().tab(GROUP).food(new Food.Builder().nutrition(2).saturationMod(0.1F).build())));
-    public static final RegistryObject<Item> WORM = REGISTER.register("worm", () -> new Item(new Item.Properties().tab(GROUP).food(new Food.Builder().nutrition(1).saturationMod(0.1F).build())));
+    public static final RegistryObject<Item> LONGHORN_COWFISH = REGISTER.register("longhorn_cowfish", () -> new Item(new Item.Properties().tab(GROUP).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
+    public static final RegistryObject<Item> WORM = REGISTER.register("worm", () -> new Item(new Item.Properties().tab(GROUP).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
     public static final RegistryObject<Item> BARK = REGISTER.register("bark", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = REGISTER.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = REGISTER.register("yeti_crab_fluff", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> STARFISH_ARM = REGISTER.register("starfish_arm", () -> new StarfishArmItem(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> LEAF_FROG_EGG = REGISTER.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG::get, new Item.Properties().tab(GROUP).stacksTo(16)));
-    public static final RegistryObject<Item> FLYING_FISH = REGISTER.register("flying_fish", () -> new Item(new Item.Properties().tab(GROUP).food(new Food.Builder().nutrition(2).saturationMod(0.1F).build())));
+    public static final RegistryObject<Item> FLYING_FISH = REGISTER.register("flying_fish", () -> new Item(new Item.Properties().tab(GROUP).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
 
     // Buckets & Catching Items
-    public static final RegistryObject<Item> LONGHORN_COWFISH_BUCKET = REGISTER.register("longhorn_cowfish_bucket", () -> new FishBucketItem(AAEntities.LONGHORN_COWFISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> LONGHORN_COWFISH_BUCKET = REGISTER.register("longhorn_cowfish_bucket", () -> new MobBucketItem(AAEntities.LONGHORN_COWFISH, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> STAG_BEETLE_BOTTLE = REGISTER.register("stag_beetle_bottle", () -> new AACatchableItem(AAEntities.STAG_BEETLE::get, Items.GLASS_BOTTLE, false, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> CRATE = REGISTER.register("crate", () -> new CrateItem(new Item.Properties().tab(GROUP).stacksTo(16)));
     public static final RegistryObject<Item> MOLE_BUCKET = REGISTER.register("mole_bucket", () -> new AACatchableItem(AAEntities.MOLE::get, Items.BUCKET, true, new Item.Properties().tab(GROUP).stacksTo(1)));
@@ -44,8 +50,8 @@ public class AAItems {
     public static final RegistryObject<Item> CHOCOLATE_CHIP_STARFISH_BUCKET = REGISTER.register("chocolate_chip_starfish_bucket", () -> new AABucketItem(AAEntities.CHOCOLATE_CHIP_STARFISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> HARLEQUIN_SHRIMP_BUCKET = REGISTER.register("harlequin_shrimp_bucket", () -> new AABucketItem(AAEntities.HARLEQUIN_SHRIMP, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> LEAF_FROG_BOWL = REGISTER.register("leaf_frog_bowl", () -> new AACatchableItem(AAEntities.LEAF_FROG::get, Items.BOWL, false, new Item.Properties().tab(GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> FLYING_FISH_BUCKET = REGISTER.register("flying_fish_bucket", () -> new FishBucketItem(AAEntities.FLYING_FISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> SHAME_FACED_CRAB_BUCKET = REGISTER.register("shame_faced_crab_bucket", () -> new FishBucketItem(AAEntities.SHAME_FACED_CRAB, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> FLYING_FISH_BUCKET = REGISTER.register("flying_fish_bucket", () -> new MobBucketItem(AAEntities.FLYING_FISH, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SHAME_FACED_CRAB_BUCKET = REGISTER.register("shame_faced_crab_bucket", () -> new MobBucketItem(AAEntities.SHAME_FACED_CRAB, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(GROUP).stacksTo(1)));
 
     // Spawn Eggs
     public static final RegistryObject<Item> WHITE_FRUIT_BAT_SPAWN_EGG = REGISTER.register("white_fruit_bat_spawn_egg", () -> new AASpawnEggItem(AAEntities.WHITE_FRUIT_BAT, 0xf9f5e5, 0xffd000, new Item.Properties().tab(GROUP)));
