@@ -96,7 +96,7 @@ public class NakedMoleRatEntity extends Animal implements IAnimatable {
     }
 
     public static boolean checkAnimalSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.BASE_STONE_OVERWORLD) && p_223316_1_.getHeight() < 64;
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.BASE_STONE_OVERWORLD) && p_223316_1_.getHeight() < 50;
     }
 
     @Nullable

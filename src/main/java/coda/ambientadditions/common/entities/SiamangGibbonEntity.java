@@ -40,6 +40,7 @@ public class SiamangGibbonEntity extends Animal implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.walk", true));
+            event.getController().setAnimationSpeed(1.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.idle", true));
         }

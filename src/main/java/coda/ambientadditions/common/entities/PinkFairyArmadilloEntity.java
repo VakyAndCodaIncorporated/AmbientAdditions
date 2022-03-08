@@ -34,6 +34,7 @@ public class PinkFairyArmadilloEntity extends Animal implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pink_fairy_armadillo.walk", true));
+            event.getController().setAnimationSpeed(2.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pink_fairy_armadillo.idle", true));
         }

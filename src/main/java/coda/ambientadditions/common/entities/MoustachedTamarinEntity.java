@@ -39,6 +39,7 @@ public class MoustachedTamarinEntity extends Animal implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moustached_tamarin.walk", true));
+            event.getController().setAnimationSpeed(2);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moustached_tamarin.idle", true));
         }

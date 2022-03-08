@@ -178,10 +178,9 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 2, 1, 1));
         }
 
-        // scale doesnt exist anymore? TODO
-        //if (event.getScale() > 0F) {
-        event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
-        //}
+        if (event.getCategory() == Biome.BiomeCategory.PLAINS) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
+        }
 
         if (event.getName() != null) {
             if (event.getName().getPath().equals("warm_ocean")) {

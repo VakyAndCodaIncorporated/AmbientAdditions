@@ -34,6 +34,7 @@ public class PineMartenEntity extends Animal  implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pine_marten.walk", true));
+            event.getController().setAnimationSpeed(1.75);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pine_marten.idle", true));
         }

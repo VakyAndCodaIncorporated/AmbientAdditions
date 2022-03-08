@@ -36,6 +36,7 @@ public class RingTailedLemurEntity extends Animal implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ring_tailed_lemur.walk", true));
+            event.getController().setAnimationSpeed(2.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ring_tailed_lemur.idle", true));
         }
