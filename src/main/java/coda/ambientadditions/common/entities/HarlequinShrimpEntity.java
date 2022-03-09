@@ -67,7 +67,7 @@ public class HarlequinShrimpEntity extends WaterAnimal implements IAnimatable {
     ///////////////////////////////////////////////////////////////////
 
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(HarlequinShrimpEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(ChocolateChipStarfishEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(HarlequinShrimpEntity.class, EntityDataSerializers.INT);
 
     public HarlequinShrimpEntity(EntityType<? extends WaterAnimal> type, Level world) {
         super(type, world);
