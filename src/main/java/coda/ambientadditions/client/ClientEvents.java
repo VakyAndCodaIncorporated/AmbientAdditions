@@ -3,9 +3,7 @@ package coda.ambientadditions.client;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.armor.DuckyMaskModel;
 import coda.ambientadditions.client.armor.YetiArmWarmersModel;
-import coda.ambientadditions.client.geo.renderer.AyeAyeRenderer;
-import coda.ambientadditions.client.geo.renderer.LeafFrogRenderer;
-import coda.ambientadditions.client.geo.renderer.WhiteFruitBatRenderer;
+import coda.ambientadditions.client.geo.renderer.*;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
@@ -35,7 +33,19 @@ public class ClientEvents {
     @OnlyIn(Dist.CLIENT)
     public static void clientSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(AAEntities.AYE_AYE.get(), AyeAyeRenderer::new);
-        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), AyeAyeRenderer::new);
+        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), ChocolateChipStarfishRenderer::new);
+        EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), CardiganCorgiRenderer::new);
+        EntityRenderers.register(AAEntities.FLYING_FISH.get(), FlyingFishRenderer::new);
+        EntityRenderers.register(AAEntities.GIANT_LAND_SNAIL.get(), GiantLandSnailRenderer::new);
+        EntityRenderers.register(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), GoldenElephantSnailRenderer::new);
+        EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpRenderer::new);
+        EntityRenderers.register(AAEntities.LEAF_FROG.get(), LeafFrogRenderer::new);
+        EntityRenderers.register(AAEntities.LONGHORN_COWFISH.get(), LonghornCowfishRenderer::new);
+        EntityRenderers.register(AAEntities.MOUSTACHED_TAMARIN.get(), MoustachedTamarinRenderer::new);
+        EntityRenderers.register(AAEntities.NAKED_MOLE_RAT.get(), NakedMoleRatRenderer::new);
+        EntityRenderers.register(AAEntities.NAPOLEON_WRASSE.get(), NapoleonWrasseRenderer::new);
+        EntityRenderers.register(AAEntities.NINE_BANDED_ARMADILLO.get(), NineBandedArmadilloRenderer::new);
+        EntityRenderers.register(AAEntities.PINE_MARTEN.get(), PineMartenRenderer::new);
 
         EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<PembrokeCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi", "corgi/pembroke_corgi"));
@@ -73,16 +83,6 @@ public class ClientEvents {
             return model;
         }));
 
-        EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
-            TextureVariantModel<HarlequinShrimpEntity> model = new TextureVariantModel<>(AAEntities.HARLEQUIN_SHRIMP.get().getRegistryName().getPath());
-            model.setTextures(HarlequinShrimpEntity::getVariant, Arrays.asList(
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/pink.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/purple.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/blue.png")
-                    ));
-            return model;
-        }));
-
         EntityRenderers.register(AAEntities.MOLE.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
             TextureVariantModel<MoleEntity> model = new TextureVariantModel<>("star_nosed_mole");
             model.setTextures(MoleEntity::getVariant, Arrays.asList(
@@ -111,16 +111,6 @@ public class ClientEvents {
             return model;
         }));
 
-        // todo - Tadpole model may not work
-        EntityRenderers.register(AAEntities.LEAF_FROG.get(), (ctx) -> new LeafFrogRenderer(ctx, () -> {
-            TextureVariantModel<LeafFrogEntity> model = new TextureVariantModel<>(AAEntities.LEAF_FROG.get().getRegistryName().getPath());
-            model.setTextures((e) -> e.isBaby() ? 1 : 0, Arrays.asList(
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog_tadpole.png")
-            ));
-            return model;
-        }));
-
         EntityRenderers.register(AAEntities.WHITE_FRUIT_BAT.get(), (ctx) -> new WhiteFruitBatRenderer(ctx, () -> {
             TextureVariantModel<WhiteFruitBatEntity> model = new TextureVariantModel<>("white_fruit_bat");
             model.setTextures((e) -> e.isResting() ? 1 : 0, Arrays.asList(
@@ -141,7 +131,7 @@ public class ClientEvents {
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
 
-        didPlfrLayers = false;
+        didPlayerLayers = false;
     }
 
     @SubscribeEvent
