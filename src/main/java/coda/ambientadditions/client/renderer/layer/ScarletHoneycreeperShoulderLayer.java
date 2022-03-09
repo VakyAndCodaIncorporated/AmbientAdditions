@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
-   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/scarlet_honeycreeper.geo.json"); //todo - remove?
+   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/scarlet_honeycreeper.geo.json");
 
    RenderLayerParent<T, PlayerModel<T>> renderer;
 
@@ -40,7 +40,7 @@ public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLa
          p_229136_1_.pushPose();
          p_229136_1_.translate(p_229136_9_ ? (double)0.4F : (double)-0.4F, p_229136_4_.isCrouching() ? (double)-1.3F : -1.5D, 0.0D);
 
-         if (shoulder == null){
+         if (shoulder == null) {
             shoulder = new ScarletHoneycreeperEntity(AAEntities.SCARLET_HONEYCREEPER.get(), Minecraft.getInstance().level);
          }
 
