@@ -267,7 +267,7 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
                 this.targetPosition = null;
             }
 
-            if (this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerThan(this.position(), 2.0D)) {
+            if (this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerThan(this.blockPosition(), 2.0D)) {
                 this.targetPosition = new BlockPos(this.getX() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7), this.getY() + (double)this.random.nextInt(6) - 2.0D, this.getZ() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7));
             }
 

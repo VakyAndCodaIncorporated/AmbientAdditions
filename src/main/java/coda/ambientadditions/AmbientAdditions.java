@@ -7,6 +7,7 @@ import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
 import coda.ambientadditions.common.init.AATags;
+import net.minecraft.core.Registry;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -42,6 +43,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
@@ -250,7 +252,7 @@ public class AmbientAdditions {
                 world.addFreshEntity(entity);
             }
 
-            if (AATags.STRIPPABLE_LOGS.contains(state.getBlock()) && world.random.nextBoolean()) {
+            if (Registry.BLOCK.getHolderOrThrow(state.getBlock().builtInRegistryHolder().key()).is(AATags.STRIPPABLE_LOGS) && world.random.nextBoolean()) {
                 ItemStack stack = new ItemStack(AAItems.BARK.get());
                 ItemEntity entity = EntityType.ITEM.create(world);
 
