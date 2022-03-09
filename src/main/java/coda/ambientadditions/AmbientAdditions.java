@@ -1,6 +1,5 @@
 package coda.ambientadditions;
 
-import coda.ambientadditions.client.ClientEvents;
 import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.common.entities.ai.goal.SheepFollowCorgiGoal;
 import coda.ambientadditions.common.init.AAEntities;
@@ -31,6 +30,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -43,7 +44,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
@@ -300,7 +300,6 @@ public class AmbientAdditions {
     }
 
     private void registerClient(FMLClientSetupEvent event) {
-        ClientEvents.clientSetup();
         CALLBACKS.forEach(Runnable::run);
         CALLBACKS.clear();
     }

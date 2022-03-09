@@ -22,19 +22,22 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
+@OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
     private static void make(EntityType type, String name){
         EntityRenderers.register(type, (ctx) -> new GenericGeoRenderer(ctx, () -> new GenericGeoModel(name)));
     }
 
+    @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void clientSetup() {
+    public static void clientSetup(FMLClientSetupEvent event) {
         EntityType[] simpleEntities = new EntityType[]{
                 AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(), AAEntities.PINK_FAIRY_ARMADILLO.get(),
                 AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
@@ -154,6 +157,7 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event){
         event.registerLayerDefinition(YetiArmWarmersModel.LAYER_LOCATION, YetiArmWarmersModel::createBodyLayer);
         event.registerLayerDefinition(DuckyMaskModel.LAYER_LOCATION, DuckyMaskModel::createBodyLayer);
@@ -165,7 +169,8 @@ public class ClientEvents {
     static class ModForgeEvents {
         // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
         @SubscribeEvent
-        public static void playerLayers(RenderPlayerEvent event){
+        @OnlyIn(Dist.CLIENT)
+        public static void playerLayers(RenderPlayerEvent event) {
             if (!didPlayerLayers) {
                 PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
                 PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
