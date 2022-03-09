@@ -47,7 +47,7 @@ public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLa
          // TODO: 0,0,0 are offsets. 0F is parameter of entity render but seems to not be passed into the payers
          p_229136_1_.mulPose(Vector3f.YP.rotationDegrees(180));
          p_229136_1_.mulPose(Vector3f.ZP.rotationDegrees(180));
-         float yOffset = -1.5F; // larger number renders it higher
+         float yOffset = -1.85F; // larger number renders it higher
          Minecraft.getInstance().getEntityRenderDispatcher().render(shoulder, 0, yOffset, 0, 0F, p_229136_7_, p_229136_1_, p_229136_2_, p_229136_3_);
 
          p_229136_1_.popPose();
