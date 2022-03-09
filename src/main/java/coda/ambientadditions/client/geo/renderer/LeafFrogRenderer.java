@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.geo;
+package coda.ambientadditions.client.geo.renderer;
 
 import coda.ambientadditions.common.entities.LeafFrogEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,7 +9,7 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.util.function.Supplier;
 
-public class LeafFrogRenderer extends GenericGeoRenderer<LeafFrogEntity> {
+public class LeafFrogRenderer extends software.bernie.geckolib3.renderers.geo.GeoEntityRenderer<LeafFrogEntity> {
     public LeafFrogRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<LeafFrogEntity>> model) {
         super(renderManager, model);
     }

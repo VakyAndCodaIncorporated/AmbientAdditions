@@ -12,7 +12,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
 import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
-@OnlyIn(Dist.CLIENT)
 public class PembrokeCorgiCollarLayer extends GeoLayerRenderer<PembrokeCorgiEntity> {
    private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/corgi/collar.png");
    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/corgi.geo.json");

@@ -1,7 +1,4 @@
-package coda.ambientadditions.client.geo.armor;// Made with Blockbench 4.1.4
-// Exported for Minecraft version 1.17 with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package coda.ambientadditions.client.armor;
 
 import coda.ambientadditions.AmbientAdditions;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public class DuckyMaskModel<T extends LivingEntity> extends HumanoidModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(AmbientAdditions.MOD_ID, "ducky_mask"), "main");
 	private final ModelPart field_78116_c;
 	private final ModelPart bb_main;

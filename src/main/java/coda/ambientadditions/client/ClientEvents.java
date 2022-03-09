@@ -1,9 +1,11 @@
 package coda.ambientadditions.client;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.geo.armor.DuckyMaskModel;
-import coda.ambientadditions.client.geo.*;
-import coda.ambientadditions.client.geo.armor.YetiArmWarmersModel;
+import coda.ambientadditions.client.armor.DuckyMaskModel;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
+import coda.ambientadditions.client.geo.renderer.AyeAyeRenderer;
+import coda.ambientadditions.client.geo.renderer.LeafFrogRenderer;
+import coda.ambientadditions.client.geo.renderer.WhiteFruitBatRenderer;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
@@ -15,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -28,26 +29,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
-@OnlyIn(Dist.CLIENT)
 public class ClientEvents {
-
-    private static void make(EntityType type, String name){
-        EntityRenderers.register(type, (ctx) -> new GenericGeoRenderer(ctx, () -> new GenericGeoModel(name)));
-    }
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void clientSetup(FMLClientSetupEvent event) {
-        EntityType[] simpleEntities = new EntityType[]{
-                AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(), AAEntities.PINK_FAIRY_ARMADILLO.get(),
-                AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
-                AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(),
-                AAEntities.RING_TAILED_LEMUR.get(), AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(),
-                AAEntities.SHAME_FACED_CRAB.get()
-        };
-        for (EntityType type : simpleEntities){
-            make(type, type.getRegistryName().getPath());
-        }
+        EntityRenderers.register(AAEntities.AYE_AYE.get(), AyeAyeRenderer::new);
+        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), AyeAyeRenderer::new);
 
         EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<PembrokeCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi", "corgi/pembroke_corgi"));
@@ -153,7 +141,7 @@ public class ClientEvents {
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
 
-        didPlayerLayers = false;
+        didPlfrLayers = false;
     }
 
     @SubscribeEvent
@@ -166,10 +154,10 @@ public class ClientEvents {
     static boolean didPlayerLayers = false;
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID)
+    @OnlyIn(Dist.CLIENT)
     static class ModForgeEvents {
         // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
         @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
         public static void playerLayers(RenderPlayerEvent event) {
             if (!didPlayerLayers) {
                 PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");

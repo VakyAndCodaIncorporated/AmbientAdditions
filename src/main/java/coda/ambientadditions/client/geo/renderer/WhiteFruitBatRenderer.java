@@ -1,17 +1,16 @@
-package coda.ambientadditions.client.geo;
+package coda.ambientadditions.client.geo.renderer;
 
 import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-import java.util.function.Supplier;
+public class WhiteFruitBatRenderer extends GeoEntityRenderer<WhiteFruitBatEntity> {
 
-public class WhiteFruitBatRenderer extends GenericGeoRenderer<WhiteFruitBatEntity> {
-    public WhiteFruitBatRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<WhiteFruitBatEntity>> model) {
-        super(renderManager, model);
+    public WhiteFruitBatRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new WhiteFruitBatModel());
     }
 
     @Override

@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/scarlet_honeycreeper.geo.json"); //todo - remove?
 
@@ -28,6 +27,7 @@ public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLa
       this.renderer = p_i50929_1_;
    }
 
+   @OnlyIn(Dist.CLIENT)
    public void render(PoseStack p_225628_1_, MultiBufferSource p_225628_2_, int p_225628_3_, T p_225628_4_, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
       this.render(p_225628_1_, p_225628_2_, p_225628_3_, p_225628_4_, p_225628_5_, p_225628_6_, p_225628_9_, p_225628_10_, true);
       this.render(p_225628_1_, p_225628_2_, p_225628_3_, p_225628_4_, p_225628_5_, p_225628_6_, p_225628_9_, p_225628_10_, false);

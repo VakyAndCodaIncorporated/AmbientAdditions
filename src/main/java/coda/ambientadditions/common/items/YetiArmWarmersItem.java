@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.geo.armor.YetiArmWarmersModel;
+import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;

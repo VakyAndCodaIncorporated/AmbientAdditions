@@ -18,7 +18,6 @@ import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
 import java.util.Map;
 
-@OnlyIn(Dist.CLIENT)
 public class ChameleonBrightnessLayer extends GeoLayerRenderer<VeiledChameleonEntity> {
     public static final Map<Integer, RenderType> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
         hashMap.put(0, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_1.png")));

@@ -12,7 +12,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
 import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
-@OnlyIn(Dist.CLIENT)
 public class CardiganCorgiCollarLayer extends GeoLayerRenderer<CardiganCorgiEntity> {
    private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/corgi/collar.png");
    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/corgi.geo.json");
@@ -20,7 +19,6 @@ public class CardiganCorgiCollarLayer extends GeoLayerRenderer<CardiganCorgiEnti
    public CardiganCorgiCollarLayer(IGeoRenderer<CardiganCorgiEntity> entityRendererIn) {
       super(entityRendererIn);
    }
-
 
    @Override
    public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CardiganCorgiEntity entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {

@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.geo.armor.DuckyMaskModel;
+import coda.ambientadditions.client.armor.DuckyMaskModel;
 import coda.ambientadditions.common.init.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
