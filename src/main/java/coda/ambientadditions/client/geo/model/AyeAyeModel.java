@@ -9,7 +9,7 @@ public class AyeAyeModel extends AnimatedGeoModel<AyeAyeEntity> {
 
     @Override
     public ResourceLocation getModelLocation(AyeAyeEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/aye_aye.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/aye_aye.geo.json");
     }
 
     @Override

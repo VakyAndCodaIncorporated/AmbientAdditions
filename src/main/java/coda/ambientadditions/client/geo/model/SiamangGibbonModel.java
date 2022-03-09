@@ -9,7 +9,7 @@ public class SiamangGibbonModel extends AnimatedGeoModel<SiamangGibbonEntity> {
 
     @Override
     public ResourceLocation getModelLocation(SiamangGibbonEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/siamang_gibbon.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/siamang_gibbon.geo.json");
     }
 
     @Override

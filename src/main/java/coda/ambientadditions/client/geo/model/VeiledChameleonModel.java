@@ -22,7 +22,7 @@ public class VeiledChameleonModel extends AnimatedGeoModel<VeiledChameleonEntity
 
     @Override
     public ResourceLocation getModelLocation(VeiledChameleonEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/veiled_chameleon.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/veiled_chameleon.geo.json");
     }
 
     @Override

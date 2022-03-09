@@ -9,7 +9,7 @@ public class NineBandedArmadilloModel extends AnimatedGeoModel<NineBandedArmadil
 
     @Override
     public ResourceLocation getModelLocation(NineBandedArmadilloEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/nine_banded_armadillo.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/nine_banded_armadillo.geo.json");
     }
 
     @Override

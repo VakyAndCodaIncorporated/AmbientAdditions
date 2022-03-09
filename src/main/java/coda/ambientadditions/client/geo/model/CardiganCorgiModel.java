@@ -10,7 +10,7 @@ public class CardiganCorgiModel extends AnimatedGeoModel<CardiganCorgiEntity> {
 
     @Override
     public ResourceLocation getModelLocation(CardiganCorgiEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/corgi.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/corgi.geo.json");
     }
 
     @Override

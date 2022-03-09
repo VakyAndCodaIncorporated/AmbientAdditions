@@ -9,7 +9,7 @@ public class YetiCrabModel extends AnimatedGeoModel<YetiCrabEntity> {
 
     @Override
     public ResourceLocation getModelLocation(YetiCrabEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/yeti_crab.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/yeti_crab.geo.json");
     }
 
     @Override

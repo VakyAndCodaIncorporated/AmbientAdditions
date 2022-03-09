@@ -9,7 +9,7 @@ public class RubberDuckyIsopodModel extends AnimatedGeoModel<RubberDuckyIsopodEn
 
     @Override
     public ResourceLocation getModelLocation(RubberDuckyIsopodEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/rubber_ducky_isopod.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/rubber_ducky_isopod.geo.json");
     }
 
     @Override

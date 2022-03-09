@@ -9,7 +9,7 @@ public class PineMartenModel extends AnimatedGeoModel<PineMartenEntity> {
 
     @Override
     public ResourceLocation getModelLocation(PineMartenEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/pine_marten.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/pine_marten.geo.json");
     }
 
     @Override

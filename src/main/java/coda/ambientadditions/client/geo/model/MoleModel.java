@@ -19,7 +19,7 @@ public class MoleModel extends AnimatedGeoModel<MoleEntity> {
 
     @Override
     public ResourceLocation getModelLocation(MoleEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/star_nosed_mole.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/star_nosed_mole.geo.json");
     }
 
     @Override

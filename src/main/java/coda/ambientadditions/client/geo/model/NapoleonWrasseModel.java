@@ -9,7 +9,7 @@ public class NapoleonWrasseModel extends AnimatedGeoModel<NapoleonWrasseEntity> 
 
     @Override
     public ResourceLocation getModelLocation(NapoleonWrasseEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/napoleon_wrasse.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/napoleon_wrasse.geo.json");
     }
 
     @Override

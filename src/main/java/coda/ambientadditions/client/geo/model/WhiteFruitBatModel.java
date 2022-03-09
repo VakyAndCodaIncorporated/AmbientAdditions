@@ -9,7 +9,7 @@ public class WhiteFruitBatModel extends AnimatedGeoModel<WhiteFruitBatEntity> {
 
     @Override
     public ResourceLocation getModelLocation(WhiteFruitBatEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/white_fruit_bat.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/white_fruit_bat.geo.json");
     }
 
     @Override

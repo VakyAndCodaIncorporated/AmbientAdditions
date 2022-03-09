@@ -20,7 +20,7 @@ public class ChocolateChipStarfishModel extends AnimatedGeoModel<ChocolateChipSt
 
     @Override
     public ResourceLocation getModelLocation(ChocolateChipStarfishEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/chocolate_chip_starfish.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/chocolate_chip_starfish.geo.json");
     }
 
     @Override

@@ -18,7 +18,7 @@ public class HarlequinShrimpModel extends AnimatedGeoModel<HarlequinShrimpEntity
 
     @Override
     public ResourceLocation getModelLocation(HarlequinShrimpEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/harlequin_shrimp.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/harlequin_shrimp.geo.json");
     }
 
     @Override

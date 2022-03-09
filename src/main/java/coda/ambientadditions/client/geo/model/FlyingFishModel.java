@@ -9,7 +9,7 @@ public class FlyingFishModel extends AnimatedGeoModel<FlyingFishEntity> {
 
     @Override
     public ResourceLocation getModelLocation(FlyingFishEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/flying_fish.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/flying_fish.geo.json");
     }
 
     @Override

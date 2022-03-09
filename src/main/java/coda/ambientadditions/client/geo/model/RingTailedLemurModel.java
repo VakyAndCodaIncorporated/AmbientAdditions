@@ -9,7 +9,7 @@ public class RingTailedLemurModel extends AnimatedGeoModel<RingTailedLemurEntity
 
     @Override
     public ResourceLocation getModelLocation(RingTailedLemurEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/ring_tailed_lemur.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/ring_tailed_lemur.geo.json");
     }
 
     @Override

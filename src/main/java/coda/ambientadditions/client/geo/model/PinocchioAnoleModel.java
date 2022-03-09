@@ -9,7 +9,7 @@ public class PinocchioAnoleModel extends AnimatedGeoModel<PinocchioAnoleEntity> 
 
     @Override
     public ResourceLocation getModelLocation(PinocchioAnoleEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/pinocchio_anole.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/pinocchio_anole.geo.json");
     }
 
     @Override

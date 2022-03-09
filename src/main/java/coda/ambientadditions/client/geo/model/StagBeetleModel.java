@@ -9,7 +9,7 @@ public class StagBeetleModel extends AnimatedGeoModel<StagBeetleEntity> {
 
     @Override
     public ResourceLocation getModelLocation(StagBeetleEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/stag_beetle.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/stag_beetle.geo.json");
     }
 
     @Override

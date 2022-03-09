@@ -9,7 +9,7 @@ public class PembrokeCorgiModel extends AnimatedGeoModel<PembrokeCorgiEntity> {
 
     @Override
     public ResourceLocation getModelLocation(PembrokeCorgiEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/corgi.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/corgi.geo.json");
     }
 
     @Override

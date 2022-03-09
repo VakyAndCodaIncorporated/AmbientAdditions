@@ -9,7 +9,7 @@ public class GoldenElephantSnailModel extends AnimatedGeoModel<GoldenElephantSna
 
     @Override
     public ResourceLocation getModelLocation(GoldenElephantSnailEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/golden_elephant_snail.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/golden_elephant_snail.geo.json");
     }
 
     @Override

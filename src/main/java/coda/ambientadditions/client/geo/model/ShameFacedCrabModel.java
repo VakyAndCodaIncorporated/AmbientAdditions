@@ -9,7 +9,7 @@ public class ShameFacedCrabModel extends AnimatedGeoModel<ShameFacedCrabEntity> 
 
     @Override
     public ResourceLocation getModelLocation(ShameFacedCrabEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/shame_faced_crab.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/shame_faced_crab.geo.json");
     }
 
     @Override

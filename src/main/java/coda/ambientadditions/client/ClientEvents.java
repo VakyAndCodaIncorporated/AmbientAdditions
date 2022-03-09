@@ -10,6 +10,8 @@ import coda.ambientadditions.common.init.AAEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -66,8 +68,10 @@ public class ClientEvents {
     static class ModForgeEvents {
         // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
         @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
         public static void playerLayers(RenderPlayerEvent event) {
             if (!didPlayerLayers) {
+                didPlayerLayers = true;
                 PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
                 PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
                 managerDefault.addLayer(new ScarletHoneycreeperShoulderLayer<>(managerDefault));

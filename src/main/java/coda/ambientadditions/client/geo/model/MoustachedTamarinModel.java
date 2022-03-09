@@ -9,7 +9,7 @@ public class MoustachedTamarinModel extends AnimatedGeoModel<MoustachedTamarinEn
 
     @Override
     public ResourceLocation getModelLocation(MoustachedTamarinEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/moustached_tamarin.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/moustached_tamarin.geo.json");
     }
 
     @Override

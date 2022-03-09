@@ -9,7 +9,7 @@ public class ScarletHoneycreeperModel extends AnimatedGeoModel<ScarletHoneycreep
 
     @Override
     public ResourceLocation getModelLocation(ScarletHoneycreeperEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/scarlet_honeycreeper.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/scarlet_honeycreeper.geo.json");
     }
 
     @Override

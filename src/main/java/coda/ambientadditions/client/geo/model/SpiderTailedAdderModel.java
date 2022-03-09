@@ -9,7 +9,7 @@ public class SpiderTailedAdderModel extends AnimatedGeoModel<SpiderTailedAdderEn
 
     @Override
     public ResourceLocation getModelLocation(SpiderTailedAdderEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/spider_tailed_adder.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/spider_tailed_adder.geo.json");
     }
 
     @Override

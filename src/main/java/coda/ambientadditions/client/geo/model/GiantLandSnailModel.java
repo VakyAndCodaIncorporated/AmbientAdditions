@@ -9,7 +9,7 @@ public class GiantLandSnailModel extends AnimatedGeoModel<GiantLandSnailEntity> 
 
     @Override
     public ResourceLocation getModelLocation(GiantLandSnailEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/giant_land_snail.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/giant_land_snail.geo.json");
     }
 
     @Override

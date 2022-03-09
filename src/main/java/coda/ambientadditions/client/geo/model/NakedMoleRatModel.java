@@ -9,7 +9,7 @@ public class NakedMoleRatModel extends AnimatedGeoModel<NakedMoleRatEntity> {
 
     @Override
     public ResourceLocation getModelLocation(NakedMoleRatEntity object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/naked_mole_rat.geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/naked_mole_rat.geo.json");
     }
 
     @Override
