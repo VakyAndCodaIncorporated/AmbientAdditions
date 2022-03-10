@@ -152,15 +152,6 @@ public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
       }
    }
 
-   public boolean doHurtTarget(Entity p_70652_1_) {
-      boolean flag = p_70652_1_.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
-      if (flag) {
-         this.doEnchantDamageEffects(this, p_70652_1_);
-      }
-
-      return flag;
-   }
-
    public void setTame(boolean p_70903_1_) {
       super.setTame(p_70903_1_);
       if (p_70903_1_) {
@@ -229,11 +220,6 @@ public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
 
          return super.mobInteract(p_230254_1_, p_230254_2_);
       }
-   }
-
-   @OnlyIn(Dist.CLIENT)
-   public float getTailAngle() {
-      return this.isTame() ? (0.55F - (this.getMaxHealth() - this.getHealth()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F);
    }
 
    public boolean isFood(ItemStack p_70877_1_) {
