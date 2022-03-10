@@ -208,7 +208,7 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
       return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS) || blockstate.is(Blocks.AIR)) && p_223317_1_.getRawBrightness(p_223317_3_, 0) > 8;
    }
 
-   public boolean causeFallDamage(float p_225503_1_, float p_225503_2_) {
+   public boolean causeFallDamage(float p_225503_1_, float p_225503_2_, DamageSource source) {
       return false;
    }
 
