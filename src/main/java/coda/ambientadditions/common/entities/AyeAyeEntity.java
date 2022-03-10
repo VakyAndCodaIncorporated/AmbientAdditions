@@ -39,11 +39,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class AyeAyeEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
+        if (walking) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.aye_aye.walk", true));
             event.getController().setAnimationSpeed(2.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.aye_aye.idle", true));
+            event.getController().setAnimationSpeed(1.0);
         }
 
         return PlayState.CONTINUE;

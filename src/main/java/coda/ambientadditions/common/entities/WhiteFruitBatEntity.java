@@ -50,6 +50,7 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
             event.getController().setAnimationSpeed(2.0D);
         } else if (this.isResting()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.white_fruit_bat.idle", true));
+            event.getController().setAnimationSpeed(1.0);
         }
 
         return PlayState.CONTINUE;

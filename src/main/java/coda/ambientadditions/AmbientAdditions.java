@@ -252,7 +252,7 @@ public class AmbientAdditions {
                 world.addFreshEntity(entity);
             }
 
-            if (Registry.BLOCK.getHolderOrThrow(state.getBlock().builtInRegistryHolder().key()).is(AATags.STRIPPABLE_LOGS) && world.random.nextBoolean()) {
+            if (state.getBlock().defaultBlockState().is(AATags.STRIPPABLE_LOGS) && world.random.nextBoolean()) {
                 ItemStack stack = new ItemStack(AAItems.BARK.get());
                 ItemEntity entity = EntityType.ITEM.create(world);
 

@@ -34,11 +34,12 @@ import javax.annotation.Nullable;
 public class RingTailedLemurEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
+        if (walking) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ring_tailed_lemur.walk", true));
             event.getController().setAnimationSpeed(2.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ring_tailed_lemur.idle", true));
+            event.getController().setAnimationSpeed(1.0);
         }
 
         return PlayState.CONTINUE;

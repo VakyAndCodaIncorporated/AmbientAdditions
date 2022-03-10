@@ -44,12 +44,14 @@ public class PembrokeCorgiEntity extends TamableAnimal implements IAnimatable {
 
       if (isInSittingPose()) {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.sploot", true));
+         event.getController().setAnimationSpeed(1.0);
       }
       else if (walking) {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.walk", true));
          event.getController().setAnimationSpeed(2.5);
       } else {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.idle", true));
+         event.getController().setAnimationSpeed(1.0);
       }
 
       return PlayState.CONTINUE;

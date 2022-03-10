@@ -38,11 +38,12 @@ import javax.annotation.Nullable;
 public class SiamangGibbonEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
+        if (walking) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.walk", true));
             event.getController().setAnimationSpeed(1.5);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.idle", true));
+            event.getController().setAnimationSpeed(1.0);
         }
 
         return PlayState.CONTINUE;

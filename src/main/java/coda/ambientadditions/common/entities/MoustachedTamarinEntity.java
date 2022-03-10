@@ -37,11 +37,12 @@ import java.util.Random;
 public class MoustachedTamarinEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
+        if (walking) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moustached_tamarin.walk", true));
             event.getController().setAnimationSpeed(2);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.moustached_tamarin.idle", true));
+            event.getController().setAnimationSpeed(1);
         }
 
         return PlayState.CONTINUE;
