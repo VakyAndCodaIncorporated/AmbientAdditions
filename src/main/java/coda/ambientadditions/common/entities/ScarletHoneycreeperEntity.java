@@ -225,10 +225,6 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
       return null;
    }
 
-   public boolean doHurtTarget(Entity p_70652_1_) {
-      return p_70652_1_.hurt(DamageSource.mobAttack(this), 3.0F);
-   }
-
    @Nullable
    public SoundEvent getAmbientSound() {
       return AASounds.HONEYCREEPER_AMBIENT.get();
@@ -244,15 +240,6 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
 
    protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
       this.playSound(SoundEvents.PARROT_STEP, 0.15F, 1.0F);
-   }
-
-   protected float playFlySound(float p_191954_1_) {
-      this.playSound(SoundEvents.PARROT_FLY, 0.15F, 1.0F);
-      return p_191954_1_ + this.flapSpeed / 2.0F;
-   }
-
-   protected boolean makeFlySound() {
-      return true;
    }
 
    public float getVoicePitch() {
