@@ -161,6 +161,10 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NINE_BANDED_ARMADILLO.get(), 5, 2, 4));
         }
 
+        if (event.getCategory() == Biome.BiomeCategory.SWAMP) {
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.LEAF_FROG.get(), 6, 1, 2));
+        }
+
         if (event.getCategory() == Biome.BiomeCategory.DESERT) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINK_FAIRY_ARMADILLO.get(), 3, 1, 1));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SPIDER_TAILED_ADDER.get(), 4, 1, 1));
