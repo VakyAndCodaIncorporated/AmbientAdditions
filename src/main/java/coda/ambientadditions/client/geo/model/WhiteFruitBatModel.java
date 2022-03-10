@@ -26,4 +26,11 @@ public class WhiteFruitBatModel extends AnimatedGeoModel<WhiteFruitBatEntity> {
     public ResourceLocation getAnimationFileLocation(WhiteFruitBatEntity animatable) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/white_fruit_bat.animation.json");
     }
+
+    @Override
+    public void setLivingAnimations(WhiteFruitBatEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        IBone body = this.getAnimationProcessor().getBone("body");
+        body.setPositionY(-0.2F);
+    }
 }

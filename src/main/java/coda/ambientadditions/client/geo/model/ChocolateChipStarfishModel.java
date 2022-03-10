@@ -2,9 +2,13 @@ package coda.ambientadditions.client.geo.model;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.ChocolateChipStarfishEntity;
+import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import com.google.common.collect.Maps;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.util.Map;
@@ -31,5 +35,12 @@ public class ChocolateChipStarfishModel extends AnimatedGeoModel<ChocolateChipSt
     @Override
     public ResourceLocation getAnimationFileLocation(ChocolateChipStarfishEntity animatable) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/chocolate_chip_starfish.animation.json");
+    }
+
+    @Override
+    public void setLivingAnimations(ChocolateChipStarfishEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        IBone body = this.getAnimationProcessor().getBone("Middle");
+        body.setPositionY(-0.2F);
     }
 }

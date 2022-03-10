@@ -34,6 +34,14 @@ public class SpiderTailedAdderModel extends AnimatedGeoModel<SpiderTailedAdderEn
 
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
         head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
+
+        IBone root = this.getAnimationProcessor().getBone("root");
+        if (entity.isBaby()) {
+            root.setScaleX(0.5F);
+            root.setScaleY(0.5F);
+            root.setScaleZ(0.5F);
+            root.setPositionY(0.1F);
+        }
     }
 
 }

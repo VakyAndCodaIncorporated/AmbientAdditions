@@ -2,9 +2,13 @@ package coda.ambientadditions.client.geo.model;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.HarlequinShrimpEntity;
+import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import com.google.common.collect.Maps;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.util.Map;
@@ -29,5 +33,12 @@ public class HarlequinShrimpModel extends AnimatedGeoModel<HarlequinShrimpEntity
     @Override
     public ResourceLocation getAnimationFileLocation(HarlequinShrimpEntity animatable) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/harlequin_shrimp.animation.json");
+    }
+
+    @Override
+    public void setLivingAnimations(HarlequinShrimpEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        IBone body = this.getAnimationProcessor().getBone("root");
+        body.setPositionY(-0.2F);
     }
 }
