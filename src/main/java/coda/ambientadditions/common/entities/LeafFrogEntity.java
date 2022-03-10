@@ -84,17 +84,13 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
 
     ///////////////////////////////////////////////////////////////////
 
-    private static final EntityDataAccessor<Boolean> IS_IDLE = SynchedEntityData.defineId(LeafFrogEntity.class, EntityDataSerializers.BOOLEAN);
     private Goal swimGoal;
     private boolean wasOnGround;
     private int currentMoveTypeDuration;
-    private float idleAmount;
-    private float idleAmountO;
 
     public LeafFrogEntity(EntityType<? extends LeafFrogEntity> type, Level world) {
         super(type, world);
         this.moveControl = new FrogMoveController(this);
-        this.maxUpStep = 1;
     }
 
     @Override
@@ -148,51 +144,10 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         int lvt_1_1_ = this.getAirSupply();
         super.baseTick();
         this.updateAir(lvt_1_1_);
-
-        this.updateIdleAmount();
-        if (getDeltaMovement().x() == 0D && getDeltaMovement().z() == 0D) {
-            setIdle(true);
-        }
-        else {
-            setIdle(false);
-        }
-    }
-
-    public void setIdle(boolean p_213419_1_) {
-        this.entityData.set(IS_IDLE, p_213419_1_);
-    }
-
-    public boolean isIdle() {
-        return this.entityData.get(IS_IDLE);
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(IS_IDLE, false);
-    }
-
-    private void updateIdleAmount() {
-        this.idleAmountO = this.idleAmount;
-        if (this.isIdle()) {
-            this.idleAmount = Math.min(1.0F, this.idleAmount + 0.15F);
-        } else {
-            this.idleAmount = Math.max(0.0F, this.idleAmount - 0.22F);
-        }
-
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public float getIdleAmount(float p_213408_1_) {
-        return Mth.lerp(p_213408_1_, this.idleAmountO, this.idleAmount);
     }
 
     public void customServerAiStep() {
         if (!isBaby()) {
-            if (this.currentMoveTypeDuration > 0) {
-                --this.currentMoveTypeDuration;
-            }
-
             if (this.onGround) {
                 if (!this.wasOnGround) {
                     this.checkLandingDelay();
@@ -203,7 +158,6 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
                     if (livingentity != null && this.distanceToSqr(livingentity) < 16.0D) {
                         this.calculateRotationYaw(livingentity.getX(), livingentity.getZ());
                         this.moveControl.setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), this.moveControl.getSpeedModifier());
-                        this.wasOnGround = true;
                     }
                 }
             }
@@ -351,7 +305,7 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
             }
 
             if (this.frog.isBaby() && this.frog.horizontalCollision && this.frog.level.getBlockState(this.frog.blockPosition().above()).getBlock() == Blocks.WATER) {
-                this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, 0.025D, 0.0D));
+                this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, -0.025D, 0.0D));
             }
 
             if (this.operation == MoveControl.Operation.MOVE_TO && !this.frog.getNavigation().isDone()) {
@@ -428,7 +382,7 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         }
     }
 
-    private static class FrogMovementGoal extends WaterAvoidingRandomStrollGoal {
+    private static class FrogMovementGoal extends RandomStrollGoal {
         public FrogMovementGoal(PathfinderMob creature) {
             super(creature, 1.0D);
         }

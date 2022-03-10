@@ -1,12 +1,14 @@
 package coda.ambientadditions.client;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.armor.DuckyMaskModel;
-import coda.ambientadditions.client.armor.YetiArmWarmersModel;
 import coda.ambientadditions.client.geo.renderer.*;
+import coda.ambientadditions.client.geo.renderer.armor.DuckyMaskRenderer;
+import coda.ambientadditions.client.geo.renderer.armor.YetiWarmersRenderer;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.ScarletHoneycreeperShoulderLayer;
 import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.common.items.DuckyMaskArmorItem;
+import coda.ambientadditions.common.items.YetiArmWarmersItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -17,6 +19,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
 public class ClientEvents {
@@ -58,9 +61,9 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public static void layers(EntityRenderersEvent.RegisterLayerDefinitions event){
-        event.registerLayerDefinition(YetiArmWarmersModel.LAYER_LOCATION, YetiArmWarmersModel::createBodyLayer);
-        event.registerLayerDefinition(DuckyMaskModel.LAYER_LOCATION, DuckyMaskModel::createBodyLayer);
+    public static void layers(EntityRenderersEvent.AddLayers event) {
+        GeoArmorRenderer.registerArmorRenderer(YetiArmWarmersItem.class, new YetiWarmersRenderer());
+        GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, new DuckyMaskRenderer());
     }
 
     static boolean didPlayerLayers = false;

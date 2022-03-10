@@ -1,7 +1,6 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.armor.DuckyMaskModel;
 import coda.ambientadditions.common.init.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -24,10 +23,15 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
-public class DuckyMaskArmorItem extends ArmorItem {
-    public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":ducky",  4, new int[]{1, 2, 3, 1}, 12, SoundEvents.ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.of(Items.IRON_INGOT));
+public class DuckyMaskArmorItem extends GeoArmorItem implements IAnimatable {
+    public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":ducky_mask",  4, new int[]{1, 2, 3, 1}, 12, SoundEvents.ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.of(Items.IRON_INGOT));
     public static final Lazy<Multimap<Attribute, AttributeModifier>> SWIM_MODIFIER = Lazy.of(() -> ImmutableMultimap.of(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("Swim modifier", 0.15, AttributeModifier.Operation.ADDITION)));
+    private final AnimationFactory factory = new AnimationFactory(this);
 
     public DuckyMaskArmorItem(EquipmentSlot slot) {
         super(MATERIAL, slot, new Properties().tab(AAItems.GROUP));
@@ -45,17 +49,11 @@ public class DuckyMaskArmorItem extends ArmorItem {
         }
     }
 
+    @Override
+    public void registerControllers(AnimationData animationData) {}
 
     @Override
-    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
-        consumer.accept(new DuckyMaskArmorItem.ModelSupplier());
-    }
-
-    static class ModelSupplier implements IItemRenderProperties {
-        DuckyMaskModel INSTANCE;
-        public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-            if (INSTANCE == null) INSTANCE = new DuckyMaskModel(Minecraft.getInstance().getEntityModels().bakeLayer(DuckyMaskModel.LAYER_LOCATION));
-            return INSTANCE;
-        }
+    public AnimationFactory getFactory() {
+        return factory;
     }
 }
