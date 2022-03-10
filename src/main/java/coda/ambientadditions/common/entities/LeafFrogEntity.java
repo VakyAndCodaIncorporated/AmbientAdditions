@@ -51,12 +51,21 @@ import java.util.Set;
 
 public class LeafFrogEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            // TODO: know when its hopping dont just loop it randomly
+        if (event.isMoving() && isBaby()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tadpole.swim", true));
+            event.getController().setAnimationSpeed(1.0);
+        }
+        else if (!event.isMoving() && isBaby()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tadpole.idle", true));
+            event.getController().setAnimationSpeed(2.5);
+        }
+        else if (event.isMoving() && !isBaby()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.hop", true));
-        } else {
+            event.getController().setAnimationSpeed(1);
+        }
+        else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.idle", true));
+            event.getController().setAnimationSpeed(1);
         }
 
         return PlayState.CONTINUE;
