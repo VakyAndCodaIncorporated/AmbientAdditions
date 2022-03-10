@@ -34,7 +34,7 @@ public class GiantLandSnailModel extends AnimatedGeoModel<GiantLandSnailEntity> 
             body.setScaleX(0.5F);
             body.setScaleY(0.5F);
             body.setScaleZ(0.5F);
-            body.setPositionY(-0.2F);
+            body.setPositionY(-0.6F);
         }
         else {
 
