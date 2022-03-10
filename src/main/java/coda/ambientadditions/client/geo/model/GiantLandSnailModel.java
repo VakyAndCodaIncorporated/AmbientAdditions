@@ -30,6 +30,15 @@ public class GiantLandSnailModel extends AnimatedGeoModel<GiantLandSnailEntity> 
     public void setLivingAnimations(GiantLandSnailEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
         IBone body = this.getAnimationProcessor().getBone("body");
-        body.setPositionY(-0.2F);
+        if (entity.isBaby()) {
+            body.setScaleX(0.5F);
+            body.setScaleY(0.5F);
+            body.setScaleZ(0.5F);
+            body.setPositionY(-0.2F);
+        }
+        else {
+
+            body.setPositionY(-0.2F);
+        }
     }
 }
