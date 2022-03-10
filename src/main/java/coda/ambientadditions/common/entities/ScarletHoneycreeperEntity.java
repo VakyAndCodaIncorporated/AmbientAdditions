@@ -156,7 +156,6 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
       if (!this.isTame() && itemstack.is(ItemTags.FLOWERS)) {
          if (!p_230254_1_.getAbilities().instabuild) {
             itemstack.shrink(1);
-            p_230254_1_.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
          }
 
          if (!this.isSilent()) {
