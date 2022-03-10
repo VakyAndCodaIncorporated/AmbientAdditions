@@ -14,7 +14,7 @@ public class LeafFrogModel extends AnimatedGeoModel<LeafFrogEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(LeafFrogEntity object) {
-        return object.isBaby() ? new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog/tadpole.png") : new ResourceLocation(AmbientAdditions.MOD_ID, "textures/leaf_frog/frog.png");
+        return object.isBaby() ? new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog/tadpole.png") : new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog/frog.png");
     }
 
     @Override
