@@ -1,9 +1,14 @@
 package coda.ambientadditions.client.geo.model;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.common.entities.VeiledChameleonEntity;
 import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class WhiteFruitBatModel extends AnimatedGeoModel<WhiteFruitBatEntity> {
 

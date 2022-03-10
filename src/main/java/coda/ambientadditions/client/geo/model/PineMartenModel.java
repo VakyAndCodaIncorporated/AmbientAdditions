@@ -1,9 +1,14 @@
 package coda.ambientadditions.client.geo.model;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.common.entities.AyeAyeEntity;
 import coda.ambientadditions.common.entities.PineMartenEntity;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class PineMartenModel extends AnimatedGeoModel<PineMartenEntity> {
 
@@ -21,4 +26,16 @@ public class PineMartenModel extends AnimatedGeoModel<PineMartenEntity> {
     public ResourceLocation getAnimationFileLocation(PineMartenEntity animatable) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/pine_marten.animation.json");
     }
+
+    @Override
+    public void setLivingAnimations(PineMartenEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        IBone head = this.getAnimationProcessor().getBone("neck");
+
+        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+        head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));
+        head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
+    }
+
+
 }
