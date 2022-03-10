@@ -65,7 +65,6 @@ public class SiamangGibbonEntity extends Animal implements IAnimatable {
     private static final EntityDataAccessor<Boolean> IS_BOOMING = SynchedEntityData.defineId(SiamangGibbonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.CARROT, Items.APPLE);
     private static final int BOOM_TIMER = 500;
-    private int boomTimer = BOOM_TIMER;
 
     public SiamangGibbonEntity(EntityType<? extends Animal> type, Level worldIn) {
         super(type, worldIn);
