@@ -214,8 +214,8 @@ public class AmbientAdditions {
 
     private void onEntityJoinWorld(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
-        if (entity instanceof Sheep) {
-            ((Sheep) entity).goalSelector.addGoal(1, new SheepFollowCorgiGoal((Sheep) entity, 1.0D, 10.0F, 1.0F));
+        if (entity instanceof Sheep sheep) {
+            //sheep.goalSelector.addGoal(1, new SheepFollowCorgiGoal(sheep, 1.0D, 10.0F, 1.0F));
         }
     }
 
