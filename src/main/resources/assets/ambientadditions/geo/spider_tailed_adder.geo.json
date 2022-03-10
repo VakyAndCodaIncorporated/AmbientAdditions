@@ -32,14 +32,6 @@
 					]
 				},
 				{
-					"name": "tongue",
-					"parent": "head",
-					"pivot": [0, 1, -13],
-					"cubes": [
-						{"origin": [-1.5, 1, -16], "size": [3, 0, 3], "uv": [-3, 5]}
-					]
-				},
-				{
 					"name": "body1",
 					"parent": "root",
 					"pivot": [0, 1, -10],
