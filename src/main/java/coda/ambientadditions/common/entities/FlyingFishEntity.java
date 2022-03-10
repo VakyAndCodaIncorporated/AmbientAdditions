@@ -102,10 +102,12 @@ public class FlyingFishEntity extends AbstractSchoolingFish implements IAnimatab
         }
     }
 
+/*
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.FLYING_FISH_SPAWN_EGG.get());
     }
+*/
 
     public ItemStack getBucketItemStack() {
         return new ItemStack(AAItems.FLYING_FISH_BUCKET.get());
