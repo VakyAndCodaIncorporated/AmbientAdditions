@@ -36,4 +36,19 @@ public class MoleModel extends AnimatedGeoModel<MoleEntity> {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/star_nosed_mole.animation.json");
     }
 
+    @Override
+    public void setLivingAnimations(MoleEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+        super.setLivingAnimations(entity, uniqueID, customPredicate);
+        IBone root = this.getAnimationProcessor().getBone("root");
+
+        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+
+        if (entity.isBaby()) {
+            root.setScaleX(0.5F);
+            root.setScaleY(0.5F);
+            root.setScaleZ(0.5F);
+            root.setPositionY(0.2F);
+        }
+    }
+
 }
