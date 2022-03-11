@@ -30,7 +30,7 @@ public class LonghornCowfishModel extends AnimatedGeoModel<LonghornCowfishEntity
     @Override
     public void setLivingAnimations(LonghornCowfishEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-        IBone body = this.getAnimationProcessor().getBone("root");
+        IBone body = this.getAnimationProcessor().getBone("body");
         body.setPositionY(-0.2F);
     }
 }
