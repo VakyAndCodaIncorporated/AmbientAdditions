@@ -56,11 +56,10 @@ public class ClientEvents {
         EntityRenderers.register(AAEntities.YETI_CRAB.get(), YetiCrabRenderer::new);
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
-
-        didPlayerLayers = false;
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void layers(EntityRenderersEvent.AddLayers event) {
         GeoArmorRenderer.registerArmorRenderer(YetiArmWarmersItem.class, new YetiWarmersRenderer());
         GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, new DuckyMaskRenderer());
@@ -68,7 +67,7 @@ public class ClientEvents {
 
     static boolean didPlayerLayers = false;
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID, value = Dist.CLIENT)
     static class ModForgeEvents {
         // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
         @SubscribeEvent
@@ -76,8 +75,10 @@ public class ClientEvents {
         public static void playerLayers(RenderPlayerEvent event) {
             if (!didPlayerLayers) {
                 didPlayerLayers = true;
-                PlayerRenderer managerDefault = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
-                PlayerRenderer managerSlim = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
+
+                var managerDefault = (PlayerRenderer)Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default");
+                var managerSlim = (PlayerRenderer)Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("slim");
+
                 managerDefault.addLayer(new ScarletHoneycreeperShoulderLayer<>(managerDefault));
                 managerSlim.addLayer(new ScarletHoneycreeperShoulderLayer<>(managerSlim));
             }
