@@ -43,7 +43,7 @@ public class AyeAyeModel extends AnimatedGeoModel<AyeAyeEntity> {
             root.setPositionY(-0.1F);
         }
         else {
-            root.setPositionY(-0.2F);
+            root.setPositionY(-0.1F);
         }
     }
 }
