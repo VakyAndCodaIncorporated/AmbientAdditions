@@ -89,14 +89,6 @@ public class HarlequinShrimpEntity extends WaterAnimal implements IAnimatable {
     }
 
     @Override
-    public void travel(Vec3 p_213352_1_) {
-        super.travel(p_213352_1_);
-        if (isInWater()) {
-            setSpeed(this.getSpeed() * 1.5F);
-        }
-    }
-
-    @Override
     public MobType getMobType() {
         return MobType.ARTHROPOD;
     }
