@@ -38,6 +38,6 @@ public class PinocchioAnoleModel extends AnimatedGeoModel<PinocchioAnoleEntity> 
         head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
 
         IBone body = this.getAnimationProcessor().getBone("root");
-        body.setPositionY(-0.2F);
+        body.setPositionY(-0.1F);
     }
 }
