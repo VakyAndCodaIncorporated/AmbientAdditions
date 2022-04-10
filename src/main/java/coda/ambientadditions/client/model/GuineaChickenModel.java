@@ -1,12 +1,15 @@
 package coda.ambientadditions.client.model;
 
+import coda.ambientadditions.common.entities.GuineaChickenEntity;
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
 
-public class GuineaChickenModel<T extends Entity> extends EntityModel<T> {
+import java.util.Collections;
+
+public class GuineaChickenModel<T extends GuineaChickenEntity> extends AgeableModel<T> {
 	private final ModelRenderer chimcken;
 	private final ModelRenderer body;
 	private final ModelRenderer l_leg;
@@ -90,14 +93,19 @@ public class GuineaChickenModel<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		this.r_wing.zRot = ageInTicks * 0.5F;
 		this.l_wing.zRot = -ageInTicks * 0.5F;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		chimcken.render(matrixStack, buffer, packedLight, packedOverlay);
+	protected Iterable<ModelRenderer> headParts() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	protected Iterable<ModelRenderer> bodyParts() {
+		return ImmutableList.of(chimcken);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {

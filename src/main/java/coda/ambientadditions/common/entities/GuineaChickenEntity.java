@@ -63,7 +63,7 @@ public class GuineaChickenEntity extends AnimalEntity {
     @Override
     public GuineaChickenEntity getBreedOffspring(ServerWorld world, AgeableEntity animal) {
         GuineaChickenEntity chicken = AAEntities.GUINEA_CHICKEN.get().create(world);
-        int i = random.nextInt(7);
+        int i = random.nextInt(3);
         chicken.setVariant(i);
         return chicken;
     }
@@ -92,7 +92,7 @@ public class GuineaChickenEntity extends AnimalEntity {
     @Override
     public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         if (dataTag == null) {
-            setVariant(random.nextInt(7));
+            setVariant(random.nextInt(3));
         } else {
             if (dataTag.contains("Variant", 3)){
                 this.setVariant(dataTag.getInt("Variant"));
@@ -108,7 +108,7 @@ public class GuineaChickenEntity extends AnimalEntity {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return isBaby() ? 0.5F : 1.0F;
+        return isBaby() ? 0.25F : 0.5F;
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {

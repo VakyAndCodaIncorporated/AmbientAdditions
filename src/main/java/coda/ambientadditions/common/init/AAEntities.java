@@ -40,7 +40,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<YetiCrabEntity>> YETI_CRAB = create("yeti_crab", EntityType.Builder.of(YetiCrabEntity::new, EntityClassification.WATER_CREATURE).sized(0.7f, 0.2f));
     public static final RegistryObject<EntityType<HarlequinShrimpEntity>> HARLEQUIN_SHRIMP = create("harlequin_shrimp", EntityType.Builder.of(HarlequinShrimpEntity::new, EntityClassification.WATER_CREATURE).sized(0.5f, 0.4f));
     public static final RegistryObject<EntityType<ShameFacedCrabEntity>> SHAME_FACED_CRAB = create("shame_faced_crab", EntityType.Builder.of(ShameFacedCrabEntity::new, EntityClassification.WATER_CREATURE).sized(0.6f, 0.5f));
-    public static final RegistryObject<EntityType<GuineaChickenEntity>> GUINEA_CHICKEN = create("guinea_chicken", EntityType.Builder.of(GuineaChickenEntity::new, EntityClassification.CREATURE).sized(1.0f, 1.0f));
+    public static final RegistryObject<EntityType<GuineaChickenEntity>> GUINEA_CHICKEN = create("guinea_chicken", EntityType.Builder.of(GuineaChickenEntity::new, EntityClassification.CREATURE).sized(0.5f, 0.6f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, EntityClassification.MISC).sized(0.5f, 0.5f));
