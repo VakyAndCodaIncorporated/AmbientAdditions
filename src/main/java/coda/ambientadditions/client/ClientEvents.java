@@ -9,19 +9,13 @@ import coda.ambientadditions.common.init.AAEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.layers.ParrotVariantLayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
 public class ClientEvents {
@@ -53,9 +47,8 @@ public class ClientEvents {
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.YETI_CRAB.get(), YetiCrabRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), ChocolateChipStarfishRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AAEntities.LEAF_FROG.get(), LeafFrogRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AAEntities.FLYING_FISH.get(), FlyingFishRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AAEntities.GUINEA_CHICKEN.get(), GuineaChickenRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(AAEntities.DART.get(), DartRenderer::new);
 

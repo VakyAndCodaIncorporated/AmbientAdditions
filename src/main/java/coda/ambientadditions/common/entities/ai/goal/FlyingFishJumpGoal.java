@@ -1,6 +1,5 @@
 package coda.ambientadditions.common.entities.ai.goal;
 
-import coda.ambientadditions.common.entities.FlyingFishEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.JumpGoal;
 import net.minecraft.fluid.FluidState;

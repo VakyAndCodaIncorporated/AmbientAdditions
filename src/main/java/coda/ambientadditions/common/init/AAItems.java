@@ -31,7 +31,6 @@ public class AAItems {
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = REGISTER.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = REGISTER.register("yeti_crab_fluff", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> STARFISH_ARM = REGISTER.register("starfish_arm", () -> new StarfishArmItem(new Item.Properties().tab(GROUP)));
-    public static final RegistryObject<Item> LEAF_FROG_EGG = REGISTER.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG::get, new Item.Properties().tab(GROUP).stacksTo(16)));
     public static final RegistryObject<Item> FLYING_FISH = REGISTER.register("flying_fish", () -> new Item(new Item.Properties().tab(GROUP).food(new Food.Builder().nutrition(2).saturationMod(0.1F).build())));
 
     // Buckets & Catching Items
@@ -43,8 +42,6 @@ public class AAItems {
     public static final RegistryObject<Item> YETI_CRAB_BUCKET = REGISTER.register("yeti_crab_bucket", () -> new AABucketItem(AAEntities.YETI_CRAB, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> CHOCOLATE_CHIP_STARFISH_BUCKET = REGISTER.register("chocolate_chip_starfish_bucket", () -> new AABucketItem(AAEntities.CHOCOLATE_CHIP_STARFISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> HARLEQUIN_SHRIMP_BUCKET = REGISTER.register("harlequin_shrimp_bucket", () -> new AABucketItem(AAEntities.HARLEQUIN_SHRIMP, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> LEAF_FROG_BOWL = REGISTER.register("leaf_frog_bowl", () -> new AACatchableItem(AAEntities.LEAF_FROG::get, Items.BOWL, false, new Item.Properties().tab(GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> FLYING_FISH_BUCKET = REGISTER.register("flying_fish_bucket", () -> new FishBucketItem(AAEntities.FLYING_FISH, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
     public static final RegistryObject<Item> SHAME_FACED_CRAB_BUCKET = REGISTER.register("shame_faced_crab_bucket", () -> new FishBucketItem(AAEntities.SHAME_FACED_CRAB, () -> Fluids.WATER, new Item.Properties().tab(GROUP).stacksTo(1)));
 
     // Spawn Eggs
@@ -73,7 +70,6 @@ public class AAItems {
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_SPAWN_EGG = REGISTER.register("rubber_ducky_isopod_spawn_egg", () -> new AASpawnEggItem(AAEntities.RUBBER_DUCKY_ISOPOD, 0x625949, 0xefcc63, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_SPAWN_EGG = REGISTER.register("yeti_crab_spawn_egg", () -> new AASpawnEggItem(AAEntities.YETI_CRAB, 0xe7d0bb, 0xb19b77, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> HARLEQUIN_SHRIMP_SPAWN_EGG = REGISTER.register("harlequin_shrimp_spawn_egg", () -> new AASpawnEggItem(AAEntities.HARLEQUIN_SHRIMP, 0xe1e1f9, 0x667ce6, new Item.Properties().tab(GROUP)));
-    public static final RegistryObject<Item> LEAF_FROG_SPAWN_EGG = REGISTER.register("leaf_frog_spawn_egg", () -> new AASpawnEggItem(AAEntities.LEAF_FROG, 0x783e29, 0x44241a, new Item.Properties().tab(GROUP)));
-    public static final RegistryObject<Item> FLYING_FISH_SPAWN_EGG = REGISTER.register("flying_fish_spawn_egg", () -> new AASpawnEggItem(AAEntities.FLYING_FISH, 0x6e86a8, 0xaec2d4, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> SHAME_FACED_CRAB_SPAWN_EGG = REGISTER.register("shame_faced_crab_spawn_egg", () -> new AASpawnEggItem(AAEntities.SHAME_FACED_CRAB, 0xc7ab90, 0xb3654a, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> GUINEA_CHICKEN_SPAWN_EGG = REGISTER.register("guinea_chicken_spawn_egg", () -> new AASpawnEggItem(AAEntities.GUINEA_CHICKEN, 0x2c2826, 0xdee0ca, new Item.Properties().tab(GROUP)));
 }

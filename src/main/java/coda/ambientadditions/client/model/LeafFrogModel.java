@@ -1,6 +1,5 @@
 package coda.ambientadditions.client.model;
 
-import coda.ambientadditions.common.entities.LeafFrogEntity;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

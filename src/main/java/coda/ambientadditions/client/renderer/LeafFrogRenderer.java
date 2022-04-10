@@ -2,20 +2,15 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.LeafFrogModel;
-import coda.ambientadditions.common.entities.LeafFrogEntity;
-import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class LeafFrogRenderer extends MobRenderer<LeafFrogEntity, LeafFrogModel<LeafFrogEntity>> {

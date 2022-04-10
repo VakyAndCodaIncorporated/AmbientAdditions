@@ -2,18 +2,11 @@ package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.FlyingFishModel;
-import coda.ambientadditions.client.model.MoleModel;
-import coda.ambientadditions.common.entities.FlyingFishEntity;
-import coda.ambientadditions.common.entities.MoleEntity;
-import com.google.common.collect.Maps;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class FlyingFishRenderer extends MobRenderer<FlyingFishEntity, FlyingFishModel<FlyingFishEntity>> {

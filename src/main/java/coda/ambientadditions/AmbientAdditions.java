@@ -100,9 +100,8 @@ public class AmbientAdditions {
         event.put(AAEntities.RUBBER_DUCKY_ISOPOD.get(), RubberDuckyIsopodEntity.createAttributes().build());
         event.put(AAEntities.YETI_CRAB.get(), YetiCrabEntity.createAttributes().build());
         event.put(AAEntities.HARLEQUIN_SHRIMP.get(), HarlequinShrimpEntity.createAttributes().build());
-        event.put(AAEntities.LEAF_FROG.get(), LeafFrogEntity.createAttributes().build());
-        event.put(AAEntities.FLYING_FISH.get(), AbstractFishEntity.createAttributes().build());
         event.put(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabEntity.createAttributes().build());
+        event.put(AAEntities.GUINEA_CHICKEN.get(), GuineaChickenEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -128,7 +127,7 @@ public class AmbientAdditions {
         EntitySpawnPlacementRegistry.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.YETI_CRAB.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         EntitySpawnPlacementRegistry.register(AAEntities.HARLEQUIN_SHRIMP.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
-        EntitySpawnPlacementRegistry.register(AAEntities.FLYING_FISH.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractFishEntity::checkFishSpawnRules);
+        EntitySpawnPlacementRegistry.register(AAEntities.GUINEA_CHICKEN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, AnimalEntity::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -168,6 +167,7 @@ public class AmbientAdditions {
         if (event.getCategory() == Biome.Category.SAVANNA) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.VEILED_CHAMELEON.get(), 10, 1, 1));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GIANT_LAND_SNAIL.get(), 25, 1, 2));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(AAEntities.GUINEA_CHICKEN.get(), 20, 3, 5));
         }
 
         if (event.getCategory() == Biome.Category.RIVER) {
@@ -265,7 +265,6 @@ public class AmbientAdditions {
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(AAItems.CHOCOLATE_CHIP_STARFISH_BUCKET.get()), 3, 4, 1.5f));
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(AAItems.SHAME_FACED_CRAB_BUCKET.get()), 3, 4, 1.5f));
         trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 7), new ItemStack(AAItems.LONGHORN_COWFISH_BUCKET.get()), 3, 4, 1.5f));
-        trades.add(new ItemsForItemsTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(AAItems.LEAF_FROG_BOWL.get()), 3, 4, 1.5f));
     }
 
     private static class ItemsForItemsTrade implements VillagerTrades.ITrade {
