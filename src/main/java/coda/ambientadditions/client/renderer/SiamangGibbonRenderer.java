@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.geo.renderer;
+package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.client.geo.model.SiamangGibbonModel;
 import coda.ambientadditions.common.entities.SiamangGibbonEntity;

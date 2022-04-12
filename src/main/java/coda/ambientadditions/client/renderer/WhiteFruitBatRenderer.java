@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.geo.renderer;
+package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.client.geo.model.WhiteFruitBatModel;
 import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
