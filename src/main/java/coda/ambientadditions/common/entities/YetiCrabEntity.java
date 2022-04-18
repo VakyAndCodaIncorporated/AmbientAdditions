@@ -95,7 +95,7 @@ public class YetiCrabEntity extends WaterAnimal implements IAnimatable {
     public void travel(Vec3 p_213352_1_) {
         super.travel(p_213352_1_);
         if (isInWater()) {
-            setSpeed(this.getSpeed() * 1.5F);
+            setSpeed(2.5F);
         }
     }
 

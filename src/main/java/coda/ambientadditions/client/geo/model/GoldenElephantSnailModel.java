@@ -29,7 +29,7 @@ public class GoldenElephantSnailModel extends AnimatedGeoModel<GoldenElephantSna
     @Override
     public void setLivingAnimations(GoldenElephantSnailEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-        IBone body = this.getAnimationProcessor().getBone("shell1");
+        IBone body = this.getAnimationProcessor().getBone("root");
         body.setPositionY(-0.2F);
     }
 }

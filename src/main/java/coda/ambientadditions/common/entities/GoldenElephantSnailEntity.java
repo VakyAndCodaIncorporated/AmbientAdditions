@@ -36,9 +36,9 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.golden_elephant_snail.move", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.golden_elephant_snail.idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         }
 
         return PlayState.CONTINUE;
