@@ -1,6 +1,5 @@
-package coda.ambientadditions.client.geo.renderer;
+package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.AyeAyeModel;
 import coda.ambientadditions.client.geo.model.CardiganCorgiModel;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.common.entities.CardiganCorgiEntity;

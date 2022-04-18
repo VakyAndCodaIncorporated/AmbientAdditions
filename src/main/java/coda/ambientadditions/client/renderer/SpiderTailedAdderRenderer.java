@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.geo.renderer;
+package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.client.geo.model.SpiderTailedAdderModel;
 import coda.ambientadditions.common.entities.SpiderTailedAdderEntity;

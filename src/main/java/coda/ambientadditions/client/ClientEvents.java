@@ -1,9 +1,9 @@
 package coda.ambientadditions.client;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.client.geo.renderer.*;
-import coda.ambientadditions.client.geo.renderer.armor.DuckyMaskRenderer;
-import coda.ambientadditions.client.geo.renderer.armor.YetiWarmersRenderer;
+import coda.ambientadditions.client.renderer.*;
+import coda.ambientadditions.client.renderer.armor.DuckyMaskRenderer;
+import coda.ambientadditions.client.renderer.armor.YetiWarmersRenderer;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.ScarletHoneycreeperShoulderLayer;
 import coda.ambientadditions.common.init.AAEntities;

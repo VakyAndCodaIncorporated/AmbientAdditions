@@ -150,7 +150,7 @@ public class ChocolateChipStarfishEntity extends WaterAnimal implements IAnimata
     }
 
     public static boolean checkStarfishSpawnRules(EntityType<? extends WaterAnimal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_).is(Blocks.WATER);
+        return p_223316_1_.getBlockState(p_223316_3_).is(Blocks.WATER) && p_223316_4_.nextFloat() > 0.85F;
     }
 
     @Nullable

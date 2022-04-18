@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.geo.renderer;
+package coda.ambientadditions.client.renderer;
 
 import coda.ambientadditions.client.geo.model.GoldenElephantSnailModel;
 import coda.ambientadditions.common.entities.GoldenElephantSnailEntity;
