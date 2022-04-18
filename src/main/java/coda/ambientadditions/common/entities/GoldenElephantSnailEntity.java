@@ -34,7 +34,7 @@ import java.util.Random;
 
 public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        boolean walking = !(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
         } else {

@@ -5,6 +5,6 @@ license="All rights reserved"
 modId="ambientadditions" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Ambient Additions" #mandatory
-credits="LukeGrahamLandry#6888, VakyPanda, Graustreif2004, Ninni, MightyGoat42" #optional
+credits="LukeGrahamLandry#6888, VakyPanda, Graustreif2004, Ninni, MightyGoat42, PoopHead27" #optional
 authors="Coda"
 description='''Adds more ambient wildlife to your world!'''
