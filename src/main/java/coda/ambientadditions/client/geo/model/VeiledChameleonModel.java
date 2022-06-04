@@ -54,7 +54,7 @@ public class VeiledChameleonModel extends AnimatedGeoModel<VeiledChameleonEntity
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
             root.setScaleZ(0.5F);
-            root.setPositionY(-0.2F);
+            root.setPositionY(-0.15F);
         }
     }
 
