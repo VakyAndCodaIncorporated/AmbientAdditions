@@ -36,7 +36,9 @@ import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -73,7 +75,7 @@ public class AmbientAdditions {
         AAEntities.REGISTER.register(bus);
         AASounds.REGISTER.register(bus);
 
-        GeckoLib.initialize();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AAConfig.Common.SPEC);
     }
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
@@ -140,76 +142,76 @@ public class AmbientAdditions {
 
     private void onBiomeLoading(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.BiomeCategory.JUNGLE) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.WHITE_FRUIT_BAT.get(), 20, 3, 3));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOUSTACHED_TAMARIN.get(), 40, 3, 5));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SCARLET_HONEYCREEPER.get(), 35, 2, 3));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINOCCHIO_ANOLE.get(), 25, 1, 1));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.AYE_AYE.get(), 30, 1, 2));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SIAMANG_GIBBON.get(), 30, 3, 6));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RING_TAILED_LEMUR.get(), 30, 4, 8));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.WHITE_FRUIT_BAT.get(), AAConfig.Common.INSTANCE.whiteFruitBatSpawnWeight.get(), 3, 3));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOUSTACHED_TAMARIN.get(), AAConfig.Common.INSTANCE.moustachedTamarinSpawnWeight.get(), 3, 5));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SCARLET_HONEYCREEPER.get(), AAConfig.Common.INSTANCE.scarletHoneycreeperSpawnWeight.get(), 2, 3));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINOCCHIO_ANOLE.get(), AAConfig.Common.INSTANCE.pinocchioAnoleSpawnWeight.get(), 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.AYE_AYE.get(), AAConfig.Common.INSTANCE.ayeAyeSpawnWeight.get(), 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SIAMANG_GIBBON.get(), AAConfig.Common.INSTANCE.siamangGibbonSpawnWeight.get(), 3, 6));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RING_TAILED_LEMUR.get(), AAConfig.Common.INSTANCE.ringTailedLemurSpawnWeight.get(), 4, 8));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.TAIGA) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.STAG_BEETLE.get(), 40, 1, 2));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINE_MARTEN.get(), 30, 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.STAG_BEETLE.get(), AAConfig.Common.INSTANCE.statBeetleSpawnWeight.get(), 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINE_MARTEN.get(), AAConfig.Common.INSTANCE.pineMartenSpawnWeight.get(), 1, 2));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.MESA) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NINE_BANDED_ARMADILLO.get(), 5, 2, 4));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NINE_BANDED_ARMADILLO.get(), AAConfig.Common.INSTANCE.nineBandedArmadilloSpawnWeight.get(), 2, 4));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.SWAMP) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.LEAF_FROG.get(), 6, 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.LEAF_FROG.get(), AAConfig.Common.INSTANCE.leafFrogSpawnWeight.get(), 1, 2));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.DESERT) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINK_FAIRY_ARMADILLO.get(), 3, 1, 1));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SPIDER_TAILED_ADDER.get(), 4, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PINK_FAIRY_ARMADILLO.get(), AAConfig.Common.INSTANCE.pinkFairyArmadilloSpawnWeight.get(), 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SPIDER_TAILED_ADDER.get(), AAConfig.Common.INSTANCE.spiderTailedAdderSpawnWeight.get(), 1, 1));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.PLAINS || event.getCategory() == Biome.BiomeCategory.FOREST) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOLE.get(), 10, 1, 1));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PEMBROKE_CORGI.get(), 4, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MOLE.get(), AAConfig.Common.INSTANCE.moleSpawnWeight.get(), 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.PEMBROKE_CORGI.get(), AAConfig.Common.INSTANCE.pembrokeCorgiSpawnWeight.get(), 1, 1));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.SAVANNA) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), 10, 1, 1));
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), 25, 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), AAConfig.Common.INSTANCE.veiledChameleonSpawnWeight.get(), 1, 1));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), AAConfig.Common.INSTANCE.giantLandSnailSpawnWeight.get(), 1, 2));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.RIVER) {
-            event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), 2, 1, 1));
+            event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), AAConfig.Common.INSTANCE.rabbitSnailSpawnWeight.get(), 1, 1));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.PLAINS) {
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), 3, 2, 8));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), AAConfig.Common.INSTANCE.nakedMoleRatSpawnWeight.get(), 2, 8));
         }
 
         if (event.getName() != null) {
             if (event.getName().getPath().equals("warm_ocean")) {
-                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(AAEntities.LONGHORN_COWFISH.get(), 5, 1, 1));
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAPOLEON_WRASSE.get(), 4, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(AAEntities.LONGHORN_COWFISH.get(), AAConfig.Common.INSTANCE.longhornCowfishSpawnWeight.get(), 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAPOLEON_WRASSE.get(), AAConfig.Common.INSTANCE.napoleonWrasseSpawnWeight.get(), 1, 2));
             }
 
             if (event.getName().getPath().equals("lukewarm_ocean") || event.getName().getPath().equals("deep_lukewarm_ocean")) {
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), 5, 2, 5));
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.HARLEQUIN_SHRIMP.get(), 6, 1, 1));
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SHAME_FACED_CRAB.get(), 3, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), AAConfig.Common.INSTANCE.chocolateChipStarfishSpawnWeight.get(), 2, 5));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.HARLEQUIN_SHRIMP.get(), AAConfig.Common.INSTANCE.harlequinShrimpSpawnWeight.get(), 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SHAME_FACED_CRAB.get(), AAConfig.Common.INSTANCE.shameFacedCrabSpawnWeight.get(), 1, 2));
             }
 
             if (event.getName().getPath().equals("deep_ocean")) {
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.YETI_CRAB.get(), 6, 2, 3));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.YETI_CRAB.get(), AAConfig.Common.INSTANCE.yetiCrabSpawnWeight.get(), 2, 3));
             }
 
             if (event.getName().getPath().equals("dark_forest")) {
-                event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), 4, 1, 2));
+                event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), AAConfig.Common.INSTANCE.cardiganCorgiSpawnWeight.get(), 1, 2));
             }
         }
     }
 
     private void entitySpawnInStructure(StructureSpawnListGatherEvent event) {
         if (event.getStructure() == StructureFeature.WOODLAND_MANSION) {
-            event.addEntitySpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), 8, 1, 1));
+            event.addEntitySpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AAEntities.CARDIGAN_CORGI.get(), AAConfig.Common.INSTANCE.cardiganCorgiMansionSpawnWeight.get(), 1, 1));
         }
     }
 
@@ -226,7 +228,7 @@ public class AmbientAdditions {
             BlockPos pos = event.getPos();
             BlockState state = world.getBlockState(pos);
 
-            if (state.is(Blocks.JUNGLE_LOG) && world.random.nextFloat() > 0.95F) {
+            if (state.is(Blocks.JUNGLE_LOG) && world.random.nextInt(AAConfig.Common.INSTANCE.rubberDuckyIsopodSpawnWeight.get()) == 0) {
                 RubberDuckyIsopodEntity entity = AAEntities.RUBBER_DUCKY_ISOPOD.get().create(world);
 
                 // this is a horrible way to do this, but it works
