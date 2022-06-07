@@ -67,7 +67,6 @@ public class AmbientAdditions {
 
         forgeBus.addListener(this::entitySpawnInStructure);
         forgeBus.addListener(this::onBiomeLoading);
-        forgeBus.addListener(this::onEntityJoinWorld);
         forgeBus.addListener(this::onLogStripped);
         forgeBus.addListener(this::addWanderingTrades);
 
@@ -215,12 +214,12 @@ public class AmbientAdditions {
         }
     }
 
-    private void onEntityJoinWorld(EntityJoinWorldEvent event) {
+/*    private void onEntityJoinWorld(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof Sheep sheep) {
-            //sheep.goalSelector.addGoal(1, new SheepFollowCorgiGoal(sheep, 1.0D, 10.0F, 1.0F));
+            sheep.goalSelector.addGoal(1, new SheepFollowCorgiGoal(sheep, 1.0D, 10.0F, 1.0F));
         }
-    }
+    }*/
 
     private void onLogStripped(PlayerInteractEvent.RightClickBlock event) {
         if (event.getItemStack().getItem() instanceof AxeItem) {
