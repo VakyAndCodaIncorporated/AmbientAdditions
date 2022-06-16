@@ -10,7 +10,9 @@ import net.minecraft.tags.BlockTags;
 
 public class KATags {
     public static final TagKey<Block> STRIPPABLE_LOGS = blockTag("strippable_logs");
-    public static final TagKey<EntityType<?>> CRATE_ACCEPTABLE = entityTag("crate_acceptable");
+    public static final TagKey<EntityType<?>> CRATEABLE = entityTag("crateable");
+    public static final TagKey<EntityType<?>> CRATEABLE_VANILLA = entityTag("crateable_vanilla");
+    public static final TagKey<EntityType<?>> CRATEABLE_KA = entityTag("crateable_kingdom_animalia");
 
     private static TagKey<Block> blockTag(String path) {
         return BlockTags.create(new ResourceLocation(KingdomAnimalia.MOD_ID, path));

@@ -53,7 +53,7 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob) && target.getType().is(KATags.CRATE_ACCEPTABLE)) {
+        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob) && target.getType().is(KATags.CRATEABLE)) {
             if (!level.isClientSide) {
 
                 ItemStack stack1 = player.getItemInHand(hand);
