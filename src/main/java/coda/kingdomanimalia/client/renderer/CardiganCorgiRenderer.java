@@ -1,0 +1,15 @@
+package coda.kingdomanimalia.client.renderer;
+
+import coda.kingdomanimalia.client.geo.model.CardiganCorgiModel;
+import coda.kingdomanimalia.client.renderer.layer.CardiganCorgiCollarLayer;
+import coda.kingdomanimalia.common.entities.CardiganCorgiEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
+public class CardiganCorgiRenderer extends GeoEntityRenderer<CardiganCorgiEntity> {
+
+    public CardiganCorgiRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new CardiganCorgiModel());
+        addLayer(new CardiganCorgiCollarLayer(this));
+    }
+}

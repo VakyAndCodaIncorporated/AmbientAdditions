@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "kingdomanimalia:item/mole_bucket_0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "kingdomanimalia:variant": 0
+      },
+      "model": "kingdomanimalia:item/mole_bucket"
+    },
+    {
+      "predicate": {
+        "kingdomanimalia:variant": 1
+      },
+      "model": "kingdomanimalia:item/mole_bucket_1"
+    },
+    {
+      "predicate": {
+        "kingdomanimalia:variant": 2
+      },
+      "model": "kingdomanimalia:item/mole_bucket_2"
+    }
+  ]
+}

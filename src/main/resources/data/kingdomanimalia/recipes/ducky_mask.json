@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "S S"
+  ],
+  "key": {
+    "#": {
+      "item": "kingdomanimalia:rubber_ducky_isopod_molt"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "kingdomanimalia:ducky_mask",
+    "count": 1
+  }
+}

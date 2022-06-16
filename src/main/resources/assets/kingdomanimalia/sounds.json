@@ -1,0 +1,223 @@
+{
+  "armadillo.ambient": {
+    "subtitle": "kingdomanimalia.armadillo.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:armadillo/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "armadillo.death": {
+    "subtitle": "kingdomanimalia.armadillo.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:armadillo/death",
+        "stream": true
+      }
+    ]
+  },
+  "armadillo.hurt": {
+    "subtitle": "kingdomanimalia.armadillo.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:armadillo/hurt",
+        "stream": true
+      }
+    ]
+  },
+  "corgi.ambient": {
+    "subtitle": "kingdomanimalia.corgi.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:corgi/ambient_1",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:corgi/ambient_2",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:corgi/ambient_3",
+        "stream": true
+      }
+    ]
+  },
+  "rat.ambient": {
+    "subtitle": "kingdomanimalia.rat.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:rat/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "rat.death": {
+    "subtitle": "kingdomanimalia.rat.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:rat/death",
+        "stream": true
+      }
+    ]
+  },
+  "rat.hurt": {
+    "subtitle": "kingdomanimalia.rat.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:rat/hurt",
+        "stream": true
+      }
+    ]
+  },
+  "honeycreeper.ambient": {
+    "subtitle": "kingdomanimalia.honeycreeper.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:honeycreeper/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "honeycreeper.death": {
+    "subtitle": "kingdomanimalia.honeycreeper.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:honeycreeper/death",
+        "stream": true
+      }
+    ]
+  },
+  "honeycreeper.hurt": {
+    "subtitle": "kingdomanimalia.honeycreeper.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:honeycreeper/hurt",
+        "stream": true
+      }
+    ]
+  },
+  "siamang.ambient": {
+    "subtitle": "kingdomanimalia.siamang.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:siamang/ambient_1",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/ambient_2",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/ambient_3",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/ambient_4",
+        "stream": true
+      }
+    ]
+  },
+  "siamang.hurt": {
+    "subtitle": "kingdomanimalia.siamang.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:siamang/hurt_1",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/hurt_2",
+        "stream": true
+      }
+    ]
+  },
+  "siamang.death": {
+    "subtitle": "kingdomanimalia.siamang.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:siamang/death_1",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/death_2",
+        "stream": true
+      }
+    ]
+  },
+  "siamang.booming": {
+    "subtitle": "kingdomanimalia.siamang.booming",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:siamang/booming_1",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/booming_2",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/booming_3",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/booming_4",
+        "stream": true
+      },
+      {
+        "name": "kingdomanimalia:siamang/booming_5",
+        "stream": true
+      }
+    ]
+  },
+  "snake.ambient": {
+    "subtitle": "kingdomanimalia.snake.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:snake/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "snake.hurt": {
+    "subtitle": "kingdomanimalia.snake.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:snake/hurt",
+        "stream": true
+      }
+    ]
+  },
+  "snake.death": {
+    "subtitle": "kingdomanimalia.snake.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:snake/death",
+        "stream": true
+      }
+    ]
+  },
+  "frog.ambient": {
+    "subtitle": "kingdomanimalia.frog.ambient",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:frog/ambient"
+      }
+    ]
+  },
+  "frog.death": {
+    "subtitle": "kingdomanimalia.frog.death",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:frog/death"
+      }
+    ]
+  },
+  "frog.hurt": {
+    "subtitle": "kingdomanimalia.frog.hurt",
+    "sounds": [
+      {
+        "name": "kingdomanimalia:frog/hurt"
+      }
+    ]
+  }
+}

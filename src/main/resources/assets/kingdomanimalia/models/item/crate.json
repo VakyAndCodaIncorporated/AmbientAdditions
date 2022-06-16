@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "kingdomanimalia:block/crate_top",
+    "side": "kingdomanimalia:block/crate"
+  }
+}

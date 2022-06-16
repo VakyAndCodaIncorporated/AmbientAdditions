@@ -2,9 +2,9 @@ modLoader="javafml" #mandatory
     loaderVersion="[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license="All rights reserved"
 [[mods]] #mandatory
-modId="ambientadditions" #mandatory
+modId="kingdomanimalia" #mandatory
 version="${file.jarVersion}" #mandatory
-displayName="Ambient Additions" #mandatory
+displayName="Kingdom Animalia" #mandatory
 credits="LukeGrahamLandry#6888, VakyPanda, Graustreif2004, Ninni, MightyGoat42, PoopHead27" #optional
 authors="Coda"
 description='''Adds more ambient wildlife to your world!'''

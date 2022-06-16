@@ -1,0 +1,13 @@
+package coda.kingdomanimalia.client.renderer;
+
+import coda.kingdomanimalia.client.geo.model.MoustachedTamarinModel;
+import coda.kingdomanimalia.common.entities.MoustachedTamarinEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
+public class MoustachedTamarinRenderer extends GeoEntityRenderer<MoustachedTamarinEntity> {
+
+    public MoustachedTamarinRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new MoustachedTamarinModel());
+    }
+}

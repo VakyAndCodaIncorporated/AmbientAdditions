@@ -1,0 +1,10 @@
+{
+  "type": "kingdomanimalia:spawning",
+  "biomes": "#minecraft:is_jungle",
+  "spawn": {
+    "type": "kingdomanimalia:moustached_tamarin",
+    "maxCount": 1,
+    "minCount": 3,
+    "weight": 100
+  }
+}
