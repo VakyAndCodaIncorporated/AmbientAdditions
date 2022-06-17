@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -117,22 +118,26 @@ public class CrateItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        Component name = super.getName(stack);
-        Component name2;
+        MutableComponent name = (MutableComponent) super.getName(stack);
+        MutableComponent creatureName = containsEntity(stack) ? EntityType.byString(stack.getTag()
+                .getCompound(DATA_CREATURE)
+                .getString("id"))
+                .orElse(null)
+                .getDescription().copy() : name;
 
         if (containsEntity(stack)) {
             CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
 
             if (tag.contains("CustomName")) {
-                name2 = Component.Serializer.fromJson(tag.getString("CustomName"));
+                creatureName = Component.Serializer.fromJson(tag.getString("CustomName"));
             }
             else {
-                name2 = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+                creatureName = (MutableComponent) EntityType.byString(tag.getString("id")).orElse(null).getDescription();
             }
 
-            name.copy().append(" of ").append(name2);
+
         }
-        return name;
+        return name.copy().append(" of ").append(creatureName);
     }
 
     @Override
