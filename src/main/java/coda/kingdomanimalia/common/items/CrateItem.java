@@ -119,11 +119,11 @@ public class CrateItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         MutableComponent name = (MutableComponent) super.getName(stack);
-        MutableComponent creatureName = containsEntity(stack) ? EntityType.byString(stack.getTag()
+        MutableComponent creatureName = EntityType.byString(stack.getTag()
                 .getCompound(DATA_CREATURE)
                 .getString("id"))
                 .orElse(null)
-                .getDescription().copy() : name;
+                .getDescription().copy();
 
         if (containsEntity(stack)) {
             CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
