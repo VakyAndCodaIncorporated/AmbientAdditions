@@ -62,6 +62,20 @@
 					}
 				}
 			}
+		},
+		"animation.scarlet_honey_creeper.sit": {
+			"animation_length": 8.2,
+			"bones": {
+				"body": {
+					"position": [0, -2, 0]
+				},
+				"legRight": {
+					"position": [0, 0.2, 0]
+				},
+				"legLeft": {
+					"position": [0, 0.2, 0]
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2
