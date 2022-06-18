@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+// todo - fix this
 public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
    private static final ResourceLocation MODEL = new ResourceLocation(KingdomAnimalia.MOD_ID, "geo/scarlet_honeycreeper.geo.json");
 
