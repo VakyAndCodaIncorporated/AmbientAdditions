@@ -14,9 +14,9 @@ import java.util.Map;
 
 public class MoleModel extends AnimatedGeoModel<MoleEntity> {
     public static final Map<Integer, ResourceLocation> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
-        hashMap.put(0, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/eastern_mole.png"));
-        hashMap.put(1, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/hairy_tailed_mole.png"));
-        hashMap.put(2, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/star_nosed_mole.png"));
+        hashMap.put(0, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/star_nosed_mole.png"));
+        hashMap.put(1, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/eastern_mole.png"));
+        hashMap.put(2, new ResourceLocation(KingdomAnimalia.MOD_ID, "textures/entity/mole/hairy_tailed_mole.png"));
     });
 
     @Override

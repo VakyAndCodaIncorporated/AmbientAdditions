@@ -119,25 +119,13 @@ public class CrateItem extends Item {
     @Override
     public Component getName(ItemStack stack) {
         MutableComponent name = (MutableComponent) super.getName(stack);
-        MutableComponent creatureName = EntityType.byString(stack.getTag()
+        MutableComponent creatureName = containsEntity(stack) ? EntityType.byString(stack.getTag()
                 .getCompound(DATA_CREATURE)
                 .getString("id"))
                 .orElse(null)
-                .getDescription().copy();
+                .getDescription().copy() : Component.empty();
 
-        if (containsEntity(stack)) {
-            CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
-
-            if (tag.contains("CustomName")) {
-                creatureName = Component.Serializer.fromJson(tag.getString("CustomName"));
-            }
-            else {
-                creatureName = (MutableComponent) EntityType.byString(tag.getString("id")).orElse(null).getDescription();
-            }
-
-
-        }
-        return name.copy().append(" of ").append(creatureName);
+        return containsEntity(stack) ? name.copy().append(" of ").append(creatureName) : name;
     }
 
     @Override
@@ -146,7 +134,12 @@ public class CrateItem extends Item {
             CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
             Component name;
 
-            name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+            if (tag.contains("CustomName")) {
+                name = Component.Serializer.fromJson(tag.getString("CustomName"));
+            }
+            else {
+                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+            }
             tooltip.add(name.copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
     }
