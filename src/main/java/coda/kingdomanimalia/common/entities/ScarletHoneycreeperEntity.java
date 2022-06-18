@@ -53,7 +53,7 @@ import java.util.Random;
 
 public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements FlyingAnimal, IAnimatable {
    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-      if (isInSittingPose()) {
+      if (isOrderedToSit()) {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.sit", true));
       }
 
