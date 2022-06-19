@@ -54,11 +54,11 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
             event.getController().setAnimationSpeed(2.5);
         }
         else if (event.isMoving() && !isBaby()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.hop", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("jump", true));
             event.getController().setAnimationSpeed(1);
         }
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
             event.getController().setAnimationSpeed(1);
         }
 

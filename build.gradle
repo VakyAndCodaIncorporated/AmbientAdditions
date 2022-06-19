@@ -120,7 +120,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19-41.0.17'
+    minecraft 'net.minecraftforge:forge:1.19-41.0.38'
 
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.3')
 }
