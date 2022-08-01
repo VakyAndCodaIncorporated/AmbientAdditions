@@ -51,7 +51,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements FlyingAnimal, IAnimatable {
+public class ScarletHoneycreeperEntity extends TamableAnimal implements FlyingAnimal, IAnimatable {
    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
       if (this.isFlying()) {
          event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.fly", true));
@@ -109,8 +109,9 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
       this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
       this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
       this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
-      this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
       this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+      this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
+      this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.15D));
    }
 
    public static AttributeSupplier.Builder createAttributes() {
@@ -218,7 +219,7 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
 
    @Override
    public boolean canMate(Animal p_70878_1_) {
-      return false;
+      return true;
    }
 
    @Nullable
