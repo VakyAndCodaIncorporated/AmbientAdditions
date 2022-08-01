@@ -65,7 +65,7 @@ public class ClientEvents {
         GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, new DuckyMaskRenderer());
     }
 
-    static boolean didPlayerLayers = false;
+    //static boolean didPlayerLayers = false;
 
 /*    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID, value = Dist.CLIENT)
     static class ModForgeEvents {

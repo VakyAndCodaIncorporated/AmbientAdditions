@@ -116,12 +116,17 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+
+    maven { url "https://maven.blamejared.com" }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.0.12'
 
     implementation fg.deobf('software.bernie.geckolib:geckolib-1.18-forge:3.0.12')
+
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
