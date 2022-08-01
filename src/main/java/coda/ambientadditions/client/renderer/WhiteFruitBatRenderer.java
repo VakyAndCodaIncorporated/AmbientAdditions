@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.WhiteFruitBatModel;
+import coda.ambientadditions.client.model.WhiteFruitBatModel;
 import coda.ambientadditions.common.entities.WhiteFruitBatEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

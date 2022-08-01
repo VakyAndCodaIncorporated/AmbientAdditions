@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.ShameFacedCrabModel;
+import coda.ambientadditions.client.model.ShameFacedCrabModel;
 import coda.ambientadditions.common.entities.ShameFacedCrabEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

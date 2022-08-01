@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.PineMartenModel;
+import coda.ambientadditions.client.model.PineMartenModel;
 import coda.ambientadditions.common.entities.PineMartenEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

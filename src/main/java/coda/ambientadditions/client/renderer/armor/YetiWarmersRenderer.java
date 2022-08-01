@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer.armor;
 
-import coda.ambientadditions.client.geo.model.armor.YetiWarmersModel;
+import coda.ambientadditions.client.model.armor.YetiWarmersModel;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 

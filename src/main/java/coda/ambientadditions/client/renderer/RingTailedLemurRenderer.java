@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.RingTailedLemurModel;
+import coda.ambientadditions.client.model.RingTailedLemurModel;
 import coda.ambientadditions.common.entities.RingTailedLemurEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

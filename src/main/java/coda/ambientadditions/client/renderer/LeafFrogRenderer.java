@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.LeafFrogModel;
+import coda.ambientadditions.client.model.LeafFrogModel;
 import coda.ambientadditions.common.entities.LeafFrogEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

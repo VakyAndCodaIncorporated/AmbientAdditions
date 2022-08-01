@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.init.AAEntities;
 import coda.ambientadditions.common.init.AAItems;
 import coda.ambientadditions.common.init.AASounds;
 import net.minecraft.core.BlockPos;
@@ -222,7 +223,7 @@ public class ScarletHoneycreeperEntity extends ShoulderRidingEntity implements F
 
    @Nullable
    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
-      return null;
+      return AAEntities.SCARLET_HONEYCREEPER.get().create(p_241840_1_);
    }
 
    @Nullable

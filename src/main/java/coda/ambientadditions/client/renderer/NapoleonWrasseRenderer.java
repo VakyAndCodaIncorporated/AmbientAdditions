@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.NapoleonWrasseModel;
+import coda.ambientadditions.client.model.NapoleonWrasseModel;
 import coda.ambientadditions.common.entities.NapoleonWrasseEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

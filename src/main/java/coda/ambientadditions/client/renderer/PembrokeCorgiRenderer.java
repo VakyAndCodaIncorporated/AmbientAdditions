@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.PembrokeCorgiModel;
+import coda.ambientadditions.client.model.PembrokeCorgiModel;
 import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.PembrokeCorgiEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

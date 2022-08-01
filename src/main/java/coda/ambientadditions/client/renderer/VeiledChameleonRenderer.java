@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.VeiledChameleonModel;
+import coda.ambientadditions.client.model.VeiledChameleonModel;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import coda.ambientadditions.common.entities.VeiledChameleonEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

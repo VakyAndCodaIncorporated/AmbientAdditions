@@ -1,6 +1,6 @@
 package coda.ambientadditions.client.renderer;
 
-import coda.ambientadditions.client.geo.model.AyeAyeModel;
+import coda.ambientadditions.client.model.AyeAyeModel;
 import coda.ambientadditions.common.entities.AyeAyeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
