@@ -273,18 +273,56 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
     }
 
     @Override
-    public void travel(Vec3 p_213352_1_) {
+    public void travel(Vec3 vec3) {
         if (isBaby() && this.isEffectiveAi() && this.isInWater()) {
-            this.moveRelative(0.01F, p_213352_1_);
+            this.moveRelative(0.01F, vec3);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
             if (this.getTarget() == null) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
             }
-        } else {
-            super.travel(p_213352_1_);
+        } else if (isEffectiveAi() && !isBaby()) {
+            super.travel(jump(vec3));
+        }
+        else {
+            super.travel(vec3);
         }
     }
+
+    private Vec3 jump(Vec3 pos) {
+        if (!(getControllingPassenger() instanceof LivingEntity)) return Vec3.ZERO;
+
+        LivingEntity passenger = (LivingEntity) this.getControllingPassenger();
+        float f1 = passenger.zza;
+        if (f1 <= 0.0F) {
+            f1 *= 0.25F;
+        }
+
+        float distance = 2.0F;
+        double x, z;
+
+        if (f1 > 0 && isOnGround()) {
+            float yRot = passenger.getViewYRot(1.0F);
+
+            x = -Mth.sin((float) (yRot * Math.PI/180F)) * distance;
+            z = Mth.cos((float) (yRot * Math.PI/180F)) * distance;
+
+            setDeltaMovement(x, distance * 0.45, z);
+            playSound(SoundEvents.SLIME_JUMP_SMALL, Math.min(random.nextFloat() + 0.4F, 1.0F), 1.0F);
+        }
+        else if (f1 < 0 && isOnGround()) {
+            float yRot = passenger.getViewYRot(1.0F);
+
+            x = Mth.sin((float) (yRot * Math.PI/180F)) * (distance / 2);
+            z = -Mth.cos((float) (yRot * Math.PI/180F)) * (distance / 2);
+
+            setDeltaMovement(x, distance * 0.45, z);
+            playSound(SoundEvents.SLIME_JUMP_SMALL, Math.min(random.nextFloat() + 0.4F, 1.0F), 1.0F);
+        }
+
+        return new Vec3(0, pos.y, f1);
+    }
+
 
     @Override
     public ItemStack getPickedResult(HitResult target) {
