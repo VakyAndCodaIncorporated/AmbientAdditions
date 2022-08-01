@@ -67,7 +67,7 @@ public class ClientEvents {
 
     static boolean didPlayerLayers = false;
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID, value = Dist.CLIENT)
+/*    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = AmbientAdditions.MOD_ID, value = Dist.CLIENT)
     static class ModForgeEvents {
         // this is trash but Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap() is null on FMLClientSetupEvent
         @SubscribeEvent
@@ -83,5 +83,5 @@ public class ClientEvents {
                 managerSlim.addLayer(new ScarletHoneycreeperShoulderLayer<>(managerSlim));
             }
         }
-    }
+    }*/
 }
