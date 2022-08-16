@@ -142,7 +142,7 @@ public class AAConfig {
             builder.pop();
 
             builder.push("Other Spawning");
-            rubberDuckyIsopodSpawnWeight = builder.comment("Spawn weight of Rubber Ducky Isopods (lower = more common)").defineInRange("rubber_ducky_isopod_spawn_weight", 20, 1, 1000);
+            rubberDuckyIsopodSpawnWeight = builder.comment("Spawn weight of Rubber Ducky Isopods (lower = more common)").defineInRange("rubber_ducky_isopod_spawn_weight", 40, 1, 1000);
 
             cardiganCorgiMansionSpawnWeight = builder.comment("Spawn weight of Cardigan Corgis in Mansions (higher = more common)").defineInRange("cardigan_corgi_in_mansion_spawn_weight", 8, 1, 1000);
 

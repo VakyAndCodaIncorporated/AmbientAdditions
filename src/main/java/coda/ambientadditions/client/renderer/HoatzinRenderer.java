@@ -21,9 +21,4 @@ public class HoatzinRenderer extends GeoEntityRenderer<HoatzinEntity> {
     public RenderType getRenderType(HoatzinEntity animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityTranslucent(textureLocation);
     }
-
-    @Override
-    public void render(HoatzinEntity entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
-    }
 }
