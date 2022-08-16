@@ -124,9 +124,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.51'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.73'
 
-    implementation fg.deobf('software.bernie.geckolib:geckolib-1.18-forge:3.0.12')
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.34')
 
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
