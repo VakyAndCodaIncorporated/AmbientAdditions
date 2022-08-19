@@ -89,7 +89,7 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue cardiganCorgiMansionSpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
-            builder.push("Creature Spawn Weights (higher = more common)");
+            builder.push("Spawn Weights (higher = more common)");
             // Jungle
             whiteFruitBatSpawnWeight = builder.comment("Spawn weight of White Fruit Bats").defineInRange("white_fruit_bats_spawn_weight", 30, 1, 1000);
             moustachedTamarinSpawnWeight = builder.comment("Spawn weight of Moustached Tamarins").defineInRange("moustached_tamarin_spawn_weight", 30, 1, 1000);
