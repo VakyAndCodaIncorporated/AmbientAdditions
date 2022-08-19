@@ -1,6 +1,7 @@
 package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.common.entities.PineMartenEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -52,11 +53,14 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
         IBone root = getAnimationProcessor().getBone("root");
 
         if (this.getAnimationProcessor().getBone("head") != null) {
-            IBone head = this.getAnimationProcessor().getBone("head");
+            boolean flag = entity instanceof PineMartenEntity;
+            IBone head = this.getAnimationProcessor().getBone(!flag ? "head" : "neck");
 
             EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-            head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));
+            head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F) - (flag ? 0.7854F : 0F));
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
+
+
         }
 
         if (entity.isBaby()) {

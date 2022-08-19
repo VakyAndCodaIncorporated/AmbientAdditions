@@ -1,4 +1,4 @@
-package coda.ambientadditions.client.renderer.armor;
+package coda.ambientadditions.client.renderer.item;
 
 import coda.ambientadditions.client.model.armor.YetiWarmersModel;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
