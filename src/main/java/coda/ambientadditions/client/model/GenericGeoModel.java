@@ -59,8 +59,6 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
             EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
             head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F) - (flag ? 0.7854F : 0F));
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
-
-
         }
 
         if (entity.isBaby()) {

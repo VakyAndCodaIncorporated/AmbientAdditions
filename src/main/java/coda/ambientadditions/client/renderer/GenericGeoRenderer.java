@@ -43,11 +43,10 @@ public class GenericGeoRenderer<T extends LivingEntity & IAnimatable> extends Ge
 			stack.scale(scale, scale, scale);
 		}
 
-		if (entity instanceof AbstractFish) {
-			if (!entity.isInWater()) {
-				stack.translate(0.1F, 0.1F, -0.1F);
-				stack.mulPose(Vector3f.ZP.rotationDegrees(90));
-			}
+		// fix fish (napoleon wrasse) flopping
+		if (entity instanceof AbstractFish && !entity.isInWater()) {
+			stack.translate(0.1F, 0.1F, -0.1F);
+			stack.mulPose(Vector3f.ZP.rotation(1.5708F));
 		}
 
 		super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
