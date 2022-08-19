@@ -14,9 +14,12 @@ import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.common.items.CrateItem;
 import coda.ambientadditions.common.items.DuckyMaskArmorItem;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -143,6 +146,8 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
+
+        ItemProperties.register(AAItems.CRATE.get(), new ResourceLocation(AmbientAdditions.MOD_ID, "full"), (stack, world, player, i) -> !CrateItem.containsEntity(stack) ? 0.0F : 1.0F);
     }
 
     @SubscribeEvent

@@ -1,7 +1,14 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "end": "ambientadditions:block/crate_top",
-    "side": "ambientadditions:block/crate"
-  }
+    "layer0": "ambientadditions:item/crate_empty"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "ambientadditions:full": 1.0
+      },
+      "model": "ambientadditions:item/crate_full"
+    }
+  ]
 }

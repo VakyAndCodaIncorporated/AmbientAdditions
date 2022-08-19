@@ -146,12 +146,7 @@ public class CrateItem extends Item {
         }
     }
 
-    @Override
-    public boolean isFoil(ItemStack stack) {
-        return containsEntity(stack);
-    }
-
-    private static boolean containsEntity(ItemStack stack) {
+    public static boolean containsEntity(ItemStack stack) {
         return stack.hasTag() && stack.getTag().contains(DATA_CREATURE);
     }
 
