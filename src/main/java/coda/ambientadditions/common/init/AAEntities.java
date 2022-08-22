@@ -33,7 +33,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<SiamangGibbonEntity>> SIAMANG_GIBBON = create("siamang_gibbon", EntityType.Builder.of(SiamangGibbonEntity::new, MobCategory.CREATURE).sized(0.5f, 0.7f));
     public static final RegistryObject<EntityType<GiantLandSnailEntity>> GIANT_LAND_SNAIL = create("giant_land_snail", EntityType.Builder.of(GiantLandSnailEntity::new, MobCategory.CREATURE).sized(0.4f, 0.35f));
     public static final RegistryObject<EntityType<GoldenElephantSnailEntity>> GOLDEN_ELEPHANT_SNAIL = create("golden_elephant_snail", EntityType.Builder.of(GoldenElephantSnailEntity::new, MobCategory.CREATURE).sized(0.45f, 0.4f));
-    public static final RegistryObject<EntityType<PineMartenEntity>> PINE_MARTEN = create("pine_marten", EntityType.Builder.of(PineMartenEntity::new, MobCategory.CREATURE).sized(0.45f, 0.35f));
+    public static final RegistryObject<EntityType<PineMartenEntity>> PINE_MARTEN = create("pine_marten", EntityType.Builder.of(PineMartenEntity::new, MobCategory.CREATURE).sized(0.5f, 0.45f));
     public static final RegistryObject<EntityType<SpiderTailedAdderEntity>> SPIDER_TAILED_ADDER = create("spider_tailed_adder", EntityType.Builder.of(SpiderTailedAdderEntity::new, MobCategory.CREATURE).sized(0.75f, 0.45f));
     public static final RegistryObject<EntityType<RubberDuckyIsopodEntity>> RUBBER_DUCKY_ISOPOD = create("rubber_ducky_isopod", EntityType.Builder.of(RubberDuckyIsopodEntity::new, MobCategory.CREATURE).sized(0.4f, 0.3f));
     public static final RegistryObject<EntityType<ChocolateChipStarfishEntity>> CHOCOLATE_CHIP_STARFISH = create("chocolate_chip_starfish", EntityType.Builder.of(ChocolateChipStarfishEntity::new, MobCategory.CREATURE).sized(0.7f, 0.2f));
