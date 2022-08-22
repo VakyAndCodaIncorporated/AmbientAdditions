@@ -2,6 +2,7 @@ package coda.ambientadditions.client;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.GenericGeoModel;
+import coda.ambientadditions.client.model.LeafFrogModel;
 import coda.ambientadditions.client.model.TextureVariantModel;
 import coda.ambientadditions.client.renderer.GenericGeoRenderer;
 import coda.ambientadditions.client.renderer.LeafFrogRenderer;
@@ -26,6 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -66,7 +68,7 @@ public class ClientEvents {
         });
 
         EntityRenderers.register(AAEntities.VEILED_CHAMELEON.get(), (ctx) -> {
-            GenericGeoRenderer<VeiledChameleonEntity> render = new GenericGeoRenderer(ctx, () -> {
+            GenericGeoRenderer<VeiledChameleonEntity> render = new GenericGeoRenderer<>(ctx, () -> {
                 TextureVariantModel<VeiledChameleonEntity> model = new TextureVariantModel<>(AAEntities.VEILED_CHAMELEON.get().getRegistryName().getPath());
                 ArrayList<ResourceLocation> textures = new ArrayList<>();
                 for (int i=1;i<=7;i++){
@@ -79,7 +81,7 @@ public class ClientEvents {
             return render;
         });
 
-        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
+        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<ChocolateChipStarfishEntity> model = new TextureVariantModel<>(AAEntities.CHOCOLATE_CHIP_STARFISH.get().getRegistryName().getPath());
             ArrayList<ResourceLocation> textures = new ArrayList<>();
             for (int i=1;i<=5;i++){
@@ -89,7 +91,7 @@ public class ClientEvents {
             return model;
         }));
 
-        EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer(ctx, () -> {
+        EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<HarlequinShrimpEntity> model = new TextureVariantModel<>(AAEntities.HARLEQUIN_SHRIMP.get().getRegistryName().getPath());
             model.setTextures(HarlequinShrimpEntity::getVariant, Arrays.asList(
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/pink.png"),
@@ -118,14 +120,7 @@ public class ClientEvents {
             return model;
         }));
 
-        EntityRenderers.register(AAEntities.LEAF_FROG.get(), (ctx) -> new LeafFrogRenderer(ctx, () -> {
-            TextureVariantModel<LeafFrogEntity> model = new TextureVariantModel<>(AAEntities.LEAF_FROG.get().getRegistryName().getPath());
-            model.setTextures((e) -> e.isBaby() ? 1 : 0, Arrays.asList(
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/leaf_frog_tadpole.png")
-            ));
-            return model;
-        }));
+        EntityRenderers.register(AAEntities.LEAF_FROG.get(), (ctx) -> new LeafFrogRenderer(ctx, LeafFrogModel::new));
 
         EntityRenderers.register(AAEntities.WHITE_FRUIT_BAT.get(), (ctx) -> new WhiteFruitBatRenderer(ctx, () -> {
             TextureVariantModel<WhiteFruitBatEntity> model = new TextureVariantModel<>("honduran_white_bat");
