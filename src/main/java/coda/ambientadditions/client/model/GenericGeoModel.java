@@ -1,9 +1,9 @@
 package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.common.entities.PineMartenEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.AbstractFish;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
@@ -58,6 +58,10 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
             EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
             head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
+        }
+
+        if (entity instanceof AbstractFish) {
+            root.setRotationZ(90F);
         }
 
         if (entity.isBaby()) {

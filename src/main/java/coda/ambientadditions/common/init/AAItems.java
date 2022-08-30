@@ -3,18 +3,14 @@ package coda.ambientadditions.common.init;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.items.*;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import net.minecraft.world.food.FoodProperties;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
 
 public class AAItems {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, AmbientAdditions.MOD_ID);
@@ -83,4 +79,5 @@ public class AAItems {
     public static final RegistryObject<Item> LEAF_FROG_SPAWN_EGG = REGISTER.register("leaf_frog_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.LEAF_FROG, 0x783e29, 0x44241a, new Item.Properties().tab(GROUP)));
     //public static final RegistryObject<Item> FLYING_FISH_SPAWN_EGG = REGISTER.register("flying_fish_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.FLYING_FISH, 0x6e86a8, 0xaec2d4, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> SHAME_FACED_CRAB_SPAWN_EGG = REGISTER.register("shame_faced_crab_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.SHAME_FACED_CRAB, 0xc7ab90, 0xb3654a, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> OPAH_SPAWN_EGG = REGISTER.register("opah_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.OPAH, 0x3abbc7, 0xe3f0f1, new Item.Properties().tab(GROUP)));
 }

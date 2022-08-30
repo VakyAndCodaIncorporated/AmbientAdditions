@@ -37,6 +37,7 @@ public class AAConfig {
     public static int rubberDuckyIsopodSpawnWeight;
     public static int cardiganCorgiMansionSpawnWeight;
     public static int rabbitSnailSpawnWeight;
+    public static int opahSpawnWeight;
 
     @SubscribeEvent
     public static void configLoad(ModConfigEvent.Reloading event) {
@@ -87,6 +88,7 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue yetiCrabSpawnWeight;
         public final ForgeConfigSpec.IntValue rubberDuckyIsopodSpawnWeight;
         public final ForgeConfigSpec.IntValue cardiganCorgiMansionSpawnWeight;
+        public final ForgeConfigSpec.IntValue opahSpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.push("Spawn Weights (higher = more common)");
@@ -135,10 +137,14 @@ public class AAConfig {
             // Lukewarm Ocean
             chocolateChipStarfishSpawnWeight = builder.comment("Spawn weight of Chocolate Chip Starfish").defineInRange("chocolate_chip_starfish_spawn_weight", 5, 1, 1000);
             harlequinShrimpSpawnWeight = builder.comment("Spawn weight of Harlequin Shrimp").defineInRange("harlequin_shrimp_spawn_weight", 6, 1, 1000);
-            shameFacedCrabSpawnWeight = builder.comment("Spawn weight of Shame-Faced Crab").defineInRange("shame_faced_crab_spawn_weight", 3, 1, 1000);
+            shameFacedCrabSpawnWeight = builder.comment("Spawn weight of Shame-Faced Crabs").defineInRange("shame_faced_crab_spawn_weight", 3, 1, 1000);
 
             // Deep Ocean
             yetiCrabSpawnWeight = builder.comment("Spawn weight of Yeti Crabs").defineInRange("yeti_crab_spawn_weight", 6, 1, 1000);
+
+            // Cold Ocean
+            opahSpawnWeight= builder.comment("Spawn weight of Opah").defineInRange("opah_spawn_weight", 5, 1, 1000);
+
             builder.pop();
 
             builder.push("Other Spawning");
@@ -178,6 +184,7 @@ public class AAConfig {
             AAConfig.rubberDuckyIsopodSpawnWeight = INSTANCE.rubberDuckyIsopodSpawnWeight.get();
             AAConfig.cardiganCorgiMansionSpawnWeight = INSTANCE.cardiganCorgiMansionSpawnWeight.get();
             AAConfig.rabbitSnailSpawnWeight = INSTANCE.rabbitSnailSpawnWeight.get();
+            AAConfig.opahSpawnWeight = INSTANCE.opahSpawnWeight.get();
         }
     }
 }
