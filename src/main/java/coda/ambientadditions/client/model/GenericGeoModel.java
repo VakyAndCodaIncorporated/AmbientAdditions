@@ -1,6 +1,7 @@
 package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.AmbientAdditions;
+import coda.ambientadditions.common.entities.util.Flopper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -63,6 +64,10 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
             root.setScaleZ(0.5F);
+        }
+
+        if (entity instanceof Flopper && !entity.isInWater()) {
+            root.setRotationZ(90.0F);
         }
     }
 }
