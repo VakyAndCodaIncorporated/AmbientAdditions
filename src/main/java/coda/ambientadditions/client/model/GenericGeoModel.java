@@ -67,7 +67,7 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
         }
 
         if (entity instanceof Flopper && !entity.isInWater()) {
-            root.setRotationZ(90.0F);
+            root.setRotationZ(1.5708F);
         }
     }
 }
