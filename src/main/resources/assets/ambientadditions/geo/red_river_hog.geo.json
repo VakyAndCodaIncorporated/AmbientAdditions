@@ -1,0 +1,94 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.red_river_hog",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "hog",
+					"pivot": [0, 11, 0]
+				},
+				{
+					"name": "r_leg_2",
+					"parent": "hog",
+					"pivot": [-5, 5, 5.5],
+					"cubes": [
+						{"origin": [-6, 0, 4], "size": [3, 5, 3], "uv": [28, 42]}
+					]
+				},
+				{
+					"name": "l_leg_2",
+					"parent": "hog",
+					"pivot": [4, 5, 5.5],
+					"cubes": [
+						{"origin": [3, 0, 4], "size": [3, 5, 3], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "l_leg_1",
+					"parent": "hog",
+					"pivot": [4, 5, -5.5],
+					"cubes": [
+						{"origin": [3, 0, -7], "size": [3, 5, 3], "uv": [22, 30]}
+					]
+				},
+				{
+					"name": "r_leg_1",
+					"parent": "hog",
+					"pivot": [-4, 5, -5.5],
+					"cubes": [
+						{"origin": [-6, 0, -7], "size": [3, 5, 3], "uv": [41, 42]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "hog",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-1.5, 16, 8], "size": [3, 0, 11], "pivot": [0, 16, 8], "rotation": [-80, 0, 0], "uv": [31, 30]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "hog",
+					"pivot": [0, 10, -8],
+					"cubes": [
+						{"origin": [-3, 8, -17], "size": [6, 5, 9], "pivot": [0, 11, -8], "rotation": [40, 0, 0], "uv": [0, 30]}
+					]
+				},
+				{
+					"name": "r_ear",
+					"parent": "head",
+					"pivot": [-3, 11, -9.25],
+					"cubes": [
+						{"origin": [-9, 9.19652, -9.29244], "size": [6, 3, 0], "pivot": [-3, 11, -9.25], "rotation": [20, 15, -12.5], "uv": [0, 9]}
+					]
+				},
+				{
+					"name": "l_ear",
+					"parent": "head",
+					"pivot": [3, 11, -9.25],
+					"cubes": [
+						{"origin": [3, 9.19652, -9.29244], "size": [6, 3, 0], "pivot": [3, 11, -9.25], "rotation": [20, -15, 12.5], "uv": [0, 45]}
+					]
+				},
+				{
+					"name": "body",
+					"parent": "hog",
+					"pivot": [0, 11, 0],
+					"cubes": [
+						{"origin": [-6, 5, -8], "size": [12, 13, 16], "uv": [0, 0]},
+						{"origin": [0, 17, 1], "size": [0, 3, 9], "uv": [41, 0]}
+					]
+				}
+			]
+		}
+	]
+}

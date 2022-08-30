@@ -40,10 +40,10 @@ public class NapoleonWrasseEntity extends AbstractFish implements IAnimatable, F
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
     }
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = new AnimationFactory(this);
     @Override
     public AnimationFactory getFactory() {
         return factory;

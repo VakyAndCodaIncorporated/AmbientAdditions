@@ -104,6 +104,7 @@ public class AmbientAdditions {
         event.put(AAEntities.FLYING_FISH.get(), AbstractFish.createAttributes().build());
         event.put(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabEntity.createAttributes().build());
         event.put(AAEntities.OPAH.get(), OpahEntity.createAttributes().build());
+        event.put(AAEntities.RED_RIVER_HOG.get(), RedRiverHogEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -132,6 +133,7 @@ public class AmbientAdditions {
         SpawnPlacements.register(AAEntities.FLYING_FISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.SHAME_FACED_CRAB.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.OPAH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.RED_RIVER_HOG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RedRiverHogEntity::canHogSpawn);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -175,6 +177,7 @@ public class AmbientAdditions {
         if (event.getCategory() == Biome.BiomeCategory.SAVANNA) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), AAConfig.Common.INSTANCE.veiledChameleonSpawnWeight.get(), 1, 1));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), AAConfig.Common.INSTANCE.giantLandSnailSpawnWeight.get(), 1, 2));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RED_RIVER_HOG.get(), AAConfig.Common.INSTANCE.redRiverHogSpawnWeight.get(), 2, 8));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.RIVER) {
@@ -184,7 +187,6 @@ public class AmbientAdditions {
         if (event.getCategory() == Biome.BiomeCategory.PLAINS) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAKED_MOLE_RAT.get(), AAConfig.Common.INSTANCE.nakedMoleRatSpawnWeight.get(), 2, 8));
         }
-
 
         if (event.getName() != null) {
             String path = event.getName().getPath();
@@ -206,7 +208,7 @@ public class AmbientAdditions {
 
 
             if (path.equals("cold_ocean") || path.equals("deep_cold_ocean")) {
-                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.OPAH.get(), AAConfig.Common.INSTANCE.opahSpawnWeight.get(), 2, 3));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.OPAH.get(), AAConfig.Common.INSTANCE.opahSpawnWeight.get(), 1, 1));
             }
 
             if (path.equals("dark_forest")) {

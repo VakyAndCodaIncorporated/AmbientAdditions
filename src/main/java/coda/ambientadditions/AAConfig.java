@@ -38,6 +38,7 @@ public class AAConfig {
     public static int cardiganCorgiMansionSpawnWeight;
     public static int rabbitSnailSpawnWeight;
     public static int opahSpawnWeight;
+    public static int redRiverHogSpawnWeight;
 
     @SubscribeEvent
     public static void configLoad(ModConfigEvent.Reloading event) {
@@ -89,6 +90,7 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue rubberDuckyIsopodSpawnWeight;
         public final ForgeConfigSpec.IntValue cardiganCorgiMansionSpawnWeight;
         public final ForgeConfigSpec.IntValue opahSpawnWeight;
+        public final ForgeConfigSpec.IntValue redRiverHogSpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.push("Spawn Weights (higher = more common)");
@@ -122,7 +124,8 @@ public class AAConfig {
 
             // Savanna
             veiledChameleonSpawnWeight = builder.comment("Spawn weight of Veiled Chameleons").defineInRange("veiled_chameleon_spawn_weight", 10, 1, 1000);
-            giantLandSnailSpawnWeight = builder.comment("Spawn weight of Giant Land Snails").defineInRange("giant_land_snail_spawn_weight", 25, 1, 1000);
+            giantLandSnailSpawnWeight = builder.comment("Spawn weight of Giant Land Snails").defineInRange("giant_land_snail_spawn_weight", 15, 1, 1000);
+            redRiverHogSpawnWeight = builder.comment("Spawn weight of Red River Hogs").defineInRange("red_river_hog_spawn_weight", 20, 1, 1000);
 
             // River
             rabbitSnailSpawnWeight = builder.comment("Spawn weight of Rabbit Snails").defineInRange("rabbit_snail_spawn_weight", 2, 1, 1000);
@@ -185,6 +188,7 @@ public class AAConfig {
             AAConfig.cardiganCorgiMansionSpawnWeight = INSTANCE.cardiganCorgiMansionSpawnWeight.get();
             AAConfig.rabbitSnailSpawnWeight = INSTANCE.rabbitSnailSpawnWeight.get();
             AAConfig.opahSpawnWeight = INSTANCE.opahSpawnWeight.get();
+            AAConfig.redRiverHogSpawnWeight = INSTANCE.redRiverHogSpawnWeight.get();
         }
     }
 }
