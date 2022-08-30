@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "hog",
+					"name": "root",
 					"pivot": [0, 11, 0]
 				},
 				{
 					"name": "r_leg_2",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [-5, 5, 5.5],
 					"cubes": [
 						{"origin": [-6, 0, 4], "size": [3, 5, 3], "uv": [28, 42]}
@@ -25,7 +25,7 @@
 				},
 				{
 					"name": "l_leg_2",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [4, 5, 5.5],
 					"cubes": [
 						{"origin": [3, 0, 4], "size": [3, 5, 3], "uv": [0, 0]}
@@ -33,7 +33,7 @@
 				},
 				{
 					"name": "l_leg_1",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [4, 5, -5.5],
 					"cubes": [
 						{"origin": [3, 0, -7], "size": [3, 5, 3], "uv": [22, 30]}
@@ -41,7 +41,7 @@
 				},
 				{
 					"name": "r_leg_1",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [-4, 5, -5.5],
 					"cubes": [
 						{"origin": [-6, 0, -7], "size": [3, 5, 3], "uv": [41, 42]}
@@ -49,7 +49,7 @@
 				},
 				{
 					"name": "tail",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 16, 8], "size": [3, 0, 11], "pivot": [0, 16, 8], "rotation": [-80, 0, 0], "uv": [31, 30]}
@@ -57,7 +57,7 @@
 				},
 				{
 					"name": "head",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [0, 10, -8],
 					"cubes": [
 						{"origin": [-3, 8, -17], "size": [6, 5, 9], "pivot": [0, 11, -8], "rotation": [40, 0, 0], "uv": [0, 30]}
@@ -81,7 +81,7 @@
 				},
 				{
 					"name": "body",
-					"parent": "hog",
+					"parent": "root",
 					"pivot": [0, 11, 0],
 					"cubes": [
 						{"origin": [-6, 5, -8], "size": [12, 13, 16], "uv": [0, 0]},

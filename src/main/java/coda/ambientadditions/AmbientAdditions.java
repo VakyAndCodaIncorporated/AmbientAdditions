@@ -130,11 +130,11 @@ public class AmbientAdditions {
         SpawnPlacements.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         SpawnPlacements.register(AAEntities.YETI_CRAB.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
         SpawnPlacements.register(AAEntities.HARLEQUIN_SHRIMP.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING, ChocolateChipStarfishEntity::checkStarfishSpawnRules);
+        SpawnPlacements.register(AAEntities.GIANT_LAND_SNAIL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.FLYING_FISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.SHAME_FACED_CRAB.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.OPAH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.RED_RIVER_HOG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, RedRiverHogEntity::canHogSpawn);
-        SpawnPlacements.register(AAEntities.GIANT_LAND_SNAIL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -178,6 +178,7 @@ public class AmbientAdditions {
         if (event.getCategory() == Biome.BiomeCategory.SAVANNA) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), AAConfig.Common.INSTANCE.veiledChameleonSpawnWeight.get(), 1, 1));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), AAConfig.Common.INSTANCE.giantLandSnailSpawnWeight.get(), 1, 2));
+            // todo - fix river hog spawning
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RED_RIVER_HOG.get(), AAConfig.Common.INSTANCE.redRiverHogSpawnWeight.get(), 2, 8));
         }
 

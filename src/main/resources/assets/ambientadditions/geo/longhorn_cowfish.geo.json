@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "body",
+					"name": "root",
 					"pivot": [0, 1.5, -0.5],
 					"cubes": [
 						{"origin": [-1.5, 0, -2.5], "size": [3, 3, 4], "uv": [0, 0]}
@@ -20,7 +20,7 @@
 				},
 				{
 					"name": "horns",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [0, 2, -2.5],
 					"cubes": [
 						{"origin": [1, 2, -4.5], "size": [0, 1, 2], "uv": [8, 7]},
@@ -29,7 +29,7 @@
 				},
 				{
 					"name": "dorsalFin",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [0, 2.5, 0],
 					"cubes": [
 						{"origin": [0, 2.5, 0], "size": [0, 2, 2], "uv": [0, 0]}
@@ -37,7 +37,7 @@
 				},
 				{
 					"name": "analFin",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [0, 0.5, 1.5],
 					"cubes": [
 						{"origin": [0, -0.5, 1], "size": [0, 1, 1], "uv": [2, -1]}
@@ -45,7 +45,7 @@
 				},
 				{
 					"name": "hornsBack",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [0, 1, 1.5],
 					"cubes": [
 						{"origin": [1, 0, 1.5], "size": [0, 1, 1], "uv": [0, 10]},
@@ -54,7 +54,7 @@
 				},
 				{
 					"name": "pectoralFinLeft",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [-1.5, 1.5, -1],
 					"rotation": [0, -30, 0],
 					"cubes": [
@@ -63,7 +63,7 @@
 				},
 				{
 					"name": "pectoralFinRight",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [1.5, 1.5, -1],
 					"rotation": [0, 30, 0],
 					"cubes": [
@@ -72,7 +72,7 @@
 				},
 				{
 					"name": "caudalFin",
-					"parent": "body",
+					"parent": "root",
 					"pivot": [0, 1, 1.5],
 					"cubes": [
 						{"origin": [0, 0, 1.5], "size": [0, 3, 4], "uv": [0, 3]}
