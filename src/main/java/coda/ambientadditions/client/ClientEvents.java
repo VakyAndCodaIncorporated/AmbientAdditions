@@ -12,6 +12,7 @@ import coda.ambientadditions.client.renderer.item.DuckyMaskRenderer;
 import coda.ambientadditions.client.renderer.item.YetiWarmersRenderer;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
+import coda.ambientadditions.client.renderer.layer.FishFlopLayer;
 import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.*;
 import coda.ambientadditions.common.init.AAEntities;
@@ -27,7 +28,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
@@ -46,7 +46,7 @@ public class ClientEvents {
     public static void clientSetup(FMLClientSetupEvent event) {
         EntityType[] simpleEntities = new EntityType[]{
                 AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(), AAEntities.PINK_FAIRY_ARMADILLO.get(),
-                AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
+                AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
                 AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(),
                 AAEntities.RING_TAILED_LEMUR.get(), AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(),
                 AAEntities.SHAME_FACED_CRAB.get(), AAEntities.FLYING_FISH.get(),
@@ -66,6 +66,19 @@ public class ClientEvents {
             render.addLayer(new CardiganCorgiCollarLayer(render));
             return render;
         });
+
+        EntityRenderers.register(AAEntities.NAPOLEON_WRASSE.get(), (ctx) -> {
+            GenericGeoRenderer<NapoleonWrasseEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("napoleon_wrasse", "napoleon_wrasse"));
+            render.addLayer(new FishFlopLayer<>(render));
+            return render;
+        });
+
+        EntityRenderers.register(AAEntities.OPAH.get(), (ctx) -> {
+            GenericGeoRenderer<OpahEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("opah", "opah"));
+            render.addLayer(new FishFlopLayer<>(render));
+            return render;
+        });
+
 
         EntityRenderers.register(AAEntities.VEILED_CHAMELEON.get(), (ctx) -> {
             GenericGeoRenderer<VeiledChameleonEntity> render = new GenericGeoRenderer<>(ctx, () -> {
