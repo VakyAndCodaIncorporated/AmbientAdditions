@@ -179,7 +179,7 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.VEILED_CHAMELEON.get(), AAConfig.Common.INSTANCE.veiledChameleonSpawnWeight.get(), 1, 1));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.GIANT_LAND_SNAIL.get(), AAConfig.Common.INSTANCE.giantLandSnailSpawnWeight.get(), 1, 2));
             // todo - fix river hog spawning
-            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RED_RIVER_HOG.get(), AAConfig.Common.INSTANCE.redRiverHogSpawnWeight.get(), 2, 8));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RED_RIVER_HOG.get(), AAConfig.Common.INSTANCE.redRiverHogSpawnWeight.get(), 5, 8));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.RIVER) {
