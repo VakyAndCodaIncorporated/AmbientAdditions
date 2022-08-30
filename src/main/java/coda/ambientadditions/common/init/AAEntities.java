@@ -42,7 +42,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<LeafFrogEntity>> LEAF_FROG = create("leaf_frog", EntityType.Builder.of(LeafFrogEntity::new, MobCategory.CREATURE).sized(0.4f, 0.35f));
     public static final RegistryObject<EntityType<FlyingFishEntity>> FLYING_FISH = create("flying_fish", EntityType.Builder.of(FlyingFishEntity::new, MobCategory.WATER_AMBIENT).sized(0.6f, 0.35f));
     public static final RegistryObject<EntityType<ShameFacedCrabEntity>> SHAME_FACED_CRAB = create("shame_faced_crab", EntityType.Builder.of(ShameFacedCrabEntity::new, MobCategory.WATER_CREATURE).sized(0.6f, 0.5f));
-    public static final RegistryObject<EntityType<OpahEntity>> OPAH = create("shame_faced_crab", EntityType.Builder.of(OpahEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.85f));
+    public static final RegistryObject<EntityType<OpahEntity>> OPAH = create("opah", EntityType.Builder.of(OpahEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.85f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, MobCategory.MISC).sized(0.5f, 0.5f));
