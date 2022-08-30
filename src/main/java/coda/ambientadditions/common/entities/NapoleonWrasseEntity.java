@@ -1,6 +1,6 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.ai.goal.BigFishMoveHelperController;
+import coda.ambientadditions.common.entities.ai.movement.BigFishMoveHelperController;
 import coda.ambientadditions.common.entities.util.Flopper;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.sounds.SoundEvent;

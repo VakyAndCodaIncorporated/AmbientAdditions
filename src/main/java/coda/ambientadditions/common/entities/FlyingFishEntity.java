@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.ai.goal.BigFishMoveHelperController;
 import coda.ambientadditions.common.entities.ai.goal.FlyingFishJumpGoal;
+import coda.ambientadditions.common.entities.ai.movement.BigFishMoveHelperController;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,7 +17,6 @@ import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;

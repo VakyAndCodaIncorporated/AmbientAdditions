@@ -1,6 +1,6 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.ai.goal.BigFishMoveHelperController;
+import coda.ambientadditions.common.entities.ai.movement.BigFishMoveHelperController;
 import coda.ambientadditions.common.entities.util.Flopper;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.sounds.SoundEvent;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -27,12 +28,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class OpahEntity extends AbstractFish implements IAnimatable, Flopper {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-/*        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
+        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.opah.swim", true));
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.opah.idle", true));
-        }*/
+        }
 
         return PlayState.CONTINUE;
     }
