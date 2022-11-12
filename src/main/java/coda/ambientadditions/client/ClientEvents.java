@@ -44,11 +44,12 @@ public class ClientEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         EntityType[] simpleEntities = new EntityType[]{
-                AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(), AAEntities.PINK_FAIRY_ARMADILLO.get(),
-                AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
-                AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(),
-                AAEntities.RING_TAILED_LEMUR.get(), AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(),
-                AAEntities.SHAME_FACED_CRAB.get(), AAEntities.FLYING_FISH.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.OPAH.get(), AAEntities.RED_RIVER_HOG.get(),
+                AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(),
+                AAEntities.PINK_FAIRY_ARMADILLO.get(), AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.SCARLET_HONEYCREEPER.get(), AAEntities.PINOCCHIO_ANOLE.get(),
+                AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), AAEntities.RING_TAILED_LEMUR.get(),
+                AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(), AAEntities.SHAME_FACED_CRAB.get(),
+                AAEntities.FLYING_FISH.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.OPAH.get(), AAEntities.RED_RIVER_HOG.get(),
+                AAEntities.BLUNTHEAD_TREE_SNAKE.get(),
         };
         for (EntityType type : simpleEntities){
             make(type, type.getRegistryName().getPath());

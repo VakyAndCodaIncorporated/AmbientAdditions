@@ -105,6 +105,7 @@ public class AmbientAdditions {
         event.put(AAEntities.SHAME_FACED_CRAB.get(), ShameFacedCrabEntity.createAttributes().build());
         event.put(AAEntities.OPAH.get(), OpahEntity.createAttributes().build());
         event.put(AAEntities.RED_RIVER_HOG.get(), RedRiverHogEntity.createAttributes().build());
+        event.put(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), BluntheadTreeSnakeEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -135,6 +136,7 @@ public class AmbientAdditions {
         SpawnPlacements.register(AAEntities.SHAME_FACED_CRAB.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.OPAH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.RED_RIVER_HOG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BluntheadTreeSnakeEntity::checkSnakeSpawnRules);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -150,6 +152,7 @@ public class AmbientAdditions {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.AYE_AYE.get(), AAConfig.Common.INSTANCE.ayeAyeSpawnWeight.get(), 1, 2));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.SIAMANG_GIBBON.get(), AAConfig.Common.INSTANCE.siamangGibbonSpawnWeight.get(), 3, 6));
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.RING_TAILED_LEMUR.get(), AAConfig.Common.INSTANCE.ringTailedLemurSpawnWeight.get(), 4, 8));
+            event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAConfig.Common.INSTANCE.bluntheadTreeSnakeSpawnWeight.get(), 1, 1));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.TAIGA) {

@@ -39,6 +39,7 @@ public class AAConfig {
     public static int rabbitSnailSpawnWeight;
     public static int opahSpawnWeight;
     public static int redRiverHogSpawnWeight;
+    public static int bluntheadTreeSnakeSpawnWeight;
 
     @SubscribeEvent
     public static void configLoad(ModConfigEvent.Reloading event) {
@@ -91,9 +92,10 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue cardiganCorgiMansionSpawnWeight;
         public final ForgeConfigSpec.IntValue opahSpawnWeight;
         public final ForgeConfigSpec.IntValue redRiverHogSpawnWeight;
+        public final ForgeConfigSpec.IntValue bluntheadTreeSnakeSpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
-            builder.push("Spawn Weights (higher = more common)");
+            builder.push("Spawn Weights (higher value = more common)");
             // Jungle
             whiteFruitBatSpawnWeight = builder.comment("Spawn weight of White Fruit Bats").defineInRange("white_fruit_bats_spawn_weight", 30, 1, 1000);
             moustachedTamarinSpawnWeight = builder.comment("Spawn weight of Moustached Tamarins").defineInRange("moustached_tamarin_spawn_weight", 30, 1, 1000);
@@ -102,6 +104,7 @@ public class AAConfig {
             ayeAyeSpawnWeight = builder.comment("Spawn weight of Aye Ayes").defineInRange("aye_aye_spawn_weight", 30, 1, 1000);
             siamangGibbonSpawnWeight = builder.comment("Spawn weight of Siamang Gibbons").defineInRange("siamang_gibbon_spawn_weight", 30, 1, 1000);
             ringTailedLemurSpawnWeight = builder.comment("Spawn weight of Ring-Tailed Lemurs").defineInRange("ring_tailed_lemur_weight", 30, 1, 1000);
+            bluntheadTreeSnakeSpawnWeight = builder.comment("Spawn weight of Blunthead Tree Snakes").defineInRange("blunthead_tree_snake_weight", 25, 1, 1000);
 
             // Taiga
             statBeetleSpawnWeight = builder.comment("Spawn weight of Stag Beetles").defineInRange("stag_beetle_spawn_weight", 40, 1, 1000);
@@ -189,6 +192,7 @@ public class AAConfig {
             AAConfig.rabbitSnailSpawnWeight = INSTANCE.rabbitSnailSpawnWeight.get();
             AAConfig.opahSpawnWeight = INSTANCE.opahSpawnWeight.get();
             AAConfig.redRiverHogSpawnWeight = INSTANCE.redRiverHogSpawnWeight.get();
+            AAConfig.bluntheadTreeSnakeSpawnWeight = INSTANCE.bluntheadTreeSnakeSpawnWeight.get();
         }
     }
 }
