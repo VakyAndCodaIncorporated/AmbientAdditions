@@ -123,10 +123,10 @@ public class ClientEvents {
         EntityRenderers.register(AAEntities.LEAF_FROG.get(), (ctx) -> new LeafFrogRenderer(ctx, LeafFrogModel::new));
 
         EntityRenderers.register(AAEntities.WHITE_FRUIT_BAT.get(), (ctx) -> new WhiteFruitBatRenderer(ctx, () -> {
-            TextureVariantModel<WhiteFruitBatEntity> model = new TextureVariantModel<>("honduran_white_bat");
+            TextureVariantModel<WhiteFruitBatEntity> model = new TextureVariantModel<>("white_fruit_bat");
             model.setTextures((e) -> e.isResting() ? 1 : 0, Arrays.asList(
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/white_fruit_bat.png"),
-                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/white_fruit_bat_resting.png")
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/white_fruit_bat/bat.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/white_fruit_bat/resting.png")
             ));
             return model;
         }));

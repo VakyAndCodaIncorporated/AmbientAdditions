@@ -22,17 +22,14 @@ import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -40,8 +37,6 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-
-import java.util.Random;
 
 public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -70,7 +65,6 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
     ///////////////////////////////////////////////////////////////////
 
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(WhiteFruitBatEntity.class, EntityDataSerializers.BYTE);
-    private static final TargetingConditions BAT_RESTING_TARGETING =TargetingConditions.forNonCombat().range(4.0D);
     private BlockPos targetPosition;
     public float prevTilt;
     public float tilt;
@@ -96,10 +90,6 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, IAnimat
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.WHITE_FRUIT_BAT_SPAWN_EGG.get());
-    }
-
-    public static boolean checkBatSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getLightEmission(p_223316_3_) > 8;
     }
 
     @Override

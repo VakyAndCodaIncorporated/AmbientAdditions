@@ -37,7 +37,7 @@
 					"parent": "body",
 					"pivot": [-2.5, 3, -2],
 					"cubes": [
-						{"origin": [-3.5, 3, -2], "size": [2, 3, 0], "uv": [0, 25]}
+						{"origin": [-3.5, 3, -2], "size": [2, 3, 0], "uv": [0, 25], "mirror": true}
 					]
 				},
 				{
