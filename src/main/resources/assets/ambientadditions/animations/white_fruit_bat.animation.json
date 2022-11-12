@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.white_fruit_bat.idle": {
 			"loop": true,
-			"animation_length": 1.5,
+			"animation_length": 1.8,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -22,12 +22,22 @@
 				},
 				"wingLeft1": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time*240)*-1", 0, 0]
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*240)*-1", 0, 18.7087]
+						},
+						"0.92": {
+							"vector": ["math.sin(query.anim_time*240)*-1.0369", 0, 18.70867]
+						}
 					}
 				},
 				"wingRight1": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time*240)*-1", 0, 0]
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*240)*-1", 0, -18.7087]
+						},
+						"0.92": {
+							"vector": ["math.sin(query.anim_time*240)*-1", 0, -18.7087]
+						}
 					}
 				},
 				"legs": {
