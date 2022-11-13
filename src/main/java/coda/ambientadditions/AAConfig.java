@@ -40,6 +40,7 @@ public class AAConfig {
     public static int opahSpawnWeight;
     public static int redRiverHogSpawnWeight;
     public static int bluntheadTreeSnakeSpawnWeight;
+    public static int mataMataSpawnWeight;
 
     @SubscribeEvent
     public static void configLoad(ModConfigEvent.Reloading event) {
@@ -93,6 +94,7 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue opahSpawnWeight;
         public final ForgeConfigSpec.IntValue redRiverHogSpawnWeight;
         public final ForgeConfigSpec.IntValue bluntheadTreeSnakeSpawnWeight;
+        public final ForgeConfigSpec.IntValue mataMataSpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.push("Spawn Weights (higher value = more common)");
@@ -115,6 +117,7 @@ public class AAConfig {
 
             // Swamp
             leafFrogSpawnWeight = builder.comment("Spawn weight of Leaf Frogs").defineInRange("leaf_frog_spawn_weight", 6, 1, 1000);
+            mataMataSpawnWeight = builder.comment("Spawn weight of Mata Matas").defineInRange("mata_mata_snake_weight", 20, 1, 1000);
 
             // Desert
             pinkFairyArmadilloSpawnWeight = builder.comment("Spawn weight of Pink Fairy Armadillos").defineInRange("pink_fairy_armadillo_spawn_weight", 3, 1, 1000);
@@ -193,6 +196,7 @@ public class AAConfig {
             AAConfig.opahSpawnWeight = INSTANCE.opahSpawnWeight.get();
             AAConfig.redRiverHogSpawnWeight = INSTANCE.redRiverHogSpawnWeight.get();
             AAConfig.bluntheadTreeSnakeSpawnWeight = INSTANCE.bluntheadTreeSnakeSpawnWeight.get();
+            AAConfig.mataMataSpawnWeight = INSTANCE.mataMataSpawnWeight.get();
         }
     }
 }

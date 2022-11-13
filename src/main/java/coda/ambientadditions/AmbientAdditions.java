@@ -106,6 +106,7 @@ public class AmbientAdditions {
         event.put(AAEntities.OPAH.get(), OpahEntity.createAttributes().build());
         event.put(AAEntities.RED_RIVER_HOG.get(), RedRiverHogEntity.createAttributes().build());
         event.put(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), BluntheadTreeSnakeEntity.createAttributes().build());
+        event.put(AAEntities.MATA_MATA.get(), MataMataEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -137,6 +138,7 @@ public class AmbientAdditions {
         SpawnPlacements.register(AAEntities.OPAH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.RED_RIVER_HOG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
         SpawnPlacements.register(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BluntheadTreeSnakeEntity::checkSnakeSpawnRules);
+        SpawnPlacements.register(AAEntities.MATA_MATA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MataMataEntity::canSpawn);
 
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
@@ -166,6 +168,7 @@ public class AmbientAdditions {
 
         if (event.getCategory() == Biome.BiomeCategory.SWAMP) {
             event.getSpawns().getSpawner(MobCategory.CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.LEAF_FROG.get(), AAConfig.Common.INSTANCE.leafFrogSpawnWeight.get(), 1, 2));
+            event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.MATA_MATA.get(), AAConfig.Common.INSTANCE.mataMataSpawnWeight.get(), 1, 2));
         }
 
         if (event.getCategory() == Biome.BiomeCategory.DESERT) {

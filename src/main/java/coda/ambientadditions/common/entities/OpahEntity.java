@@ -1,6 +1,6 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.ai.movement.BigFishMoveHelperController;
+import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
 import coda.ambientadditions.common.entities.util.Flopper;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.sounds.SoundEvent;
@@ -53,7 +53,7 @@ public class OpahEntity extends AbstractFish implements IAnimatable, Flopper {
 
     public OpahEntity(EntityType<? extends AbstractFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
-        this.moveControl = new BigFishMoveHelperController(this);
+        this.moveControl = new BigFishMoveControl(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

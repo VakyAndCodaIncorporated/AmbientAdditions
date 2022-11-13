@@ -45,6 +45,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<OpahEntity>> OPAH = create("opah", EntityType.Builder.of(OpahEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.85f));
     public static final RegistryObject<EntityType<RedRiverHogEntity>> RED_RIVER_HOG = create("red_river_hog", EntityType.Builder.of(RedRiverHogEntity::new, MobCategory.CREATURE).sized(1.0f, 1.0f));
     public static final RegistryObject<EntityType<BluntheadTreeSnakeEntity>> BLUNTHEAD_TREE_SNAKE = create("blunthead_tree_snake", EntityType.Builder.of(BluntheadTreeSnakeEntity::new, MobCategory.CREATURE).sized(1.0f, 0.3f));
+    public static final RegistryObject<EntityType<MataMataEntity>> MATA_MATA = create("mata_mata", EntityType.Builder.of(MataMataEntity::new, MobCategory.WATER_CREATURE).sized(1.0f, 0.45f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, MobCategory.MISC).sized(0.5f, 0.5f));

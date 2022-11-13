@@ -5,10 +5,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.AbstractFish;
 
-public class BigFishMoveHelperController extends MoveControl {
+public class BigFishMoveControl extends MoveControl {
     private final AbstractFish entity;
 
-    public BigFishMoveHelperController(AbstractFish entity) {
+    public BigFishMoveControl(AbstractFish entity) {
         super(entity);
         this.entity = entity;
     }

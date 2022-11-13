@@ -19,6 +19,7 @@ public class GenericGeoRenderer<T extends LivingEntity & IAnimatable> extends Ge
 
 	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<T>> model) {
 		super(renderManager, model.get());
+		this.shadowRadius = 0.3F;
 	}
 
 	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<T>> model, float scale) {

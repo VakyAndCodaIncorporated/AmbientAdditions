@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.goal.FlyingFishJumpGoal;
-import coda.ambientadditions.common.entities.ai.movement.BigFishMoveHelperController;
+import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -55,7 +55,7 @@ public class FlyingFishEntity extends AbstractSchoolingFish implements IAnimatab
 
     public FlyingFishEntity(EntityType<? extends AbstractSchoolingFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
-        this.moveControl = new BigFishMoveHelperController(this);
+        this.moveControl = new BigFishMoveControl(this);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }

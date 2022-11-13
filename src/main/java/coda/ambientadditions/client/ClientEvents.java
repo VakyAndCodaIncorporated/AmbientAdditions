@@ -6,6 +6,7 @@ import coda.ambientadditions.client.model.LeafFrogModel;
 import coda.ambientadditions.client.model.TextureVariantModel;
 import coda.ambientadditions.client.renderer.GenericGeoRenderer;
 import coda.ambientadditions.client.renderer.LeafFrogRenderer;
+import coda.ambientadditions.client.renderer.MataMataRenderer;
 import coda.ambientadditions.client.renderer.WhiteFruitBatRenderer;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.item.DuckyMaskRenderer;
@@ -60,6 +61,7 @@ public class ClientEvents {
             render.addLayer(new PembrokeCorgiCollarLayer(render));
             return render;
         });
+
 
         EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<CardiganCorgiEntity> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel("corgi", "corgi/cardigan_corgi"));
@@ -141,6 +143,8 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
+
+        EntityRenderers.register(AAEntities.MATA_MATA.get(), MataMataRenderer::new);
 
         ItemProperties.register(AAItems.CRATE.get(), new ResourceLocation(AmbientAdditions.MOD_ID, "full"), (stack, world, player, i) -> !CrateItem.containsEntity(stack) ? 0.0F : 1.0F);
     }

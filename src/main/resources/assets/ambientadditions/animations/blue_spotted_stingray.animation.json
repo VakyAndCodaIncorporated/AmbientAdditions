@@ -1,0 +1,110 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.blue_spotted_stingray.swim": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time-0.2)*180)*3", 0, 0]
+					}
+				},
+				"tail": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time-0.4)*180)*10", 0, 0]
+					}
+				},
+				"leftwing": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time)*180)*3", "Math.sin((query.anim_time-0.2)*180)*-1", "Math.cos((query.anim_time)*180)*15"]
+					}
+				},
+				"rightwing": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time)*180)*3", "Math.sin((query.anim_time-0.2)*180)*1", "Math.cos((query.anim_time)*180)*-15"]
+					}
+				}
+			}
+		},
+		"animation.blue_spotted_stingray.idle": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time)*90)*2", 0, 0]
+					}
+				},
+				"leftwing": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time-0.1)*90)*1", 0, "Math.sin((query.anim_time-0.1)*90)*5"]
+					}
+				},
+				"rightwing": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time-0.1)*90)*-1", 0, "Math.sin((query.anim_time-0.1)*90)*-5"]
+					}
+				},
+				"tail": {
+					"rotation": {
+						"vector": ["Math.sin((query.anim_time-0.6)*90)*5", 0, 0]
+					}
+				}
+			}
+		},
+		"animation.blue_spotted_stingray.attack": {
+			"animation_length": 0.41667,
+			"bones": {
+				"body": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.0417": {
+							"vector": [0, -55, 0]
+						},
+						"0.0833": {
+							"vector": [0, -102.5, 0]
+						},
+						"0.125": {
+							"vector": [0, -112.5, 0]
+						},
+						"0.2917": {
+							"vector": [0, -52.5, 0]
+						},
+						"0.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"tail": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.0417": {
+							"vector": [0, 42.5, 0]
+						},
+						"0.0833": {
+							"vector": [0, 50, 0]
+						},
+						"0.125": {
+							"vector": [0, -50, 0]
+						},
+						"0.1667": {
+							"vector": [0, -50, 0]
+						},
+						"0.25": {
+							"vector": [0, -35, 0]
+						},
+						"0.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

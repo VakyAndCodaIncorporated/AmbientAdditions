@@ -25,7 +25,7 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
         this(name, texture, name);
     }
 
-    public GenericGeoModel(String model, String texture, String anim){
+    public GenericGeoModel(String model, String texture, String anim) {
         this.model = model;
         this.texture = texture;
         this.anim = anim;

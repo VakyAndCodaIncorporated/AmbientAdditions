@@ -82,4 +82,5 @@ public class AAItems {
     public static final RegistryObject<Item> OPAH_SPAWN_EGG = REGISTER.register("opah_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.OPAH, 0x3abbc7, 0xe3f0f1, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> RED_RIVER_HOG_SPAWN_EGG = REGISTER.register("red_river_hog_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.RED_RIVER_HOG, 0x9f6132, 0xd5ccc2, new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> BLUNTHEAD_TREE_SNAKE_SPAWN_EGG = REGISTER.register("blunthead_tree_snake_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.BLUNTHEAD_TREE_SNAKE, 0xe9e1cf, 0x975730, new Item.Properties().tab(GROUP)));
+    public static final RegistryObject<Item> MATA_MATA_SPAWN_EGG = REGISTER.register("mata_mata_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.MATA_MATA, 0x5f583f, 0xa39752, new Item.Properties().tab(GROUP)));
 }
