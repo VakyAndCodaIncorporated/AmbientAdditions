@@ -59,6 +59,7 @@
   "item.ambientadditions.red_river_hog_spawn_egg": "Red River Hog Spawn Egg",
   "item.ambientadditions.blunthead_tree_snake_spawn_egg": "Blunthead Tree Snake Spawn Egg",
   "item.ambientadditions.mata_mata_spawn_egg": "Mata Mata Spawn Egg",
+  "item.ambientadditions.blue_spotted_stingray_spawn_egg": "Blue Spotted Stingray Spawn Egg",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
@@ -92,6 +93,7 @@
   "entity.ambientadditions.red_river_hog": "Red River Hog",
   "entity.ambientadditions.blunthead_tree_snake": "Blunthead Tree Snake",
   "entity.ambientadditions.mata_mata": "Mata Mata",
+  "entity.ambientadditions.blue_spotted_stingray": "Blue Spotted Stingray",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",

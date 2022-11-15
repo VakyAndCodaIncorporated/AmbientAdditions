@@ -2,6 +2,7 @@ package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.util.Flopper;
+import coda.ambientadditions.common.entities.util.Swimmer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -52,10 +53,11 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
 
         IBone root = getAnimationProcessor().getBone("root");
 
+        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+
         if (this.getAnimationProcessor().getBone("head") != null) {
             IBone head = this.getAnimationProcessor().getBone("head");
 
-            EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
             head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
         }
@@ -68,6 +70,10 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
 
         if (entity instanceof Flopper && !entity.isInWater()) {
             root.setRotationZ(1.5708F);
+        }
+        if (entity instanceof Swimmer && entity.isInWater()) {
+            root.setRotationY(extraData.netHeadYaw * ((float)Math.PI / 180F));
+            root.setRotationX(extraData.headPitch * ((float)Math.PI / 180F));
         }
     }
 }

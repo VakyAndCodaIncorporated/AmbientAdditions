@@ -2,6 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
 import coda.ambientadditions.common.entities.util.Flopper;
+import coda.ambientadditions.common.entities.util.Swimmer;
 import coda.ambientadditions.common.init.AAItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -26,7 +27,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class NapoleonWrasseEntity extends AbstractFish implements IAnimatable, Flopper {
+public class NapoleonWrasseEntity extends AbstractFish implements IAnimatable, Flopper, Swimmer {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){

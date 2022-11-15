@@ -107,6 +107,7 @@ public class AmbientAdditions {
         event.put(AAEntities.RED_RIVER_HOG.get(), RedRiverHogEntity.createAttributes().build());
         event.put(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), BluntheadTreeSnakeEntity.createAttributes().build());
         event.put(AAEntities.MATA_MATA.get(), MataMataEntity.createAttributes().build());
+        event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingrayEntity.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -202,6 +203,7 @@ public class AmbientAdditions {
             if (path.equals("warm_ocean")) {
                 event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(AAEntities.LONGHORN_COWFISH.get(), AAConfig.Common.INSTANCE.longhornCowfishSpawnWeight.get(), 1, 1));
                 event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.NAPOLEON_WRASSE.get(), AAConfig.Common.INSTANCE.napoleonWrasseSpawnWeight.get(), 1, 2));
+                event.getSpawns().getSpawner(MobCategory.WATER_CREATURE).add(new MobSpawnSettings.SpawnerData(AAEntities.BLUE_SPOTTED_STINGRAY.get(), AAConfig.Common.INSTANCE.blueSpottedStingraySpawnWeight.get(), 1, 2));
             }
 
             if (path.equals("lukewarm_ocean") || path.equals("deep_lukewarm_ocean")) {

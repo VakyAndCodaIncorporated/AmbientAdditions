@@ -41,6 +41,7 @@ public class AAConfig {
     public static int redRiverHogSpawnWeight;
     public static int bluntheadTreeSnakeSpawnWeight;
     public static int mataMataSpawnWeight;
+    public static int blueSpottedStingraySpawnWeight;
 
     @SubscribeEvent
     public static void configLoad(ModConfigEvent.Reloading event) {
@@ -95,6 +96,7 @@ public class AAConfig {
         public final ForgeConfigSpec.IntValue redRiverHogSpawnWeight;
         public final ForgeConfigSpec.IntValue bluntheadTreeSnakeSpawnWeight;
         public final ForgeConfigSpec.IntValue mataMataSpawnWeight;
+        public final ForgeConfigSpec.IntValue blueSpottedStingraySpawnWeight;
 
         Common(ForgeConfigSpec.Builder builder) {
             builder.push("Spawn Weights (higher value = more common)");
@@ -142,6 +144,7 @@ public class AAConfig {
             // Warm Ocean
             longhornCowfishSpawnWeight = builder.comment("Spawn weight of Longhorn Cowfish").defineInRange("longhorn_cowfish_spawn_weight", 5, 1, 1000);
             napoleonWrasseSpawnWeight = builder.comment("Spawn weight of Napolean Wrasse").defineInRange("napoleon_wrasse_spawn_weight", 4, 1, 1000);
+            blueSpottedStingraySpawnWeight = builder.comment("Spawn weight of Blue Spotted Stingray").defineInRange("blue_spotted_stringray_spawn_weight", 4, 1, 1000);
 
             // Lukewarm Ocean
             chocolateChipStarfishSpawnWeight = builder.comment("Spawn weight of Chocolate Chip Starfish").defineInRange("chocolate_chip_starfish_spawn_weight", 5, 1, 1000);
@@ -197,6 +200,7 @@ public class AAConfig {
             AAConfig.redRiverHogSpawnWeight = INSTANCE.redRiverHogSpawnWeight.get();
             AAConfig.bluntheadTreeSnakeSpawnWeight = INSTANCE.bluntheadTreeSnakeSpawnWeight.get();
             AAConfig.mataMataSpawnWeight = INSTANCE.mataMataSpawnWeight.get();
+            AAConfig.blueSpottedStingraySpawnWeight = INSTANCE.blueSpottedStingraySpawnWeight.get();
         }
     }
 }

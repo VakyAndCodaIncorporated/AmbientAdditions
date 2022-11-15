@@ -50,7 +50,7 @@ public class ClientEvents {
                 AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), AAEntities.RING_TAILED_LEMUR.get(),
                 AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(), AAEntities.SHAME_FACED_CRAB.get(),
                 AAEntities.FLYING_FISH.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.OPAH.get(), AAEntities.RED_RIVER_HOG.get(),
-                AAEntities.BLUNTHEAD_TREE_SNAKE.get(),
+                AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAEntities.BLUE_SPOTTED_STINGRAY.get(),
         };
         for (EntityType type : simpleEntities){
             make(type, type.getRegistryName().getPath());
