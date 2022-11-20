@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.BiomeDictionary;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -98,7 +99,7 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
     }
 
     public static boolean checkSnailSpawnRules(EntityType<? extends GoldenElephantSnailEntity> p_223363_0_, LevelAccessor p_223363_1_, MobSpawnType p_223363_2_, BlockPos p_223363_3_, Random p_223363_4_) {
-        return p_223363_1_.getBlockState(p_223363_3_).is(Blocks.WATER) && p_223363_1_.getBlockState(p_223363_3_.above()).is(Blocks.WATER) && p_223363_4_.nextFloat() > 0.9F;
+        return BiomeDictionary.hasType(p_223363_1_.getBiome(p_223363_3_).unwrapKey().get(), BiomeDictionary.Type.OVERWORLD) && p_223363_1_.getBlockState(p_223363_3_).is(Blocks.WATER) && p_223363_1_.getBlockState(p_223363_3_.above()).is(Blocks.WATER) && p_223363_4_.nextFloat() > 0.9F;
     }
 
     static class MoveHelperController extends MoveControl {
