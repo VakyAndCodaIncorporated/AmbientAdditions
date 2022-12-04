@@ -62,12 +62,6 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
             head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
         }
 
-        if (entity.isBaby()) {
-            root.setScaleX(0.5F);
-            root.setScaleY(0.5F);
-            root.setScaleZ(0.5F);
-        }
-
         if (entity instanceof Flopper && !entity.isInWater()) {
             root.setRotationZ(1.5708F);
         }

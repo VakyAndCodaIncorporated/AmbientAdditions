@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -40,6 +41,10 @@ public class GenericGeoRenderer<T extends LivingEntity & IAnimatable> extends Ge
 	public void render(T entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
 		if (scale != 1F) {
 			stack.scale(scale, scale, scale);
+		}
+
+		if (entity instanceof AgeableMob mob && mob.isBaby()) {
+			stack.scale(0.5F, 0.5F, 0.5F);
 		}
 
 		super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
