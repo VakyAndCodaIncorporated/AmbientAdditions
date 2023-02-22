@@ -34,7 +34,7 @@ public class AAItems {
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = REGISTER.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = REGISTER.register("yeti_crab_fluff", () -> new Item(new Item.Properties().tab(GROUP)));
     public static final RegistryObject<Item> STARFISH_ARM = REGISTER.register("starfish_arm", () -> new StarfishArmItem(new Item.Properties().tab(GROUP)));
-    public static final RegistryObject<Item> LEAF_FROG_EGG = REGISTER.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG::get, new Item.Properties().tab(GROUP).stacksTo(16)));
+    public static final RegistryObject<Item> LEAF_FROG_EGG = REGISTER.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG_TADPOLE::get, new Item.Properties().tab(GROUP).stacksTo(16)));
     public static final RegistryObject<Item> FLYING_FISH = REGISTER.register("flying_fish", () -> new Item(new Item.Properties()/*.tab(GROUP)*/.food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
 
     // Buckets & Catching Items

@@ -108,6 +108,7 @@ public class AmbientAdditions {
         event.put(AAEntities.BLUNTHEAD_TREE_SNAKE.get(), BluntheadTreeSnakeEntity.createAttributes().build());
         event.put(AAEntities.MATA_MATA.get(), MataMataEntity.createAttributes().build());
         event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingrayEntity.createAttributes().build());
+        event.put(AAEntities.LEAF_FROG_TADPOLE.get(), AbstractFish.createAttributes().build());
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {

@@ -1,6 +1,5 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.entities.ai.movement.GroundAndSwimmerNavigator;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
 import com.google.common.collect.Sets;
@@ -9,26 +8,27 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -45,15 +45,7 @@ import java.util.Set;
 
 public class LeafFrogEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving() && isBaby()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tadpole.swim", true));
-            event.getController().setAnimationSpeed(1.0);
-        }
-        else if (!event.isMoving() && isBaby()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tadpole.idle", true));
-            event.getController().setAnimationSpeed(2.5);
-        }
-        else if (event.isMoving() && !isBaby()) {
+        if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leaf_frog.hop", true));
             event.getController().setAnimationSpeed(1);
         }
@@ -89,81 +81,33 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, swimGoal = new FloatGoal(this));
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
+        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(1, new BreedGoal(this, 0.8D));
-        this.goalSelector.addGoal(2, new FrogMovementGoal(this));
         this.goalSelector.addGoal(3, new LeafFrogEntity.PlayerTemptGoal(this, 1.0D, Items.SPIDER_EYE));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 10.0F));
-    }
-
-    @Override
-    public void setAge(int age) {
-        boolean wasChild = isBaby();
-        super.setAge(age);
-        boolean isChild = isBaby();
-        if (!wasChild && isChild) {
-            this.goalSelector.removeGoal(swimGoal);
-            this.maxUpStep = 1.0f;
-        } else if (wasChild && !isChild) {
-            this.goalSelector.addGoal(0, swimGoal);
-            this.maxUpStep = 0.0f;
-        }
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 10.0F));
     }
 
     protected PathNavigation createNavigation(Level world) {
-        return new GroundAndSwimmerNavigator(this, world);
-    }
-
-    @Override
-    public boolean canBreatheUnderwater() {
-        return this.isBaby();
-    }
-
-    protected void updateAir(int air) {
-        if (this.isBaby()) {
-            if (this.isAlive() && !this.isInWaterOrBubble()) {
-                this.setAirSupply(air - 1);
-                if (this.getAirSupply() == -20) {
-                    this.setAirSupply(0);
-                    this.hurt(DamageSource.DROWN, 2.0F);
-                }
-            } else {
-                this.setAirSupply(300);
-            }
-        }
-    }
-
-    public void baseTick() {
-        int lvt_1_1_ = this.getAirSupply();
-        super.baseTick();
-        this.updateAir(lvt_1_1_);
+        return new GroundPathNavigation(this, world);
     }
 
     public void customServerAiStep() {
-        if (!isBaby()) {
-            if (this.onGround) {
-                if (!this.wasOnGround) {
-                    this.checkLandingDelay();
-                }
-
-                if (this.currentMoveTypeDuration == 0) {
-                    LivingEntity livingentity = this.getTarget();
-                    if (livingentity != null && this.distanceToSqr(livingentity) < 16.0D) {
-                        this.calculateRotationYaw(livingentity.getX(), livingentity.getZ());
-                        this.moveControl.setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), this.moveControl.getSpeedModifier());
-                    }
-                }
+        if (this.onGround) {
+            if (!this.wasOnGround) {
+                this.checkLandingDelay();
             }
 
-            this.wasOnGround = this.onGround;
+            if (this.currentMoveTypeDuration == 0) {
+                LivingEntity livingentity = this.getTarget();
+                if (livingentity != null && this.distanceToSqr(livingentity) < 16.0D) {
+                    this.calculateRotationYaw(livingentity.getX(), livingentity.getZ());
+                    this.moveControl.setWantedPosition(livingentity.getX(), livingentity.getY(), livingentity.getZ(), this.moveControl.getSpeedModifier());
+                }
+            }
         }
+
+        this.wasOnGround = this.onGround;
     }
 
     @Nullable
@@ -209,19 +153,15 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
     }
 
     protected SoundEvent getAmbientSound() {
-        return !this.isBaby() ? AASounds.FROG_AMBIENT.get() : SoundEvents.COD_AMBIENT;
+        return AASounds.FROG_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return !this.isBaby() ? AASounds.FROG_HURT.get() : SoundEvents.COD_HURT;
+        return AASounds.FROG_HURT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return !this.isBaby() ? AASounds.FROG_DEATH.get() : SoundEvents.COD_DEATH;
-    }
-
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.COD_FLOP;
+        return AASounds.FROG_DEATH.get();
     }
 
     protected float getSoundVolume() {
@@ -241,10 +181,6 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         return false;
     }
 
-    public MobType getMobType() {
-        return this.isBaby() ? MobType.WATER : MobType.UNDEFINED;
-    }
-
     private void calculateRotationYaw(double x, double z) {
         float rot = (float) (Mth.atan2(z - this.getZ(), x - this.getX()) * (double) (180F / (float) Math.PI)) - 90.0F;
         this.setYRot(rot);
@@ -262,26 +198,9 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         this.updateMoveTypeDuration();
     }
 
-    public void aiStep() {
-        super.aiStep();
-        if (this.isBaby() && !this.isInWater() && this.onGround && this.verticalCollision) {
-            this.setDeltaMovement(this.getDeltaMovement().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F, 0.4000000059604645D, ((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F)));
-            this.onGround = false;
-            this.hasImpulse = true;
-            this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getVoicePitch());
-        }
-    }
-
     @Override
     public void travel(Vec3 vec3) {
-        if (isBaby() && this.isEffectiveAi() && this.isInWater()) {
-            this.moveRelative(0.01F, vec3);
-            this.move(MoverType.SELF, this.getDeltaMovement());
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
-            if (this.getTarget() == null) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
-            }
-        } else if (isEffectiveAi() && !isBaby()) {
+        if (isEffectiveAi()) {
             super.travel(jump(vec3));
         }
         else {
@@ -338,14 +257,6 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         }
 
         public void tick() {
-            if (this.frog.isEyeInFluid(FluidTags.WATER) && this.frog.isBaby()) {
-                this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
-            }
-
-            if (this.frog.isBaby() && this.frog.horizontalCollision && this.frog.level.getBlockState(this.frog.blockPosition().above()).getBlock() == Blocks.WATER) {
-                this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, -0.025D, 0.0D));
-            }
-
             if (this.operation == MoveControl.Operation.MOVE_TO && !this.frog.getNavigation().isDone()) {
                 double d0 = this.wantedX - this.frog.getX();
                 double d1 = this.wantedY - this.frog.getY();
@@ -356,9 +267,6 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
                 this.frog.setYRot(this.rotlerp(this.frog.getYRot(), f, 90.0F));
                 this.frog.yBodyRot = this.frog.getYRot();
                 float f1 = (float) (this.speedModifier * this.frog.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
-                if (frog.isBaby()) {
-                    f1 *= 2.8;
-                }
                 this.frog.setSpeed(Mth.lerp(0.125F, this.frog.getSpeed(), f1));
                 this.frog.setDeltaMovement(this.frog.getDeltaMovement().add(0.0D, (double) this.frog.getSpeed() * d1 * 0.1D, 0.0D));
             } else {
@@ -420,15 +328,4 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
         }
     }
 
-    private static class FrogMovementGoal extends RandomStrollGoal {
-        public FrogMovementGoal(PathfinderMob creature) {
-            super(creature, 1.0D);
-        }
-
-        @Override
-        protected Vec3 getPosition() {
-            if (mob.isBaby()) return DefaultRandomPos.getPos(this.mob, 10, 7);
-            return super.getPosition();
-        }
-    }
 }
