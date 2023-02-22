@@ -2,7 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
 import coda.ambientadditions.common.entities.util.Flopper;
-import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;

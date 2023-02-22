@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.items;
 
 import coda.ambientadditions.common.entities.ChocolateChipStarfishEntity;
-import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.registry.AAEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

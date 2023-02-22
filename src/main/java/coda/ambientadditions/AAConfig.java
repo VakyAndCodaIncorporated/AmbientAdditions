@@ -104,7 +104,7 @@ public class AAConfig {
             whiteFruitBatSpawnWeight = builder.comment("Spawn weight of White Fruit Bats").defineInRange("white_fruit_bats_spawn_weight", 30, 1, 1000);
             moustachedTamarinSpawnWeight = builder.comment("Spawn weight of Moustached Tamarins").defineInRange("moustached_tamarin_spawn_weight", 30, 1, 1000);
             scarletHoneycreeperSpawnWeight = builder.comment("Spawn weight of Scarlet Honeycreepers").defineInRange("scarlet_honeycreeper_spawn_weight", 35, 1, 1000);
-            pinocchioAnoleSpawnWeight = builder.comment("Spawn weight of Pinocchio Anoles").defineInRange("pinocchio_anole_spawn_weight", 25, 1, 1000);
+            pinocchioAnoleSpawnWeight = builder.comment("Spawn weight of Pinocchio Anoles").defineInRange("pinocchio_anole_spawn_weight", 35, 1, 1000);
             ayeAyeSpawnWeight = builder.comment("Spawn weight of Aye Ayes").defineInRange("aye_aye_spawn_weight", 30, 1, 1000);
             siamangGibbonSpawnWeight = builder.comment("Spawn weight of Siamang Gibbons").defineInRange("siamang_gibbon_spawn_weight", 30, 1, 1000);
             ringTailedLemurSpawnWeight = builder.comment("Spawn weight of Ring-Tailed Lemurs").defineInRange("ring_tailed_lemur_weight", 30, 1, 1000);

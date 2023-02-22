@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer.layer;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.ScarletHoneycreeperEntity;
-import coda.ambientadditions.common.init.AAEntities;
+import coda.ambientadditions.registry.AAEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;

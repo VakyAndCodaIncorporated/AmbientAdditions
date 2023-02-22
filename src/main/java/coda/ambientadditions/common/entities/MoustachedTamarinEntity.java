@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.init.AAEntities;
-import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.registry.AAEntities;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;

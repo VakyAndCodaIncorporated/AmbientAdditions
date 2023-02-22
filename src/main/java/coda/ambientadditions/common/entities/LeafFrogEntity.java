@@ -1,13 +1,10 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.GroundAndSwimmerNavigator;
-import coda.ambientadditions.common.init.AAItems;
-import coda.ambientadditions.common.init.AASounds;
+import coda.ambientadditions.registry.AAItems;
+import coda.ambientadditions.registry.AASounds;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +22,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,8 +31,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -97,6 +91,12 @@ public class LeafFrogEntity extends Animal implements IAnimatable {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, swimGoal = new FloatGoal(this));
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(1, new BreedGoal(this, 0.8D));
         this.goalSelector.addGoal(2, new FrogMovementGoal(this));
         this.goalSelector.addGoal(3, new LeafFrogEntity.PlayerTemptGoal(this, 1.0D, Items.SPIDER_EYE));

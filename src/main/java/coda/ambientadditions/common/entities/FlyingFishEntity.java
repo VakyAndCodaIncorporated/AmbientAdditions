@@ -2,7 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.goal.FlyingFishJumpGoal;
 import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
-import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

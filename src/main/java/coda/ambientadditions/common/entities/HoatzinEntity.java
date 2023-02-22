@@ -1,8 +1,8 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.init.AAEntities;
-import coda.ambientadditions.common.init.AAItems;
-import coda.ambientadditions.common.init.AASounds;
+import coda.ambientadditions.registry.AAEntities;
+import coda.ambientadditions.registry.AAItems;
+import coda.ambientadditions.registry.AASounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

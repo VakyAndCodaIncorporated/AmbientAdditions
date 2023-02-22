@@ -1,4 +1,4 @@
-package coda.ambientadditions.common.init;
+package coda.ambientadditions.registry;
 
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.*;

@@ -1,10 +1,10 @@
 package coda.ambientadditions;
 
 import coda.ambientadditions.common.entities.*;
-import coda.ambientadditions.common.init.AAEntities;
-import coda.ambientadditions.common.init.AAItems;
-import coda.ambientadditions.common.init.AASounds;
-import coda.ambientadditions.common.init.AATags;
+import coda.ambientadditions.registry.AAEntities;
+import coda.ambientadditions.registry.AAItems;
+import coda.ambientadditions.registry.AASounds;
+import coda.ambientadditions.registry.AATags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

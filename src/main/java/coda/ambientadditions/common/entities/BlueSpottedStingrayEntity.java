@@ -2,7 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.BottomFeederMoveControl;
 import coda.ambientadditions.common.entities.util.Swimmer;
-import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;

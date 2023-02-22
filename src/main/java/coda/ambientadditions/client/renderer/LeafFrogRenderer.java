@@ -22,4 +22,13 @@ public class LeafFrogRenderer extends GenericGeoRenderer<LeafFrogEntity> {
     public RenderType getRenderType(LeafFrogEntity animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityTranslucent(textureLocation);
     }
+
+    @Override
+    public void render(LeafFrogEntity entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
+        super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
+
+        if (entity.isBaby()) {
+            stack.scale(2.0F, 2.0F, 2.0F);
+        }
+    }
 }

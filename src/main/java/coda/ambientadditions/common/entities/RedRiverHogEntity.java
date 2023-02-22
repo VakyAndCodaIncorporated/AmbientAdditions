@@ -1,7 +1,7 @@
 package coda.ambientadditions.common.entities;
 
-import coda.ambientadditions.common.init.AAEntities;
-import coda.ambientadditions.common.init.AAItems;
+import coda.ambientadditions.registry.AAEntities;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -34,10 +34,10 @@ public class RedRiverHogEntity extends Animal implements IAnimatable {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.red_river_hog.walk", true));
-            event.getController().setAnimationSpeed(2);
+            event.getController().setAnimationSpeed(2.0D);
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.red_river_hog.idle", true));
-            event.getController().setAnimationSpeed(1);
+            event.getController().setAnimationSpeed(1.0D);
         }
 
         return PlayState.CONTINUE;
@@ -76,6 +76,11 @@ public class RedRiverHogEntity extends Animal implements IAnimatable {
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.RED_RIVER_HOG_SPAWN_EGG.get());
+    }
+
+    @Override
+    public float getStepHeight() {
+        return 1.05F;
     }
 
     @Override
