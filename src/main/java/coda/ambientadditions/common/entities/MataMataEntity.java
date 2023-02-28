@@ -48,8 +48,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.Random;
-
 public class MataMataEntity extends Animal implements IAnimatable {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMataEntity.class, EntityDataSerializers.ITEM_STACK);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -268,12 +266,13 @@ public class MataMataEntity extends Animal implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isInWater()) {
+        if (isInWater() && event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.swim", ILoopType.EDefaultLoopTypes.LOOP));
         }
         else if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.walk", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
+        }
+        else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
 

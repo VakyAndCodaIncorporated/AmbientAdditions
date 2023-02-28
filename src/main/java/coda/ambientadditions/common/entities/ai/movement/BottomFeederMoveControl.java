@@ -39,7 +39,7 @@ public class BottomFeederMoveControl extends MoveControl {
                 if (this.entity.isInWater()) {
                     this.entity.setSpeed(f1 * 0.02F);
                     float f2 = -((float)(Mth.atan2(d1, Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double)(180F / (float)Math.PI)));
-                    f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
+                    f2 = Mth.clamp(Mth.wrapDegrees(f2), -20.0F, 20.0F);
                     this.entity.setXRot(this.rotlerp(this.entity.getXRot(), f2, 5.0F));
                     float f3 = Mth.cos(this.entity.getXRot() * ((float)Math.PI / 180F));
                     float f4 = Mth.sin(this.entity.getXRot() * ((float)Math.PI / 180F));
