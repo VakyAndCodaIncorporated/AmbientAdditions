@@ -107,6 +107,7 @@ public class AmbientAdditions {
         });
     }
 
+    // todo - fix rabbit snail spawning. all other spawns have been tested & work
     private void spawnPlacements(SpawnPlacementRegisterEvent e) {
         e.register(AAEntities.WHITE_FRUIT_BAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
         e.register(AAEntities.LONGHORN_COWFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, WaterAnimal::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
