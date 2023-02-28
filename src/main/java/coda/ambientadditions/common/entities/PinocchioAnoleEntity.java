@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -76,7 +77,7 @@ public class PinocchioAnoleEntity extends PathfinderMob  implements IAnimatable 
         return new ItemStack(AAItems.PINOCCHIO_ANOLE_SPAWN_EGG.get());
     }
 
-    public static boolean checkAnimalSpawnRules(EntityType<? extends PathfinderMob> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+    public static boolean checkAnimalSpawnRules(EntityType<? extends PathfinderMob> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
         return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.LEAVES) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS);
     }
 

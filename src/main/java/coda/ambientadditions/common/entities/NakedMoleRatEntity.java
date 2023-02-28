@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -26,10 +27,12 @@ import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -38,9 +41,9 @@ public class NakedMoleRatEntity extends Animal implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.walk", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
 
         return PlayState.CONTINUE;
@@ -48,10 +51,10 @@ public class NakedMoleRatEntity extends Animal implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
     }
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     @Override
     public AnimationFactory getFactory() {
         return factory;
@@ -93,10 +96,6 @@ public class NakedMoleRatEntity extends Animal implements IAnimatable {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.MOVEMENT_SPEED, 0.2D);
-    }
-
-    public static boolean checkAnimalSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_.below()).is(BlockTags.BASE_STONE_OVERWORLD) && p_223316_1_.getHeight() < 50;
     }
 
     @Nullable

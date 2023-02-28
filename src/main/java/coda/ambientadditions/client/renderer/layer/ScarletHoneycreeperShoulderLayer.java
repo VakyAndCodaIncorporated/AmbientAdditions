@@ -37,7 +37,7 @@ public class ScarletHoneycreeperShoulderLayer<T extends Player> extends RenderLa
    @OnlyIn(Dist.CLIENT)
    private void render(PoseStack p_229136_1_, MultiBufferSource p_229136_2_, int p_229136_3_, T p_229136_4_, float p_229136_5_, float p_229136_6_, float p_229136_7_, float p_229136_8_, boolean p_229136_9_) {
       CompoundTag compoundnbt = p_229136_9_ ? p_229136_4_.getShoulderEntityLeft() : p_229136_4_.getShoulderEntityRight();
-      if (compoundnbt.getString("id").equals(AAEntities.SCARLET_HONEYCREEPER.get().getRegistryName().toString())) {
+      if (compoundnbt.getString("id").equals(AAEntities.SCARLET_HONEYCREEPER.get().getDescriptionId().substring("entity.ambientadditions.".length()))) {
          p_229136_1_.pushPose();
          p_229136_1_.translate(p_229136_9_ ? (double)0.4F : (double)-0.4F, p_229136_4_.isCrouching() ? (double)-1.3F : -1.5D, 0.0D);
 

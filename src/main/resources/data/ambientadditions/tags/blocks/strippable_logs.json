@@ -6,6 +6,14 @@
     "minecraft:birch_log",
     "minecraft:dark_oak_log",
     "minecraft:acacia_log",
-    "minecraft:spruce_log"
+    "minecraft:spruce_log",
+    "minecraft:mangrove_log",
+    "minecraft:oak_wood",
+    "minecraft:jungle_wood",
+    "minecraft:birch_wood",
+    "minecraft:dark_oak_wood",
+    "minecraft:acacia_wood",
+    "minecraft:spruce_wood",
+    "minecraft:mangrove_wood"
   ]
 }

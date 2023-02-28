@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -249,7 +250,7 @@ public class HoatzinEntity extends ShoulderRidingEntity implements FlyingAnimal,
         return getPitch(this.random);
     }
 
-    public static float getPitch(Random p_192000_0_) {
+    public static float getPitch(RandomSource p_192000_0_) {
         return (p_192000_0_.nextFloat() - p_192000_0_.nextFloat()) * 0.2F + 1.0F;
     }
 

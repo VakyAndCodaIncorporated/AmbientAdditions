@@ -8,7 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -53,7 +53,7 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob) && player.isShiftKeyDown()) {
+        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob)/* && target.getType().is(AATags.CRATEABLE)*/) {
             if (!level.isClientSide) {
 
                 ItemStack stack1 = player.getItemInHand(hand);
@@ -117,22 +117,14 @@ public class CrateItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        TranslatableComponent name = (TranslatableComponent) super.getName(stack);
-        Component name2;
+        MutableComponent name = (MutableComponent) super.getName(stack);
+        MutableComponent creatureName = containsEntity(stack) ? EntityType.byString(stack.getTag()
+                        .getCompound(DATA_CREATURE)
+                        .getString("id"))
+                .orElse(null)
+                .getDescription().copy() : Component.empty();
 
-        if (containsEntity(stack)) {
-            CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
-
-            if (tag.contains("CustomName")) {
-                name2 = Component.Serializer.fromJson(tag.getString("CustomName"));
-            }
-            else {
-                name2 = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
-            }
-
-            name.append(" of ").append(name2);
-        }
-        return name;
+        return containsEntity(stack) ? name.copy().append(" of ").append(creatureName) : name;
     }
 
     @Override
@@ -141,9 +133,19 @@ public class CrateItem extends Item {
             CompoundTag tag = stack.getTag().getCompound(DATA_CREATURE);
             Component name;
 
-            name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+            if (tag.contains("CustomName")) {
+                name = Component.Serializer.fromJson(tag.getString("CustomName"));
+            }
+            else {
+                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+            }
             tooltip.add(name.copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return containsEntity(stack);
     }
 
     public static boolean containsEntity(ItemStack stack) {

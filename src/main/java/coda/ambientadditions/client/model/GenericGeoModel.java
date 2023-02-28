@@ -33,23 +33,23 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
     }
 
     @Override
-    public ResourceLocation getModelLocation(E object) {
+    public ResourceLocation getModelResource(E object) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/" + model + ".geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureLocation(E object) {
+    public ResourceLocation getTextureResource(E object) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/" + texture + ".png");
     }
 
     @Override
-    public ResourceLocation getAnimationFileLocation(E object) {
+    public ResourceLocation getAnimationResource(E object) {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/" + anim + ".animation.json");
     }
 
     @Override
-    public void setLivingAnimations(E entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-        super.setLivingAnimations(entity, uniqueID, customPredicate);
+    public void setCustomAnimations(E entity, int instanceId, AnimationEvent customPredicate) {
+        super.setCustomAnimations(entity, instanceId, customPredicate);
 
         IBone root = getAnimationProcessor().getBone("root");
 

@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:warm_ocean",
+  "spawners":
+  {
+    "type": "ambientadditions:longhorn_cowfish",
+    "weight": 5,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

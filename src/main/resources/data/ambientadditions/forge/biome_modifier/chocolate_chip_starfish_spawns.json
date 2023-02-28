@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:lukewarm_ocean",
+  "spawners":
+  {
+    "type": "ambientadditions:chocolate_chip_starfish",
+    "weight": 50,
+    "minCount": 2,
+    "maxCount": 5
+  }
+}

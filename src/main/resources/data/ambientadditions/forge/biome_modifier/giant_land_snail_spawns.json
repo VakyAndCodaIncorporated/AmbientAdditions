@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:is_savanna",
+  "spawners":
+  {
+    "type": "ambientadditions:giant_land_snail",
+    "weight": 15,
+    "minCount": 1,
+    "maxCount": 2
+  }
+}

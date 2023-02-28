@@ -53,7 +53,7 @@ public class ClientEvents {
                 AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAEntities.BLUE_SPOTTED_STINGRAY.get(), AAEntities.LEAF_FROG_TADPOLE.get(),
         };
         for (EntityType type : simpleEntities){
-            make(type, type.getRegistryName().getPath());
+            make(type, type.getDescriptionId().substring("entity.ambientadditions.".length()));
         }
 
         EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
@@ -71,7 +71,7 @@ public class ClientEvents {
 
         EntityRenderers.register(AAEntities.VEILED_CHAMELEON.get(), (ctx) -> {
             GenericGeoRenderer<VeiledChameleonEntity> render = new GenericGeoRenderer<>(ctx, () -> {
-                TextureVariantModel<VeiledChameleonEntity> model = new TextureVariantModel<>(AAEntities.VEILED_CHAMELEON.get().getRegistryName().getPath());
+                TextureVariantModel<VeiledChameleonEntity> model = new TextureVariantModel<>(AAEntities.VEILED_CHAMELEON.get().getDescriptionId().substring("entity.ambientadditions.".length()));
                 ArrayList<ResourceLocation> textures = new ArrayList<>();
                 for (int i=1;i<=7;i++){
                     textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_" + i + ".png"));
@@ -84,7 +84,7 @@ public class ClientEvents {
         });
 
         EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<ChocolateChipStarfishEntity> model = new TextureVariantModel<>(AAEntities.CHOCOLATE_CHIP_STARFISH.get().getRegistryName().getPath());
+            TextureVariantModel<ChocolateChipStarfishEntity> model = new TextureVariantModel<>(AAEntities.CHOCOLATE_CHIP_STARFISH.get().getDescriptionId().substring("entity.ambientadditions.".length()));
             ArrayList<ResourceLocation> textures = new ArrayList<>();
             for (int i=1;i<=5;i++){
                 textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/chocolate_chip_starfish/starfish_" + i + ".png"));
@@ -94,7 +94,7 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<HarlequinShrimpEntity> model = new TextureVariantModel<>(AAEntities.HARLEQUIN_SHRIMP.get().getRegistryName().getPath());
+            TextureVariantModel<HarlequinShrimpEntity> model = new TextureVariantModel<>(AAEntities.HARLEQUIN_SHRIMP.get().getDescriptionId().substring("entity.ambientadditions.".length()));
             model.setTextures(HarlequinShrimpEntity::getVariant, Arrays.asList(
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/pink.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/harlequin_shrimp/purple.png"),
@@ -114,7 +114,7 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.SIAMANG_GIBBON.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<SiamangGibbonEntity> model = new TextureVariantModel<>(AAEntities.SIAMANG_GIBBON.get().getRegistryName().getPath());
+            TextureVariantModel<SiamangGibbonEntity> model = new TextureVariantModel<>(AAEntities.SIAMANG_GIBBON.get().getDescriptionId().substring("entity.ambientadditions.".length()));
             model.setTextures((e) -> e.isBooming() ? 1 : 0, Arrays.asList(
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/siamang_gibbon/normal.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/siamang_gibbon/booming.png")
@@ -134,7 +134,7 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.YETI_CRAB.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<YetiCrabEntity> model = new TextureVariantModel<>(AAEntities.YETI_CRAB.get().getRegistryName().getPath());
+            TextureVariantModel<YetiCrabEntity> model = new TextureVariantModel<>(AAEntities.YETI_CRAB.get().getDescriptionId().substring("entity.ambientadditions.".length()));
             model.setTextures((e) -> e.isSheared() ? 1 : 0, Arrays.asList(
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/yeti_crab/yeti_crab.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/yeti_crab/sheared.png")
@@ -152,8 +152,8 @@ public class ClientEvents {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void layers(EntityRenderersEvent.AddLayers event) {
-        GeoArmorRenderer.registerArmorRenderer(YetiArmWarmersItem.class, new YetiWarmersRenderer());
-        GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, new DuckyMaskRenderer());
+        GeoArmorRenderer.registerArmorRenderer(YetiArmWarmersItem.class, YetiWarmersRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, DuckyMaskRenderer::new);
     }
 
     //static boolean didPlayerLayers = false;

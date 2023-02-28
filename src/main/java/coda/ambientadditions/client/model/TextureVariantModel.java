@@ -32,7 +32,7 @@ public class TextureVariantModel<E extends LivingEntity & IAnimatable> extends G
     }
 
     @Override
-    public ResourceLocation getTextureLocation(E object) {
+    public ResourceLocation getTextureResource(E object) {
         if (this.textures == null || this.whichTexture == null) return null;
         return this.textures.get(this.whichTexture.apply(object));
     }

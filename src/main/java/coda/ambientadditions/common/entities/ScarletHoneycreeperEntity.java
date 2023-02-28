@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -42,20 +43,21 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class ScarletHoneycreeperEntity extends TamableAnimal implements FlyingAnimal, IAnimatable {
    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
       if (this.isFlying()) {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.fly", true));
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.fly", ILoopType.EDefaultLoopTypes.LOOP));
       } else {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.idle", true));
+         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.scarlet_honey_creeper.idle", ILoopType.EDefaultLoopTypes.LOOP));
       }
 
       return PlayState.CONTINUE;
@@ -63,10 +65,10 @@ public class ScarletHoneycreeperEntity extends TamableAnimal implements FlyingAn
 
    @Override
    public void registerControllers(AnimationData data) {
-      data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
+      data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
    }
 
-   private AnimationFactory factory = new AnimationFactory(this);
+   private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
    @Override
    public AnimationFactory getFactory() {
       return factory;
@@ -204,7 +206,7 @@ public class ScarletHoneycreeperEntity extends TamableAnimal implements FlyingAn
       return false;
    }
 
-   public static boolean checkHoneycreeperSpawnRules(EntityType<ScarletHoneycreeperEntity> p_223317_0_, LevelAccessor p_223317_1_, MobSpawnType p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
+   public static boolean checkHoneycreeperSpawnRules(EntityType<ScarletHoneycreeperEntity> p_223317_0_, LevelAccessor p_223317_1_, MobSpawnType p_223317_2_, BlockPos p_223317_3_, RandomSource p_223317_4_) {
       BlockState blockstate = p_223317_1_.getBlockState(p_223317_3_.below());
       return (blockstate.is(BlockTags.LEAVES) || blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS) || blockstate.is(Blocks.AIR)) && p_223317_1_.getRawBrightness(p_223317_3_, 0) > 8;
    }
@@ -247,7 +249,7 @@ public class ScarletHoneycreeperEntity extends TamableAnimal implements FlyingAn
       return getPitch(this.random);
    }
 
-   public static float getPitch(Random p_192000_0_) {
+   public static float getPitch(RandomSource p_192000_0_) {
       return (p_192000_0_.nextFloat() - p_192000_0_.nextFloat()) * 0.2F + 1.0F;
    }
 

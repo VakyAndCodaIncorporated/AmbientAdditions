@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -149,7 +150,7 @@ public class ChocolateChipStarfishEntity extends WaterAnimal implements IAnimata
         setVariant(compound.getInt("Variant"));
     }
 
-    public static boolean checkStarfishSpawnRules(EntityType<? extends WaterAnimal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+    public static boolean checkStarfishSpawnRules(EntityType<? extends WaterAnimal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
         return p_223316_1_.getBlockState(p_223316_3_).is(Blocks.WATER) && p_223316_4_.nextFloat() > 0.85F;
     }
 

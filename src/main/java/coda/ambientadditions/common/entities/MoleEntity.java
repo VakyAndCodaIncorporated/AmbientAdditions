@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -105,7 +106,7 @@ public class MoleEntity extends Animal implements IAnimatable {
         }
     }
 
-    public static boolean checkMoleSpawnRules(EntityType<? extends Animal> p_223363_0_, LevelAccessor p_223363_1_, MobSpawnType p_223363_2_, BlockPos p_223363_3_, Random p_223363_4_) {
+    public static boolean checkMoleSpawnRules(EntityType<? extends Animal> p_223363_0_, LevelAccessor p_223363_1_, MobSpawnType p_223363_2_, BlockPos p_223363_3_, RandomSource p_223363_4_) {
         return p_223363_1_.getBlockState(p_223363_3_.below()).is(Blocks.GRASS_BLOCK) && p_223363_1_.dayTime() > 12000 && p_223363_1_.dayTime() < 23999;
     }
 

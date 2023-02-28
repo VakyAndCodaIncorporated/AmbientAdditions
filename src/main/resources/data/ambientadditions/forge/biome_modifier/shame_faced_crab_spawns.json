@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:lukewarm_ocean",
+  "spawners":
+  {
+    "type": "ambientadditions:shame_faced_crab",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

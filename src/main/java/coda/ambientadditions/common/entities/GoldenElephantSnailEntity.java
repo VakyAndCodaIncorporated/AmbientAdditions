@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -22,14 +23,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.BiomeDictionary;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Random;
 
@@ -37,9 +39,9 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F);
         if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
 
         return PlayState.CONTINUE;
@@ -47,10 +49,10 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
+        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
     }
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     @Override
     public AnimationFactory getFactory() {
         return factory;
@@ -96,10 +98,6 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.GOLDEN_ELEPHANT_SNAIL_SPAWN_EGG.get());
-    }
-
-    public static boolean checkSnailSpawnRules(EntityType<? extends GoldenElephantSnailEntity> p_223363_0_, LevelAccessor p_223363_1_, MobSpawnType p_223363_2_, BlockPos p_223363_3_, Random p_223363_4_) {
-        return BiomeDictionary.hasType(p_223363_1_.getBiome(p_223363_3_).unwrapKey().get(), BiomeDictionary.Type.OVERWORLD) && p_223363_1_.getBlockState(p_223363_3_).is(Blocks.WATER) && p_223363_1_.getBlockState(p_223363_3_.above()).is(Blocks.WATER) && p_223363_4_.nextFloat() > 0.9F;
     }
 
     static class MoveHelperController extends MoveControl {

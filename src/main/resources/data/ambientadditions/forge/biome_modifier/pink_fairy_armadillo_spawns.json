@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:desert",
+  "spawners":
+  {
+    "type": "ambientadditions:pink_fairy_armadillo",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

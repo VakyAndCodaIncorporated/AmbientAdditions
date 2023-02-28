@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": ["minecraft:plains", "minecraft:forest"],
+  "spawners":
+  {
+    "type": "ambientadditions:mole",
+    "weight": 10,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

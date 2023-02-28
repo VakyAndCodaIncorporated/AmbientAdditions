@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -40,16 +41,18 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Random;
 
 public class MataMataEntity extends Animal implements IAnimatable {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMataEntity.class, EntityDataSerializers.ITEM_STACK);
-    private final AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private ItemStack eatingItem = ItemStack.EMPTY;
     private int eatingTicks = 0;
 
@@ -80,10 +83,10 @@ public class MataMataEntity extends Animal implements IAnimatable {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.25D));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.1D));
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.1D));
         this.goalSelector.addGoal(1, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(1, new TemptGoal(this, 1.25D, Ingredient.of(AAItems.WORM.get()), true));
+        this.goalSelector.addGoal(1, new TemptGoal(this, 1.15D, Ingredient.of(AAItems.WORM.get()), true));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0D, 10) {
             @Override
             public boolean canUse() {
@@ -153,7 +156,7 @@ public class MataMataEntity extends Animal implements IAnimatable {
             }
 
             eatingItem = stack.copy();
-            this.equipEventAndSound(stack);
+            this.equipItemIfPossible(stack);
             return true;
         } else {
             return false;
@@ -235,10 +238,8 @@ public class MataMataEntity extends Animal implements IAnimatable {
         }
     }
 
-    public static boolean canSpawn(EntityType<? extends Animal> p_186238_, LevelAccessor p_186239_, MobSpawnType p_186240_, BlockPos p_186241_, Random p_186242_) {
-        int i = p_186239_.getSeaLevel();
-        int j = i - 13;
-        return p_186241_.getY() >= j && p_186241_.getY() <= i && p_186239_.getFluidState(p_186241_.below()).is(FluidTags.WATER) && p_186239_.getBlockState(p_186241_.above()).is(Blocks.WATER);
+    public static boolean canSpawn(EntityType<? extends Animal> p_186238_, LevelAccessor p_186239_, MobSpawnType p_186240_, BlockPos p_186241_, RandomSource p_186242_) {
+        return (p_186239_.getFluidState(p_186241_.below()).is(FluidTags.WATER) && p_186239_.getBlockState(p_186241_.above()).is(Blocks.WATER)) || p_186239_.getBlockState(p_186241_.below()).is(Blocks.MUD);
     }
 
     @Override
@@ -268,12 +269,12 @@ public class MataMataEntity extends Animal implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.swim", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.swim", ILoopType.EDefaultLoopTypes.LOOP));
         }
         else if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.walk", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
 
         return PlayState.CONTINUE;
