@@ -6,6 +6,7 @@ import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
 import coda.ambientadditions.registry.AATags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,6 +58,7 @@ public class AmbientAdditions {
         bus.addListener(this::registerCommon);
         bus.addListener(this::spawnPlacements);
 
+        forgeBus.addListener(this::frogBreed);
         forgeBus.addListener(this::onLogStripped);
         forgeBus.addListener(this::addWanderingTrades);
 
@@ -99,6 +102,20 @@ public class AmbientAdditions {
         event.put(AAEntities.MATA_MATA.get(), MataMataEntity.createAttributes().build());
         event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingrayEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG_TADPOLE.get(), AbstractFish.createAttributes().build());
+    }
+
+    private void frogBreed(BabyEntitySpawnEvent e) {
+        if (e.getParentA() instanceof LeafFrogEntity && e.getParentB() instanceof LeafFrogEntity) {
+            ItemEntity item = EntityType.ITEM.create(e.getParentA().level);
+            item.setItem(new ItemStack(AAItems.LEAF_FROG_EGG.get(), e.getParentA().getRandom().nextInt(3) + 1));
+            item.moveTo(e.getParentA().position());
+
+            e.getParentA().level.addFreshEntity(item);
+            e.getParentA().playSound(SoundEvents.CHICKEN_EGG, 1.0F, (e.getParentA().getRandom().nextFloat() - e.getParentA().getRandom().nextFloat()) * 0.2F + 1.0F);
+
+
+            e.setCanceled(true);
+        }
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
