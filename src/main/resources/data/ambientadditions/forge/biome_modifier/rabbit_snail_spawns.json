@@ -4,7 +4,7 @@
   "spawners":
   {
     "type": "ambientadditions:golden_elephant_snail",
-    "weight": 500,
+    "weight": 50,
     "minCount": 1,
     "maxCount": 1
   }

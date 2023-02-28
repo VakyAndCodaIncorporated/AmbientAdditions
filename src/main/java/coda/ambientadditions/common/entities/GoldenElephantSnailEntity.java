@@ -95,10 +95,6 @@ public class GoldenElephantSnailEntity extends WaterAnimal implements IAnimatabl
         return 0.15F;
     }
 
-    public static boolean checkSnailSpawnRules(EntityType<? extends WaterAnimal> p_218283_, LevelAccessor p_218284_, MobSpawnType p_218285_, BlockPos p_218286_, RandomSource p_218287_) {
-        return p_218284_.getFluidState(p_218286_.below()).is(FluidTags.WATER) && p_218284_.getBlockState(p_218286_.above()).is(Blocks.WATER);
-    }
-
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.GOLDEN_ELEPHANT_SNAIL_SPAWN_EGG.get());
