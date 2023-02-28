@@ -4,7 +4,7 @@
   "spawners":
   {
     "type": "ambientadditions:chocolate_chip_starfish",
-    "weight": 50,
+    "weight": 5,
     "minCount": 2,
     "maxCount": 5
   }

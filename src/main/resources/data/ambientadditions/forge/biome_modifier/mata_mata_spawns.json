@@ -4,7 +4,7 @@
   "spawners":
   {
     "type": "ambientadditions:mata_mata",
-    "weight": 200,
+    "weight": 20,
     "minCount": 1,
     "maxCount": 1
   }
