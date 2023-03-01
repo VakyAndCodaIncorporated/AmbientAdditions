@@ -15,11 +15,11 @@ import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import coda.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import coda.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import coda.ambientadditions.common.entities.*;
-import coda.ambientadditions.registry.AAEntities;
-import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.common.items.CrateItem;
 import coda.ambientadditions.common.items.DuckyMaskArmorItem;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
+import coda.ambientadditions.registry.AAEntities;
+import coda.ambientadditions.registry.AAItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = AmbientAdditions.MOD_ID, value = Dist.CLIENT)
 public class ClientEvents {
 
     private static void make(EntityType type, String name){
