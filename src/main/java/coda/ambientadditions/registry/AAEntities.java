@@ -44,9 +44,9 @@ public class AAEntities {
     public static final RegistryObject<EntityType<ShameFacedCrabEntity>> SHAME_FACED_CRAB = create("shame_faced_crab", EntityType.Builder.of(ShameFacedCrabEntity::new, MobCategory.WATER_CREATURE).sized(0.6f, 0.5f));
     public static final RegistryObject<EntityType<OpahEntity>> OPAH = create("opah", EntityType.Builder.of(OpahEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.85f));
     public static final RegistryObject<EntityType<RedRiverHogEntity>> RED_RIVER_HOG = create("red_river_hog", EntityType.Builder.of(RedRiverHogEntity::new, MobCategory.CREATURE).sized(1.0f, 1.0f));
-    public static final RegistryObject<EntityType<BluntheadTreeSnakeEntity>> BLUNTHEAD_TREE_SNAKE = create("blunthead_tree_snake", EntityType.Builder.of(BluntheadTreeSnakeEntity::new, MobCategory.CREATURE).sized(1.0f, 0.3f));
+    public static final RegistryObject<EntityType<BluntheadTreeSnakeEntity>> BLUNTHEAD_TREE_SNAKE = create("blunthead_tree_snake", EntityType.Builder.of(BluntheadTreeSnakeEntity::new, MobCategory.CREATURE).sized(0.75f, 0.45f));
     public static final RegistryObject<EntityType<MataMataEntity>> MATA_MATA = create("mata_mata", EntityType.Builder.of(MataMataEntity::new, MobCategory.WATER_CREATURE).sized(1.0f, 0.45f));
-    public static final RegistryObject<EntityType<BlueSpottedStingrayEntity>> BLUE_SPOTTED_STINGRAY = create("blue_spotted_stingray", EntityType.Builder.of(BlueSpottedStingrayEntity::new, MobCategory.WATER_CREATURE).sized(0.8f, 0.2f));
+    public static final RegistryObject<EntityType<BlueSpottedStingrayEntity>> BLUE_SPOTTED_STINGRAY = create("blue_spotted_stingray", EntityType.Builder.of(BlueSpottedStingrayEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.2f));
     public static final RegistryObject<EntityType<LeafFrogTadpoleEntity>> LEAF_FROG_TADPOLE = create("leaf_frog_tadpole", EntityType.Builder.of(LeafFrogTadpoleEntity::new, MobCategory.WATER_CREATURE).sized(0.25f, 0.25f));
 
     // Items
