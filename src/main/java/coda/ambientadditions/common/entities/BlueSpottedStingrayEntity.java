@@ -72,7 +72,6 @@ public class BlueSpottedStingrayEntity extends AbstractFish implements IAnimatab
         return SoundEvents.PUFFER_FISH_HURT;
     }
 
-
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.BLUE_SPOTTED_STINGRAY_SPAWN_EGG.get());
