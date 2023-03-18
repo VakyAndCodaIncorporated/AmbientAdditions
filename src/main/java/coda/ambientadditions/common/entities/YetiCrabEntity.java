@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -35,37 +36,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class YetiCrabEntity extends WaterAnimal implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.YetiCrabModel.walk", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.YetiCrabModel.idle", ILoopType.EDefaultLoopTypes.LOOP));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
-    }
-
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
-
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(YetiCrabEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(YetiCrabEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -235,6 +216,29 @@ public class YetiCrabEntity extends WaterAnimal implements GeoEntity {
 
     public void setSheared(boolean sheared) {
         this.entityData.set(SHEARED, sheared);
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     static class MoveHelperController extends MoveControl {

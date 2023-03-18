@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -31,35 +32,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        if (this.isFlying()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.white_fruit_bat.fly", ILoopType.EDefaultLoopTypes.LOOP));
-            event.getController().setAnimationSpeed(2.0D);
-        } else if (this.isResting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.white_fruit_bat.idle", ILoopType.EDefaultLoopTypes.LOOP));
-            event.getController().setAnimationSpeed(1.0);
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
-    }
-
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
-
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(WhiteFruitBatEntity.class, EntityDataSerializers.BYTE);
     private BlockPos targetPosition;
     public float prevTilt;
@@ -279,7 +260,32 @@ public class WhiteFruitBatEntity extends Animal implements FlyingAnimal, GeoEnti
         return !this.isResting() && !this.isOnGround();
     }
 
-    public class MoveHelperController extends MoveControl {
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.FLY);
+            state.getController().setAnimationSpeed(2.0D);
+        }
+        else {
+            state.setAnimation(AAAnimations.SIT);
+            state.getController().setAnimationSpeed(1.0D);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    static class MoveHelperController extends MoveControl {
         private final boolean hoversInPlace;
         private final WhiteFruitBatEntity entity;
 

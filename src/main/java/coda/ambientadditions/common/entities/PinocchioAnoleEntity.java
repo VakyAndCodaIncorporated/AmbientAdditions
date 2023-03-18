@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -27,34 +28,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.builder.AnimationBuilder;
-import software.bernie.geckolib.core.controller.AnimationController;
-import software.bernie.geckolib.core.manager.AnimatableManager;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PinocchioAnoleEntity extends PathfinderMob implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState event) {
-        if (event.ismov) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pinnochio_anole.walk", true));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pinnochio_anole.idle", true));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
-    }
-
-    private AnimationFactory factory = new AnimationFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
 
     public PinocchioAnoleEntity(EntityType<? extends PathfinderMob> type, Level world) {
         super(type, world);
@@ -136,4 +118,28 @@ public class PinocchioAnoleEntity extends PathfinderMob implements GeoEntity {
         }
 
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
 }

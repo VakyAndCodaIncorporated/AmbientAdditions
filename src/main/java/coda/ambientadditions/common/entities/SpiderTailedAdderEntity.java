@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
@@ -27,34 +28,17 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class SpiderTailedAdderEntity extends Animal implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spider_tailed_adder.slither", true));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spider_tailed_adder.idle", true));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
-    }
-
-    private AnimationFactory factory = new AnimationFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
 
     public SpiderTailedAdderEntity(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
@@ -129,4 +113,28 @@ public class SpiderTailedAdderEntity extends Animal implements GeoEntity {
     public static boolean checkSnakeSpawnRules(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
         return p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.SAND) && p_223316_1_.getRawBrightness(p_223316_3_, 0) > 8;
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
 }

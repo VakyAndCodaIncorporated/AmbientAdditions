@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
@@ -25,37 +26,17 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class NineBandedArmadilloEntity extends Animal implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.nine_banded_armadillo.walk", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.nine_banded_armadillo.idle", ILoopType.EDefaultLoopTypes.LOOP));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
-    }
-
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
-
-    // private static final DataParameter<Boolean> IS_BALL = EntityDataManager.defineId(NineBandedArmadilloEntity.class, DataSerializers.BOOLEAN);
 
     public NineBandedArmadilloEntity(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
@@ -100,51 +81,10 @@ public class NineBandedArmadilloEntity extends Animal implements GeoEntity {
         return AASounds.ARMADILLO_DEATH.get();
     }
 
-    /*    @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
-        List<PlayerEntity> list = level.getEntitiesOfClass(PlayerEntity.class, this.getBoundingBox().inflate(4.0D), NO_CREATIVE_OR_SPECTATOR);
-        if (list.size() > 0) {
-            setBalled(true);
-            getNavigation().stop();
-        }
-        else {
-            setBalled(false);
-        }
-    }*/
-
-    /*@Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(IS_BALL, false);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundNBT p_70037_1_) {
-        super.readAdditionalSaveData(p_70037_1_);
-        this.entityData.set(IS_BALL, p_70037_1_.getBoolean("balled"));
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundNBT p_213281_1_) {
-        super.addAdditionalSaveData(p_213281_1_);
-        p_213281_1_.putBoolean("balled", false);
-    }
-*/
     @Override
     public boolean isFood(ItemStack p_70877_1_) {
         return p_70877_1_.getItem() == Items.SPIDER_EYE;
     }
-
-/*
-    public boolean isBalled() {
-        return this.entityData.get(IS_BALL);
-    }
-
-    public void setBalled(boolean p_82236_1_) {
-        this.entityData.set(IS_BALL, p_82236_1_);
-    }
-*/
 
     @Nullable
     @Override
@@ -157,15 +97,26 @@ public class NineBandedArmadilloEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
-        if (this.isInvulnerableTo(p_70097_1_)) {
-            return false;
-        } else {
-/*            if (!this.level.isClientSide && this.isBalled()) {
-                this.setBalled(false);
-            }*/
-
-            return super.hurt(p_70097_1_, p_70097_2_);
-        }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
     }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
 }

@@ -1,6 +1,7 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.common.entities.util.Flopper;
 import coda.ambientadditions.common.entities.util.Swimmer;
 import coda.ambientadditions.registry.AAItems;
@@ -20,33 +21,16 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
 public class NapoleonWrasseEntity extends AbstractFish implements GeoEntity, Flopper, Swimmer {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.napoleon_wrasse.swim", true));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.napoleon_wrasse.idle", true));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
-    }
-
-    private final AnimationFactory factory = new AnimationFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
 
     public NapoleonWrasseEntity(EntityType<? extends AbstractFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
@@ -90,4 +74,28 @@ public class NapoleonWrasseEntity extends AbstractFish implements GeoEntity, Flo
             return super.mobInteract(p_230254_1_, p_230254_2_);
         }
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.SWIM);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
 }

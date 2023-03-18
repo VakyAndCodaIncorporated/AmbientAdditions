@@ -210,7 +210,6 @@ public class MoleEntity extends Animal implements GeoEntity {
         return spawnDataIn;
     }
 
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
         controller.add(new AnimationController<>(this, "controller", 2, this::predicate));

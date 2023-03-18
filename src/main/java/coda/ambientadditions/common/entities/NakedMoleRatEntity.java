@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
@@ -20,35 +21,17 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class NakedMoleRatEntity extends Animal implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.walk", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.idle", ILoopType.EDefaultLoopTypes.LOOP));
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
-    }
-
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
 
     public NakedMoleRatEntity(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
@@ -102,5 +85,28 @@ public class NakedMoleRatEntity extends Animal implements GeoEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return AASounds.RAT_DEATH.get();
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
@@ -26,40 +27,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
 public class SiamangGibbonEntity extends Animal implements GeoEntity {
-    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
-        boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-        if (walking) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.walk", true));
-            event.getController().setAnimationSpeed(1.5);
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.siamang_gibbon.idle", true));
-            event.getController().setAnimationSpeed(1.0);
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager data) {
-        data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
-    }
-
-    private AnimationFactory factory = new AnimationFactory(this);
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    ///////////////////////////////////////////////////////////////////
-
     private static final EntityDataAccessor<Boolean> IS_BOOMING = SynchedEntityData.defineId(SiamangGibbonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.CARROT, Items.APPLE);
-    private static final int BOOM_TIMER = 500;
 
     public SiamangGibbonEntity(EntityType<? extends Animal> type, Level worldIn) {
         super(type, worldIn);
@@ -146,5 +126,30 @@ public class SiamangGibbonEntity extends Animal implements GeoEntity {
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.SIAMANG_GIBBON_SPAWN_EGG.get());
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
+            state.getController().setAnimationSpeed(1.5D);
+        }
+        else {
+            state.setAnimation(AAAnimations.IDLE);
+            state.getController().setAnimationSpeed(1.0D);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }
