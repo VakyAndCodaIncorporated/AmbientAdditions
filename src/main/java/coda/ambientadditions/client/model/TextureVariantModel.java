@@ -9,21 +9,12 @@ import java.util.function.Function;
 
 
 public class TextureVariantModel<E extends LivingEntity & GeoEntity> extends GenericGeoModel<E> {
-
-    public TextureVariantModel(String name) {
-        super(name);
-    }
-
-    public TextureVariantModel(String name, String texture) {
-        super(name, texture);
-    }
-
-    public TextureVariantModel(String model, String texture, String anim) {
-        super(model, texture, anim);
-    }
-
     List<ResourceLocation> textures;
     Function<E, Integer> whichTexture;
+
+    public TextureVariantModel(ResourceLocation assetSubpath) {
+        super(assetSubpath);
+    }
 
     public TextureVariantModel<E> setTextures(Function<E, Integer> whichTexture, List<ResourceLocation> textures){
         this.whichTexture = whichTexture;

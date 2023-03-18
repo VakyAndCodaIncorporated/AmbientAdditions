@@ -3,27 +3,30 @@ package coda.ambientadditions.client.renderer.layer;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.CardiganCorgiEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.renderers.geo.GeoLayerRenderer;
-import software.bernie.geckolib.renderers.geo.IGeoRenderer;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.renderer.GeoRenderer;
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
-public class CardiganCorgiCollarLayer extends GeoLayerRenderer<CardiganCorgiEntity> {
+public class CardiganCorgiCollarLayer extends GeoRenderLayer<CardiganCorgiEntity> {
    private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/corgi/collar.png");
-   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/corgi.geo.json");
+   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/cardigan_corgi.geo.json");
 
-   public CardiganCorgiCollarLayer(IGeoRenderer<CardiganCorgiEntity> entityRendererIn) {
+   public CardiganCorgiCollarLayer(GeoRenderer<CardiganCorgiEntity> entityRendererIn) {
       super(entityRendererIn);
    }
 
    @Override
-   public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, CardiganCorgiEntity entityLivingBaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-      if (entityLivingBaseIn.isTame() && !entityLivingBaseIn.isInvisible()) {
+   public void render(PoseStack poseStack, CardiganCorgiEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+      if (animatable.isTame() && !animatable.isInvisible()) {
          RenderType collarTexture = RenderType.entityCutoutNoCull(COLLAR_LOCATION);
-         float[] afloat = entityLivingBaseIn.getCollarColor().getTextureDiffuseColors();
-         this.getRenderer().render(this.getEntityModel().getModel(MODEL), entityLivingBaseIn, partialTicks, collarTexture, matrixStackIn, bufferIn, bufferIn.getBuffer(collarTexture), packedLightIn, OverlayTexture.NO_OVERLAY, afloat[0], afloat[1], afloat[2], 1f);
+         float[] afloat = animatable.getCollarColor().getTextureDiffuseColors();
+         this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, collarTexture, bufferSource.getBuffer(collarTexture), partialTick, packedLight, OverlayTexture.NO_OVERLAY, afloat[0], afloat[1], afloat[2], 1f);
       }
    }
+
 }

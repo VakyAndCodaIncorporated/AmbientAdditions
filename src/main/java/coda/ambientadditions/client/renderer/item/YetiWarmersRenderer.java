@@ -1,19 +1,14 @@
 package coda.ambientadditions.client.renderer.item;
 
-import coda.ambientadditions.client.model.armor.YetiWarmersModel;
+import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
-import software.bernie.geckolib.renderers.geo.GeoArmorRenderer;
+import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.model.DefaultedItemGeoModel;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public class YetiWarmersRenderer extends GeoArmorRenderer<YetiArmWarmersItem> {
 
     public YetiWarmersRenderer() {
-        super(new YetiWarmersModel());
-
-        //These values are what each bone name is in blockbench. So if your head bone is named "bone545",
-        // make sure to do this.headBone = "bone545";
-
-        // The default values are the ones that come with the default armor template in the geckolib blockbench plugin.
-        this.leftArmBone = "armorLeftArm";
-        this.rightArmBone = "armorRightArm";
+        super(new DefaultedItemGeoModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "armor/yeti_warmers")));
     }
 }

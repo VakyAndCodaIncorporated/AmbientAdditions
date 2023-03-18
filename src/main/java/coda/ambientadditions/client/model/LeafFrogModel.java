@@ -3,10 +3,13 @@ package coda.ambientadditions.client.model;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.entities.LeafFrogEntity;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.core.processor.IBone;
-import software.bernie.geckolib.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class LeafFrogModel extends AnimatedGeoModel<LeafFrogEntity> {
+public class LeafFrogModel extends DefaultedEntityGeoModel<LeafFrogEntity> {
+
+    public LeafFrogModel(ResourceLocation assetSubpath) {
+        super(assetSubpath);
+    }
 
     @Override
     public ResourceLocation getModelResource(LeafFrogEntity object) {
@@ -23,10 +26,10 @@ public class LeafFrogModel extends AnimatedGeoModel<LeafFrogEntity> {
         return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/leaf_frog.animation.json");
     }
 
-    @Override
+/*    @Override
     public void setCustomAnimations(LeafFrogEntity animatable, int instanceId) {
         super.setCustomAnimations(animatable, instanceId);
         IBone body = this.getAnimationProcessor().getBone("root");
         body.setPositionY(-0.2F);
-    }
+    }*/
 }
