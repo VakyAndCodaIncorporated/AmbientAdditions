@@ -53,7 +53,6 @@ public class YetiCrabEntity extends WaterAnimal implements GeoEntity {
     public YetiCrabEntity(EntityType<? extends WaterAnimal> type, Level world) {
         super(type, world);
         this.moveControl = new MoveHelperController(this);
-        this.maxUpStep = 0.7f;
     }
 
     @Override
