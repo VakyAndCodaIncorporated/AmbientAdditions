@@ -1,13 +1,10 @@
 package coda.ambientadditions.client.model;
 
 import coda.ambientadditions.AmbientAdditions;
-import coda.ambientadditions.common.entities.HarlequinShrimpEntity;
 import coda.ambientadditions.common.entities.LeafFrogEntity;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.core.processor.IBone;
+import software.bernie.geckolib.model.AnimatedGeoModel;
 
 public class LeafFrogModel extends AnimatedGeoModel<LeafFrogEntity> {
 

@@ -3,16 +3,12 @@ package coda.ambientadditions.common.entities;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -22,23 +18,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public class NakedMoleRatEntity extends Animal implements IAnimatable {
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+public class NakedMoleRatEntity extends Animal implements GeoEntity {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.naked_mole_rat.walk", ILoopType.EDefaultLoopTypes.LOOP));
@@ -50,7 +38,7 @@ public class NakedMoleRatEntity extends Animal implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
     }
 

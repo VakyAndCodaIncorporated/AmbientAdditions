@@ -26,19 +26,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public class SpiderTailedAdderEntity extends Animal implements IAnimatable {
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+public class SpiderTailedAdderEntity extends Animal implements GeoEntity {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
         if (walking){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spider_tailed_adder.slither", true));
@@ -50,7 +44,7 @@ public class SpiderTailedAdderEntity extends Animal implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
+    public void registerControllers(AnimatableManager data) {
         data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
     }
 

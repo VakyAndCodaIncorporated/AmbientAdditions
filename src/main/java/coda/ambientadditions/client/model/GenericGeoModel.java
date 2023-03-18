@@ -5,15 +5,13 @@ import coda.ambientadditions.common.entities.util.Flopper;
 import coda.ambientadditions.common.entities.util.Swimmer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.model.provider.data.EntityModelData;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.event.predicate.AnimationState;
+import software.bernie.geckolib.core.processor.IBone;
+import software.bernie.geckolib.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.provider.data.EntityModelData;
 
-import javax.annotation.Nullable;
-
-public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends AnimatedGeoModel<E> {
+public class GenericGeoModel<E extends LivingEntity & GeoEntity> extends AnimatedGeoModel<E> {
     private final String model;
     private final String texture;
     private final String anim;
@@ -48,7 +46,7 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
     }
 
     @Override
-    public void setCustomAnimations(E entity, int instanceId, AnimationEvent customPredicate) {
+    public void setCustomAnimations(E entity, int instanceId, AnimationState customPredicate) {
         super.setCustomAnimations(entity, instanceId, customPredicate);
 
         IBone root = getAnimationProcessor().getBone("root");

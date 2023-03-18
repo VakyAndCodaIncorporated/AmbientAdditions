@@ -19,14 +19,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.item.GeoArmorItem;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.manager.AnimatableManager;
+import software.bernie.geckolib.core.manager.AnimationFactory;
+import software.bernie.geckolib.item.GeoArmorItem;
 
 import java.util.List;
 
-public class DuckyMaskArmorItem extends GeoArmorItem implements IAnimatable {
+public class DuckyMaskArmorItem extends GeoArmorItem implements GeoEntity {
     public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":ducky_mask",  4, new int[]{1, 2, 3, 1}, 12, SoundEvents.ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.of(Items.IRON_INGOT));
     public static final Lazy<Multimap<Attribute, AttributeModifier>> SWIM_MODIFIER = Lazy.of(() -> ImmutableMultimap.of(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("Swim modifier", 0.15, AttributeModifier.Operation.ADDITION)));
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -52,7 +52,7 @@ public class DuckyMaskArmorItem extends GeoArmorItem implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {}
+    public void registerControllers(AnimatableManager AnimatableManager) {}
 
     @Override
     public AnimationFactory getFactory() {

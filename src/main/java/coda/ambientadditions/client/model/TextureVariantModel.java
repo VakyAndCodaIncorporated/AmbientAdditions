@@ -2,13 +2,13 @@ package coda.ambientadditions.client.model;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
 
 import java.util.List;
 import java.util.function.Function;
 
 
-public class TextureVariantModel<E extends LivingEntity & IAnimatable> extends GenericGeoModel<E> {
+public class TextureVariantModel<E extends LivingEntity & GeoEntity> extends GenericGeoModel<E> {
 
     public TextureVariantModel(String name) {
         super(name);

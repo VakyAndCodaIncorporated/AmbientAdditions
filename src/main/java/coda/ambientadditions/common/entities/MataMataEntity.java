@@ -2,6 +2,7 @@ package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.GroundAndSwimmerNavigator;
 import coda.ambientadditions.common.entities.ai.movement.SemiAquaticMoveControl;
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import net.minecraft.core.BlockPos;
@@ -38,22 +39,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MataMataEntity extends Animal implements IAnimatable {
+public class MataMataEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMataEntity.class, EntityDataSerializers.ITEM_STACK);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private ItemStack eatingItem = ItemStack.EMPTY;
     private int eatingTicks = 0;
-
 
     public MataMataEntity(EntityType<? extends Animal> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
@@ -146,8 +143,9 @@ public class MataMataEntity extends Animal implements IAnimatable {
         return eatingItem.isEmpty();
     }
 
+    // todo - test this
     @Override
-    public boolean equipItemIfPossible(ItemStack stack) {
+    public ItemStack equipItemIfPossible(ItemStack stack) {
         if (this.canHoldItem(stack)) {
             if (!eatingItem.isEmpty()) {
                 this.spawnAtLocation(eatingItem);
@@ -155,10 +153,15 @@ public class MataMataEntity extends Animal implements IAnimatable {
 
             eatingItem = stack.copy();
             this.equipItemIfPossible(stack);
-            return true;
+            return stack;
         } else {
-            return false;
+            return ItemStack.EMPTY;
         }
+    }
+
+    @Override
+    protected void verifyEquippedItem(ItemStack p_181123_) {
+        super.verifyEquippedItem(p_181123_);
     }
 
     @Override
@@ -261,27 +264,30 @@ public class MataMataEntity extends Animal implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 8, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isInWater() && event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.swim", ILoopType.EDefaultLoopTypes.LOOP));
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<T> state) {
+        if (isInWater() && state.isMoving()) {
+            state.setAnimation(AAAnimations.SWIM);
         }
-        else if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.walk", ILoopType.EDefaultLoopTypes.LOOP));
+        else if (state.isMoving()) {
+            state.setAnimation(AAAnimations.WALK);
         }
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mata_mata.idle", ILoopType.EDefaultLoopTypes.LOOP));
+            state.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
+
 
 }

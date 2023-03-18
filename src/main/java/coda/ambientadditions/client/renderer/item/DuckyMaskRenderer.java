@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer.item;
 
 import coda.ambientadditions.client.model.armor.DuckyMaskModel;
 import coda.ambientadditions.common.items.DuckyMaskArmorItem;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.geckolib.renderers.geo.GeoArmorRenderer;
 
 public class DuckyMaskRenderer extends GeoArmorRenderer<DuckyMaskArmorItem> {
 

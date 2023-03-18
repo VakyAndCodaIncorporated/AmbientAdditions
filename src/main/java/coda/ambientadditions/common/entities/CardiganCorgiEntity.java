@@ -1,5 +1,6 @@
 package coda.ambientadditions.common.entities;
 
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
@@ -27,49 +28,18 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class CardiganCorgiEntity extends TamableAnimal implements IAnimatable {
-   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-
-      boolean walking = !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F);
-
-      if (isInSittingPose()) {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.sploot", true));
-         event.getController().setAnimationSpeed(1.0);
-      }
-      else if (walking) {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.walk", true));
-         event.getController().setAnimationSpeed(2.5);
-      } else {
-         event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.corgi.idle", true));
-         event.getController().setAnimationSpeed(1.0);
-      }
-
-
-      return PlayState.CONTINUE;
-   }
-
-   @Override
-   public void registerControllers(AnimationData data) {
-      data.addAnimationController(new AnimationController(this, "controller", 8, this::predicate));
-   }
-
-   private AnimationFactory factory = new AnimationFactory(this);
-   @Override
-   public AnimationFactory getFactory() {
-      return factory;
-   }
-
-   ///////////////////////////////////////////////////////////////////
+public class CardiganCorgiEntity extends TamableAnimal implements GeoEntity {
 
    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(CardiganCorgiEntity.class, EntityDataSerializers.INT);
 
@@ -270,4 +240,34 @@ public class CardiganCorgiEntity extends TamableAnimal implements IAnimatable {
    public ItemStack getPickedResult(HitResult target) {
       return new ItemStack(AAItems.CARDIGAN_CORGI_SPAWN_EGG.get());
    }
+
+   @Override
+   public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+      controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+   }
+
+   private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+      if (isInSittingPose()) {
+         state.setAnimation(AAAnimations.SIT);
+         state.getController().setAnimationSpeed(1.0);
+      }
+      else if (state.isMoving()) {
+         state.setAnimation(AAAnimations.WALK);
+         state.getController().setAnimationSpeed(2.5);
+      }
+      else {
+         state.setAnimation(AAAnimations.IDLE);
+         state.getController().setAnimationSpeed(1.0);
+      }
+
+      return PlayState.CONTINUE;
+   }
+
+   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+   @Override
+   public AnimatableInstanceCache getAnimatableInstanceCache() {
+      return cache;
+   }
+
 }

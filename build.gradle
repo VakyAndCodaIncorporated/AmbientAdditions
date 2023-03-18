@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.19.2-0.1.4'
+version = '1.19.3-0.1.0'
 group = 'coda.ambientadditions' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ambientadditions'
 
@@ -33,7 +33,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.19.3'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -124,9 +124,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
+    minecraft 'net.minecraftforge:forge:1.19.3-44.1.0'
 
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.38')
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19.3:4.0.4')
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

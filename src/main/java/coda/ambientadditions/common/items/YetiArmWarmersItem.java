@@ -10,14 +10,14 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.item.GeoArmorItem;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.manager.AnimatableManager;
+import software.bernie.geckolib.core.manager.AnimationFactory;
+import software.bernie.geckolib.item.GeoArmorItem;
 
 import java.util.Random;
 
-public class YetiArmWarmersItem extends GeoArmorItem implements IAnimatable {
+public class YetiArmWarmersItem extends GeoArmorItem implements GeoEntity {
     public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_arm_warmers",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
     private final AnimationFactory factory = new AnimationFactory(this);
     static Random random = new Random();
@@ -42,7 +42,7 @@ public class YetiArmWarmersItem extends GeoArmorItem implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {}
+    public void registerControllers(AnimatableManager AnimatableManager) {}
 
     @Override
     public AnimationFactory getFactory() {

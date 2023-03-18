@@ -2,7 +2,7 @@ package coda.ambientadditions.client.renderer.item;
 
 import coda.ambientadditions.client.model.armor.YetiWarmersModel;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.geckolib.renderers.geo.GeoArmorRenderer;
 
 public class YetiWarmersRenderer extends GeoArmorRenderer<YetiArmWarmersItem> {
 

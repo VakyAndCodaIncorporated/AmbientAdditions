@@ -3,7 +3,7 @@ package coda.ambientadditions.client.model.armor;
 import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.common.items.YetiArmWarmersItem;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.AnimatedGeoModel;
 
 public class YetiWarmersModel extends AnimatedGeoModel<YetiArmWarmersItem> {
 

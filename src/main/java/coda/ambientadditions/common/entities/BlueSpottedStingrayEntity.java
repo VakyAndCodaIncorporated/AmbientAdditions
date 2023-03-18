@@ -1,6 +1,7 @@
 package coda.ambientadditions.common.entities;
 
 import coda.ambientadditions.common.entities.ai.movement.BottomFeederMoveControl;
+import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.common.entities.util.Swimmer;
 import coda.ambientadditions.registry.AAItems;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -24,18 +25,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BlueSpottedStingrayEntity extends AbstractFish implements IAnimatable, Swimmer {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class BlueSpottedStingrayEntity extends AbstractFish implements GeoEntity, Swimmer {
 
     public BlueSpottedStingrayEntity(EntityType<? extends AbstractFish> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);
@@ -98,22 +97,25 @@ public class BlueSpottedStingrayEntity extends AbstractFish implements IAnimatab
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
+        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.blue_spotted_stingray.swim", ILoopType.EDefaultLoopTypes.LOOP));
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+        if (state.isMoving()) {
+            state.setAnimation(AAAnimations.SWIM);
         }
         else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.blue_spotted_stingray.idle", ILoopType.EDefaultLoopTypes.LOOP));
+            state.setAnimation(AAAnimations.IDLE);
         }
+
         return PlayState.CONTINUE;
     }
 
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

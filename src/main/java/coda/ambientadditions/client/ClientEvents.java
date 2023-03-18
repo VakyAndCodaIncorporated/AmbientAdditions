@@ -30,7 +30,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.geckolib.renderers.geo.GeoArmorRenderer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
