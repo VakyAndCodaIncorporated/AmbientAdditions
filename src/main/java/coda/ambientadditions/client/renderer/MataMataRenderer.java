@@ -16,7 +16,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 
-// todo - test
 public class MataMataRenderer extends GenericGeoRenderer<MataMataEntity> {
     private MultiBufferSource renderTypeBuffer;
 
