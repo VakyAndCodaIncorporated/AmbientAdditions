@@ -18,6 +18,7 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 import java.util.Map;
 
+// todo - fix
 public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleonEntity> {
     public static final Map<Integer, RenderType> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
         hashMap.put(0, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_1.png")));
@@ -51,7 +52,7 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleonEnti
         darkness = Mth.clamp(darkness, 0.0F, 1.0F);
 
         if (!animatable.isInvisible()) {
-            this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, renderType, builder, partialTick, LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), OverlayTexture.NO_OVERLAY, darkness, darkness, darkness, 1f);
+            this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, renderType, builder, partialTick, LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), OverlayTexture.NO_OVERLAY, darkness, darkness, darkness, 1.0F);
         }
     }
 }

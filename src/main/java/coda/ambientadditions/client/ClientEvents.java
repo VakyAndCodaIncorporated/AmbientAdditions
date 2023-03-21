@@ -4,7 +4,6 @@ import coda.ambientadditions.AmbientAdditions;
 import coda.ambientadditions.client.model.GenericGeoModel;
 import coda.ambientadditions.client.model.TextureVariantModel;
 import coda.ambientadditions.client.renderer.GenericGeoRenderer;
-import coda.ambientadditions.client.renderer.LeafFrogRenderer;
 import coda.ambientadditions.client.renderer.MataMataRenderer;
 import coda.ambientadditions.client.renderer.item.DartRenderer;
 import coda.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
@@ -44,7 +43,8 @@ public class ClientEvents {
                 AAEntities.PINE_MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.GOLDEN_ELEPHANT_SNAIL.get(), AAEntities.RING_TAILED_LEMUR.get(),
                 AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(), AAEntities.SHAME_FACED_CRAB.get(),
                 AAEntities.FLYING_FISH.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.OPAH.get(), AAEntities.RED_RIVER_HOG.get(),
-                AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAEntities.BLUE_SPOTTED_STINGRAY.get(), AAEntities.LEAF_FROG_TADPOLE.get(),
+                AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAEntities.BLUE_SPOTTED_STINGRAY.get(), AAEntities.LEAF_FROG_TADPOLE.get(), AAEntities.LEAF_FROG.get(),
+                
         };
         for (EntityType<?> type : simpleEntities){
             make(type, type.getDescriptionId().substring("entity.ambientadditions.".length()));
@@ -97,6 +97,7 @@ public class ClientEvents {
             return model;
         }));
 
+        // todo - add mole digging animation
         EntityRenderers.register(AAEntities.MOLE.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<MoleEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "star_nosed_mole"));
             model.setTextures(MoleEntity::getVariant, Arrays.asList(
@@ -115,8 +116,6 @@ public class ClientEvents {
             ));
             return model;
         }));
-
-        EntityRenderers.register(AAEntities.LEAF_FROG.get(), LeafFrogRenderer::new);
 
         EntityRenderers.register(AAEntities.WHITE_FRUIT_BAT.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<WhiteFruitBatEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "white_fruit_bat"));

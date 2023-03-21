@@ -13,7 +13,7 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class PembrokeCorgiCollarLayer extends GeoRenderLayer<PembrokeCorgiEntity> {
-   private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/corgi/collar.png");
+   private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/collar.png");
    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/cardigan_corgi.geo.json");
 
    public PembrokeCorgiCollarLayer(GeoRenderer<PembrokeCorgiEntity> entityRendererIn) {
