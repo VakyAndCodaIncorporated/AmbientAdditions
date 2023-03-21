@@ -44,6 +44,8 @@ public class MataMataRenderer extends GenericGeoRenderer<MataMataEntity> {
     @Override
     public void postRender(PoseStack poseStack, MataMataEntity animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.postRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        this.renderTypeBuffer = bufferSource;
+
     }
 
 }
