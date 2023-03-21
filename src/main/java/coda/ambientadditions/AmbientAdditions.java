@@ -6,6 +6,8 @@ import coda.ambientadditions.registry.AAItems;
 import coda.ambientadditions.registry.AASounds;
 import coda.ambientadditions.registry.AATags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -26,6 +28,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
@@ -57,14 +60,26 @@ public class AmbientAdditions {
         bus.addListener(this::registerEntityAttributes);
         bus.addListener(this::registerCommon);
         bus.addListener(this::spawnPlacements);
+        bus.addListener(this::createTab);
 
         forgeBus.addListener(this::frogBreed);
         forgeBus.addListener(this::onLogStripped);
         forgeBus.addListener(this::addWanderingTrades);
 
-        AAItems.REGISTER.register(bus);
-        AAEntities.REGISTER.register(bus);
-        AASounds.REGISTER.register(bus);
+        AAItems.ITEMS.register(bus);
+        AAEntities.ENTITIES.register(bus);
+        AASounds.SOUNDS.register(bus);
+    }
+
+    private void createTab(CreativeModeTabEvent.Register e) {
+        e.registerCreativeModeTab(new ResourceLocation(MOD_ID, MOD_ID), p -> p.icon(() -> new ItemStack(AAItems.DART.get()))
+                .title(Component.translatable("itemGroup." + MOD_ID))
+                .displayItems((enabledFeatures, entries, operatorEnabled) -> {
+                    for (var items : AAItems.ITEMS.getEntries()) {
+                        entries.accept(items.get());
+                    }
+                })
+        );
     }
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
@@ -116,6 +131,11 @@ public class AmbientAdditions {
 
             e.setCanceled(true);
         }
+    }
+
+    private void registerClient(FMLClientSetupEvent event) {
+        CALLBACKS.forEach(Runnable::run);
+        CALLBACKS.clear();
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -237,8 +257,4 @@ public class AmbientAdditions {
         }
     }
 
-    private void registerClient(FMLClientSetupEvent event) {
-        CALLBACKS.forEach(Runnable::run);
-        CALLBACKS.clear();
-    }
 }

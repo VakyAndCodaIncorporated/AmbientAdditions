@@ -3,7 +3,6 @@ package coda.ambientadditions.common.entities;
 import coda.ambientadditions.common.entities.ai.goal.FlyingFishJumpGoal;
 import coda.ambientadditions.common.entities.ai.movement.BigFishMoveControl;
 import coda.ambientadditions.common.entities.util.AAAnimations;
-import coda.ambientadditions.registry.AAItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -88,7 +87,7 @@ public class FlyingFishEntity extends AbstractSchoolingFish implements GeoEntity
 */
 
     public ItemStack getBucketItemStack() {
-        return new ItemStack(AAItems.FLYING_FISH_BUCKET.get());
+        return /*new ItemStack(AAItems.FLYING_FISH_BUCKET.get())*/ null;
     }
 
     protected SoundEvent getAmbientSound() {
