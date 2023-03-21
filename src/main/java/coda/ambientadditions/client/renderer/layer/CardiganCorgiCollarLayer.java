@@ -14,7 +14,7 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class CardiganCorgiCollarLayer extends GeoRenderLayer<CardiganCorgiEntity> {
    private static final ResourceLocation COLLAR_LOCATION = new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/corgi/collar.png");
-   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/cardigan_corgi.geo.json");
+   private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/cardigan_corgi.geo.json");
 
    public CardiganCorgiCollarLayer(GeoRenderer<CardiganCorgiEntity> entityRendererIn) {
       super(entityRendererIn);

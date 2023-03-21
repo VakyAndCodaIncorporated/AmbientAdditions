@@ -28,7 +28,7 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleonEnti
         hashMap.put(5, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_6.png")));
         hashMap.put(6, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_7.png")));
     });
-    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/veiled_chameleon.geo.json");
+    private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/veiled_chameleon.geo.json");
 
     public ChameleonBrightnessLayer(GeoRenderer<VeiledChameleonEntity> entityRendererIn) {
         super(entityRendererIn);
