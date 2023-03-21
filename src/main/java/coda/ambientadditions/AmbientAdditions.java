@@ -141,6 +141,7 @@ public class AmbientAdditions {
     private void registerCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
+            ComposterBlock.COMPOSTABLES.put(AAItems.BARK.get().asItem(), 0.3F);
         });
     }
 
