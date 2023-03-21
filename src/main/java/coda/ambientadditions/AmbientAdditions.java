@@ -128,7 +128,6 @@ public class AmbientAdditions {
             e.getParentA().level.addFreshEntity(item);
             e.getParentA().playSound(SoundEvents.CHICKEN_EGG, 1.0F, (e.getParentA().getRandom().nextFloat() - e.getParentA().getRandom().nextFloat()) * 0.2F + 1.0F);
 
-
             e.setCanceled(true);
         }
     }

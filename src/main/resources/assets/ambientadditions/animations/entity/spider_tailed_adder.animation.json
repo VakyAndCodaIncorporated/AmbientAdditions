@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.spider_tailed_adder.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -83,7 +83,7 @@
 				}
 			}
 		},
-		"animation.spider_tailed_adder.slither": {
+		"walk": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {

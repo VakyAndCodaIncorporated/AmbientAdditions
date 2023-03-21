@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.rubber_ducky_isopod.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -27,7 +27,7 @@
 				}
 			}
 		},
-		"animation.rubber_ducky_isopod.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

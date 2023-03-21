@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.pink_fairy_armadillo.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -22,7 +22,7 @@
 				}
 			}
 		},
-		"animation.pink_fairy_armadillo.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.aye_aye.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -32,7 +32,7 @@
 				}
 			}
 		},
-		"animation.aye_aye.walk": {
+		"swim": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

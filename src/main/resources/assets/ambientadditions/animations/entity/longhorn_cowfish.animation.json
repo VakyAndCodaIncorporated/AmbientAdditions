@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.longhorn_cowfish.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -32,7 +32,7 @@
 				}
 			}
 		},
-		"animation.longhorn_cowfish.swim": {
+		"swim": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.moustached_tamarin.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -32,7 +32,7 @@
 				}
 			}
 		},
-		"animation.moustached_tamarin.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

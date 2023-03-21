@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.napoleon_wrasse.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -42,7 +42,7 @@
 				}
 			}
 		},
-		"animation.napoleon_wrasse.swim": {
+		"swim": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

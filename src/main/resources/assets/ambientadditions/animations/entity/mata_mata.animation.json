@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.mata_mata.swim": {
+		"swim": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -64,7 +64,7 @@
 				}
 			}
 		},
-		"animation.mata_mata.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -124,7 +124,7 @@
 				}
 			}
 		},
-		"animation.mata_mata.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -165,7 +165,7 @@
 				}
 			}
 		},
-		"animation.mata_mata.bite": {
+		"attack": {
 			"animation_length": 0.5,
 			"bones": {
 				"neck": {

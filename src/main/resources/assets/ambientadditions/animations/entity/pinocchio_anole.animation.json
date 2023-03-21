@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.pinnochio_anole.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -22,7 +22,7 @@
 				}
 			}
 		},
-		"animation.pinnochio_anole.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.ring_tailed_lemur.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -37,7 +37,7 @@
 				}
 			}
 		},
-		"animation.ring_tailed_lemur.walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

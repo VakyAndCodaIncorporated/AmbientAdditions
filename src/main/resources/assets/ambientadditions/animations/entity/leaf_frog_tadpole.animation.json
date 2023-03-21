@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.tadpole.swim": {
+		"swim": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -20,7 +20,7 @@
 				}
 			}
 		},
-		"animation.tadpole.idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
