@@ -143,7 +143,6 @@ public class MataMataEntity extends Animal implements GeoEntity {
         return eatingItem.isEmpty();
     }
 
-    // todo - test this
     @Override
     public ItemStack equipItemIfPossible(ItemStack stack) {
         if (this.canHoldItem(stack)) {

@@ -33,7 +33,6 @@ public class AAItems {
     public static final RegistryObject<Item> STAG_BEETLE_BOTTLE = ITEMS.register("stag_beetle_bottle", () -> new AACatchableItem(AAEntities.STAG_BEETLE::get, Items.GLASS_BOTTLE, false, new Item.Properties().stacksTo(1)));
 
     // Drops & Materials
-    // todo - make bark compostable
     public static final RegistryObject<Item> BARK = ITEMS.register("bark", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = ITEMS.register("yeti_crab_fluff", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = ITEMS.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties()));
