@@ -13,7 +13,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -72,16 +71,6 @@ public class MoleEntity extends Animal implements GeoEntity {
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.MOLE_SPAWN_EGG.get());
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public float getHeadEatAngleScale(float p_70890_1_) {
-        if (this.eatAnimationTick > 4 && this.eatAnimationTick <= 36) {
-            float f = ((float)(this.eatAnimationTick - 4) - p_70890_1_) / 32.0F;
-            return ((float)Math.PI / 5F) + 0.21991149F * Mth.sin(f * 28.7F);
-        } else {
-            return this.eatAnimationTick > 0 ? ((float)Math.PI / 5F) : this.getXRot() * ((float)Math.PI / 180F);
-        }
     }
 
     public static boolean checkMoleSpawnRules(EntityType<? extends Animal> p_223363_0_, LevelAccessor p_223363_1_, MobSpawnType p_223363_2_, BlockPos p_223363_3_, RandomSource p_223363_4_) {
