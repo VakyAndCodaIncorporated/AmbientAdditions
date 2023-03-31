@@ -117,6 +117,7 @@ public class AmbientAdditions {
         event.put(AAEntities.MATA_MATA.get(), MataMataEntity.createAttributes().build());
         event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingrayEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG_TADPOLE.get(), AbstractFish.createAttributes().build());
+        event.put(AAEntities.PANCAKE_SLUG.get(), PancakeSlugEntity.createAttributes().build());
     }
 
     private void frogBreed(BabyEntitySpawnEvent e) {

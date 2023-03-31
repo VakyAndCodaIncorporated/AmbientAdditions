@@ -34,7 +34,7 @@ public class NapoleonWrasseEntity extends AbstractFish implements GeoEntity, Flo
 
     public NapoleonWrasseEntity(EntityType<? extends AbstractFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 40, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 

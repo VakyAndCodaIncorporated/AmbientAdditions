@@ -48,6 +48,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<MataMataEntity>> MATA_MATA = create("mata_mata", EntityType.Builder.of(MataMataEntity::new, MobCategory.WATER_CREATURE).sized(1.0f, 0.45f));
     public static final RegistryObject<EntityType<BlueSpottedStingrayEntity>> BLUE_SPOTTED_STINGRAY = create("blue_spotted_stingray", EntityType.Builder.of(BlueSpottedStingrayEntity::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.2f));
     public static final RegistryObject<EntityType<LeafFrogTadpoleEntity>> LEAF_FROG_TADPOLE = create("leaf_frog_tadpole", EntityType.Builder.of(LeafFrogTadpoleEntity::new, MobCategory.WATER_CREATURE).sized(0.25f, 0.25f));
+    public static final RegistryObject<EntityType<PancakeSlugEntity>> PANCAKE_SLUG = create("pancake_slug", EntityType.Builder.of(PancakeSlugEntity::new, MobCategory.CREATURE).sized(0.5f, 0.15f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, MobCategory.MISC).sized(0.5f, 0.5f));

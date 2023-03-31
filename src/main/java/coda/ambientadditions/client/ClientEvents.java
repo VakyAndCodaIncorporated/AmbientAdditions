@@ -97,7 +97,6 @@ public class ClientEvents {
             return model;
         }));
 
-        // todo - add mole digging animation
         EntityRenderers.register(AAEntities.MOLE.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<MoleEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "star_nosed_mole"));
             model.setTextures(MoleEntity::getVariant, Arrays.asList(
@@ -142,9 +141,19 @@ public class ClientEvents {
             return model;
         }));
 
-        EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
+        EntityRenderers.register(AAEntities.PANCAKE_SLUG.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
+            TextureVariantModel<PancakeSlugEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "pancake_slug"));
+            model.setTextures(PancakeSlugEntity::getVariant, Arrays.asList(
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_1.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_2.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_3.png")
+            ));
+            return model;
+        }));
 
         EntityRenderers.register(AAEntities.MATA_MATA.get(), MataMataRenderer::new);
+
+        EntityRenderers.register(AAEntities.DART.get(), DartRenderer::new);
 
         ItemProperties.register(AAItems.CRATE.get(), new ResourceLocation(AmbientAdditions.MOD_ID, "full"), (stack, world, player, i) -> !CrateItem.containsEntity(stack) ? 0.0F : 1.0F);
     }

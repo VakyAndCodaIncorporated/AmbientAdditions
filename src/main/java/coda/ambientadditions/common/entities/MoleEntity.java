@@ -100,6 +100,10 @@ public class MoleEntity extends Animal implements GeoEntity {
         }
     }
 
+    private boolean isDigging() {
+        return eatAnimationTick > 0;
+    }
+
     @Override
     public boolean isFood(ItemStack p_70877_1_) {
         return p_70877_1_.getItem() == AAItems.WORM.get();
@@ -205,7 +209,10 @@ public class MoleEntity extends Animal implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        if (state.isMoving()) {
+        if (isDigging()) {
+            state.setAnimation(AAAnimations.ACTION);
+        }
+        else if (state.isMoving()) {
             state.setAnimation(AAAnimations.WALK);
         }
         else {

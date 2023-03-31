@@ -40,7 +40,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.UUID;
 
 public class CardiganCorgiEntity extends TamableAnimal implements GeoEntity {
-
    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(CardiganCorgiEntity.class, EntityDataSerializers.INT);
 
    public CardiganCorgiEntity(EntityType<? extends CardiganCorgiEntity> p_i50240_1_, Level p_i50240_2_) {

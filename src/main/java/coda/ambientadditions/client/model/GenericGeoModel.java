@@ -23,21 +23,25 @@ public class GenericGeoModel<E extends LivingEntity & GeoEntity> extends Default
 
         CoreGeoBone root = getAnimationProcessor().getBone("root");
 
-        if (animatable instanceof Flopper && !animatable.isInWater()) {
-            root.setRotZ(1.5708F);
+        if (animatable instanceof Flopper) {
+            if (!animatable.isInWater()) {
+                root.setRotZ(1.5708F);
+            }
+            else {
+                root.setRotZ(0.0F);
+            }
         }
-        else {
-            root.setRotZ(0.0F);
-        }
-        if (animatable instanceof Swimmer && animatable.isInWater()) {
-            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+        if (animatable instanceof Swimmer) {
+            if (animatable.isInWater()) {
+                EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
-            root.setRotX(entityData.headPitch() * ((float)Math.PI / 180F));
-            root.setRotY(entityData.netHeadYaw() * ((float)Math.PI / 180F));
-        }
-        else {
-            root.setRotX(0.0F);
-            root.setRotY(0.0F);
+                root.setRotX(entityData.headPitch() * ((float)Math.PI / 180F));
+                root.setRotY(entityData.netHeadYaw() * ((float)Math.PI / 180F));
+            }
+            else {
+                root.setRotX(0.0F);
+                root.setRotY(0.0F);
+            }
         }
     }
 }
