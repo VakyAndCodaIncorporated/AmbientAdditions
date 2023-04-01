@@ -3,6 +3,7 @@ package coda.ambientadditions.common.entities;
 import coda.ambientadditions.common.entities.util.AAAnimations;
 import coda.ambientadditions.registry.AAEntities;
 import coda.ambientadditions.registry.AAItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +12,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -22,6 +25,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -104,15 +111,43 @@ public class PancakeSlugEntity extends Animal implements GeoEntity {
         setVariant(compound.getInt("Variant"));
     }
 
+    public static boolean canSlugSpawn(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS_BLOCK) ||  p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.MOSS_BLOCK);
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+        if (dataTag != null && dataTag.contains("Variant", 3)) {
+            this.setVariant(dataTag.getInt("Variant"));
+            //setAge(dataTag.getInt("Age"));
+        }
+        else {
+            if (worldIn.getBiome(blockPosition()).is(Biomes.LUSH_CAVES)) {
+                setVariant(2);
+            }
+            else {
+                setVariant(random.nextInt(2));
+            }
+        }
+        return spawnDataIn;
+    }
+
     @Override
     public void tick() {
         super.tick();
 
-        List<Player> list = level.getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(20.0D, 2.0D, 20.0D));
+        List<Player> list = level.getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
         if (!list.isEmpty()) {
-            setHiding(true);
-            getNavigation().stop();
+            if (list.stream().noneMatch(Entity::isCrouching)) {
+                setHiding(true);
+                getNavigation().stop();
+
+            }
+            else {
+                setHiding(false);
+            }
         }
         else {
             setHiding(false);
