@@ -52,7 +52,6 @@ public class PancakeSlugEntity extends Animal implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        //this.goalSelector.addGoal(0, new HideGoal(this));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.0f));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, Ingredient.of(ItemTags.LEAVES), false));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -112,7 +111,7 @@ public class PancakeSlugEntity extends Animal implements GeoEntity {
     }
 
     public static boolean canSlugSpawn(EntityType<? extends Animal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
-        return p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS_BLOCK) ||  p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.MOSS_BLOCK);
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS_BLOCK) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.MOSS_BLOCK) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.CLAY);
     }
 
     @Nullable
