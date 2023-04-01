@@ -51,6 +51,10 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleonEnti
 
         darkness = Mth.clamp(darkness, 0.0F, 1.0F);
 
+        System.out.println(darkness);
+
+        darkness = 5.0F;
+
         if (!animatable.isInvisible()) {
             this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, renderType, builder, partialTick, LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), OverlayTexture.NO_OVERLAY, darkness, darkness, darkness, 1.0F);
         }
