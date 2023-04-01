@@ -9,7 +9,6 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
@@ -51,12 +50,8 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleonEnti
 
         darkness = Mth.clamp(darkness, 0.0F, 1.0F);
 
-        System.out.println(darkness);
-
-        darkness = 5.0F;
-
         if (!animatable.isInvisible()) {
-            this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, renderType, builder, partialTick, LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), OverlayTexture.NO_OVERLAY, darkness, darkness, darkness, 1.0F);
+            this.getRenderer().reRender(this.getGeoModel().getBakedModel(MODEL), poseStack, bufferSource, animatable, renderType, builder, partialTick, 175,  LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), darkness, darkness, darkness, 1.0F);
         }
     }
 }
