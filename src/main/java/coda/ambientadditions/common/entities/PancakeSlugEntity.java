@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -27,7 +28,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -122,7 +122,7 @@ public class PancakeSlugEntity extends Animal implements GeoEntity {
             //setAge(dataTag.getInt("Age"));
         }
         else {
-            if (worldIn.getBiome(blockPosition()).is(Biomes.LUSH_CAVES)) {
+            if (worldIn.getBiome(blockPosition()).is(BiomeTags.IS_JUNGLE)) {
                 setVariant(2);
             }
             else {
