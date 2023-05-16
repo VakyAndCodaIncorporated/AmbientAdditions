@@ -44,7 +44,7 @@ public class ClientEvents {
                 AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(), AAEntities.SHAME_FACED_CRAB.get(),
                 AAEntities.FLYING_FISH.get(), AAEntities.NAPOLEON_WRASSE.get(), AAEntities.OPAH.get(), AAEntities.RED_RIVER_HOG.get(),
                 AAEntities.BLUNTHEAD_TREE_SNAKE.get(), AAEntities.BLUE_SPOTTED_STINGRAY.get(), AAEntities.LEAF_FROG_TADPOLE.get(), AAEntities.LEAF_FROG.get(),
-                
+
         };
         for (EntityType<?> type : simpleEntities){
             make(type, type.getDescriptionId().substring("entity.ambientadditions.".length()));
@@ -147,6 +147,15 @@ public class ClientEvents {
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_1.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_2.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/pancake_slug/pancake_slug_3.png")
+            ));
+            return model;
+        }));
+
+        EntityRenderers.register(AAEntities.SLOTH_BEAR.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
+            TextureVariantModel<SlothBearEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "sloth_bear"));
+            model.setTextures((e) -> e.isAngry() ? 1 : 0, Arrays.asList(
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/sloth_bear/bear.png"),
+                    new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/sloth_bear/angry.png")
             ));
             return model;
         }));

@@ -118,6 +118,7 @@ public class AmbientAdditions {
         event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingrayEntity.createAttributes().build());
         event.put(AAEntities.LEAF_FROG_TADPOLE.get(), AbstractFish.createAttributes().build());
         event.put(AAEntities.PANCAKE_SLUG.get(), PancakeSlugEntity.createAttributes().build());
+        event.put(AAEntities.SLOTH_BEAR.get(), SlothBearEntity.createAttributes().build());
     }
 
     private void frogBreed(BabyEntitySpawnEvent e) {
@@ -177,6 +178,7 @@ public class AmbientAdditions {
         e.register(AAEntities.MATA_MATA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MataMataEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.AND);
         e.register(AAEntities.BLUE_SPOTTED_STINGRAY.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractFish::checkSurfaceWaterAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
         e.register(AAEntities.PANCAKE_SLUG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PancakeSlugEntity::canSlugSpawn, SpawnPlacementRegisterEvent.Operation.AND);
+        e.register(AAEntities.SLOTH_BEAR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
     }
 
     private void onLogStripped(PlayerInteractEvent.RightClickBlock event) {
