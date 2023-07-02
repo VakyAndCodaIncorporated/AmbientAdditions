@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.19.3-0.1.0'
-group = 'coda.ambientadditions' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'codyhuh.ambientadditions' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ambientadditions'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.

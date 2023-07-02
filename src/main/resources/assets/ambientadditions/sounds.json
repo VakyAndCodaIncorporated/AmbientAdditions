@@ -70,29 +70,29 @@
       }
     ]
   },
-  "honeycreeper.ambient": {
-    "subtitle": "ambientadditions.honeycreeper.ambient",
+  "iiwi.ambient": {
+    "subtitle": "ambientadditions.iiwi.ambient",
     "sounds": [
       {
-        "name": "ambientadditions:honeycreeper/ambient",
+        "name": "ambientadditions:iiwi/ambient",
         "stream": true
       }
     ]
   },
-  "honeycreeper.death": {
-    "subtitle": "ambientadditions.honeycreeper.death",
+  "iiwi.death": {
+    "subtitle": "ambientadditions.iiwi.death",
     "sounds": [
       {
-        "name": "ambientadditions:honeycreeper/death",
+        "name": "ambientadditions:iiwi/death",
         "stream": true
       }
     ]
   },
-  "honeycreeper.hurt": {
-    "subtitle": "ambientadditions.honeycreeper.hurt",
+  "iiwi.hurt": {
+    "subtitle": "ambientadditions.iiwi.hurt",
     "sounds": [
       {
-        "name": "ambientadditions:honeycreeper/hurt",
+        "name": "ambientadditions:iiwi/hurt",
         "stream": true
       }
     ]

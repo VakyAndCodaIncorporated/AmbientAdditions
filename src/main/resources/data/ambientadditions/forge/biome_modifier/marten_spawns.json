@@ -1,0 +1,11 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:grove",
+  "spawners":
+  {
+    "type": "ambientadditions:marten",
+    "weight": 30,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}
