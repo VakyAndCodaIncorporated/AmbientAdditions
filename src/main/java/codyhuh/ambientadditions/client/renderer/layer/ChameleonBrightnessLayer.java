@@ -40,24 +40,24 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleon> {
         VertexConsumer builder = bufferSource.getBuffer(renderType);
         float health = animatable.getHealth();
         float darkness;
-        if (health > 4) {
+        if (health > 6) {
             darkness = 1.0F;
         }
-        else if (health <= 4) {
-            darkness = Math.min(health * 0.1F, 1.0F);
+        else if (health <= 6) {
+            darkness = Math.min(health * 0.2F + 0.4F, 1.0F);
         }
         else {
-            darkness = 0.5F;
+            darkness = 1.0F;
         }
 
         darkness = Mth.clamp(darkness, 0.0F, 1.0F);
 
         boolean flag = health <= 4;
         float r = !flag ? 1.0F : darkness;
-        float g = !flag ? 1.0F : darkness * 0.66F;
-        float b = !flag ? 1.0F : darkness * 0.33F;
+        float g = !flag ? 1.0F : darkness * 0.6F;
+        float b = !flag ? 1.0F : darkness * 0.3F;
 
-        if (!animatable.isInvisible()) {
+        if (!animatable.isInvisible() && animatable.isAlive()) {
             this.getRenderer().actuallyRender(poseStack, animatable, this.getGeoModel().getBakedModel(MODEL), renderType, bufferSource, builder, true, partialTick, 175,  LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), r, g, b, 1.0F);
         }
     }
