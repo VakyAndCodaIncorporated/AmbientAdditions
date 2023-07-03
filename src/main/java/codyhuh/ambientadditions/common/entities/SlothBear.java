@@ -42,13 +42,13 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class SlothBearEntity extends Animal implements GeoEntity, NeutralMob {
-    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(SlothBearEntity.class, EntityDataSerializers.INT);
+public class SlothBear extends Animal implements GeoEntity, NeutralMob {
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(SlothBear.class, EntityDataSerializers.INT);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     @Nullable
     private UUID persistentAngerTarget;
 
-    public SlothBearEntity(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {
+    public SlothBear(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
     }
 
@@ -82,7 +82,6 @@ public class SlothBearEntity extends Animal implements GeoEntity, NeutralMob {
         this.readPersistentAngerSaveData(this.level, p_30402_);
     }
 
-    // Todo- sounds?
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
             return SoundEvents.PANDA_AGGRESSIVE_AMBIENT;
@@ -90,6 +89,11 @@ public class SlothBearEntity extends Animal implements GeoEntity, NeutralMob {
         else {
             return SoundEvents.PANDA_AMBIENT;
         }
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return 0.5F;
     }
 
     protected SoundEvent getHurtSound(DamageSource p_30424_) {
@@ -142,7 +146,7 @@ public class SlothBearEntity extends Animal implements GeoEntity, NeutralMob {
 
     @Nullable
     @Override
-    public SlothBearEntity getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
+    public SlothBear getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
         return AAEntities.SLOTH_BEAR.get().create(p_241840_1_);
     }
 

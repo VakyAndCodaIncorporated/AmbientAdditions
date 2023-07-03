@@ -49,7 +49,7 @@ public class AAEntities {
     public static final RegistryObject<EntityType<BlueSpottedStingray>> BLUE_SPOTTED_STINGRAY = create("blue_spotted_stingray", EntityType.Builder.of(BlueSpottedStingray::new, MobCategory.WATER_CREATURE).sized(0.7f, 0.2f));
     public static final RegistryObject<EntityType<LeafFrogTadpole>> LEAF_FROG_TADPOLE = create("leaf_frog_tadpole", EntityType.Builder.of(LeafFrogTadpole::new, MobCategory.WATER_CREATURE).sized(0.25f, 0.25f));
     public static final RegistryObject<EntityType<PancakeSlug>> PANCAKE_SLUG = create("pancake_slug", EntityType.Builder.of(PancakeSlug::new, MobCategory.CREATURE).sized(0.5f, 0.15f));
-    public static final RegistryObject<EntityType<SlothBearEntity>> SLOTH_BEAR = create("sloth_bear", EntityType.Builder.of(SlothBearEntity::new, MobCategory.CREATURE).sized(1.25f, 1.15f));
+    public static final RegistryObject<EntityType<SlothBear>> SLOTH_BEAR = create("sloth_bear", EntityType.Builder.of(SlothBear::new, MobCategory.CREATURE).sized(1.25f, 1.15f));
 
     // Items
     public static final RegistryObject<EntityType<DartEntity>> DART = create("dart",EntityType.Builder.<DartEntity>of(DartEntity::new, MobCategory.MISC).sized(0.5f, 0.5f));

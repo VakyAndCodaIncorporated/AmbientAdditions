@@ -100,6 +100,7 @@ public class CommonEvents {
         event.put(AAEntities.BLUE_SPOTTED_STINGRAY.get(), BlueSpottedStingray.createAttributes().build());
         event.put(AAEntities.LEAF_FROG_TADPOLE.get(), AbstractFish.createAttributes().build());
         event.put(AAEntities.PANCAKE_SLUG.get(), PancakeSlug.createAttributes().build());
+        event.put(AAEntities.SLOTH_BEAR.get(), SlothBear.createAttributes().build());
     }
 
     @SubscribeEvent

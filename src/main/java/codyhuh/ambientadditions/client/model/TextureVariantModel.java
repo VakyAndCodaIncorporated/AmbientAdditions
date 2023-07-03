@@ -7,7 +7,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import java.util.List;
 import java.util.function.Function;
 
-
 public class TextureVariantModel<E extends LivingEntity & GeoEntity> extends GenericGeoModel<E> {
     List<ResourceLocation> textures;
     Function<E, Integer> whichTexture;

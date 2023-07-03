@@ -10,7 +10,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -31,6 +30,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -54,7 +54,7 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Player.class, 8.0F, 2.2D, 2.2D));
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 5.0D));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
@@ -75,7 +75,7 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Nullable
@@ -97,6 +97,11 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
         int i = this.getAirSupply();
         super.baseTick();
         this.handleAirSupply(i);
+    }
+
+    @Override
+    protected float getWaterSlowDown() {
+        return 0.0F;
     }
 
     protected void handleAirSupply(int p_209207_1_) {
@@ -194,13 +199,20 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     }
 
     @Override
+    public void travel(Vec3 vec3) {
+        super.travel(vec3);
+    }
+
+    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
         controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        if (state.isMoving()) {
+        boolean walking = !(state.getLimbSwingAmount() > -0.1F && state.getLimbSwingAmount() < 0.1F);
+        if (walking) {
             state.setAnimation(AAAnimations.WALK);
+            state.getController().setAnimationSpeed(2.5D);
         }
         else {
             state.setAnimation(AAAnimations.IDLE);
@@ -225,10 +237,6 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
         }
 
         public void tick() {
-            if (this.crab.isEyeInFluid(FluidTags.WATER)) {
-                this.crab.setDeltaMovement(this.crab.getDeltaMovement().add(0.0D, 0.0D, 0.0D));
-            }
-
             if (this.operation == Operation.MOVE_TO && !this.crab.getNavigation().isDone()) {
                 double d0 = this.wantedX - this.crab.getX();
                 double d1 = this.wantedY - this.crab.getY();

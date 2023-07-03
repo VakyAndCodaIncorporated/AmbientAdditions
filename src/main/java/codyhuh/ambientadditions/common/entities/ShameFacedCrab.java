@@ -29,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -74,6 +75,11 @@ public class ShameFacedCrab extends WaterAnimal  implements GeoEntity {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
+    @Override
+    protected float getWaterSlowDown() {
+        return 0.0F;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -108,11 +114,7 @@ public class ShameFacedCrab extends WaterAnimal  implements GeoEntity {
     }
 
     public boolean requiresCustomPersistence() {
-        if (this.isFromBucket()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.isFromBucket();
     }
 
     protected void defineSynchedData() {
@@ -167,6 +169,12 @@ public class ShameFacedCrab extends WaterAnimal  implements GeoEntity {
         }
     }
 
+    // todo - delete?
+    @Override
+    public void travel(Vec3 vec3) {
+        super.travel(vec3);
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
         controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
@@ -175,6 +183,7 @@ public class ShameFacedCrab extends WaterAnimal  implements GeoEntity {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
         if (state.isMoving()) {
             state.setAnimation(AAAnimations.WALK);
+            state.getController().setAnimationSpeed(2.5D);
         }
         else {
             state.setAnimation(AAAnimations.IDLE);

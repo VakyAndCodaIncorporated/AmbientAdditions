@@ -9,6 +9,7 @@ import codyhuh.ambientadditions.client.renderer.item.DartRenderer;
 import codyhuh.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import codyhuh.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import codyhuh.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
+import codyhuh.ambientadditions.client.renderer.layer.StarfishArmLayer;
 import codyhuh.ambientadditions.common.entities.*;
 import codyhuh.ambientadditions.common.items.CrateItem;
 import codyhuh.ambientadditions.registry.AAEntities;
@@ -77,15 +78,19 @@ public class ClientEvents {
             return render;
         });
 
-        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<ChocolateChipStarfish> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "chocolate_chip_starfish"));
-            ArrayList<ResourceLocation> textures = new ArrayList<>();
-            for (int i=1;i<=5;i++){
-                textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/chocolate_chip_starfish/starfish_" + i + ".png"));
-            }
-            model.setTextures(ChocolateChipStarfish::getVariant, textures);
-            return model;
-        }));
+        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> {
+            GenericGeoRenderer<ChocolateChipStarfish> render = new GenericGeoRenderer<>(ctx, () -> {
+                TextureVariantModel<ChocolateChipStarfish> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "chocolate_chip_starfish"));
+                ArrayList<ResourceLocation> textures = new ArrayList<>();
+                for (int i=1;i<=5;i++){
+                    textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/chocolate_chip_starfish/starfish_" + i + ".png"));
+                }
+                model.setTextures(ChocolateChipStarfish::getVariant, textures);
+                return model;
+            });
+            render.addRenderLayer(new StarfishArmLayer(render));
+            return render;
+        });
 
         EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<HarlequinShrimp> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "harlequin_shrimp"));
@@ -152,7 +157,7 @@ public class ClientEvents {
         }));
 
         EntityRenderers.register(AAEntities.SLOTH_BEAR.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
-            TextureVariantModel<SlothBearEntity> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "sloth_bear"));
+            TextureVariantModel<SlothBear> model = new TextureVariantModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "sloth_bear"));
             model.setTextures((e) -> e.isAngry() ? 1 : 0, Arrays.asList(
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/sloth_bear/bear.png"),
                     new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/sloth_bear/angry.png")
