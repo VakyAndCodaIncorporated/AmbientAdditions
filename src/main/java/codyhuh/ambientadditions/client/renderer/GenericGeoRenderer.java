@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions.client.renderer;
 
+import codyhuh.ambientadditions.common.entities.ChocolateChipStarfish;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -8,10 +9,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoEntityRenderer<T> {
@@ -44,6 +47,22 @@ public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoE
 
 		if (entity instanceof AgeableMob mob && mob.isBaby()) {
 			stack.scale(0.5F, 0.5F, 0.5F);
+		}
+
+		//todo - fix...
+		if (animatable instanceof ChocolateChipStarfish starfish) {
+			int armCount = (int) starfish.getHealth();
+
+			Optional<GeoBone> arm = model.getBone("Arm" + armCount);
+
+			for (int i = 1; i <= 5; ++i) {
+				if (arm.isPresent()) {
+					arm.get().setHidden(false);
+					arm.get().setHidden(i > armCount);
+					System.out.println("arm " + i + ": " + (i > armCount));
+				}
+			}
+
 		}
 
 		super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);

@@ -9,7 +9,6 @@ import codyhuh.ambientadditions.client.renderer.item.DartRenderer;
 import codyhuh.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import codyhuh.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import codyhuh.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
-import codyhuh.ambientadditions.client.renderer.layer.StarfishArmLayer;
 import codyhuh.ambientadditions.common.entities.*;
 import codyhuh.ambientadditions.common.items.CrateItem;
 import codyhuh.ambientadditions.registry.AAEntities;
@@ -88,7 +87,6 @@ public class ClientEvents {
                 model.setTextures(ChocolateChipStarfish::getVariant, textures);
                 return model;
             });
-            render.addRenderLayer(new StarfishArmLayer(render));
             return render;
         });
 

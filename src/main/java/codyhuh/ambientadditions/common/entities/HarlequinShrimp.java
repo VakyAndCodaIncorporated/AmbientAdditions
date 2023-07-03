@@ -53,10 +53,10 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Player.class, 8.0F, 2.2D, 2.2D));
+        this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.2D, 1.2D));
         this.goalSelector.addGoal(1, new RandomStrollGoal(this, 5.0D));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 1.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ChocolateChipStarfish.class, false));
     }

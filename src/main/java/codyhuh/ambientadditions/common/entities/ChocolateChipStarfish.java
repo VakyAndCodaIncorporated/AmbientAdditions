@@ -86,7 +86,7 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
         if (source.getEntity() instanceof HarlequinShrimp shrimp && source.equals(DamageSource.mobAttack(shrimp))) {
             ItemEntity item = EntityType.ITEM.create(level);
             item.setItem(new ItemStack(AAItems.STARFISH_ARM.get()));
-            item.moveTo(shrimp.position());
+            item.moveTo(position());
 
             level.addFreshEntity(item);
         }
