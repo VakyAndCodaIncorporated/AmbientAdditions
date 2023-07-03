@@ -2,6 +2,7 @@ package codyhuh.ambientadditions.client.renderer;
 
 import codyhuh.ambientadditions.common.entities.ChocolateChipStarfish;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -49,23 +51,31 @@ public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoE
 			stack.scale(0.5F, 0.5F, 0.5F);
 		}
 
+		super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
+	}
+
+	@Override
+	public void preRender(PoseStack poseStack, T animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+
 		//todo - fix...
 		if (animatable instanceof ChocolateChipStarfish starfish) {
-			int armCount = (int) starfish.getHealth();
 
-			Optional<GeoBone> arm = model.getBone("Arm" + armCount);
+			for (int i = 1; i <= starfish.getArms(); i++) {
+				Optional<GeoBone> arm = model.getBone("Arm" + i);
 
-			for (int i = 1; i <= 5; ++i) {
 				if (arm.isPresent()) {
 					arm.get().setHidden(false);
-					arm.get().setHidden(i > armCount);
-					System.out.println("arm " + i + ": " + (i > armCount));
+
+					boolean flag = starfish.getArms() > i;
+
+					arm.get().setHidden(flag);
+					System.out.println("arm" + i + ": " + (flag));
 				}
 			}
 
 		}
 
-		super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
+		super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
