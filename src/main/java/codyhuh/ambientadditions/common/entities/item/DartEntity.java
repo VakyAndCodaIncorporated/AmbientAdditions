@@ -38,7 +38,10 @@ public class DartEntity extends AbstractArrow implements IEntityAdditionalSpawnD
         super.onHitEntity(p_213868_1_);
         Entity target = p_213868_1_.getEntity();
         if (target instanceof LivingEntity livingEntity) {
-            if (!(livingEntity instanceof TamableAnimal pet && pet.isTame())) {
+            if (livingEntity instanceof TamableAnimal pet && pet.getOwner() != null && getOwner() != null && pet.getOwner().is(getOwner())) {
+                pet.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 1));
+            }
+            else {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 1));
             }
         }
