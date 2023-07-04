@@ -73,7 +73,7 @@ public class RubberDuckyIsopod extends PathfinderMob implements GeoEntity {
         boolean flag = blockstate.is(BlockTags.INSIDE_STEP_SOUND_BLOCKS);
         if (flag || !state.getMaterial().isLiquid()) {
             SoundType soundtype = blockstate.is(Blocks.SNOW) ? blockstate.getSoundType(level, pos, this) : state.getSoundType(level, pos, this);
-            this.playSound(soundtype.getStepSound(), soundtype.getVolume() * 0.15F, soundtype.getPitch());
+            this.playSound(soundtype.getStepSound(), soundtype.getVolume() * 0.025F, soundtype.getPitch());
         }
     }
 
