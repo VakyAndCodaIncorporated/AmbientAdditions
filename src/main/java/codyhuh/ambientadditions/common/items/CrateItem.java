@@ -3,6 +3,7 @@ package codyhuh.ambientadditions.common.items;
 import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -137,9 +138,19 @@ public class CrateItem extends Item {
                 name = Component.Serializer.fromJson(tag.getString("CustomName"));
             }
             else {
-                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription();
+                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription().copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC);
             }
-            tooltip.add(name.copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            tooltip.add(name);
+
+            String entity = EntityType.getKey(EntityType.byString(tag.getString("id")).orElse(null)).getPath();
+
+            Component extraInfo = Component.translatable("tooltip.ambientadditions.fun_fact." + entity).withStyle(ChatFormatting.GRAY);
+
+            if (Screen.hasShiftDown()) {
+                if (!extraInfo.getString().equals("tooltip.ambientadditions.fun_fact." + entity)) {
+                    tooltip.add(extraInfo);
+                }
+            }
         }
     }
 
