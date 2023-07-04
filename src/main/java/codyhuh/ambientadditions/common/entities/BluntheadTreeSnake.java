@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions.common.entities;
 
+import codyhuh.ambientadditions.common.entities.ai.goal.AvoidEntityWithoutMaskGoal;
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
@@ -47,7 +48,7 @@ public class BluntheadTreeSnake extends Animal implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Player.class, 4.0F, 1.15D, 1.35D));
+        this.goalSelector.addGoal(1, new AvoidEntityWithoutMaskGoal<>(this, Player.class, 4.0F, 1.15D, 1.35D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(AAItems.PINOCCHIO_ANOLE_POT.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));

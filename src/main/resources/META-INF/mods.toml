@@ -8,3 +8,25 @@ displayName="Ambient Additions" #mandatory
 credits="LukeGrahamLandry, OmayPaty, Graustreif2004, Ninni, MightyGoat42, PoopHead27" #optional
 authors="codyhuh, VakyPanda"
 description='''Adds more ambient wildlife to your world!'''
+
+[[dependencies.ambientadditions]]
+modId="forge"
+mandatory=true
+versionRange="[44,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ambientadditions]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.3,1.20)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ambientadditions]]
+modId="geckolib"
+mandatory=true
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="[4.0,5.0)"
+ordering="NONE"
+side="BOTH"

@@ -50,7 +50,6 @@ public class YetiArmWarmersItem extends ArmorItem implements GeoItem {
         }
     }
 
-
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private GeoArmorRenderer<?> renderer;

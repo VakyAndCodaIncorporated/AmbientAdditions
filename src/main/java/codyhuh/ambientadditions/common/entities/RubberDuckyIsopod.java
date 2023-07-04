@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions.common.entities;
 
+import codyhuh.ambientadditions.common.entities.ai.goal.AvoidEntityWithoutMaskGoal;
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -40,7 +41,7 @@ public class RubberDuckyIsopod extends PathfinderMob implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Player.class, 10.0F, 1.5D, 2.25D));
+        this.goalSelector.addGoal(1, new AvoidEntityWithoutMaskGoal<>(this, Player.class, 2.0F, 1.5D, 2.25D));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
@@ -70,7 +71,7 @@ public class RubberDuckyIsopod extends PathfinderMob implements GeoEntity {
         if (item == AAItems.BARK.get()) {
             if (random.nextFloat() > 0.9F) {
                 ItemEntity molt = EntityType.ITEM.create(world);
-                molt.setItem(new ItemStack(AAItems.RUBBER_DUCKY_ISOPOD_MOLT.get()));
+                molt.setItem(new ItemStack(AAItems.ISOPOD_MOLT.get()));
                 molt.moveTo(getX(), getY(), getZ());
                 world.addFreshEntity(molt);
             }

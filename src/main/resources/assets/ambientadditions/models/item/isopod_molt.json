@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ambientadditions:item/rubber_ducky_isopod_molt"
+    "layer0": "ambientadditions:item/isopod_molt"
   }
 }

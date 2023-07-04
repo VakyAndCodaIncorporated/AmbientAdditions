@@ -1,6 +1,8 @@
 package codyhuh.ambientadditions.common.entities;
 
+import codyhuh.ambientadditions.common.entities.ai.goal.AvoidEntityWithoutMaskGoal;
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
+import codyhuh.ambientadditions.common.entities.util.NonSwimmer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -10,8 +12,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,13 +20,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -46,25 +42,20 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class YetiCrab extends WaterAnimal implements GeoEntity {
+public class YetiCrab extends NonSwimmer implements GeoEntity {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
 
     public YetiCrab(EntityType<? extends WaterAnimal> type, Level world) {
         super(type, world);
-        this.moveControl = new MoveHelperController(this);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Player.class, 8.0F, 2.2D, 2.2D));
+        this.goalSelector.addGoal(0, new AvoidEntityWithoutMaskGoal<>(this, Player.class, 8.0F, 2.2D, 2.2D));
         this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-    }
-
-    protected PathNavigation createNavigation(Level world) {
-        return new GroundPathNavigation(this, world);
     }
 
     @Override
@@ -73,12 +64,6 @@ public class YetiCrab extends WaterAnimal implements GeoEntity {
         if (isInWater()) {
             setSpeed(2.5F);
         }
-    }
-
-    public void baseTick() {
-        int i = this.getAirSupply();
-        super.baseTick();
-        this.handleAirSupply(i);
     }
 
     @Override
@@ -109,25 +94,8 @@ public class YetiCrab extends WaterAnimal implements GeoEntity {
         return new ItemStack(AAItems.YETI_CRAB_SPAWN_EGG.get());
     }
 
-    protected
-    void handleAirSupply(int p_209207_1_) {
-        if (this.isAlive() && !this.isInWaterOrBubble()) {
-            this.setAirSupply(p_209207_1_ - 1);
-            if (this.getAirSupply() == -20) {
-                this.setAirSupply(0);
-                this.hurt(DamageSource.DROWN, 2.0F);
-            }
-        } else {
-            this.setAirSupply(300);
-        }
-
-    }
     public boolean requiresCustomPersistence() {
-        if (this.isFromBucket()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.isFromBucket();
     }
 
     protected void defineSynchedData() {
@@ -238,36 +206,5 @@ public class YetiCrab extends WaterAnimal implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    static class MoveHelperController extends MoveControl {
-        private final YetiCrab crab;
-
-        MoveHelperController(YetiCrab crab) {
-            super(crab);
-            this.crab = crab;
-        }
-
-        public void tick() {
-            if (this.crab.isEyeInFluid(FluidTags.WATER)) {
-                this.crab.setDeltaMovement(this.crab.getDeltaMovement().add(0.0D, 0.0D, 0.0D));
-            }
-
-            if (this.operation == Operation.MOVE_TO && !this.crab.getNavigation().isDone()) {
-                double d0 = this.wantedX - this.crab.getX();
-                double d1 = this.wantedY - this.crab.getY();
-                double d2 = this.wantedZ - this.crab.getZ();
-                double d3 = Mth.sqrt((float) (d0 * d0 + d1 * d1 + d2 * d2));
-                d1 = d1 / d3;
-                float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-                this.crab.setYRot(this.rotlerp(this.crab.getYRot(), f, 90.0F));
-                this.crab.yBodyRot = this.crab.getYRot();
-                float f1 = (float) (this.speedModifier * this.crab.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                this.crab.setSpeed(Mth.lerp(0.125F, this.crab.getSpeed(), f1));
-                this.crab.setDeltaMovement(this.crab.getDeltaMovement().add(0.0D, (double) this.crab.getSpeed() * d1 * 0.1D, 0.0D));
-            } else {
-                this.crab.setSpeed(0.0F);
-            }
-        }
     }
 }

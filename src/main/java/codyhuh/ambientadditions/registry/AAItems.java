@@ -35,7 +35,7 @@ public class AAItems {
     // Drops & Materials
     public static final RegistryObject<Item> BARK = ITEMS.register("bark", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> YETI_CRAB_FLUFF = ITEMS.register("yeti_crab_fluff", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> RUBBER_DUCKY_ISOPOD_MOLT = ITEMS.register("rubber_ducky_isopod_molt", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ISOPOD_MOLT = ITEMS.register("isopod_molt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STARFISH_ARM = ITEMS.register("starfish_arm", () -> new StarfishArmItem(new Item.Properties()));
     public static final RegistryObject<Item> LONGHORN_COWFISH = ITEMS.register("longhorn_cowfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
     //public static final RegistryObject<Item> FLYING_FISH = ITEMS.register("flying_fish", () -> new Item(new Item.Properties()/**/.food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
