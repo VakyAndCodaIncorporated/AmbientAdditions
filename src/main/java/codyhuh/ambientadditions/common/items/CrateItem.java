@@ -138,13 +138,13 @@ public class CrateItem extends Item {
                 name = Component.Serializer.fromJson(tag.getString("CustomName"));
             }
             else {
-                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription().copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC);
+                name = EntityType.byString(tag.getString("id")).orElse(null).getDescription().copy().withStyle(ChatFormatting.GRAY);
             }
             tooltip.add(name);
 
             String entity = EntityType.getKey(EntityType.byString(tag.getString("id")).orElse(null)).getPath();
 
-            Component extraInfo = Component.translatable("tooltip.ambientadditions.fun_fact." + entity).withStyle(ChatFormatting.GRAY);
+            Component extraInfo = Component.translatable("tooltip.ambientadditions.fun_fact." + entity).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC);
 
             if (Screen.hasShiftDown()) {
                 if (!extraInfo.getString().equals("tooltip.ambientadditions.fun_fact." + entity)) {
