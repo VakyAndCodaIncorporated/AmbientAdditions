@@ -53,7 +53,7 @@ public class YetiFeedersItem extends ArmorItem implements GeoItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        Component info = Component.translatable("tooltip.ambientadditions.yeti_feeders").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+        Component info = Component.translatable("tooltip.ambientadditions.yeti_feeders").withStyle(ChatFormatting.GRAY);
 
         components.add(info);
     }
