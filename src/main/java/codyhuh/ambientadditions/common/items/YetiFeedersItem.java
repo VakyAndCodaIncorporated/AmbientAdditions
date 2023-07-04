@@ -3,26 +3,27 @@ package codyhuh.ambientadditions.common.items;
 import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.client.renderer.item.YetiFeedersRenderer;
 import codyhuh.ambientadditions.registry.AAItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -39,7 +40,7 @@ public class YetiFeedersItem extends ArmorItem implements GeoItem {
     public void onArmorTick(ItemStack stack, Level world, Player player) {
         if (player.isInWaterOrRain()) {
             FoodData foodStats = player.getFoodData();
-            if (player.tickCount % 20 == 0 && random.nextFloat() > 0.75F) {
+            if (player.tickCount % 40 == 0) {
                 if (foodStats.getFoodLevel() >= 20) {
                     foodStats.setSaturation(foodStats.getSaturationLevel() + 0.1F);
                 }
@@ -48,6 +49,13 @@ public class YetiFeedersItem extends ArmorItem implements GeoItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        Component info = Component.translatable("tooltip.ambientadditions.yeti_feeders").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+
+        components.add(info);
     }
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

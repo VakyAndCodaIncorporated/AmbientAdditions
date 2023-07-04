@@ -123,5 +123,7 @@
   "ambientadditions.snake.death": "Snake dies",
   "ambientadditions.frog.ambient": "Frog croaks",
   "ambientadditions.frog.hurt": "Frog hurts",
-  "ambientadditions.frog.death": "Frog dies"
+  "ambientadditions.frog.death": "Frog dies",
+
+  "tooltip.ambientadditions.yeti_feeders": "Restores hunger when wet."
 }
