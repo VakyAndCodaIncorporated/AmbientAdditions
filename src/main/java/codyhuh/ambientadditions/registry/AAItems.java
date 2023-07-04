@@ -44,7 +44,7 @@ public class AAItems {
 
     // Gear
     public static final RegistryObject<Item> DUCKY_MASK = ITEMS.register("ducky_mask", () -> new DuckyMaskArmorItem(EquipmentSlot.HEAD));
-    public static final RegistryObject<Item> YETI_ARM_WARMERS = ITEMS.register("yeti_arm_warmers", () -> new YetiArmWarmersItem(EquipmentSlot.CHEST));
+    public static final RegistryObject<Item> YETI_FEEDERS = ITEMS.register("yeti_feeders", () -> new YetiFeedersItem(EquipmentSlot.CHEST));
 
     // Spawn Eggs
     public static final RegistryObject<Item> WHITE_FRUIT_BAT_SPAWN_EGG = ITEMS.register("white_fruit_bat_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.WHITE_FRUIT_BAT, 0xf9f5e5, 0xffd000, new Item.Properties()));

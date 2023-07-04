@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ambientadditions:item/yeti_arm_warmers"
+    "layer0": "ambientadditions:item/yeti_feeders"
   }
 }

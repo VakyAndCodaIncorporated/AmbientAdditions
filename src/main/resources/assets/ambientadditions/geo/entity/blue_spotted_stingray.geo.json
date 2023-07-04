@@ -34,7 +34,7 @@
 					"parent": "wingscore",
 					"pivot": [-2, 1, -1],
 					"cubes": [
-						{"origin": [-5, 0, -5], "size": [3, 1, 10], "uv": [28, 0]}
+						{"origin": [-5, 0, -5], "size": [3, 1, 10], "uv": [28, 0], "mirror": true}
 					]
 				},
 				{
@@ -42,7 +42,7 @@
 					"parent": "wingscore",
 					"pivot": [2, 1, -1],
 					"cubes": [
-						{"origin": [2, 0, -5], "size": [3, 1, 10], "uv": [28, 0], "mirror": true}
+						{"origin": [2, 0, -5], "size": [3, 1, 10], "uv": [28, 0]}
 					]
 				},
 				{

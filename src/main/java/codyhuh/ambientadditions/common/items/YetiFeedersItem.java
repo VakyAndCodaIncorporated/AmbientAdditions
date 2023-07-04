@@ -1,7 +1,7 @@
 package codyhuh.ambientadditions.common.items;
 
 import codyhuh.ambientadditions.AmbientAdditions;
-import codyhuh.ambientadditions.client.renderer.item.YetiWarmersRenderer;
+import codyhuh.ambientadditions.client.renderer.item.YetiFeedersRenderer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.sounds.SoundEvents;
@@ -26,12 +26,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class YetiArmWarmersItem extends ArmorItem implements GeoItem {
-    public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_arm_warmers",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
+public class YetiFeedersItem extends ArmorItem implements GeoItem {
+    public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_feeders",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     static Random random = new Random();
 
-    public YetiArmWarmersItem(EquipmentSlot slot) {
+    public YetiFeedersItem(EquipmentSlot slot) {
         super(MATERIAL, slot, new Item.Properties());
     }
 
@@ -57,7 +57,7 @@ public class YetiArmWarmersItem extends ArmorItem implements GeoItem {
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (this.renderer == null)
-                    this.renderer = new YetiWarmersRenderer();
+                    this.renderer = new YetiFeedersRenderer();
 
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
 
