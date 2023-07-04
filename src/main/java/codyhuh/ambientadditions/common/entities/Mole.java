@@ -94,7 +94,7 @@ public class Mole extends Animal implements GeoEntity {
     @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte id) {
         if (id == 10) {
-            this.eatAnimationTick = 40;
+            this.eatAnimationTick = 90;
         } else {
             super.handleEntityEvent(id);
         }
