@@ -45,7 +45,6 @@ import javax.annotation.Nullable;
 
 public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(ChocolateChipStarfish.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> ARMS = SynchedEntityData.defineId(ChocolateChipStarfish.class, EntityDataSerializers.INT);
 
     public ChocolateChipStarfish(EntityType<? extends WaterAnimal> p_i48568_1_, Level p_i48568_2_) {
         super(p_i48568_1_, p_i48568_2_);
@@ -72,25 +71,19 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
-        this.entityData.define(ARMS, 0);
     }
 
     @Override
     public boolean hurt(DamageSource source, float damage) {
-        removeArm(source);
-
-        return super.hurt(source, damage);
-    }
-
-    private void removeArm(DamageSource source) {
-        if (source.getEntity() instanceof HarlequinShrimp shrimp && source.equals(DamageSource.mobAttack(shrimp))) {
+        if (source.getEntity() instanceof HarlequinShrimp) {
             ItemEntity item = EntityType.ITEM.create(level);
             item.setItem(new ItemStack(AAItems.STARFISH_ARM.get()));
             item.moveTo(position());
 
             level.addFreshEntity(item);
         }
-        setArms(Math.max(getArms() - 1, 1));
+
+        return super.hurt(source, damage);
     }
 
     public int getVariant() {
@@ -112,7 +105,6 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
         CompoundTag compoundnbt = bucket.getOrCreateTag();
         compoundnbt.putInt("Variant", this.getVariant());
         compoundnbt.putFloat("Health", this.getHealth());
-        compoundnbt.putFloat("Arms", this.getArms());
     }
 
     protected InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
@@ -142,14 +134,12 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", getVariant());
-        compound.putInt("Arms", getArms());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         setVariant(compound.getInt("Variant"));
-        setArms(compound.getInt("Arms"));
     }
 
     public static boolean checkStarfishSpawnRules(EntityType<? extends WaterAnimal> p_223316_0_, LevelAccessor p_223316_1_, MobSpawnType p_223316_2_, BlockPos p_223316_3_, RandomSource p_223316_4_) {
@@ -161,18 +151,9 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
         super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
         if (spawnDataIn == null) {
             setVariant(random.nextInt(5));
-            setArms(5);
         }
 
         return spawnDataIn;
-    }
-
-    public void setArms(int arms) {
-        this.entityData.set(ARMS, arms);
-    }
-
-    public int getArms() {
-        return Math.min(this.entityData.get(ARMS), 5);
     }
 
     @Override

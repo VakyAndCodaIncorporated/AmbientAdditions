@@ -56,21 +56,17 @@ public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoE
 
 	@Override
 	public void preRender(PoseStack poseStack, T animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-
-		//todo - fix...
 		if (animatable instanceof ChocolateChipStarfish starfish) {
 
-			for (int i = 1; i <= starfish.getArms(); i++) {
+			for (int i = 1; i <= 5; i++) {
+				Optional<GeoBone> arm = model.getBone("Arm" + i);
+				arm.ifPresent(geoBone -> geoBone.setHidden(true));
+			}
+
+			for (int i = 1; i <= (int) starfish.getHealth(); i++) {
 				Optional<GeoBone> arm = model.getBone("Arm" + i);
 
-				if (arm.isPresent()) {
-					arm.get().setHidden(false);
-
-					boolean flag = starfish.getArms() > i;
-
-					arm.get().setHidden(flag);
-					System.out.println("arm" + i + ": " + (flag));
-				}
+				arm.ifPresent(geoBone -> geoBone.setHidden(false));
 			}
 
 		}
