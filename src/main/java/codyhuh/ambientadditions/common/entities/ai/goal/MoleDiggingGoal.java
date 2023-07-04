@@ -94,8 +94,8 @@ public class MoleDiggingGoal extends Goal {
          itemEntity.moveTo(pos);
 
          level.addFreshEntity(itemEntity);
-         this.level.playSound(mole, blockpos, SoundEvents.SLIME_JUMP, SoundSource.BLOCKS, 0.25F, 1.2F);
 
+         this.level.playSound(mole, blockpos, SoundEvents.SLIME_JUMP, SoundSource.BLOCKS, 0.25F, 1.2F);
       }
    }
 }

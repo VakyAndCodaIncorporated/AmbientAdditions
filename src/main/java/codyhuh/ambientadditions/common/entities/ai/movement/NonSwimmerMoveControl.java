@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions.common.entities.ai.movement;
 
+import codyhuh.ambientadditions.common.entities.RabbitSnail;
 import codyhuh.ambientadditions.common.entities.util.NonSwimmer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,7 +31,8 @@ public class NonSwimmerMoveControl extends MoveControl {
 
             float f1 = (float) (this.speedModifier * this.nonSwimmer.getAttributeValue(Attributes.MOVEMENT_SPEED));
             if (nonSwimmer.isInWater()) {
-                f1 = f1 * 5.0F;
+                float speedMod = nonSwimmer instanceof RabbitSnail ? 2.5F : 5.0F;
+                f1 = f1 * speedMod;
             }
 
             this.nonSwimmer.setSpeed(Mth.lerp(0.125F, this.nonSwimmer.getSpeed(), f1));

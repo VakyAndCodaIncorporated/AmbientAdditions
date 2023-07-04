@@ -191,7 +191,8 @@ public class YetiCrab extends NonSwimmer implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        if (state.isMoving()) {
+        boolean walking = !(state.getLimbSwingAmount() > -0.01F && state.getLimbSwingAmount() < 0.01F);
+        if (walking) {
             state.setAnimation(AAAnimations.WALK);
         }
         else {
