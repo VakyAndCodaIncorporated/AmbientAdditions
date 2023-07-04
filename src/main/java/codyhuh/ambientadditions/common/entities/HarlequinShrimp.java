@@ -1,6 +1,7 @@
 package codyhuh.ambientadditions.common.entities;
 
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
+import codyhuh.ambientadditions.common.entities.util.NonSwimmer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -10,7 +11,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,19 +18,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -42,27 +37,42 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
+public class HarlequinShrimp extends NonSwimmer implements GeoEntity {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(HarlequinShrimp.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(HarlequinShrimp.class, EntityDataSerializers.INT);
 
-    public HarlequinShrimp(EntityType<? extends WaterAnimal> type, Level world) {
+    public HarlequinShrimp(EntityType<? extends NonSwimmer> type, Level world) {
         super(type, world);
-        this.moveControl = new MoveHelperController(this);
     }
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Player.class, 8.0F, 1.2D, 1.2D));
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 5.0D));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
+        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true) {
+
+            @Override
+            public boolean canUse() {
+                return super.canUse();
+            }
+
+            @Override
+            public void tick() {
+                if (getTarget() != null && getTarget().getHealth() < 5.0D) {
+                    stop();
+                }
+                super.tick();
+            }
+        });
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 1.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ChocolateChipStarfish.class, false));
-    }
-
-    protected PathNavigation createNavigation(Level world) {
-        return new GroundPathNavigation(this, world);
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ChocolateChipStarfish.class, false) {
+            @Override
+            public boolean canContinueToUse() {
+                return super.canContinueToUse() && target != null && target.getHealth() > 4.0D;
+            }
+        });
     }
 
     @Override
@@ -75,7 +85,7 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.15D).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Nullable
@@ -91,29 +101,6 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.HARLEQUIN_SHRIMP_SPAWN_EGG.get());
-    }
-
-    public void baseTick() {
-        int i = this.getAirSupply();
-        super.baseTick();
-        this.handleAirSupply(i);
-    }
-
-    @Override
-    protected float getWaterSlowDown() {
-        return 0.0F;
-    }
-
-    protected void handleAirSupply(int p_209207_1_) {
-        if (this.isAlive() && !this.isInWaterOrBubble()) {
-            this.setAirSupply(p_209207_1_ - 1);
-            if (this.getAirSupply() == -20) {
-                this.setAirSupply(0);
-                this.hurt(DamageSource.DROWN, 2.0F);
-            }
-        } else {
-            this.setAirSupply(300);
-        }
     }
 
     public boolean requiresCustomPersistence() {
@@ -199,23 +186,19 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     }
 
     @Override
-    public void travel(Vec3 vec3) {
-        super.travel(vec3);
-    }
-
-    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
         controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        boolean walking = !(state.getLimbSwingAmount() > -0.1F && state.getLimbSwingAmount() < 0.1F);
+        boolean walking = !(state.getLimbSwingAmount() > -0.01F && state.getLimbSwingAmount() < 0.01F);
         if (walking) {
             state.setAnimation(AAAnimations.WALK);
             state.getController().setAnimationSpeed(2.5D);
         }
         else {
             state.setAnimation(AAAnimations.IDLE);
+            state.getController().setAnimationSpeed(1.0D);
         }
 
         return PlayState.CONTINUE;
@@ -226,32 +209,5 @@ public class HarlequinShrimp extends WaterAnimal implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    static class MoveHelperController extends MoveControl {
-        private final HarlequinShrimp crab;
-
-        MoveHelperController(HarlequinShrimp crab) {
-            super(crab);
-            this.crab = crab;
-        }
-
-        public void tick() {
-            if (this.operation == Operation.MOVE_TO && !this.crab.getNavigation().isDone()) {
-                double d0 = this.wantedX - this.crab.getX();
-                double d1 = this.wantedY - this.crab.getY();
-                double d2 = this.wantedZ - this.crab.getZ();
-                double d3 = Mth.sqrt((float) (d0 * d0 + d1 * d1 + d2 * d2));
-                d1 = d1 / d3;
-                float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-                this.crab.setYRot(this.rotlerp(this.crab.getYRot(), f, 90.0F));
-                this.crab.yBodyRot = this.crab.getYRot();
-                float f1 = (float) (this.speedModifier * this.crab.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                this.crab.setSpeed(Mth.lerp(0.125F, this.crab.getSpeed(), f1));
-                this.crab.setDeltaMovement(this.crab.getDeltaMovement().add(0.0D, (double) this.crab.getSpeed() * d1 * 0.1D, 0.0D));
-            } else {
-                this.crab.setSpeed(0.0F);
-            }
-        }
     }
 }

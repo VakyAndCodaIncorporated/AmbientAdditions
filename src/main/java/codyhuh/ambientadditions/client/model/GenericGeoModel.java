@@ -1,7 +1,7 @@
 package codyhuh.ambientadditions.client.model;
 
-import codyhuh.ambientadditions.common.entities.util.Flopper;
-import codyhuh.ambientadditions.common.entities.util.Swimmer;
+import codyhuh.ambientadditions.common.entities.util.IFlopper;
+import codyhuh.ambientadditions.common.entities.util.ISwimmer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -23,7 +23,7 @@ public class GenericGeoModel<E extends LivingEntity & GeoEntity> extends Default
 
         CoreGeoBone root = getAnimationProcessor().getBone("root");
 
-        if (animatable instanceof Flopper) {
+        if (animatable instanceof IFlopper) {
             if (!animatable.isInWater()) {
                 root.setRotZ(1.5708F);
             }
@@ -31,7 +31,7 @@ public class GenericGeoModel<E extends LivingEntity & GeoEntity> extends Default
                 root.setRotZ(0.0F);
             }
         }
-        if (animatable instanceof Swimmer) {
+        if (animatable instanceof ISwimmer) {
             if (animatable.isInWater()) {
                 EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 

@@ -46,9 +46,8 @@ public class StarfishArmItem extends Item {
         if (random.nextFloat() > 0.66F) {
             ChocolateChipStarfish entity = AAEntities.CHOCOLATE_CHIP_STARFISH.get().create(world);
 
-
             if (!world.isClientSide && entity != null) {
-                entity.moveTo(blockpos1.getX() + 0.5F, blockpos1.getY() + 0.5F, blockpos1.getZ() + 0.5F);
+                entity.moveTo(blockpos1.getX() + 0.5F, blockpos1.getY(), blockpos1.getZ() + 0.5F);
                 entity.setVariant(random.nextInt(5));
                 world.addFreshEntity(entity);
                 world.playSound(player, player.blockPosition(), SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.NEUTRAL, 1.0F, 1.0F);

@@ -1,7 +1,7 @@
 package codyhuh.ambientadditions.common.entities;
 
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
-import codyhuh.ambientadditions.common.entities.util.Flopper;
+import codyhuh.ambientadditions.common.entities.util.IFlopper;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +20,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class LonghornCowfish extends AbstractFish implements GeoEntity, Flopper {
+public class LonghornCowfish extends AbstractFish implements GeoEntity, IFlopper {
 
     public LonghornCowfish(EntityType<? extends AbstractFish> p_i48855_1_, Level p_i48855_2_) {
         super(p_i48855_1_, p_i48855_2_);

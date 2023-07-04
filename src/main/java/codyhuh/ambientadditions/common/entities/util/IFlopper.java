@@ -1,4 +1,4 @@
 package codyhuh.ambientadditions.common.entities.util;
 
-public interface Swimmer {
+public interface IFlopper {
 }

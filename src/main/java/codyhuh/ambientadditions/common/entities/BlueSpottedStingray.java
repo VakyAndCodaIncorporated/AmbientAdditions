@@ -2,7 +2,7 @@ package codyhuh.ambientadditions.common.entities;
 
 import codyhuh.ambientadditions.common.entities.ai.movement.BottomFeederMoveControl;
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
-import codyhuh.ambientadditions.common.entities.util.Swimmer;
+import codyhuh.ambientadditions.common.entities.util.ISwimmer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +34,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BlueSpottedStingray extends AbstractFish implements GeoEntity, Swimmer {
+public class BlueSpottedStingray extends AbstractFish implements GeoEntity, ISwimmer {
 
     public BlueSpottedStingray(EntityType<? extends AbstractFish> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);

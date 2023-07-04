@@ -1,4 +1,4 @@
 package codyhuh.ambientadditions.common.entities.util;
 
-public interface Flopper {
+public interface ISwimmer {
 }
