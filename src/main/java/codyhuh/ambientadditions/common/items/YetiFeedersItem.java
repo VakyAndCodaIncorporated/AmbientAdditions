@@ -4,8 +4,12 @@ import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.client.renderer.item.YetiFeedersRenderer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -53,9 +57,21 @@ public class YetiFeedersItem extends ArmorItem implements GeoItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        Component info = Component.translatable("tooltip.ambientadditions.yeti_feeders").withStyle(ChatFormatting.GRAY);
+        Minecraft mc = Minecraft.getInstance();
 
-        components.add(info);
+        MutableComponent info = Component.empty();
+        info.append(Component.translatable("tooltip.ambientadditions.shift_for_info1").withStyle(ChatFormatting.DARK_GRAY));
+        info.append(mc.options.keyShift.getTranslatedKeyMessage()).withStyle(ChatFormatting.GRAY);
+        info.append(Component.translatable("tooltip.ambientadditions.shift_for_info2").withStyle(ChatFormatting.DARK_GRAY));
+
+        Component extraInfo = Component.translatable("tooltip.ambientadditions.yeti_feeders").withStyle(Style.EMPTY.withColor(0x92e341));
+
+        if (Screen.hasShiftDown()) {
+            components.add(extraInfo);
+        }
+        else {
+            components.add(info);
+        }
     }
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
