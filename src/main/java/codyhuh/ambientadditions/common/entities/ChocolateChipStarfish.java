@@ -68,6 +68,15 @@ public class ChocolateChipStarfish extends WaterAnimal implements GeoEntity {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+
+        if (getHealth() < getMaxHealth() && level.getDayTime() % 24000 == 0) {
+            setHealth(getHealth() + 1.0F);
+        }
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
