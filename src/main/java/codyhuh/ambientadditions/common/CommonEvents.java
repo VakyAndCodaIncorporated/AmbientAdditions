@@ -6,8 +6,6 @@ import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
 import codyhuh.ambientadditions.registry.AATags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +25,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
@@ -49,18 +46,6 @@ public class CommonEvents {
             ComposterBlock.COMPOSTABLES.put(AAItems.WORM.get().asItem(), 1.0F);
             ComposterBlock.COMPOSTABLES.put(AAItems.BARK.get().asItem(), 0.3F);
         });
-    }
-
-    @SubscribeEvent
-    public static void createTab(CreativeModeTabEvent.Register e) {
-        e.registerCreativeModeTab(new ResourceLocation(AmbientAdditions.MOD_ID, AmbientAdditions.MOD_ID), p -> p.icon(() -> new ItemStack(AAItems.DART.get()))
-                .title(Component.translatable("itemGroup." + AmbientAdditions.MOD_ID))
-                .displayItems((enabledFeatures, entries, operatorEnabled) -> {
-                    for (var items : AAItems.ITEMS.getEntries()) {
-                        entries.accept(items.get());
-                    }
-                })
-        );
     }
 
     @SubscribeEvent

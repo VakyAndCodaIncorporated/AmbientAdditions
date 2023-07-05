@@ -30,19 +30,18 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PancakeSlug extends Animal implements GeoEntity {
+public class PancakeSlug extends Animal implements IAnimatable {
     private static final EntityDataAccessor<Boolean> IS_HIDING = SynchedEntityData.defineId(PancakeSlug.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(PancakeSlug.class, EntityDataSerializers.INT);
 
@@ -173,28 +172,28 @@ public class PancakeSlug extends Animal implements GeoEntity {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimationData controller) {
+        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
+       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isHiding()) {
-            state.setAnimation(AAAnimations.ACTION);
+            event.getController().setAnimation(AAAnimations.ACTION);
         }
-        else if (state.isMoving()) {
-            state.setAnimation(AAAnimations.WALK);
+        else if (event.isMoving()) {
+            event.getController().setAnimation(AAAnimations.WALK);
         }
         else {
-            state.setAnimation(AAAnimations.IDLE);
+            event.getController().setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
     
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return cache;
     }
 

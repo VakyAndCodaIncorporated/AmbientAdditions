@@ -5,7 +5,6 @@ import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -64,7 +63,7 @@ public class DartEntity extends AbstractArrow implements IEntityAdditionalSpawnD
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

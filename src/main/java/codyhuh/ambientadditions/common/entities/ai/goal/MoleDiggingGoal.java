@@ -74,7 +74,7 @@ public class MoleDiggingGoal extends Goal {
       if (this.eatAnimationTick == 79) {
          if (this.level.getBlockState(blockpos.below()).is(Blocks.COARSE_DIRT)) {
 
-            this.level.playSound(mole, blockpos, SoundEvents.ROOTED_DIRT_BREAK, SoundSource.BLOCKS, 0.6F, 1.0F);
+            this.level.playSound(null, blockpos, SoundEvents.ROOTED_DIRT_BREAK, SoundSource.BLOCKS, 0.6F, 1.0F);
             this.mole.ate();
 
             for (int i = 0; i < 20; i++) {
@@ -83,7 +83,7 @@ public class MoleDiggingGoal extends Goal {
          }
       }
       else if (this.eatAnimationTick == 55) {
-         this.level.playSound(mole, blockpos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
+         this.level.playSound(null, blockpos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
       }
       else if (this.eatAnimationTick == 47) {
          List<ItemStack> items = mole.level.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerLevel) mole.level).withRandom(mole.getRandom()).create(LootContextParamSets.EMPTY));
@@ -95,7 +95,7 @@ public class MoleDiggingGoal extends Goal {
 
          level.addFreshEntity(itemEntity);
 
-         this.level.playSound(mole, blockpos, SoundEvents.SLIME_JUMP, SoundSource.BLOCKS, 0.25F, 1.2F);
+         this.level.playSound(null, blockpos, SoundEvents.SLIME_JUMP, SoundSource.BLOCKS, 0.25F, 1.2F);
       }
    }
 }

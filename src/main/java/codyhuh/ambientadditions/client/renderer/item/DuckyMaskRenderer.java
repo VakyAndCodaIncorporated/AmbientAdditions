@@ -1,14 +1,14 @@
 package codyhuh.ambientadditions.client.renderer.item;
 
-import codyhuh.ambientadditions.AmbientAdditions;
+import codyhuh.ambientadditions.client.model.DuckyMaskModel;
 import codyhuh.ambientadditions.common.items.DuckyMaskArmorItem;
-import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.model.DefaultedItemGeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class DuckyMaskRenderer extends GeoArmorRenderer<DuckyMaskArmorItem> {
 
     public DuckyMaskRenderer() {
-        super(new DefaultedItemGeoModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "armor/ducky_mask")));
+        super(new DuckyMaskModel());
+
+        this.headBone = "armorHead";
     }
 }

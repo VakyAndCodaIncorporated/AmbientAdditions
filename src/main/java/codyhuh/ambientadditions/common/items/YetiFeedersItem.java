@@ -1,40 +1,31 @@
 package codyhuh.ambientadditions.common.items;
 
 import codyhuh.ambientadditions.AmbientAdditions;
-import codyhuh.ambientadditions.client.renderer.item.YetiFeedersRenderer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
 
-public class YetiFeedersItem extends ArmorItem implements GeoItem {
+public class YetiFeedersItem extends ArmorItem implements IAnimatable {
     public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":yeti_feeders",  3, new int[]{1, 2, 3, 1}, 14, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, () -> Ingredient.of(AAItems.YETI_CRAB_FLUFF.get()));
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    static Random random = new Random();
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public YetiFeedersItem(EquipmentSlot slot) {
         super(MATERIAL, slot, new Item.Properties());
@@ -74,27 +65,12 @@ public class YetiFeedersItem extends ArmorItem implements GeoItem {
         }
     }
 
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            private GeoArmorRenderer<?> renderer;
-
-            @Override
-            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-                if (this.renderer == null)
-                    this.renderer = new YetiFeedersRenderer();
-
-                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
-
-                return this.renderer;
-            }
-        });
+    @Override
+    public void registerControllers(AnimationData animationData) {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return cache;
+    public AnimationFactory getFactory() {
+        return factory;
     }
 }

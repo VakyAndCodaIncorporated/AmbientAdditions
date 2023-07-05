@@ -39,15 +39,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class MataMata extends Animal implements GeoEntity {
+public class MataMata extends Animal implements IAnimatable {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMata.class, EntityDataSerializers.ITEM_STACK);
     private ItemStack eatingItem = ItemStack.EMPTY;
     private int eatingTicks = 0;
@@ -144,7 +144,7 @@ public class MataMata extends Animal implements GeoEntity {
     }
 
     @Override
-    public ItemStack equipItemIfPossible(ItemStack stack) {
+    public boolean equipItemIfPossible(ItemStack stack) {
         if (this.canHoldItem(stack)) {
             if (!eatingItem.isEmpty()) {
                 this.spawnAtLocation(eatingItem);
@@ -152,9 +152,9 @@ public class MataMata extends Animal implements GeoEntity {
 
             eatingItem = stack.copy();
             this.equipItemIfPossible(stack);
-            return stack;
+            return true;
         } else {
-            return ItemStack.EMPTY;
+            return false;
         }
     }
 
@@ -263,28 +263,28 @@ public class MataMata extends Animal implements GeoEntity {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimationData controller) {
+        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<T> state) {
-        if (isInWater() && state.isMoving()) {
-            state.setAnimation(AAAnimations.SWIM);
+    private <T extends IAnimatable> PlayState predicate(AnimationEvent<T> event) {
+        if (isInWater() && event.isMoving()) {
+            event.getController().setAnimation(AAAnimations.SWIM);
         }
-        else if (state.isMoving()) {
-            state.setAnimation(AAAnimations.WALK);
+        else if (event.isMoving()) {
+            event.getController().setAnimation(AAAnimations.WALK);
         }
         else {
-            state.setAnimation(AAAnimations.IDLE);
+            event.getController().setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return cache;
     }
 

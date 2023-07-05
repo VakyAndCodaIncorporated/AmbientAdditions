@@ -1,14 +1,15 @@
 package codyhuh.ambientadditions.client.renderer.item;
 
-import codyhuh.ambientadditions.AmbientAdditions;
+import codyhuh.ambientadditions.client.model.YetiFeedersModel;
 import codyhuh.ambientadditions.common.items.YetiFeedersItem;
-import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.model.DefaultedItemGeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class YetiFeedersRenderer extends GeoArmorRenderer<YetiFeedersItem> {
 
     public YetiFeedersRenderer() {
-        super(new DefaultedItemGeoModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "armor/yeti_feeders")));
+        super(new YetiFeedersModel());
+
+        this.leftArmBone = "armorLeftArm";
+        this.rightArmBone = "armorRightArm";
     }
 }

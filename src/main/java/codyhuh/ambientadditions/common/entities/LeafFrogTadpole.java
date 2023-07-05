@@ -15,16 +15,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class LeafFrogTadpole extends AbstractFish implements GeoEntity {
+public class LeafFrogTadpole extends AbstractFish implements IAnimatable {
 
     public LeafFrogTadpole(EntityType<? extends AbstractFish> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);
@@ -81,25 +80,25 @@ public class LeafFrogTadpole extends AbstractFish implements GeoEntity {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controller) {
-        controller.add(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimationData controller) {
+        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        if (state.isMoving()) {
-            state.setAnimation(AAAnimations.SWIM);
+       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(AAAnimations.SWIM);
         }
         else {
-            state.setAnimation(AAAnimations.IDLE);
+            event.getController().setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return cache;
     }
 

@@ -1,46 +1,76 @@
 package codyhuh.ambientadditions.client.model;
 
+import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.common.entities.util.IFlopper;
 import codyhuh.ambientadditions.common.entities.util.ISwimmer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.model.DefaultedEntityGeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
-public class GenericGeoModel<E extends LivingEntity & GeoEntity> extends DefaultedEntityGeoModel<E> {
+public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends AnimatedGeoModel<E> {
+    private final String model;
+    private final String texture;
+    private final String anim;
 
-    public GenericGeoModel(ResourceLocation assetSubpath) {
-        super(assetSubpath);
+    public GenericGeoModel(String name){
+        this(name, name, name);
+    }
+
+    public GenericGeoModel(String name, String texture){
+        this(name, texture, name);
+    }
+
+    public GenericGeoModel(String model, String texture, String anim) {
+        this.model = model;
+        this.texture = texture;
+        this.anim = anim;
+    }
+
+
+    @Override
+    public ResourceLocation getModelResource(E object) {
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/" + model + ".geo.json");
     }
 
     @Override
-    public void setCustomAnimations(E animatable, long instanceId, AnimationState<E> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public ResourceLocation getTextureResource(E object) {
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/" + texture + ".png");
+    }
 
-        CoreGeoBone root = getAnimationProcessor().getBone("root");
+    @Override
+    public ResourceLocation getAnimationResource(E object) {
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "animations/entity/" + anim + ".animation.json");
+    }
 
-        if (animatable instanceof IFlopper) {
-            if (!animatable.isInWater()) {
-                root.setRotZ(1.5708F);
+    @Override
+    public void setCustomAnimations(E entity, int instanceId, AnimationEvent customPredicate) {
+        super.setCustomAnimations(entity, instanceId, customPredicate);
+
+        IBone root = getAnimationProcessor().getBone("root");
+
+        if (entity instanceof IFlopper) {
+            if (!entity.isInWater()) {
+                root.setRotationZ(1.5708F);
             }
             else {
-                root.setRotZ(0.0F);
+                root.setRotationZ(0.0F);
             }
         }
-        if (animatable instanceof ISwimmer) {
-            if (animatable.isInWater()) {
-                EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+        if (entity instanceof ISwimmer) {
+            if (entity.isInWater()) {
 
-                root.setRotX(entityData.headPitch() * ((float)Math.PI / 180F));
-                root.setRotY(entityData.netHeadYaw() * ((float)Math.PI / 180F));
+                EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+
+                root.setRotationX(extraData.headPitch * ((float)Math.PI / 180F));
+                root.setRotationY(extraData.netHeadYaw * ((float)Math.PI / 180F));
             }
             else {
-                root.setRotX(0.0F);
-                root.setRotY(0.0F);
+                root.setRotationX(0.0F);
+                root.setRotationY(0.0F);
             }
         }
     }

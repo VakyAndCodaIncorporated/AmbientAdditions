@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions.client.renderer;
 
+import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.common.entities.ChocolateChipStarfish;
 import codyhuh.ambientadditions.common.entities.RabbitSnail;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,34 +11,35 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.model.DefaultedEntityGeoModel;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
+import software.bernie.geckolib3.geo.render.built.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.util.AnimationUtils;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoEntityRenderer<T> {
+public class GenericGeoRenderer<T extends LivingEntity & IAnimatable> extends GeoEntityRenderer<T> {
 	private float scale = 1F;
 
-	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<DefaultedEntityGeoModel<T>> model) {
+	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<T>> model) {
 		super(renderManager, model.get());
 		this.shadowRadius = 0.3F;
 	}
 
-	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<DefaultedEntityGeoModel<T>> model, float scale) {
+	public GenericGeoRenderer(EntityRendererProvider.Context renderManager, Supplier<AnimatedGeoModel<T>> model, float scale) {
 		this(renderManager, model.get(), scale);
 		this.scale = scale;
 	}
 	
-	public GenericGeoRenderer(EntityRendererProvider.Context mgr, DefaultedEntityGeoModel<T> modelProvider) {
+	public GenericGeoRenderer(EntityRendererProvider.Context mgr, AnimatedGeoModel<T> modelProvider) {
 		super(mgr, modelProvider);
 	}
 
-	public GenericGeoRenderer(EntityRendererProvider.Context mgr, DefaultedEntityGeoModel<T> modelProvider, float scale) {
+	public GenericGeoRenderer(EntityRendererProvider.Context mgr, AnimatedGeoModel<T> modelProvider, float scale) {
 		this(mgr, modelProvider);
 		this.scale = scale;
 	}
@@ -60,8 +62,9 @@ public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoE
 	}
 
 	@Override
-	public void preRender(PoseStack poseStack, T animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderEarly(T animatable, PoseStack poseStack, float partialTick, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float partialTicks) {
 		if (animatable instanceof ChocolateChipStarfish starfish) {
+			GeoModel model = AnimationUtils.getGeoModelForEntity(starfish).getModel( new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/chocolate_chip_starfish.geo.json"));
 
 			for (int i = 1; i <= 5; i++) {
 				Optional<GeoBone> arm = model.getBone("Arm" + i);
@@ -76,12 +79,11 @@ public class GenericGeoRenderer<T extends LivingEntity & GeoEntity> extends GeoE
 
 		}
 
-		super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+		super.renderEarly(animatable, poseStack, partialTick, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, partialTicks);
 	}
 
 	@Override
-	public RenderType getRenderType(T animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
+	public RenderType getRenderType(T animatable, float partialTick, PoseStack poseStack, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
 		return RenderType.entityTranslucent(texture);
 	}
-
 }

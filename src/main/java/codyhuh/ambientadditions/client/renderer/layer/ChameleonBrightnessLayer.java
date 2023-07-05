@@ -11,13 +11,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.renderer.GeoRenderer;
-import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
+import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 
 import java.util.Map;
 
-public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleon> {
+public class ChameleonBrightnessLayer extends GeoLayerRenderer<VeiledChameleon> {
     public static final Map<Integer, RenderType> TEXTURES = Util.make(Maps.newHashMap(), (hashMap) -> {
         hashMap.put(0, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_1.png")));
         hashMap.put(1, RenderType.entityTranslucent(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/veiled_chameleon/veiled_chameleon_2.png")));
@@ -29,12 +28,12 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleon> {
     });
     private static final ResourceLocation MODEL = new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/veiled_chameleon.geo.json");
 
-    public ChameleonBrightnessLayer(GeoRenderer<VeiledChameleon> entityRendererIn) {
+    public ChameleonBrightnessLayer(IGeoRenderer<VeiledChameleon> entityRendererIn) {
         super(entityRendererIn);
     }
 
     @Override
-    public void render(PoseStack poseStack, VeiledChameleon animatable, BakedGeoModel bakedModel, RenderType type, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn, VeiledChameleon animatable, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         RenderType renderType = TEXTURES.getOrDefault(animatable.getVariant(), TEXTURES.get(0));
 
         VertexConsumer builder = bufferSource.getBuffer(renderType);
@@ -58,7 +57,7 @@ public class ChameleonBrightnessLayer extends GeoRenderLayer<VeiledChameleon> {
         float b = !flag ? 1.0F : darkness * 0.3F;
 
         if (!animatable.isInvisible() && animatable.isAlive()) {
-            this.getRenderer().actuallyRender(poseStack, animatable, this.getGeoModel().getBakedModel(MODEL), renderType, bufferSource, builder, true, partialTick, 175,  LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), r, g, b, 1.0F);
+            this.getRenderer().render(getEntityModel().getModel(MODEL), animatable,partialTicks, renderType, poseStack, bufferSource, builder, packedLightIn, LivingEntityRenderer.getOverlayCoords(animatable, 0.0F), r, g, b, 1.0F);
         }
     }
 }
