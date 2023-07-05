@@ -6,8 +6,6 @@ import codyhuh.ambientadditions.common.entities.util.ISwimmer;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -16,9 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -47,7 +43,7 @@ public class NapoleonWrasse extends AbstractFish implements IAnimatable, IFloppe
     }
 
     public ItemStack getBucketItemStack() {
-        return null;
+        return new ItemStack(AAItems.NAPOLEON_WRASSE_BUCKET.get());
     }
 
     protected SoundEvent getAmbientSound() {
@@ -64,15 +60,6 @@ public class NapoleonWrasse extends AbstractFish implements IAnimatable, IFloppe
 
     protected SoundEvent getFlopSound() {
         return SoundEvents.COD_FLOP;
-    }
-
-    protected InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
-        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
-        if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else {
-            return super.mobInteract(p_230254_1_, p_230254_2_);
-        }
     }
 
     @Override
