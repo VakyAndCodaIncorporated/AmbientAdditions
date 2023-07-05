@@ -36,6 +36,7 @@ public class AAItems {
     public static final RegistryObject<Item> LEAF_FROG_BOWL = ITEMS.register("leaf_frog_bowl", () -> new AACatchableItem(AAEntities.LEAF_FROG::get, Items.BOWL, false, new Item.Properties().tab(TAB).stacksTo(1)));
     public static final RegistryObject<Item> STAG_BEETLE_BOTTLE = ITEMS.register("stag_beetle_bottle", () -> new AACatchableItem(AAEntities.STAG_BEETLE::get, Items.GLASS_BOTTLE, false, new Item.Properties().tab(TAB).stacksTo(1)));
     public static final RegistryObject<Item> NAPOLEON_WRASSE_BUCKET = ITEMS.register("napoleon_wrasse_bucket", () -> new MobBucketItem(AAEntities.NAPOLEON_WRASSE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(TAB).stacksTo(1)));
+    public static final RegistryObject<Item> MATA_MATA_BUCKET = ITEMS.register("mata_mata_bucket", () -> new MobBucketItem(AAEntities.MATA_MATA, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_AXOLOTL, new Item.Properties().tab(TAB).stacksTo(1)));
 
     // Drops & Materials
     public static final RegistryObject<Item> BARK = ITEMS.register("bark", () -> new Item(new Item.Properties().tab(TAB)));

@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,8 +48,9 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class MataMata extends Animal implements IAnimatable {
+public class MataMata extends Animal implements IAnimatable, Bucketable {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMata.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(MataMata.class, EntityDataSerializers.BOOLEAN);
     private ItemStack eatingItem = ItemStack.EMPTY;
     private int eatingTicks = 0;
 
@@ -74,6 +76,7 @@ public class MataMata extends Animal implements IAnimatable {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(EATING_ITEM, ItemStack.EMPTY);
+        this.entityData.define(FROM_BUCKET, false);
     }
 
     @Override
@@ -116,8 +119,9 @@ public class MataMata extends Animal implements IAnimatable {
 
             return InteractionResult.SUCCESS;
         }
-
-        return super.mobInteract(player, hand);
+        else {
+            return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        }
     }
 
     @Override
@@ -125,6 +129,7 @@ public class MataMata extends Animal implements IAnimatable {
         super.addAdditionalSaveData(pCompound);
         pCompound.put("eatingItem", eatingItem.save(new CompoundTag()));
         pCompound.putInt("eatingTicks", eatingTicks);
+        pCompound.putBoolean("FromBucket", this.fromBucket());
     }
 
     @Override
@@ -132,6 +137,7 @@ public class MataMata extends Animal implements IAnimatable {
         super.readAdditionalSaveData(pCompound);
         eatingItem = ItemStack.of(pCompound.getCompound("eatingItem"));
         eatingTicks = pCompound.getInt("eatingTicks");
+        this.setFromBucket(pCompound.getBoolean("FromBucket"));
     }
 
     public ItemStack getEatingItem() {
@@ -263,6 +269,43 @@ public class MataMata extends Animal implements IAnimatable {
     }
 
     @Override
+    public boolean fromBucket() {
+        return this.entityData.get(FROM_BUCKET);
+    }
+
+    @Override
+    public void setFromBucket(boolean fromBucket) {
+        this.entityData.set(FROM_BUCKET, fromBucket);
+    }
+
+    @Override
+    public void saveToBucketTag(ItemStack tag) {
+        Bucketable.saveDefaultDataToBucketTag(this, tag);
+        CompoundTag compoundtag = tag.getOrCreateTag();
+
+        compoundtag.putInt("Age", this.getAge());
+    }
+
+    @Override
+    public void loadFromBucketTag(CompoundTag tag) {
+        Bucketable.loadDefaultDataFromBucketTag(this, tag);
+
+        if (tag.contains("Age")) {
+            this.setAge(tag.getInt("Age"));
+        }
+    }
+
+    @Override
+    public ItemStack getBucketItemStack() {
+        return new ItemStack(AAItems.MATA_MATA_BUCKET.get());
+    }
+
+    @Override
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BUCKET_FILL_AXOLOTL;
+    }
+
+    @Override
     public void registerControllers(AnimationData controller) {
         controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
@@ -287,6 +330,5 @@ public class MataMata extends Animal implements IAnimatable {
     public AnimationFactory getFactory() {
         return cache;
     }
-
 
 }
