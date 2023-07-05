@@ -14,7 +14,7 @@ import codyhuh.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import codyhuh.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
 import codyhuh.ambientadditions.common.entities.*;
 import codyhuh.ambientadditions.common.items.CrateItem;
-import codyhuh.ambientadditions.common.items.DuckyMaskArmorItem;
+import codyhuh.ambientadditions.common.items.DuckyMaskItem;
 import codyhuh.ambientadditions.common.items.YetiFeedersItem;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
@@ -26,8 +26,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -91,18 +89,15 @@ public class ClientEvents {
             return render;
         });
 
-        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> {
-            GenericGeoRenderer<ChocolateChipStarfish> render = new GenericGeoRenderer<>(ctx, () -> {
-                TextureVariantModel<ChocolateChipStarfish> model = new TextureVariantModel<>("chocolate_chip_starfish");
-                ArrayList<ResourceLocation> textures = new ArrayList<>();
-                for (int i=1;i<=5;i++){
-                    textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/chocolate_chip_starfish/starfish_" + i + ".png"));
-                }
-                model.setTextures(ChocolateChipStarfish::getVariant, textures);
-                return model;
-            });
-            return render;
-        });
+        EntityRenderers.register(AAEntities.CHOCOLATE_CHIP_STARFISH.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
+            TextureVariantModel<ChocolateChipStarfish> model = new TextureVariantModel<>("chocolate_chip_starfish");
+            ArrayList<ResourceLocation> textures = new ArrayList<>();
+            for (int i=1;i<=5;i++){
+                textures.add(new ResourceLocation(AmbientAdditions.MOD_ID, "textures/entity/chocolate_chip_starfish/starfish_" + i + ".png"));
+            }
+            model.setTextures(ChocolateChipStarfish::getVariant, textures);
+            return model;
+        }));
 
         EntityRenderers.register(AAEntities.HARLEQUIN_SHRIMP.get(), (ctx) -> new GenericGeoRenderer<>(ctx, () -> {
             TextureVariantModel<HarlequinShrimp> model = new TextureVariantModel<>("harlequin_shrimp");
@@ -185,12 +180,10 @@ public class ClientEvents {
 
         AmbientAdditions.CALLBACKS.forEach(Runnable::run);
         AmbientAdditions.CALLBACKS.clear();
+
+        GeoArmorRenderer.registerArmorRenderer(YetiFeedersItem.class, YetiFeedersRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(DuckyMaskItem.class, DuckyMaskRenderer::new);
+
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void layers(EntityRenderersEvent.AddLayers event) {
-        GeoArmorRenderer.registerArmorRenderer(YetiFeedersItem.class, YetiFeedersRenderer::new);
-        GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, DuckyMaskRenderer::new);
-    }
 }

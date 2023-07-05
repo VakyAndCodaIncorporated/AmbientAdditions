@@ -9,7 +9,7 @@ public class YetiFeedersModel extends AnimatedGeoModel<YetiFeedersItem> {
 
 	@Override
 	public ResourceLocation getModelResource(YetiFeedersItem object) {
-		return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/item/armor/yeti_feeders.geo.json");
+		return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/armor/yeti_feeders.geo.json");
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class AAItems {
     public static final RegistryObject<Item> LEAF_FROG_EGG = ITEMS.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG_TADPOLE::get, new Item.Properties().tab(TAB).stacksTo(16)));
 
     // Gear
-    public static final RegistryObject<Item> DUCKY_MASK = ITEMS.register("ducky_mask", () -> new DuckyMaskArmorItem(EquipmentSlot.HEAD));
+    public static final RegistryObject<Item> DUCKY_MASK = ITEMS.register("ducky_mask", () -> new DuckyMaskItem(EquipmentSlot.HEAD));
     public static final RegistryObject<Item> YETI_FEEDERS = ITEMS.register("yeti_feeders", () -> new YetiFeedersItem(EquipmentSlot.CHEST));
 
     // Spawn Eggs

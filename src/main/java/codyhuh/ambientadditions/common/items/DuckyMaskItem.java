@@ -24,12 +24,12 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class DuckyMaskArmorItem extends ArmorItem implements IAnimatable {
+public class DuckyMaskItem extends ArmorItem implements IAnimatable {
     public static final ArmorMaterial MATERIAL = new AAArmorMaterial(AmbientAdditions.MOD_ID + ":ducky_mask", 4, new int[]{1, 2, 3, 1}, 12, SoundEvents.ARMOR_EQUIP_TURTLE, 0.0F, () -> Ingredient.of(Items.IRON_INGOT));
     public static final Lazy<Multimap<Attribute, AttributeModifier>> SWIM_MODIFIER = Lazy.of(() -> ImmutableMultimap.of(ForgeMod.SWIM_SPEED.get(), new AttributeModifier("Swim modifier", 0.15, AttributeModifier.Operation.ADDITION)));
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public DuckyMaskArmorItem(EquipmentSlot slot) {
+    public DuckyMaskItem(EquipmentSlot slot) {
         super(MATERIAL, slot, new Item.Properties().tab(AAItems.TAB));
     }
 
