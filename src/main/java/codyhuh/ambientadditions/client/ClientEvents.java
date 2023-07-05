@@ -6,6 +6,7 @@ import codyhuh.ambientadditions.client.model.TextureVariantModel;
 import codyhuh.ambientadditions.client.renderer.GenericGeoRenderer;
 import codyhuh.ambientadditions.client.renderer.MataMataRenderer;
 import codyhuh.ambientadditions.client.renderer.item.DartRenderer;
+import codyhuh.ambientadditions.client.renderer.layer.AAGlowingEyesLayer;
 import codyhuh.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import codyhuh.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import codyhuh.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
@@ -38,7 +39,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         EntityType<?>[] simpleEntities = new EntityType[]{
-                AAEntities.AYE_AYE.get(), AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(),
+                AAEntities.GIANT_LAND_SNAIL.get(), AAEntities.LONGHORN_COWFISH.get(), AAEntities.NINE_BANDED_ARMADILLO.get(),
                 AAEntities.PINK_FAIRY_ARMADILLO.get(), AAEntities.MOUSTACHED_TAMARIN.get(), AAEntities.IIWI.get(), AAEntities.PINOCCHIO_ANOLE.get(),
                 AAEntities.MARTEN.get(), AAEntities.SPIDER_TAILED_ADDER.get(), AAEntities.RABBIT_SNAIL.get(), AAEntities.RING_TAILED_LEMUR.get(),
                 AAEntities.RUBBER_DUCKY_ISOPOD.get(), AAEntities.NAKED_MOLE_RAT.get(), AAEntities.STAG_BEETLE.get(), AAEntities.SHAME_FACED_CRAB.get(),
@@ -60,6 +61,12 @@ public class ClientEvents {
         EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<CardiganCorgi> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "cardigan_corgi")));
             render.addRenderLayer(new CardiganCorgiCollarLayer(render));
+            return render;
+        });
+
+        EntityRenderers.register(AAEntities.AYE_AYE.get(), (ctx) -> {
+            GenericGeoRenderer<AyeAye> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel<>(new ResourceLocation(AmbientAdditions.MOD_ID, "aye_aye")));
+            render.addRenderLayer(new AAGlowingEyesLayer<>("aye_aye", render));
             return render;
         });
 
