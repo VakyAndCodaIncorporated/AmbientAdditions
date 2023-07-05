@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -186,8 +187,8 @@ public class ClientEvents {
         AmbientAdditions.CALLBACKS.clear();
     }
 
-
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void layers(EntityRenderersEvent.AddLayers event) {
         GeoArmorRenderer.registerArmorRenderer(YetiFeedersItem.class, YetiFeedersRenderer::new);
         GeoArmorRenderer.registerArmorRenderer(DuckyMaskArmorItem.class, DuckyMaskRenderer::new);

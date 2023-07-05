@@ -1,6 +1,7 @@
 package codyhuh.ambientadditions.common.items;
 
 import codyhuh.ambientadditions.AmbientAdditions;
+import codyhuh.ambientadditions.registry.AAItems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +30,7 @@ public class DuckyMaskArmorItem extends ArmorItem implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public DuckyMaskArmorItem(EquipmentSlot slot) {
-        super(MATERIAL, slot, new Item.Properties());
+        super(MATERIAL, slot, new Item.Properties().tab(AAItems.TAB));
     }
 
     @Override

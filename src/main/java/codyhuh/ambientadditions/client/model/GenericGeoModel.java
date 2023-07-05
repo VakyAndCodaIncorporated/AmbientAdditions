@@ -16,12 +16,8 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
     private final String texture;
     private final String anim;
 
-    public GenericGeoModel(String name){
+    public GenericGeoModel(String name) {
         this(name, name, name);
-    }
-
-    public GenericGeoModel(String name, String texture){
-        this(name, texture, name);
     }
 
     public GenericGeoModel(String model, String texture, String anim) {
@@ -33,7 +29,7 @@ public class GenericGeoModel<E extends LivingEntity & IAnimatable> extends Anima
 
     @Override
     public ResourceLocation getModelResource(E object) {
-        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/" + model + ".geo.json");
+        return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/" + model + ".geo.json");
     }
 
     @Override

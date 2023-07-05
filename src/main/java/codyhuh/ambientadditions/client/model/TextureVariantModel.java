@@ -15,14 +15,6 @@ public class TextureVariantModel<E extends LivingEntity & IAnimatable> extends G
         super(name);
     }
 
-    public TextureVariantModel(String name, String texture) {
-        super(name, texture);
-    }
-
-    public TextureVariantModel(String model, String texture, String anim) {
-        super(model, texture, anim);
-    }
-
     public TextureVariantModel<E> setTextures(Function<E, Integer> whichTexture, List<ResourceLocation> textures){
         this.whichTexture = whichTexture;
         this.textures = textures;

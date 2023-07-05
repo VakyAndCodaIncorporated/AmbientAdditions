@@ -9,12 +9,12 @@ public class DuckyMaskModel extends AnimatedGeoModel<DuckyMaskArmorItem> {
 
 	@Override
 	public ResourceLocation getModelResource(DuckyMaskArmorItem object) {
-		return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/ducky_mask.geo.json");
+		return new ResourceLocation(AmbientAdditions.MOD_ID, "geo/item/armor/ducky_mask.geo.json");
 	}
 
 	@Override
 	public ResourceLocation getTextureResource(DuckyMaskArmorItem object) {
-		return new ResourceLocation(AmbientAdditions.MOD_ID, "textures/armor/ducky_mask.png");
+		return new ResourceLocation(AmbientAdditions.MOD_ID, "textures/armor/ducky_mask_layer_1.png");
 	}
 
 	@Override

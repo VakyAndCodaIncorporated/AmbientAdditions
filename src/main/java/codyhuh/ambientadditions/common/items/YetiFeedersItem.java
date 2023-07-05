@@ -28,7 +28,7 @@ public class YetiFeedersItem extends ArmorItem implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public YetiFeedersItem(EquipmentSlot slot) {
-        super(MATERIAL, slot, new Item.Properties());
+        super(MATERIAL, slot, new Item.Properties().tab(AAItems.TAB));
     }
 
     @Override
