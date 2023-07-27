@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -54,10 +53,10 @@ public class LeafFrog extends Animal implements IAnimatable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.0D, Ingredient.of(Items.SPIDER_EYE), false));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
@@ -76,25 +75,29 @@ public class LeafFrog extends Animal implements IAnimatable {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
-    public BlockPos nearestWater() {
-        BlockPos pos = blockPosition();
+    private BlockPos blockPos = BlockPos.ZERO;
+
+    public boolean findNearestBlock() {
+        int i = 24;
+        int j = 2;
+        BlockPos blockpos = blockPosition();
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-        int distance = 8;
-
-        for (int x = -distance; x < distance; x++) {
-            for (int y = -2; y < 2; y++) {
-                for (int z = -distance; z < distance; z++) {
-                    mutablePos.setWithOffset(pos, x, y, z);
-
-                    if (this.level.getFluidState(mutablePos).is(FluidTags.WATER)) {
-                        return mutablePos.immutable();
+        for(int k = -1; k <= j; k = k > 0 ? -k : 1 - k) {
+            for(int l = 0; l < i; ++l) {
+                for(int i1 = 0; i1 <= l; i1 = i1 > 0 ? -i1 : 1 - i1) {
+                    for(int j1 = i1 < l && i1 > -l ? l : 0; j1 <= l; j1 = j1 > 0 ? -j1 : 1 - j1) {
+                        mutablePos.setWithOffset(blockpos, i1, k - 1, j1);
+                        if (isWithinRestriction(mutablePos) && level.getBlockState(mutablePos).is(Blocks.WATER)) {
+                            this.blockPos = mutablePos;
+                            return true;
+                        }
                     }
                 }
             }
         }
 
-        return BlockPos.ZERO;
+        return false;
     }
 
     protected void defineSynchedData() {
@@ -119,13 +122,20 @@ public class LeafFrog extends Animal implements IAnimatable {
         this.entityData.set(LAYING_EGGS, layingEggs);
     }
 
+    // todo
     @Override
     public void tick() {
         super.tick();
 
-        Path path = getNavigation().createPath(nearestWater(), 2);
+        Path path = getNavigation().createPath(blockPos.above(), 1);
 
-        if (isGravid() && path != null) {
+        if (isLayingEggs() && distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 4.0F) {
+            setLayingEggs(false);
+            level.setBlock(blockPos.above(), Blocks.FROGSPAWN.defaultBlockState(), 2);
+            playSound(SoundEvents.FROG_LAY_SPAWN);
+        }
+
+        if (findNearestBlock() && isGravid() && path != null) {
             setGravid(false);
 
             if (getNavigation().moveTo(path, 1.0D)) {
@@ -135,12 +145,6 @@ public class LeafFrog extends Animal implements IAnimatable {
                 playSound(SoundEvents.FROG_LONG_JUMP);
             }
 
-        }
-
-        if (isLayingEggs() && getNavigation().isDone()) {
-            setLayingEggs(false);
-            level.setBlock(nearestWater().above(), Blocks.FROGSPAWN.defaultBlockState(), 2);
-            playSound(SoundEvents.FROG_LAY_SPAWN);
         }
 
     }

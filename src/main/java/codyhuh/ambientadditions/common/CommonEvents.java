@@ -130,7 +130,7 @@ public class CommonEvents {
 
            if (e.getParentA() instanceof LeafFrog parentA && e.getParentB() instanceof LeafFrog parentB) {
 
-                if (!parentA.nearestWater().equals(BlockPos.ZERO) || !parentB.nearestWater().equals(BlockPos.ZERO)) {
+                if (parentA.findNearestBlock() || parentB.findNearestBlock()) {
                     parentA.setGravid(true);
                     parentB.discard();
                 }
