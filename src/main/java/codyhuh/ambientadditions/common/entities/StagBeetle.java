@@ -95,7 +95,7 @@ public class StagBeetle extends PathfinderMob implements IAnimatable {
     protected InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
         ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
         if (itemstack.getItem() == Items.GLASS_BOTTLE && this.isAlive()) {
-            this.playSound(SoundEvents.ITEM_FRAME_ADD_ITEM, 1.0F, 1.0F);
+            this.playSound(SoundEvents.BOTTLE_FILL_DRAGONBREATH, 1.0F, 1.0F); // todo - test sound
             itemstack.shrink(1);
             ItemStack itemstack1 = new ItemStack(AAItems.STAG_BEETLE_BOTTLE.get());
             this.saveToBucketTag(itemstack1);

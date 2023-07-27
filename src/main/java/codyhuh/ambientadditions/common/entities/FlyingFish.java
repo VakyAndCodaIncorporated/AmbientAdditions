@@ -25,7 +25,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-// TODO - make them stop flying once they hit the water
 public class FlyingFish extends AbstractSchoolingFish implements IAnimatable {
 
     private static final EntityDataAccessor<Boolean> IS_FLYING = SynchedEntityData.defineId(FlyingFish.class, EntityDataSerializers.BOOLEAN);

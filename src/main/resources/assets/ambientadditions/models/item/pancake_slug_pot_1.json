@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ambientadditions:item/pancake_slug_pot_1"
+  }
+}

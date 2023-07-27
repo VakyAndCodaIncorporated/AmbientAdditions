@@ -37,7 +37,6 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import javax.annotation.Nullable;
 
 public class VeiledChameleon extends Animal implements IAnimatable {
-
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(VeiledChameleon.class, EntityDataSerializers.INT);
 
     public VeiledChameleon(EntityType<? extends Animal> p_i48568_1_, Level p_i48568_2_) {

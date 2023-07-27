@@ -37,6 +37,10 @@ public class AAItems {
     public static final RegistryObject<Item> STAG_BEETLE_BOTTLE = ITEMS.register("stag_beetle_bottle", () -> new AACatchableItem(AAEntities.STAG_BEETLE::get, Items.GLASS_BOTTLE, false, new Item.Properties().tab(TAB).stacksTo(1)));
     public static final RegistryObject<Item> NAPOLEON_WRASSE_BUCKET = ITEMS.register("napoleon_wrasse_bucket", () -> new MobBucketItem(AAEntities.NAPOLEON_WRASSE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(TAB).stacksTo(1)));
     public static final RegistryObject<Item> MATA_MATA_BUCKET = ITEMS.register("mata_mata_bucket", () -> new MobBucketItem(AAEntities.MATA_MATA, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_AXOLOTL, new Item.Properties().tab(TAB).stacksTo(1)));
+    public static final RegistryObject<Item> BLUE_SPOTTED_STINGRAY_BUCKET = ITEMS.register("blue_spotted_stingray_bucket", () -> new MobBucketItem(AAEntities.BLUE_SPOTTED_STINGRAY, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().tab(TAB).stacksTo(1)));
+    public static final RegistryObject<Item> RABBIT_SNAIL_POT = ITEMS.register("rabbit_snail_pot", () -> new AACatchableItem(AAEntities.RABBIT_SNAIL::get, Fluids.WATER, Items.FLOWER_POT, false, new Item.Properties().tab(TAB).stacksTo(1)));
+    public static final RegistryObject<Item> GIANT_LAND_SNAIL_POT = ITEMS.register("giant_land_snail_pot", () -> new AACatchableItem(AAEntities.GIANT_LAND_SNAIL::get, Items.FLOWER_POT, false, new Item.Properties().tab(TAB).stacksTo(1)));
+    public static final RegistryObject<Item> PANCAKE_SLUG_POT = ITEMS.register("pancake_slug_pot", () -> new AACatchableItem(AAEntities.PANCAKE_SLUG::get, Items.FLOWER_POT, true, new Item.Properties().tab(TAB).stacksTo(1)));
 
     // Drops & Materials
     public static final RegistryObject<Item> BARK = ITEMS.register("bark", () -> new Item(new Item.Properties().tab(TAB)));

@@ -3,18 +3,22 @@ package codyhuh.ambientadditions.common.entities;
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -24,6 +28,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -118,7 +123,6 @@ public class PancakeSlug extends Animal implements IAnimatable {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         if (dataTag != null && dataTag.contains("Variant", 3)) {
             this.setVariant(dataTag.getInt("Variant"));
-            //setAge(dataTag.getInt("Age"));
         }
         else {
             if (worldIn.getBiome(blockPosition()).is(BiomeTags.IS_JUNGLE)) {
@@ -172,11 +176,42 @@ public class PancakeSlug extends Animal implements IAnimatable {
     }
 
     @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack heldItem = player.getItemInHand(hand);
+
+        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !this.isBaby()) {
+            playSound(SoundEvents.ITEM_FRAME_ADD_ITEM, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            ItemStack itemstack1 = new ItemStack(AAItems.PANCAKE_SLUG_POT.get());
+            this.setBucketData(itemstack1);
+            if (!this.level.isClientSide) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemstack1);
+            }
+            if (heldItem.isEmpty()) {
+                player.setItemInHand(hand, itemstack1);
+            } else if (!player.getInventory().add(itemstack1)) {
+                player.drop(itemstack1, false);
+            }
+            this.discard();
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    private void setBucketData(ItemStack bucket) {
+        if (this.hasCustomName()) {
+            bucket.setHoverName(this.getCustomName());
+        }
+        CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Variantw", this.getVariant());
+    }
+
+    @Override
     public void registerControllers(AnimationData controller) {
         controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (isHiding()) {
             event.getController().setAnimation(AAAnimations.ACTION);
         }

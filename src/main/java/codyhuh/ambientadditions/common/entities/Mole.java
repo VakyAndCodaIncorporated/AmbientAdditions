@@ -43,7 +43,6 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-// todo - test digging
 public class Mole extends Animal implements IAnimatable {
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(Mole.class, EntityDataSerializers.INT);
     private MoleDiggingGoal eatBlockGoal;

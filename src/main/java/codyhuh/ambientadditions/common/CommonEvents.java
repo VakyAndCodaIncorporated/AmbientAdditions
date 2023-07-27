@@ -6,7 +6,6 @@ import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
 import codyhuh.ambientadditions.registry.AATags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -128,13 +127,13 @@ public class CommonEvents {
 
         @SubscribeEvent
         public static void frogBreed(BabyEntitySpawnEvent e) {
-            if (e.getParentA() instanceof LeafFrog && e.getParentB() instanceof LeafFrog) {
-                ItemEntity item = EntityType.ITEM.create(e.getParentA().level);
-                item.setItem(new ItemStack(AAItems.LEAF_FROG_EGG.get(), e.getParentA().getRandom().nextInt(3) + 1));
-                item.moveTo(e.getParentA().position());
 
-                e.getParentA().level.addFreshEntity(item);
-                e.getParentA().playSound(SoundEvents.CHICKEN_EGG, 1.0F, (e.getParentA().getRandom().nextFloat() - e.getParentA().getRandom().nextFloat()) * 0.2F + 1.0F);
+           if (e.getParentA() instanceof LeafFrog parentA && e.getParentB() instanceof LeafFrog parentB) {
+
+                if (!parentA.nearestWater().equals(BlockPos.ZERO) || !parentB.nearestWater().equals(BlockPos.ZERO)) {
+                    parentA.setGravid(true);
+                    parentB.discard();
+                }
 
                 e.setCanceled(true);
             }

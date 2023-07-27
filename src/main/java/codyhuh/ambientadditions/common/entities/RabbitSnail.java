@@ -4,9 +4,13 @@ import codyhuh.ambientadditions.common.entities.ai.goal.AvoidEntityWithoutMaskGo
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
 import codyhuh.ambientadditions.common.entities.util.NonSwimmer;
 import codyhuh.ambientadditions.registry.AAItems;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -74,11 +79,40 @@ public class RabbitSnail extends NonSwimmer implements IAnimatable {
     }
 
     @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack heldItem = player.getItemInHand(hand);
+
+        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !this.isBaby()) {
+            playSound(SoundEvents.BUCKET_FILL_TADPOLE, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            ItemStack itemstack1 = new ItemStack(AAItems.RABBIT_SNAIL_POT.get());
+            this.setBucketData(itemstack1);
+            if (!this.level.isClientSide) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemstack1);
+            }
+            if (heldItem.isEmpty()) {
+                player.setItemInHand(hand, itemstack1);
+            } else if (!player.getInventory().add(itemstack1)) {
+                player.drop(itemstack1, false);
+            }
+            this.discard();
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    private void setBucketData(ItemStack bucket) {
+        if (this.hasCustomName()) {
+            bucket.setHoverName(this.getCustomName());
+        }
+    }
+
+    @Override
     public void registerControllers(AnimationData controller) {
         controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F);
         if (walking) {
             event.getController().setAnimation(AAAnimations.WALK);

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,7 +42,11 @@ public class AACatchableItem extends BucketItem {
     private final boolean hasTooltip;
 
     public AACatchableItem(Supplier<EntityType<?>> entityType, Item item, boolean hasTooltip, Properties properties) {
-        super(Fluids.EMPTY, properties);
+        this(entityType, Fluids.EMPTY, item, hasTooltip, properties);
+    }
+
+    public AACatchableItem(Supplier<EntityType<?>> entityType, Fluid fluid, Item item, boolean hasTooltip, Properties properties) {
+        super(fluid, properties);
         this.entityType = entityType;
         this.item1 = item;
         this.hasTooltip = hasTooltip;
@@ -84,7 +90,7 @@ public class AACatchableItem extends BucketItem {
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, world, tooltip, flag);
         if (hasTooltip && stack.hasTag()) {
-            MutableComponent variant = Component.translatable(getEntityType().getDescriptionId() + "." + stack.getTag().getInt("Variant")).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC);
+            MutableComponent variant = Component.translatable(getEntityType().getDescriptionId() + "." + stack.getTag().getInt("Variant")).withStyle(ChatFormatting.GRAY);
 
             tooltip.add(variant);
         }
@@ -95,6 +101,11 @@ public class AACatchableItem extends BucketItem {
     }
 
     protected void playEmptySound(@Nullable Player player, LevelAccessor worldIn, BlockPos pos) {
-        worldIn.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        if (getFluid().is(FluidTags.WATER)) {
+            worldIn.playSound(player, pos, SoundEvents.BUCKET_EMPTY_AXOLOTL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        }
+        else {
+            worldIn.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        }
     }
 }

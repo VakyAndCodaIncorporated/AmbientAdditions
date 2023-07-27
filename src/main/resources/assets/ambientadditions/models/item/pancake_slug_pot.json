@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ambientadditions:item/pancake_slug_pot_0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "ambientadditions:variant": 0
+      },
+      "model": "ambientadditions:item/pancake_slug_pot"
+    },
+    {
+      "predicate": {
+        "ambientadditions:variant": 1
+      },
+      "model": "ambientadditions:item/pancake_slug_pot_1"
+    },
+    {
+      "predicate": {
+        "ambientadditions:variant": 2
+      },
+      "model": "ambientadditions:item/pancake_slug_pot_2"
+    }
+  ]
+}

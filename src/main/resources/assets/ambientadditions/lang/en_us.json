@@ -28,6 +28,10 @@
   "item.ambientadditions.shame_faced_crab_bucket": "Bucket of Shame Faced Crab",
   "item.ambientadditions.napoleon_wrasse_bucket": "Bucket of Napoleon Wrasse",
   "item.ambientadditions.mata_mata_bucket": "Bucket of Mata Mata",
+  "item.ambientadditions.blue_spotted_stingray_bucket": "Bucket of Blue Spotted Stingray",
+  "item.ambientadditions.rabbit_snail_pot": "Pot of Rabbit Snail",
+  "item.ambientadditions.pancake_slug_pot": "Pot of Pancake Slug",
+  "item.ambientadditions.giant_land_snail_pot": "Pot of Giant Land Snail",
 
   "item.ambientadditions.white_fruit_bat_spawn_egg": "White Fruit Bat Spawn Egg",
   "item.ambientadditions.longhorn_cowfish_spawn_egg": "Longhorn Cowfish Spawn Egg",
@@ -105,6 +109,10 @@
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",
   "entity.ambientadditions.mole.2": "Hairy-tailed Mole",
+
+  "entity.ambientadditions.pancake_slug.0": "Pale Savanna",
+  "entity.ambientadditions.pancake_slug.1": "Savanna",
+  "entity.ambientadditions.pancake_slug.2": "Jungle",
 
   "ambientadditions.armadillo.ambient": "Armadillo squeals",
   "ambientadditions.armadillo.hurt": "Armadillo hurts",
