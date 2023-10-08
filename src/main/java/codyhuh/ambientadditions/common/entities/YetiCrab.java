@@ -189,7 +189,7 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
         controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F);
         if (walking) {
             event.getController().setAnimation(AAAnimations.WALK);

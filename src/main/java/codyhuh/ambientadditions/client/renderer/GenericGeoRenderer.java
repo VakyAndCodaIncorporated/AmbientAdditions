@@ -64,7 +64,7 @@ public class GenericGeoRenderer<T extends LivingEntity & IAnimatable> extends Ge
 	@Override
 	public void renderEarly(T animatable, PoseStack poseStack, float partialTick, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float partialTicks) {
 		if (animatable instanceof ChocolateChipStarfish starfish) {
-			GeoModel model = AnimationUtils.getGeoModelForEntity(starfish).getModel( new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/chocolate_chip_starfish.geo.json"));
+			GeoModel model = AnimationUtils.getGeoModelForEntity(starfish).getModel(new ResourceLocation(AmbientAdditions.MOD_ID, "geo/entity/chocolate_chip_starfish.geo.json"));
 
 			for (int i = 1; i <= 5; i++) {
 				Optional<GeoBone> arm = model.getBone("Arm" + i);

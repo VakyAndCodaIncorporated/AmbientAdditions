@@ -1,4 +1,3 @@
-
 package codyhuh.ambientadditions.common.entities.ai.movement;
 
 import net.minecraft.core.BlockPos;
