@@ -50,7 +50,6 @@ public class AAItems {
     public static final RegistryObject<Item> LONGHORN_COWFISH = ITEMS.register("longhorn_cowfish", () -> new Item(new Item.Properties().tab(TAB).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
     //public static final RegistryObject<Item> FLYING_FISH = ITEMS.register("flying_fish", () -> new Item(new Item.Properties().tab(TAB)/**/.food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build())));
     public static final RegistryObject<Item> WORM = ITEMS.register("worm", () -> new Item(new Item.Properties().tab(TAB).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).build())));
-    public static final RegistryObject<Item> LEAF_FROG_EGG = ITEMS.register("leaf_frog_egg", () -> new FrogEggItem(AAEntities.LEAF_FROG_TADPOLE::get, new Item.Properties().tab(TAB).stacksTo(16)));
 
     // Gear
     public static final RegistryObject<Item> DUCKY_MASK = ITEMS.register("ducky_mask", () -> new DuckyMaskItem(EquipmentSlot.HEAD));
@@ -92,4 +91,8 @@ public class AAItems {
     public static final RegistryObject<Item> BLUE_SPOTTED_STINGRAY_SPAWN_EGG = ITEMS.register("blue_spotted_stingray_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.BLUE_SPOTTED_STINGRAY, 0xe4e67e, 0x1b8cca, new Item.Properties().tab(TAB)));
     public static final RegistryObject<Item> PANCAKE_SLUG_SPAWN_EGG = ITEMS.register("pancake_slug_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.PANCAKE_SLUG, 0xdec170, 0xa05f31, new Item.Properties().tab(TAB)));
     public static final RegistryObject<Item> SLOTH_BEAR_SPAWN_EGG = ITEMS.register("sloth_bear_spawn_egg", () -> new ForgeSpawnEggItem(AAEntities.SLOTH_BEAR, 0x324242, 0xc8cbb2, new Item.Properties().tab(TAB)));
+
+    // BlockItems
+    public static final RegistryObject<Item> LEAF_FROGSPAWN = ITEMS.register("leaf_frogspawn", () -> new PlaceOnWaterBlockItem(AABlocks.LEAF_FROGSPAWN.get(), new Item.Properties().tab(TAB)));
+
 }

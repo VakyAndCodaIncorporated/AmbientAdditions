@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ambientadditions:item/leaf_frog_egg"
+    "layer0": "ambientadditions:block/leaf_frogspawn"
   }
 }

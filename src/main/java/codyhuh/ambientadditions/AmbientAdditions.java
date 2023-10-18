@@ -1,5 +1,6 @@
 package codyhuh.ambientadditions;
 
+import codyhuh.ambientadditions.registry.AABlocks;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
 import codyhuh.ambientadditions.registry.AASounds;
@@ -24,6 +25,6 @@ public class AmbientAdditions {
         AAItems.ITEMS.register(bus);
         AAEntities.ENTITIES.register(bus);
         AASounds.SOUNDS.register(bus);
+        AABlocks.BLOCKS.register(bus);
     }
-
 }

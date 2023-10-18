@@ -1,0 +1,17 @@
+{
+  "render_type": "minecraft:translucent",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "ambientadditions:block/leaf_frogspawn",
+    "texture": "ambientadditions:block/leaf_frogspawn"
+  },
+  "elements": [
+    {   "from": [  0, 0.25,  0 ],
+      "to":   [ 16, 0.25, 16 ],
+      "faces": {
+        "down":  { "uv": [  0, 16, 16,  0 ], "texture": "#texture" },
+        "up":  { "uv": [  0,  0, 16, 16 ], "texture": "#texture"}
+      }
+    }
+  ]
+}

@@ -13,7 +13,6 @@
   "item.ambientadditions.isopod_molt": "Isopod Molt",
   "item.ambientadditions.yeti_crab_fluff": "Yeti Crab Fluff",
   "item.ambientadditions.starfish_arm": "Starfish Arm",
-  "item.ambientadditions.leaf_frog_egg": "Leaf Frog Egg",
   "item.ambientadditions.flying_fish": "Flying Fish",
 
   "item.ambientadditions.longhorn_cowfish_bucket": "Bucket of Longhorn Cowfish",
@@ -68,6 +67,8 @@
   "item.ambientadditions.blue_spotted_stingray_spawn_egg": "Blue Spotted Stingray Spawn Egg",
   "item.ambientadditions.pancake_slug_spawn_egg": "Pancake Slug Spawn Egg",
   "item.ambientadditions.sloth_bear_spawn_egg": "Sloth Bear Spawn Egg",
+
+  "block.ambientadditions.leaf_frogspawn": "Leaf Frogspawn",
 
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",

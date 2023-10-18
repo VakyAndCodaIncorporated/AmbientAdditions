@@ -1,36 +1,12 @@
 package codyhuh.ambientadditions.common.entities;
 
 import codyhuh.ambientadditions.common.entities.util.AAAnimations;
+import codyhuh.ambientadditions.common.entities.util.AbstractFrog;
 import codyhuh.ambientadditions.registry.AAItems;
-import codyhuh.ambientadditions.registry.AASounds;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -40,180 +16,20 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import javax.annotation.Nullable;
-
-public class LeafFrog extends Animal implements IAnimatable {
-    private static final EntityDataAccessor<Boolean> IS_GRAVID = SynchedEntityData.defineId(LeafFrog.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> LAYING_EGGS = SynchedEntityData.defineId(LeafFrog.class, EntityDataSerializers.BOOLEAN);
+public class LeafFrog extends AbstractFrog implements IAnimatable {
 
     public LeafFrog(EntityType<? extends LeafFrog> type, Level world) {
         super(type, world);
     }
 
     @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.0D, Ingredient.of(Items.SPIDER_EYE), false));
-        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(0, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 10.0F));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-    }
-
-    protected PathNavigation createNavigation(Level world) {
-        return new GroundPathNavigation(this, world);
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
-        return null;
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.MOVEMENT_SPEED, 0.25D);
-    }
-
-    private BlockPos blockPos = BlockPos.ZERO;
-
-    public boolean findNearestBlock() {
-        int i = 24;
-        int j = 2;
-        BlockPos blockpos = blockPosition();
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-
-        for(int k = -1; k <= j; k = k > 0 ? -k : 1 - k) {
-            for(int l = 0; l < i; ++l) {
-                for(int i1 = 0; i1 <= l; i1 = i1 > 0 ? -i1 : 1 - i1) {
-                    for(int j1 = i1 < l && i1 > -l ? l : 0; j1 <= l; j1 = j1 > 0 ? -j1 : 1 - j1) {
-                        mutablePos.setWithOffset(blockpos, i1, k - 1, j1);
-                        if (isWithinRestriction(mutablePos) && level.getBlockState(mutablePos).is(Blocks.WATER)) {
-                            this.blockPos = mutablePos;
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(IS_GRAVID, false);
-        this.entityData.define(LAYING_EGGS, false);
-    }
-
-    private boolean isGravid() {
-        return this.entityData.get(IS_GRAVID);
-    }
-
-    public void setGravid(boolean gravid) {
-        this.entityData.set(IS_GRAVID, gravid);
-    }
-
-    private boolean isLayingEggs() {
-        return this.entityData.get(LAYING_EGGS);
-    }
-
-    public void setLayingEggs(boolean layingEggs) {
-        this.entityData.set(LAYING_EGGS, layingEggs);
-    }
-
-    // todo
-    @Override
-    public void tick() {
-        super.tick();
-
-        Path path = getNavigation().createPath(blockPos.above(), 1);
-
-        if (isLayingEggs() && distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 4.0F) {
-            setLayingEggs(false);
-            level.setBlock(blockPos.above(), Blocks.FROGSPAWN.defaultBlockState(), 2);
-            playSound(SoundEvents.FROG_LAY_SPAWN);
-        }
-
-        if (findNearestBlock() && isGravid() && path != null) {
-            setGravid(false);
-
-            if (getNavigation().moveTo(path, 1.0D)) {
-                setLayingEggs(true);
-            }
-            else {
-                playSound(SoundEvents.FROG_LONG_JUMP);
-            }
-
-        }
-
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack heldItem = player.getItemInHand(hand);
-
-        if (heldItem.getItem() == Items.BOWL && this.isAlive() && !this.isBaby()) {
-            playSound(SoundEvents.ITEM_FRAME_ADD_ITEM, 1.0F, 1.0F);
-            heldItem.shrink(1);
-            ItemStack itemstack1 = new ItemStack(AAItems.LEAF_FROG_BOWL.get());
-            this.setBucketData(itemstack1);
-            if (!this.level.isClientSide) {
-                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemstack1);
-            }
-            if (heldItem.isEmpty()) {
-                player.setItemInHand(hand, itemstack1);
-            } else if (!player.getInventory().add(itemstack1)) {
-                player.drop(itemstack1, false);
-            }
-            this.discard();
-            return InteractionResult.SUCCESS;
-        }
-        return super.mobInteract(player, hand);
-    }
-
-    private void setBucketData(ItemStack bucket) {
-        if (this.hasCustomName()) {
-            bucket.setHoverName(this.getCustomName());
-        }
-    }
-
-    protected SoundEvent getAmbientSound() {
-        return AASounds.FROG_AMBIENT.get();
-    }
-
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AASounds.FROG_HURT.get();
-    }
-
-    protected SoundEvent getDeathSound() {
-        return AASounds.FROG_DEATH.get();
-    }
-
-    protected float getSoundVolume() {
-        return 0.3F;
-    }
-
-    public boolean hurt(DamageSource source, float amount) {
-        return !this.isInvulnerableTo(source) && super.hurt(source, amount);
-    }
-
-    @Override
-    public boolean isFood(ItemStack stack) {
-        return stack.getItem() == Items.SPIDER_EYE;
-    }
-
-    public boolean isPushedByFluid() {
-        return false;
+    public Item getBowlItem() {
+        return AAItems.LEAF_FROG_BOWL.get();
     }
 
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(AAItems.LEAF_FROG_SPAWN_EGG.get());
-    }
-
-    public void spawnChildFromBreeding(ServerLevel level, Animal ageable) {
-        super.spawnChildFromBreeding(level, ageable);
     }
 
     @Override
