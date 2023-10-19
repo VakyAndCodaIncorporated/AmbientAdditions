@@ -1,6 +1,7 @@
 package codyhuh.ambientadditions.common.items;
 
 import codyhuh.ambientadditions.AmbientAdditions;
+import codyhuh.ambientadditions.registry.AAEffects;
 import codyhuh.ambientadditions.registry.AAItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -16,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -54,7 +54,7 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN) && (target instanceof PathfinderMob)/* && target.getType().is(AATags.CRATEABLE)*/) {
+        if (target.hasEffect(AAEffects.SEDATION.get()) && target.getEffect(AAEffects.SEDATION.get()).getAmplifier() + 1 >= AmbientAdditions.sedationLvl(target.getMaxHealth()) && target instanceof PathfinderMob/* && target.getType().is(AATags.CRATEABLE)*/) {
             if (!level.isClientSide) {
 
                 ItemStack stack1 = player.getItemInHand(hand);

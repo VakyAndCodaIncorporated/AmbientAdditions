@@ -3,14 +3,11 @@ package codyhuh.ambientadditions.common;
 import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.common.entities.*;
 import codyhuh.ambientadditions.common.entities.util.AbstractFrog;
-import codyhuh.ambientadditions.registry.AAEntities;
-import codyhuh.ambientadditions.registry.AAItems;
-import codyhuh.ambientadditions.registry.AATags;
+import codyhuh.ambientadditions.registry.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -25,9 +22,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -126,6 +125,46 @@ public class CommonEvents {
 
     @Mod.EventBusSubscriber(modid = AmbientAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ForgeEvents {
+
+        @SubscribeEvent
+        public static void addSedationParticles(LivingEvent.LivingTickEvent e) {
+            LivingEntity living = e.getEntity();
+
+            if (living.hasEffect(AAEffects.SEDATION.get()) && !living.getType().is(AATags.UNCRATABLE) && living instanceof PathfinderMob mob) {
+                int health = (int) mob.getMaxHealth();
+                int amplifier = living.hasEffect(AAEffects.SEDATION.get()) ? living.getEffect(AAEffects.SEDATION.get()).getAmplifier() : 0;
+                int effectLevel = amplifier + 1;
+
+                if (mob.hasEffect(AAEffects.SEDATION.get())) {
+                    if (effectLevel >= AmbientAdditions.sedationLvl(health)) {
+                        zParticles(mob, 30);
+                    }
+                    else {
+                        stunParticles(mob, 20);
+                    }
+                }
+            }
+        }
+
+        private static void stunParticles(LivingEntity entity, int amount) {
+            if (entity.tickCount % amount == 0) {
+                entity.level.addParticle(AAParticles.STUN.get(), getHeadOffset(entity).x(), getHeadOffset(entity).y(), getHeadOffset(entity).z(), 0.0D, 0.0D, 0.0D);
+            }
+        }
+
+        private static void zParticles(LivingEntity entity, int amount) {
+            if (entity.tickCount % amount == 0) {
+                entity.level.addParticle(AAParticles.ZZZ.get(), getHeadOffset(entity).x(), getHeadOffset(entity).y(), getHeadOffset(entity).z(), 0.0D, 0.0D, 0.0D);
+            }
+        }
+
+        public static Vec3 getHeadOffset(LivingEntity entity) {
+            return getYawVec(entity.getYRot(), 0.0F, entity.getEyeHeight() + (entity.getBbHeight() * 0.3F), entity.getBbWidth() * 0.5F).add(entity.position());
+        }
+
+        public static Vec3 getYawVec(float yaw, double xOffset, double yOffset, double zOffset) {
+            return new Vec3(xOffset, yOffset, zOffset).yRot(-yaw * (Mth.PI / 180f));
+        }
 
         @SubscribeEvent
         public static void frogBreed(BabyEntitySpawnEvent e) {

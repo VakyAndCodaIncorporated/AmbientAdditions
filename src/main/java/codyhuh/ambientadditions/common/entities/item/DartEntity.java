@@ -1,12 +1,13 @@
 package codyhuh.ambientadditions.common.entities.item;
 
 import codyhuh.ambientadditions.common.items.DartItem;
+import codyhuh.ambientadditions.registry.AAEffects;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
+import codyhuh.ambientadditions.registry.AATags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -33,17 +35,24 @@ public class DartEntity extends AbstractArrow implements IEntityAdditionalSpawnD
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult p_213868_1_) {
-        super.onHitEntity(p_213868_1_);
-        Entity target = p_213868_1_.getEntity();
-        if (target instanceof LivingEntity livingEntity) {
+    protected void onHitEntity(EntityHitResult result) {
+        Entity target = result.getEntity();
+
+        if (result.getType().equals(HitResult.Type.ENTITY) && target instanceof LivingEntity livingEntity && !target.getType().is(AATags.UNCRATABLE)) {
+            int amplifier = livingEntity.hasEffect(AAEffects.SEDATION.get()) ? livingEntity.getEffect(AAEffects.SEDATION.get()).getAmplifier() : 0;
+            int effectLevel = amplifier + 1;
+
+            // todo - test crates cus i dont think this should work
             if (livingEntity instanceof TamableAnimal pet && pet.getOwner() != null && getOwner() != null && pet.getOwner().is(getOwner())) {
-                pet.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 1));
+                pet.addEffect(new MobEffectInstance(AAEffects.SEDATION.get(), 300, effectLevel), getOwner());
             }
             else {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 1));
+                livingEntity.addEffect(new MobEffectInstance(AAEffects.SEDATION.get(), 300, effectLevel), getOwner());
             }
+
         }
+
+        super.onHitEntity(result);
     }
 
     @Override

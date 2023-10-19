@@ -3,6 +3,8 @@ package codyhuh.ambientadditions.client;
 import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.client.model.GenericGeoModel;
 import codyhuh.ambientadditions.client.model.TextureVariantModel;
+import codyhuh.ambientadditions.client.particles.StunParticle;
+import codyhuh.ambientadditions.client.particles.ZzzParticle;
 import codyhuh.ambientadditions.client.renderer.GenericGeoRenderer;
 import codyhuh.ambientadditions.client.renderer.MataMataRenderer;
 import codyhuh.ambientadditions.client.renderer.item.DartRenderer;
@@ -18,6 +20,7 @@ import codyhuh.ambientadditions.common.items.DuckyMaskItem;
 import codyhuh.ambientadditions.common.items.YetiFeedersItem;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
+import codyhuh.ambientadditions.registry.AAParticles;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -26,6 +29,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -186,4 +190,9 @@ public class ClientEvents {
 
     }
 
+    @SubscribeEvent
+    public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
+        event.register(AAParticles.ZZZ.get(), ZzzParticle.Provider::new);
+        event.register(AAParticles.STUN.get(), StunParticle.Provider::new);
+    }
 }

@@ -1,9 +1,6 @@
 package codyhuh.ambientadditions;
 
-import codyhuh.ambientadditions.registry.AABlocks;
-import codyhuh.ambientadditions.registry.AAEntities;
-import codyhuh.ambientadditions.registry.AAItems;
-import codyhuh.ambientadditions.registry.AASounds;
+import codyhuh.ambientadditions.registry.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,5 +23,25 @@ public class AmbientAdditions {
         AAEntities.ENTITIES.register(bus);
         AASounds.SOUNDS.register(bus);
         AABlocks.BLOCKS.register(bus);
+        AAParticles.PARTICLES.register(bus);
+        AAEffects.EFFECTS.register(bus);
+    }
+
+    public static int sedationLvl(float health) {
+        if (health <= 5) {
+            return 1;
+        }
+        else if (health <= 10) {
+            return 2;
+        }
+        else if (health <= 20) {
+            return 3;
+        }
+        else if (health <= 50) {
+            return 4;
+        }
+        else {
+            return 5;
+        }
     }
 }
