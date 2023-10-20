@@ -168,7 +168,6 @@ public class CommonEvents {
 
         @SubscribeEvent
         public static void frogBreed(BabyEntitySpawnEvent e) {
-
            if (e.getParentA() instanceof AbstractFrog parentA && e.getParentB() instanceof AbstractFrog parentB) {
                parentA.setGravid(true);
                parentB.getNavigation().stop();
