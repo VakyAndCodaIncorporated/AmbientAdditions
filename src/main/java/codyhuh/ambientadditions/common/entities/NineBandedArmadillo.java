@@ -88,6 +88,12 @@ public class NineBandedArmadillo extends Animal implements IAnimatable {
     @Nullable
     @Override
     public NineBandedArmadillo getBreedOffspring(ServerLevel world, AgeableMob animal) {
+        for (int i = 0; i < 3; i++) {
+            NineBandedArmadillo armadillo = AAEntities.NINE_BANDED_ARMADILLO.get().create(world);
+            armadillo.moveTo(position());
+            armadillo.setAge(-24000);
+            world.addFreshEntity(armadillo);
+        }
         return AAEntities.NINE_BANDED_ARMADILLO.get().create(world);
     }
 

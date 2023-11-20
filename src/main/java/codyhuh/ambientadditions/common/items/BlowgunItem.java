@@ -52,12 +52,8 @@ public class BlowgunItem extends ProjectileWeaponItem {
                         dart = customArrow(dart);
                         dart.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, f * 3.0F, 1.0F);
                         if (flag) {
-                            dart.pickup = AbstractArrow.Pickup.DISALLOWED;
+                            dart.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                         }
-                        else {
-                            dart.pickup = AbstractArrow.Pickup.ALLOWED;
-                        }
-
 
                         p_77615_1_.hurtAndBreak(1, playerentity, (p_220009_1_) -> {
                             p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
