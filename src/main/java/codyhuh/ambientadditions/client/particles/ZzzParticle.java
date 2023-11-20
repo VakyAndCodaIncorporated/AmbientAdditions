@@ -25,17 +25,9 @@ public class ZzzParticle extends RisingParticle {
 
     public void tick() {
         super.tick();
-        float amount = (1.0F - (age * 0.01F)) * 2.0F;
-        float speed = 0.0F;
 
-        switch (age / 10) {
-            case 0 -> speed = Mth.lerp(0.05F, 0.0F, amount) * 0.5F;
-            case 2, 4, 6, 8, 10 -> speed = Mth.lerp(0.05F, 0.0F, amount);
-            case 1, 3, 5, 7, 9 -> speed = -Mth.lerp(0.05F, 0.0F, amount);
-        }
         xd = Mth.sin(age * 0.125F) * 0.05F;
 
-        //move(0.0D, 0.005D, speed);
         this.setAlpha(Mth.lerp(0.01F, this.alpha, 0.0F));
         this.setSpriteFromAge(this.sprites);
     }
