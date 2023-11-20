@@ -24,10 +24,9 @@ public class AmbientAdditions {
         AASounds.SOUNDS.register(bus);
         AABlocks.BLOCKS.register(bus);
         AAParticles.PARTICLES.register(bus);
-        AAEffects.EFFECTS.register(bus);
     }
 
-    public static int sedationLvl(float health) {
+    public static int sedationLvlRequiredToCapture(float health) {
         if (health <= 5) {
             return 1;
         }

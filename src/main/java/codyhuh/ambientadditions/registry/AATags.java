@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 public class AATags {
     public static final TagKey<Block> STRIPPABLE_LOGS = blockTag("strippable_logs");
 
-    public static final TagKey<EntityType<?>> UNCRATABLE = entityTag("uncratable");
+    public static final TagKey<EntityType<?>> UNCRATEABLE = entityTag("uncrateable");
 
     private static TagKey<Block> blockTag(String path) {
         return BlockTags.create(new ResourceLocation(AmbientAdditions.MOD_ID, path));

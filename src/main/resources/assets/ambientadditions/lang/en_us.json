@@ -70,8 +70,6 @@
 
   "block.ambientadditions.leaf_frogspawn": "Leaf Frogspawn",
 
-  "effect.ambientadditions.sedation": "Sedation",
-
   "entity.ambientadditions.white_fruit_bat": "White Fruit Bat",
   "entity.ambientadditions.longhorn_cowfish": "Longhorn Cowfish",
   "entity.ambientadditions.stag_beetle": "Stag Beetle",
@@ -108,6 +106,8 @@
   "entity.ambientadditions.leaf_frog_tadpole": "Leaf Frog Tadpole",
   "entity.ambientadditions.pancake_slug": "Pancake Slug",
   "entity.ambientadditions.sloth_bear": "Sloth Bear",
+
+  "entity.ambientadditions.dart": "Dart",
 
   "entity.ambientadditions.mole.0": "Star Nosed Mole",
   "entity.ambientadditions.mole.1": "Eastern Mole",

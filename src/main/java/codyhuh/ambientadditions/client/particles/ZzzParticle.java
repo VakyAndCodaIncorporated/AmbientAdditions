@@ -13,8 +13,9 @@ public class ZzzParticle extends RisingParticle {
     public ZzzParticle(ClientLevel p_107717_, double p_107718_, double p_107719_, double p_107720_, double p_107721_, double p_107722_, double p_107723_, SpriteSet p_107724_) {
         super(p_107717_, p_107718_, p_107719_, p_107720_, p_107721_, p_107722_, p_107723_);
         this.sprites = p_107724_;
-        this.lifetime = 50;
-        this.hasPhysics = true;
+        this.lifetime = 100;
+        this.hasPhysics = false;
+        this.gravity = -0.015F;
         this.setSpriteFromAge(p_107724_);
     }
 
@@ -24,8 +25,18 @@ public class ZzzParticle extends RisingParticle {
 
     public void tick() {
         super.tick();
-        move(0.0D, 0.01D, 0.01D);
-        this.setAlpha(Mth.lerp(0.05F, this.alpha, 0.0F));
+        float amount = (1.0F - (age * 0.01F)) * 2.0F;
+        float speed = 0.0F;
+
+        switch (age / 10) {
+            case 0 -> speed = Mth.lerp(0.05F, 0.0F, amount) * 0.5F;
+            case 2, 4, 6, 8, 10 -> speed = Mth.lerp(0.05F, 0.0F, amount);
+            case 1, 3, 5, 7, 9 -> speed = -Mth.lerp(0.05F, 0.0F, amount);
+        }
+        xd = Mth.sin(age * 0.125F) * 0.05F;
+
+        //move(0.0D, 0.005D, speed);
+        this.setAlpha(Mth.lerp(0.01F, this.alpha, 0.0F));
         this.setSpriteFromAge(this.sprites);
     }
 

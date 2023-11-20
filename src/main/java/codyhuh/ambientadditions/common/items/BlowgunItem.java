@@ -9,11 +9,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.Random;
@@ -32,7 +31,7 @@ public class BlowgunItem extends ProjectileWeaponItem {
     public void releaseUsing(ItemStack p_77615_1_, Level p_77615_2_, LivingEntity p_77615_3_, int p_77615_4_) {
         if (p_77615_3_ instanceof Player) {
             Player playerentity = (Player)p_77615_3_;
-            boolean flag = playerentity.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, p_77615_1_) > 0;
+            boolean flag = playerentity.getAbilities().instabuild;
             ItemStack itemstack = playerentity.getProjectile(p_77615_1_);
 
             int i = this.getUseDuration(p_77615_1_) - p_77615_4_;
@@ -49,15 +48,22 @@ public class BlowgunItem extends ProjectileWeaponItem {
                     boolean flag1 = playerentity.getAbilities().instabuild || (itemstack.getItem() instanceof DartItem && ((DartItem)itemstack.getItem()).isInfinite(itemstack, p_77615_1_, playerentity));
                     if (!p_77615_2_.isClientSide) {
                         DartItem arrowitem = (DartItem)(itemstack.getItem() instanceof DartItem ? itemstack.getItem() : AAItems.DART.get());
-                        DartEntity abstractarrowentity = arrowitem.createArrow(p_77615_2_, itemstack, playerentity);
-                        abstractarrowentity = customArrow(abstractarrowentity);
-                        abstractarrowentity.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, f * 3.0F, 1.0F);
+                        DartEntity dart = arrowitem.createArrow(p_77615_2_, itemstack, playerentity);
+                        dart = customArrow(dart);
+                        dart.shootFromRotation(playerentity, playerentity.getXRot(), playerentity.getYRot(), 0.0F, f * 3.0F, 1.0F);
+                        if (flag) {
+                            dart.pickup = AbstractArrow.Pickup.DISALLOWED;
+                        }
+                        else {
+                            dart.pickup = AbstractArrow.Pickup.ALLOWED;
+                        }
+
 
                         p_77615_1_.hurtAndBreak(1, playerentity, (p_220009_1_) -> {
                             p_220009_1_.broadcastBreakEvent(playerentity.getUsedItemHand());
                         });
 
-                        p_77615_2_.addFreshEntity(abstractarrowentity);
+                        p_77615_2_.addFreshEntity(dart);
                     }
 
                     p_77615_2_.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);

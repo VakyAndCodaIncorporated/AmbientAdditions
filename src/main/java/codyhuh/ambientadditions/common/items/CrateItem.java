@@ -1,8 +1,9 @@
 package codyhuh.ambientadditions.common.items;
 
 import codyhuh.ambientadditions.AmbientAdditions;
-import codyhuh.ambientadditions.registry.AAEffects;
+import codyhuh.ambientadditions.data.SedationProvider;
 import codyhuh.ambientadditions.registry.AAItems;
+import codyhuh.ambientadditions.registry.AATags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -20,7 +21,9 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +57,14 @@ public class CrateItem extends Item {
         if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
-        if (target.hasEffect(AAEffects.SEDATION.get()) && target.getEffect(AAEffects.SEDATION.get()).getAmplifier() + 1 >= AmbientAdditions.sedationLvl(target.getMaxHealth()) && target instanceof PathfinderMob/* && target.getType().is(AATags.CRATEABLE)*/) {
+
+
+        var cap = target.getCapability(SedationProvider.SEDATION_CAP);
+
+        int sedationLevel = cap.resolve().isPresent() ? cap.resolve().get().getLevel() : 0;
+
+        // todo - account for pets/tameables (they should not be crateable unless by their owner!)
+        if (canBeCrated(target) && target.getPersistentData().getBoolean("IsSedated") && sedationLevel >= AmbientAdditions.sedationLvlRequiredToCapture(target.getMaxHealth())/* && target.getType().is(AATags.CRATEABLE)*/) {
             if (!level.isClientSide) {
 
                 ItemStack stack1 = player.getItemInHand(hand);
@@ -104,6 +114,10 @@ public class CrateItem extends Item {
         }
 
         return InteractionResult.sidedSuccess(true);
+    }
+
+    private boolean canBeCrated(LivingEntity entity) {
+        return !(entity instanceof WitherBoss) && !(entity instanceof EnderDragon) && !(entity instanceof Warden) && !entity.getType().is(AATags.UNCRATEABLE);
     }
 
     @Override
