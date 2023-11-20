@@ -75,32 +75,29 @@ public class ForgeEvents {
         var cap = living.getCapability(SedationProvider.SEDATION_CAP);
 
         if (living.getLevel() instanceof ServerLevel serverLevel && living instanceof PathfinderMob mob) {
-            if (tag.getBoolean("IsSedated")) {
-                if (cap.isPresent()) {
-                    var provider = cap.resolve().isPresent() ? cap.resolve().get() : null;
+            if (cap.isPresent()) {
+                var provider = cap.resolve().isPresent() ? cap.resolve().get() : null;
 
-                    if (provider != null) {
+                if (provider != null) {
+                    int i = provider.getTimer();
 
-                        int i = provider.getTimer();
+                    if (i == 0) {
+                        provider.setLevel(0);
+                        tag.putBoolean("IsSedated", false);
+                        mob.goalSelector.enableControlFlag(Goal.Flag.LOOK);
+                        mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);
+                        mob.goalSelector.enableControlFlag(Goal.Flag.JUMP);
+                    }
+                    else if (i > 0) {
+                        provider.setTimer(i - 1); // todo - make sure the sedation timer ticks down even when IsSedated is false
+                    }
 
-                        if (i == 0) {
-                            provider.setLevel(0);
-                            tag.putBoolean("IsSedated", false);
-                            mob.goalSelector.enableControlFlag(Goal.Flag.LOOK);
-                            mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);
-                            mob.goalSelector.enableControlFlag(Goal.Flag.JUMP);
-                        }
-                        else if (i > 0) {
-                            provider.setTimer(i - 1);
-                        }
-
-                        if (provider.getLevel() >= AmbientAdditions.sedationLvlRequiredToCapture(living.getMaxHealth())) {
-                            zzzParticles(living, 30, serverLevel);
-                            mob.getNavigation().stop();
-                            mob.goalSelector.disableControlFlag(Goal.Flag.LOOK);
-                            mob.goalSelector.disableControlFlag(Goal.Flag.MOVE);
-                            mob.goalSelector.disableControlFlag(Goal.Flag.JUMP);
-                        }
+                    if (provider.getLevel() >= AmbientAdditions.sedationLvlRequiredToCapture(living.getMaxHealth())) {
+                        zzzParticles(living, 30, serverLevel);
+                        mob.getNavigation().stop();
+                        mob.goalSelector.disableControlFlag(Goal.Flag.LOOK);
+                        mob.goalSelector.disableControlFlag(Goal.Flag.MOVE);
+                        mob.goalSelector.disableControlFlag(Goal.Flag.JUMP);
                     }
                 }
             }
