@@ -83,10 +83,10 @@ public class SlothBear extends Animal implements IAnimatable, NeutralMob {
 
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
-            return SoundEvents.PANDA_AGGRESSIVE_AMBIENT;
+            return SoundEvents.POLAR_BEAR_WARNING;
         }
         else {
-            return SoundEvents.PANDA_AMBIENT;
+            return SoundEvents.POLAR_BEAR_AMBIENT;
         }
     }
 
@@ -96,11 +96,11 @@ public class SlothBear extends Animal implements IAnimatable, NeutralMob {
     }
 
     protected SoundEvent getHurtSound(DamageSource p_30424_) {
-        return SoundEvents.PANDA_HURT;
+        return SoundEvents.POLAR_BEAR_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PANDA_DEATH;
+        return SoundEvents.POLAR_BEAR_DEATH;
     }
 
     public void aiStep() {
