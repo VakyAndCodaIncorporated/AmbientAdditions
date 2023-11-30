@@ -21,6 +21,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.warden.Warden;
@@ -39,7 +40,6 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class CrateItem extends Item {
@@ -49,8 +49,6 @@ public class CrateItem extends Item {
         super(properties);
     }
 
-    static Random random = new Random();
-
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         Level level = player.level;
@@ -58,62 +56,88 @@ public class CrateItem extends Item {
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
 
-
         var cap = target.getCapability(SedationProvider.SEDATION_CAP);
 
         int sedationLevel = cap.resolve().isPresent() ? cap.resolve().get().getLevel() : 0;
 
-        // todo - account for pets/tameables (they should not be crateable unless by their owner!)
-        if (canBeCrated(target) && target.getPersistentData().getBoolean("IsSedated") && sedationLevel >= AmbientAdditions.sedationLvlRequiredToCapture(target.getMaxHealth())/* && target.getType().is(AATags.CRATEABLE)*/) {
-            if (!level.isClientSide) {
+        if (canBeCrated(target) && target.getPersistentData().getBoolean("IsSedated") && sedationLevel >= AmbientAdditions.sedationLvlRequiredToCapture(target.getMaxHealth())) {
 
-                ItemStack stack1 = player.getItemInHand(hand);
-
-                boolean more = stack.getCount() > 1;
-
-                if (more) {
-                    stack1 = new ItemStack(AAItems.CRATE.get());
-                    stack.shrink(1);
-
-                    more = true;
-                }
-
-                CompoundTag targetTag = target.serializeNBT();
-                targetTag.putString("OwnerName", player.getName().getString());
-                CompoundTag tag = stack1.getOrCreateTag();
-                tag.put(DATA_CREATURE, targetTag);
-                stack1.setTag(tag);
-
-                if (more) {
-                    if (!player.getInventory().add(stack1)) player.drop(stack1, true);
-                    else player.addItem(stack1);
-                }
-
-                target.discard();
-
-                level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
-            }
-
-            if (level.isClientSide) {
-                double width = target.getBbWidth();
-                for (int i = 0; i <= Math.floor(width) * 25; ++i) {
-                    double x = target.getX();
-                    double y = target.getY();
-                    double z = target.getZ();
-                    for (int j = 0; j < 8; j++) {
-                        level.addParticle(ParticleTypes.CRIT, x + random.nextFloat() / 1.5F, y + 0.25F + (random.nextFloat() / 2.0F), z + random.nextFloat() / 1.5F, 5.0E-5D, 5.0E-5D, 5.0E-5D);
-                        level.addParticle(ParticleTypes.CRIT, x + random.nextFloat() / -1.5F, y + 0.25F + (random.nextFloat() / 2.0F), z + random.nextFloat() / -1.5F, 5.0E-5D, 5.0E-5D, 5.0E-5D);
-                        level.addParticle(ParticleTypes.CRIT, x + random.nextFloat() / -1.5F, y + 0.25F + (random.nextFloat() / 2.0F), z + random.nextFloat() / 1.5F, 5.0E-5D, 5.0E-5D, 5.0E-5D);
-                        level.addParticle(ParticleTypes.CRIT, x + random.nextFloat() / 1.5F, y + 0.25F + (random.nextFloat() / 2.0F), z + random.nextFloat() / -1.5F, 5.0E-5D, 5.0E-5D, 5.0E-5D);
+            if (target instanceof TamableAnimal tame) {
+                if (tame.isTame() && tame.getOwner() instanceof Player owner) {
+                    if (owner.is(player)) {
+                        return successfulCrate(tame, player, hand, stack, level);
+                    }
+                    else {
+                        return unsuccessfulCrate(tame, level);
                     }
                 }
-
             }
-            return InteractionResult.SUCCESS;
+            else {
+                return successfulCrate(target, player, hand, stack, level);
+            }
 
         }
 
         return InteractionResult.sidedSuccess(true);
+    }
+
+    private InteractionResult successfulCrate(LivingEntity target, Player player, InteractionHand hand, ItemStack stack, Level level) {
+        if (!level.isClientSide) {
+            ItemStack stack1 = player.getItemInHand(hand);
+
+            boolean more = stack.getCount() > 1;
+
+            if (more) {
+                stack1 = new ItemStack(AAItems.CRATE.get());
+                stack.shrink(1);
+            }
+
+            CompoundTag targetTag = target.serializeNBT();
+            targetTag.putString("OwnerName", player.getName().getString());
+            CompoundTag tag = stack1.getOrCreateTag();
+            tag.put(DATA_CREATURE, targetTag);
+            stack1.setTag(tag);
+
+            if (more) {
+                if (!player.getInventory().add(stack1)) player.drop(stack1, true);
+                else player.addItem(stack1);
+            }
+
+            target.discard();
+
+            level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
+        }
+        else {
+            double width = target.getBbWidth();
+            for (int i = 0; i <= Math.floor(width) * 25; ++i) {
+                double x = target.getRandomX(1.0D);
+                double y = target.getRandomY();
+                double z = target.getRandomZ(1.0D);
+
+                for (int j = 0; j < 8; j++) {
+                    level.addParticle(ParticleTypes.CRIT, x, y, z, 0.0D, 0.0D, 0.0D);
+                }
+            }
+
+        }
+        return InteractionResult.PASS;
+    }
+
+    private InteractionResult unsuccessfulCrate(LivingEntity target, Level level) {
+        if (level.isClientSide) {
+            double width = target.getBbWidth();
+            for (int i = 0; i <= Math.floor(width) * 25; ++i) {
+                double x = target.getRandomX(1.0D);
+                double y = target.getRandomY();
+                double z = target.getRandomZ(1.0D);
+
+                for (int j = 0; j < 8; j++) {
+                    level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
+                }
+            }
+
+        }
+        return InteractionResult.FAIL;
     }
 
     private boolean canBeCrated(LivingEntity entity) {
