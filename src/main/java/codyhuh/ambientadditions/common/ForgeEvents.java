@@ -89,7 +89,7 @@ public class ForgeEvents {
                         mob.goalSelector.enableControlFlag(Goal.Flag.JUMP);
                     }
                     else if (i > 0) {
-                        provider.setTimer(i - 1); // todo - make sure the sedation timer ticks down even when IsSedated is false
+                        provider.setTimer(i - 1);
                     }
 
                     if (provider.getLevel() >= AmbientAdditions.sedationLvlRequiredToCapture(living.getMaxHealth())) {

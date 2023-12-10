@@ -52,6 +52,7 @@ public class CrateItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         Level level = player.level;
+
         if (containsEntity(stack)) return InteractionResult.PASS;
 
         if (!target.getPassengers().isEmpty()) target.ejectPassengers();
@@ -63,13 +64,13 @@ public class CrateItem extends Item {
         if (canBeCrated(target) && target.getPersistentData().getBoolean("IsSedated") && sedationLevel >= AmbientAdditions.sedationLvlRequiredToCapture(target.getMaxHealth())) {
 
             if (target instanceof TamableAnimal tame) {
-                if (tame.isTame() && tame.getOwner() instanceof Player owner) {
-                    if (owner.is(player)) {
-                        return successfulCrate(tame, player, hand, stack, level);
-                    }
-                    else {
-                        return unsuccessfulCrate(tame, level);
-                    }
+                //Minecraft.getInstance().getChatListener().handleSystemMessage(Component.literal(tame.mobInteract(player, hand) + ""), false); todo - remove
+
+                if (tame.isTame() && tame.isOwnedBy(player)) {
+                    return successfulCrate(tame, player, hand, stack, level);
+                }
+                else {
+                    return unsuccessfulCrate(tame, level);
                 }
             }
             else {
@@ -81,63 +82,64 @@ public class CrateItem extends Item {
         return InteractionResult.sidedSuccess(true);
     }
 
-    private InteractionResult successfulCrate(LivingEntity target, Player player, InteractionHand hand, ItemStack stack, Level level) {
-        if (!level.isClientSide) {
-            ItemStack stack1 = player.getItemInHand(hand);
+    public InteractionResult successfulCrate(LivingEntity target, Player player, InteractionHand hand, ItemStack stack, Level level) {
+        ItemStack stack1 = player.getItemInHand(hand);
 
-            boolean more = stack.getCount() > 1;
+        boolean more = stack.getCount() > 1;
 
-            if (more) {
-                stack1 = new ItemStack(AAItems.CRATE.get());
-                stack.shrink(1);
-            }
-
-            CompoundTag targetTag = target.serializeNBT();
-            targetTag.putString("OwnerName", player.getName().getString());
-            CompoundTag tag = stack1.getOrCreateTag();
-            tag.put(DATA_CREATURE, targetTag);
-            stack1.setTag(tag);
-
-            if (more) {
-                if (!player.getInventory().add(stack1)) player.drop(stack1, true);
-                else player.addItem(stack1);
-            }
-
-            target.discard();
-
-            level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
+        if (more) {
+            stack1 = new ItemStack(AAItems.CRATE.get());
+            stack.shrink(1);
         }
-        else {
+
+        CompoundTag targetTag = target.serializeNBT();
+        targetTag.putString("OwnerName", player.getName().getString());
+        CompoundTag tag = stack1.getOrCreateTag();
+        tag.put(DATA_CREATURE, targetTag);
+        stack1.setTag(tag);
+
+        if (more) {
+            if (!player.getInventory().add(stack1)) player.drop(stack1, true);
+            else player.addItem(stack1);
+        }
+
+        target.discard();
+
+        level.playSound(null, player.blockPosition(), SoundEvents.BARREL_CLOSE, SoundSource.AMBIENT, 1, 1);
+
+        if (level instanceof ServerLevel serverLevel) {
             double width = target.getBbWidth();
             for (int i = 0; i <= Math.floor(width) * 25; ++i) {
-                double x = target.getRandomX(1.0D);
-                double y = target.getRandomY();
-                double z = target.getRandomZ(1.0D);
 
                 for (int j = 0; j < 8; j++) {
-                    level.addParticle(ParticleTypes.CRIT, x, y, z, 0.0D, 0.0D, 0.0D);
+                    double x = target.getRandomX(1.0D);
+                    double y = target.getRandomY();
+                    double z = target.getRandomZ(1.0D);
+
+                    serverLevel.sendParticles(ParticleTypes.CRIT, x, y, z, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    private InteractionResult unsuccessfulCrate(LivingEntity target, Level level) {
+        if (level instanceof ServerLevel serverLevel) {
+            double width = target.getBbWidth();
+            for (int i = 0; i <= Math.floor(width) * 25; ++i) {
+
+                for (int j = 0; j < 12; j++) {
+                    double x = target.getRandomX(1.0D);
+                    double y = target.getRandomY();
+                    double z = target.getRandomZ(1.0D);
+
+                    serverLevel.sendParticles(ParticleTypes.SMOKE, x, y, z, 1, 0.0D, 0.0D, 0.0D, 0.05D);
                 }
             }
 
         }
         return InteractionResult.PASS;
-    }
-
-    private InteractionResult unsuccessfulCrate(LivingEntity target, Level level) {
-        if (level.isClientSide) {
-            double width = target.getBbWidth();
-            for (int i = 0; i <= Math.floor(width) * 25; ++i) {
-                double x = target.getRandomX(1.0D);
-                double y = target.getRandomY();
-                double z = target.getRandomZ(1.0D);
-
-                for (int j = 0; j < 8; j++) {
-                    level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
-                }
-            }
-
-        }
-        return InteractionResult.FAIL;
     }
 
     private boolean canBeCrated(LivingEntity entity) {

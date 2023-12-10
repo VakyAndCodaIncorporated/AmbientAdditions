@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "codyhuh.ambientadditions.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "ambientadditions.refmap.json",
+  "mixins": [
+    "AnimalMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
