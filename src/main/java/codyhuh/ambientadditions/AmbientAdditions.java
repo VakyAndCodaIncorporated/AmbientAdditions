@@ -24,6 +24,7 @@ public class AmbientAdditions {
         AASounds.SOUNDS.register(bus);
         AABlocks.BLOCKS.register(bus);
         AAParticles.PARTICLES.register(bus);
+        AACreativeModeTabs.CREATIVE_MODE_TABS.register(bus);
     }
 
     public static int sedationLvlRequiredToCapture(float health) {

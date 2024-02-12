@@ -8,21 +8,28 @@ import codyhuh.ambientadditions.client.particles.ZzzParticle;
 import codyhuh.ambientadditions.client.renderer.GenericGeoRenderer;
 import codyhuh.ambientadditions.client.renderer.MataMataRenderer;
 import codyhuh.ambientadditions.client.renderer.item.DartRenderer;
-import codyhuh.ambientadditions.client.renderer.item.DuckyMaskRenderer;
-import codyhuh.ambientadditions.client.renderer.item.YetiFeedersRenderer;
 import codyhuh.ambientadditions.client.renderer.layer.AAGlowingEyesLayer;
 import codyhuh.ambientadditions.client.renderer.layer.CardiganCorgiCollarLayer;
 import codyhuh.ambientadditions.client.renderer.layer.ChameleonBrightnessLayer;
 import codyhuh.ambientadditions.client.renderer.layer.PembrokeCorgiCollarLayer;
-import codyhuh.ambientadditions.common.entities.*;
+import codyhuh.ambientadditions.common.entities.AyeAye;
+import codyhuh.ambientadditions.common.entities.CardiganCorgi;
+import codyhuh.ambientadditions.common.entities.ChocolateChipStarfish;
+import codyhuh.ambientadditions.common.entities.HarlequinShrimp;
+import codyhuh.ambientadditions.common.entities.Mole;
+import codyhuh.ambientadditions.common.entities.PancakeSlug;
+import codyhuh.ambientadditions.common.entities.PembrokeCorgi;
+import codyhuh.ambientadditions.common.entities.SiamangGibbon;
+import codyhuh.ambientadditions.common.entities.SlothBear;
+import codyhuh.ambientadditions.common.entities.VeiledChameleon;
+import codyhuh.ambientadditions.common.entities.WhiteFruitBat;
+import codyhuh.ambientadditions.common.entities.YetiCrab;
 import codyhuh.ambientadditions.common.items.CrateItem;
-import codyhuh.ambientadditions.common.items.DuckyMaskItem;
-import codyhuh.ambientadditions.common.items.YetiFeedersItem;
 import codyhuh.ambientadditions.registry.AAEntities;
 import codyhuh.ambientadditions.registry.AAItems;
 import codyhuh.ambientadditions.registry.AAParticles;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +40,6 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,20 +68,20 @@ public class ClientEvents {
 
         EntityRenderers.register(AAEntities.PEMBROKE_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<PembrokeCorgi> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel<>("pembroke_corgi"));
-            render.addLayer(new PembrokeCorgiCollarLayer(render));
+            render.addRenderLayer(new PembrokeCorgiCollarLayer(render));
             return render;
         });
 
 
         EntityRenderers.register(AAEntities.CARDIGAN_CORGI.get(), (ctx) -> {
             GenericGeoRenderer<CardiganCorgi> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel<>("cardigan_corgi"));
-            render.addLayer(new CardiganCorgiCollarLayer(render));
+            render.addRenderLayer(new CardiganCorgiCollarLayer(render));
             return render;
         });
 
         EntityRenderers.register(AAEntities.AYE_AYE.get(), (ctx) -> {
             GenericGeoRenderer<AyeAye> render = new GenericGeoRenderer<>(ctx, () -> new GenericGeoModel<>("aye_aye"));
-            render.addLayer(new AAGlowingEyesLayer<>("aye_aye", render));
+            render.addRenderLayer(new AAGlowingEyesLayer<>("aye_aye", render));
             return render;
         });
 
@@ -89,7 +95,7 @@ public class ClientEvents {
                 model.setTextures(VeiledChameleon::getVariant, textures);
                 return model;
             });
-            render.addLayer(new ChameleonBrightnessLayer(render));
+            render.addRenderLayer(new ChameleonBrightnessLayer(render));
             return render;
         });
 
@@ -144,7 +150,7 @@ public class ClientEvents {
             @Override
             protected void applyRotations(WhiteFruitBat entitylivingbaseIn, PoseStack matrix, float ageInTicks, float rotationYaw, float partialTicks) {
                 super.applyRotations(entitylivingbaseIn, matrix, ageInTicks, rotationYaw, partialTicks);
-                matrix.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entitylivingbaseIn.prevTilt, entitylivingbaseIn.tilt)));
+                matrix.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entitylivingbaseIn.prevTilt, entitylivingbaseIn.tilt)));
             }
         });
 
@@ -185,14 +191,11 @@ public class ClientEvents {
         AmbientAdditions.CALLBACKS.forEach(Runnable::run);
         AmbientAdditions.CALLBACKS.clear();
 
-        GeoArmorRenderer.registerArmorRenderer(YetiFeedersItem.class, YetiFeedersRenderer::new);
-        GeoArmorRenderer.registerArmorRenderer(DuckyMaskItem.class, DuckyMaskRenderer::new);
-
     }
 
     @SubscribeEvent
     public static void registerParticleTypes(RegisterParticleProvidersEvent event) {
-        event.register(AAParticles.ZZZ.get(), ZzzParticle.Provider::new);
-        event.register(AAParticles.STUN.get(), StunParticle.Provider::new);
+        event.registerSpriteSet(AAParticles.ZZZ.get(), ZzzParticle.Provider::new);
+        event.registerSpriteSet(AAParticles.STUN.get(), StunParticle.Provider::new);
     }
 }

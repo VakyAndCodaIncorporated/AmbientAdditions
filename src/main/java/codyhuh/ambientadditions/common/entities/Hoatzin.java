@@ -19,11 +19,27 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowMobGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LandOnOwnersShoulderGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -42,18 +58,18 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnimatable {
+public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, GeoEntity {
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
@@ -118,15 +134,15 @@ public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnim
     private void calculateFlapping() {
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
-        this.flapSpeed = (float)((double)this.flapSpeed + (double)(!this.onGround && !this.isPassenger() ? 4 : -1) * 0.3D);
+        this.flapSpeed = (float)((double)this.flapSpeed + (double)(!this.onGround() && !this.isPassenger() ? 4 : -1) * 0.3D);
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround && this.flapping < 1.0F) {
+        if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
         }
 
         this.flapping = (float)((double)this.flapping * 0.9D);
         Vec3 vector3d = this.getDeltaMovement();
-        if (!this.onGround && vector3d.y < 0.0D) {
+        if (!this.onGround() && vector3d.y < 0.0D) {
             this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
         }
 
@@ -141,25 +157,25 @@ public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnim
             }
 
             if (!this.isSilent()) {
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_230254_1_)) {
                     this.tame(p_230254_1_);
-                    this.level.broadcastEntityEvent(this, (byte)7);
+                    this.level().broadcastEntityEvent(this, (byte)7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte)6);
+                    this.level().broadcastEntityEvent(this, (byte)6);
                 }
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (!this.isFlying() && this.isTame() && this.isOwnedBy(p_230254_1_)) {
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (itemstack.getItem() == Items.HONEY_BOTTLE && isTame() && getHealth() < getMaxHealth()) {
             this.heal(4);
 
@@ -172,10 +188,10 @@ public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnim
             double d1 = this.random.nextGaussian() * 0.02D;
             double d2 = this.random.nextGaussian() * 0.02D;
             for (int i = 0; i < 4; i++) {
-                this.level.addParticle(ParticleTypes.HEART, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+                this.level().addParticle(ParticleTypes.HEART, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
             }
 
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(p_230254_1_, p_230254_2_);
         }
@@ -256,7 +272,7 @@ public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnim
     }
 
     public boolean isFlying() {
-        return !this.onGround;
+        return !this.onGround();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -265,25 +281,25 @@ public class Hoatzin extends ShoulderRidingEntity implements FlyingAnimal, IAnim
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.FLY);
+            event.setAnimation(AAAnimations.FLY);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
 }

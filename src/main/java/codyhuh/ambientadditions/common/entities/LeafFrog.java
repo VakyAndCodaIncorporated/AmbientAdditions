@@ -8,15 +8,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class LeafFrog extends AbstractFrog implements IAnimatable {
+public class LeafFrog extends AbstractFrog implements GeoEntity {
 
     public LeafFrog(EntityType<? extends LeafFrog> type, Level world) {
         super(type, world);
@@ -33,28 +33,27 @@ public class LeafFrog extends AbstractFrog implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.WALK);
+            event.setAnimation(AAAnimations.WALK);
             event.getController().setAnimationSpeed(1.5D);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
             event.getController().setAnimationSpeed(1.0D);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-
 }

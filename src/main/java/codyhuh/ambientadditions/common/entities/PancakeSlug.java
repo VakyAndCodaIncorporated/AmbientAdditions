@@ -20,10 +20,22 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -35,18 +47,18 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PancakeSlug extends Animal implements IAnimatable {
+public class PancakeSlug extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Boolean> IS_HIDING = SynchedEntityData.defineId(PancakeSlug.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(PancakeSlug.class, EntityDataSerializers.INT);
 
@@ -139,7 +151,7 @@ public class PancakeSlug extends Animal implements IAnimatable {
     public void tick() {
         super.tick();
 
-        List<Player> list = level.getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
         if (!list.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
@@ -184,7 +196,7 @@ public class PancakeSlug extends Animal implements IAnimatable {
             heldItem.shrink(1);
             ItemStack itemstack1 = new ItemStack(AAItems.PANCAKE_SLUG_POT.get());
             this.setBucketData(itemstack1);
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemstack1);
             }
             if (heldItem.isEmpty()) {
@@ -207,28 +219,28 @@ public class PancakeSlug extends Animal implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         if (isHiding()) {
-            event.getController().setAnimation(AAAnimations.ACTION);
+            event.setAnimation(AAAnimations.ACTION);
         }
         else if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.WALK);
+            event.setAnimation(AAAnimations.WALK);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
     
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
 

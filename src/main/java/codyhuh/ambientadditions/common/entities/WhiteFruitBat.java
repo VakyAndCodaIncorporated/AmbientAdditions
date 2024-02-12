@@ -13,7 +13,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -31,15 +36,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
+public class WhiteFruitBat extends Animal implements FlyingAnimal, GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(WhiteFruitBat.class, EntityDataSerializers.BYTE);
     private BlockPos targetPosition;
     public float prevTilt;
@@ -157,7 +162,7 @@ public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
         if (this.isInvulnerableTo(p_70097_1_)) {
             return false;
         } else {
-            if (!this.level.isClientSide && this.isResting()) {
+            if (!this.level().isClientSide && this.isResting()) {
                 this.setResting(false);
             }
 
@@ -192,7 +197,7 @@ public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
     public void aiStep() {
         super.aiStep();
         prevTilt = tilt;
-        if (!isOnGround()) {
+        if (!onGround()) {
             final float v = Mth.degreesDifference(this.getYRot(), yRotO);
             if (Math.abs(v) > 1) {
                 if (Math.abs(tilt) < 25) {
@@ -219,23 +224,23 @@ public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
         BlockPos blockpos1 = blockpos.below();
         if (this.isResting()) {
             boolean flag = this.isSilent();
-            if (this.level.getBlockState(blockpos1).is(BlockTags.LEAVES)) {
+            if (this.level().getBlockState(blockpos1).is(BlockTags.LEAVES)) {
                 if (this.random.nextInt(200) == 0) {
                     this.yHeadRot = (float)this.random.nextInt(360);
                 }
             } else {
                 this.setResting(false);
                 if (!flag) {
-                    this.level.levelEvent(null, 1025, blockpos, 0);
+                    this.level().levelEvent(null, 1025, blockpos, 0);
                 }
             }
         } else {
-            if (this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() < 1)) {
+            if (this.targetPosition != null && (!this.level().isEmptyBlock(this.targetPosition) || this.targetPosition.getY() < 1)) {
                 this.targetPosition = null;
             }
 
             if (this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerThan(this.blockPosition(), 2.0D)) {
-                this.targetPosition = new BlockPos(this.getX() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7), this.getY() + (double)this.random.nextInt(6) - 2.0D, this.getZ() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7));
+                this.targetPosition = BlockPos.containing(this.getX() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7), this.getY() + (double)this.random.nextInt(6) - 2.0D, this.getZ() + (double)this.random.nextInt(7) - (double)this.random.nextInt(7));
             }
 
             double d2 = (double)this.targetPosition.getX() + 0.5D - this.getX();
@@ -248,7 +253,7 @@ public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
             float f1 = Mth.wrapDegrees(f - this.getYRot());
             this.zza = 0.5F;
             this.setYRot(this.getYRot() + f1);
-            if (this.level.getBlockState(blockpos1).is(BlockTags.LEAVES)) {
+            if (this.level().getBlockState(blockpos1).is(BlockTags.LEAVES)) {
                 this.setResting(true);
             }
         }
@@ -256,31 +261,31 @@ public class WhiteFruitBat extends Animal implements FlyingAnimal, IAnimatable {
 
     @Override
     public boolean isFlying() {
-        return !this.isResting() && !this.isOnGround();
+        return !this.isResting() && !this.onGround();
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.FLY);
+            event.setAnimation(AAAnimations.FLY);
             event.getController().setAnimationSpeed(2.0D);
         }
         else {
-            event.getController().setAnimation(AAAnimations.SIT);
+            event.setAnimation(AAAnimations.SIT);
             event.getController().setAnimationSpeed(1.0D);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
 

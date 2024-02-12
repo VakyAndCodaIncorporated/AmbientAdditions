@@ -1,7 +1,7 @@
 package codyhuh.ambientadditions.common.items;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,12 +29,14 @@ public class AAArmorMaterial implements ArmorMaterial {
         this.repairMaterial = repairMaterialSupplier;
     }
 
-    public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
+    @Override
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return MAX_DAMAGE_ARRAY[type.getSlot().getIndex()] * this.maxDamageFactor;
     }
 
-    public int getDefenseForSlot(EquipmentSlot slotIn) {
-        return this.damageReductionAmountArray[slotIn.getIndex()];
+    @Override
+    public int getDefenseForType(ArmorItem.Type type) {
+        return this.damageReductionAmountArray[type.getSlot().getIndex()];
     }
 
     public int getEnchantmentValue() {

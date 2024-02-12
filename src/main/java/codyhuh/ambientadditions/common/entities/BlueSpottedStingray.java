@@ -22,15 +22,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BlueSpottedStingray extends AbstractFish implements IAnimatable, ISwimmer {
+public class BlueSpottedStingray extends AbstractFish implements GeoEntity, ISwimmer {
 
     public BlueSpottedStingray(EntityType<? extends AbstractFish> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);
@@ -49,7 +49,7 @@ public class BlueSpottedStingray extends AbstractFish implements IAnimatable, IS
 
     @Override
     public void playerTouch(Player player) {
-        if (player instanceof ServerPlayer serverPlayer && serverPlayer.hurt(DamageSource.mobAttack(this), 1)) {
+        if (player instanceof ServerPlayer serverPlayer && serverPlayer.hurt(this.level().damageSources().mobAttack(this), 1)) {
             serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
             serverPlayer.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0));
         }
@@ -83,25 +83,26 @@ public class BlueSpottedStingray extends AbstractFish implements IAnimatable, IS
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-       private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.SWIM);
+            event.setAnimation(AAAnimations.SWIM);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
 }

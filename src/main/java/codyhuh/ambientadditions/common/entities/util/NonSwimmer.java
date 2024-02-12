@@ -39,7 +39,7 @@ public class NonSwimmer extends WaterAnimal {
             this.setAirSupply(p_209207_1_ - 1);
             if (this.getAirSupply() == -20) {
                 this.setAirSupply(0);
-                this.hurt(DamageSource.DROWN, 2.0F);
+                this.hurt(this.level().damageSources().drown(), 2.0F);
             }
         } else {
             this.setAirSupply(300);

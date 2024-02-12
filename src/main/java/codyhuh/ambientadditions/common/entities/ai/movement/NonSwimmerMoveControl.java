@@ -16,7 +16,7 @@ public class NonSwimmerMoveControl extends MoveControl {
     }
 
     public void tick() {
-        if (this.nonSwimmer.horizontalCollision && this.nonSwimmer.level.getBlockState(this.nonSwimmer.blockPosition().above()).getBlock() == Blocks.WATER) {
+        if (this.nonSwimmer.horizontalCollision && this.nonSwimmer.level().getBlockState(this.nonSwimmer.blockPosition().above()).getBlock() == Blocks.WATER) {
             this.nonSwimmer.setDeltaMovement(this.nonSwimmer.getDeltaMovement().add(0.0D, 0.025D, 0.0D));
         }
         if (this.operation == MoveControl.Operation.MOVE_TO && !this.nonSwimmer.getNavigation().isDone()) {

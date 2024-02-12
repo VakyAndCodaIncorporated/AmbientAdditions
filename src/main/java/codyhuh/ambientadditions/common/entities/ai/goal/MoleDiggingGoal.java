@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.Vec3;
 
@@ -30,7 +31,7 @@ public class MoleDiggingGoal extends Goal {
 
    public MoleDiggingGoal(Mob p_i45314_1_) {
       this.mole = p_i45314_1_;
-      this.level = p_i45314_1_.level;
+      this.level = p_i45314_1_.level();
       this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
    }
 
@@ -86,7 +87,7 @@ public class MoleDiggingGoal extends Goal {
          this.level.playSound(null, blockpos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
       }
       else if (this.eatAnimationTick == 47) {
-         List<ItemStack> items = mole.level.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerLevel) mole.level).withRandom(mole.getRandom()).create(LootContextParamSets.EMPTY));
+         List<ItemStack> items = mole.level().getServer().getLootData().getLootTable(DIGGING_LOOT).getRandomItems(new LootParams.Builder((ServerLevel) mole.level()).create(LootContextParamSets.EMPTY));
 
          ItemEntity itemEntity = EntityType.ITEM.create(level);
 

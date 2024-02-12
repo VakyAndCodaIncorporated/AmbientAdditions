@@ -1,13 +1,12 @@
 package codyhuh.ambientadditions.common.entities.util;
 
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
+import software.bernie.geckolib.core.animation.RawAnimation;
 
 public class AAAnimations {
-    public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP);
-    public static final AnimationBuilder FLY = new AnimationBuilder().addAnimation("fly", ILoopType.EDefaultLoopTypes.LOOP);
-    public static final AnimationBuilder SWIM = new AnimationBuilder().addAnimation("swim", ILoopType.EDefaultLoopTypes.LOOP);
-    public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP);
-    public static final AnimationBuilder SIT = new AnimationBuilder().addAnimation("sit", ILoopType.EDefaultLoopTypes.LOOP);
-    public static final AnimationBuilder ACTION = new AnimationBuilder().addAnimation("action", ILoopType.EDefaultLoopTypes.LOOP);
+    public static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
+    public static final RawAnimation FLY = RawAnimation.begin().thenLoop("fly");
+    public static final RawAnimation SWIM = RawAnimation.begin().thenLoop("swim");
+    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+    public static final RawAnimation SIT = RawAnimation.begin().thenLoop("sit");
+    public static final RawAnimation ACTION = RawAnimation.begin().thenLoop("action");
 }

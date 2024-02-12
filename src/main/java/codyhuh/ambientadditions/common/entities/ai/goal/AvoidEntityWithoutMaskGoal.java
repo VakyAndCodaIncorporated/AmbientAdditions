@@ -15,7 +15,7 @@ public class AvoidEntityWithoutMaskGoal<T extends LivingEntity> extends AvoidEnt
 
     @Override
     public boolean canUse() {
-        this.toAvoid = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.avoidClass, this.mob.getBoundingBox().inflate(this.maxDist, 3.0D, this.maxDist), (p_148078_) -> true), this.avoidEntityTargeting, this.mob, this.mob.getX(), this.mob.getY(), this.mob.getZ());
+        this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(this.avoidClass, this.mob.getBoundingBox().inflate(this.maxDist, 3.0D, this.maxDist), (p_148078_) -> true), this.avoidEntityTargeting, this.mob, this.mob.getX(), this.mob.getY(), this.mob.getZ());
 
         return toAvoid instanceof Player player && !player.getItemBySlot(EquipmentSlot.HEAD).is(AAItems.DUCKY_MASK.get()) && super.canUse();
     }

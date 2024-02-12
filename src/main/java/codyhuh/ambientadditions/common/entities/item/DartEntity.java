@@ -9,6 +9,7 @@ import codyhuh.ambientadditions.registry.AAParticles;
 import codyhuh.ambientadditions.registry.AATags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -48,7 +49,7 @@ public class DartEntity extends AbstractArrow implements IEntityAdditionalSpawnD
                 if (provider.getLevel() >= AmbientAdditions.sedationLvlRequiredToCapture(mob.getMaxHealth())) {
                     mob.getPersistentData().putBoolean("IsSedated", true);
                 }
-                else if (mob.getLevel() instanceof ServerLevel serverLevel && !tag.getBoolean("IsSedated")) {
+                else if (mob.level() instanceof ServerLevel serverLevel && !tag.getBoolean("IsSedated")) {
                     stunParticles(mob, 3 + (provider.getLevel() * 3), serverLevel);
                 }
 
@@ -82,7 +83,7 @@ public class DartEntity extends AbstractArrow implements IEntityAdditionalSpawnD
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

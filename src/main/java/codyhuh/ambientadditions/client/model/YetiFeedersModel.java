@@ -3,9 +3,9 @@ package codyhuh.ambientadditions.client.model;
 import codyhuh.ambientadditions.AmbientAdditions;
 import codyhuh.ambientadditions.common.items.YetiFeedersItem;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class YetiFeedersModel extends AnimatedGeoModel<YetiFeedersItem> {
+public class YetiFeedersModel extends GeoModel<YetiFeedersItem> {
 
 	@Override
 	public ResourceLocation getModelResource(YetiFeedersItem object) {

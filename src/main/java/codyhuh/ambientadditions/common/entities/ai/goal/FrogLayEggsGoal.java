@@ -41,7 +41,7 @@ public class FrogLayEggsGoal extends MoveToBlockGoal {
         }
 
         if (isReachedTarget()) {
-            frog.level.setBlock(getMoveToTarget(), eggsBlock.defaultBlockState(), 2);
+            frog.level().setBlock(getMoveToTarget(), eggsBlock.defaultBlockState(), 2);
             frog.playSound(SoundEvents.FROG_LAY_SPAWN);
             frog.setGravid(false);
             stop();
