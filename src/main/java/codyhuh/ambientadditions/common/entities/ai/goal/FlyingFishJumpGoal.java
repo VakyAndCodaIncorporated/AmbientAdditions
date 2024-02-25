@@ -42,16 +42,16 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
    private boolean waterIsClear(BlockPos p_220709_1_, int p_220709_2_, int p_220709_3_, int p_220709_4_) {
       BlockPos blockpos = p_220709_1_.offset(p_220709_2_ * p_220709_4_, 0, p_220709_3_ * p_220709_4_);
-      return this.fish.level.getFluidState(blockpos).is(FluidTags.WATER) && !this.fish.level.getBlockState(blockpos).getMaterial().blocksMotion();
+      return this.fish.level().getFluidState(blockpos).is(FluidTags.WATER) && !this.fish.level().getBlockState(blockpos).blocksMotion();
    }
 
    private boolean surfaceIsClear(BlockPos p_220708_1_, int p_220708_2_, int p_220708_3_, int p_220708_4_) {
-      return this.fish.level.getBlockState(p_220708_1_.offset(p_220708_2_ * p_220708_4_, 1, p_220708_3_ * p_220708_4_)).isAir() && this.fish.level.getBlockState(p_220708_1_.offset(p_220708_2_ * p_220708_4_, 2, p_220708_3_ * p_220708_4_)).isAir();
+      return this.fish.level().getBlockState(p_220708_1_.offset(p_220708_2_ * p_220708_4_, 1, p_220708_3_ * p_220708_4_)).isAir() && this.fish.level().getBlockState(p_220708_1_.offset(p_220708_2_ * p_220708_4_, 2, p_220708_3_ * p_220708_4_)).isAir();
    }
 
    public boolean canContinueToUse() {
       double d0 = this.fish.getDeltaMovement().y;
-      return (!(d0 * d0 < (double)0.03F) || this.fish.getXRot() == 0.0F || !(Math.abs(this.fish.getXRot()) < 10.0F) || !this.fish.isInWater()) && !this.fish.isOnGround();
+      return (!(d0 * d0 < (double)0.03F) || this.fish.getXRot() == 0.0F || !(Math.abs(this.fish.getXRot()) < 10.0F) || !this.fish.isInWater()) && !this.fish.onGround();
    }
 
    public boolean isInterruptable() {
@@ -74,7 +74,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
    public void tick() {
       boolean flag = this.breached;
       if (!flag) {
-         FluidState fluidstate = this.fish.level.getFluidState(this.fish.blockPosition());
+         FluidState fluidstate = this.fish.level().getFluidState(this.fish.blockPosition());
          this.breached = fluidstate.is(FluidTags.WATER);
       }
 
@@ -84,7 +84,7 @@ public class FlyingFishJumpGoal extends JumpGoal {
 
       Vec3 vector3d = this.fish.getDeltaMovement();
       if (vector3d.y * vector3d.y < (double)0.03F && this.fish.getXRot() != 0.0F) {
-         this.fish.setXRot(Mth.rotlerp(this.fish.getXRot(), 0.0F, 0.2F));
+         this.fish.setXRot(Mth.rotLerp(this.fish.getXRot(), 0.0F, 0.2F));
       } else {
          double d0 = vector3d.horizontalDistanceSqr();
          double d1 = Math.signum(-vector3d.y) * Math.acos(d0 / vector3d.length()) * (double)(180F / (float)Math.PI);

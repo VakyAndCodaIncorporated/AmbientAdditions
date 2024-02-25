@@ -21,7 +21,7 @@ public class SemiAquaticMoveControl extends MoveControl {
                 this.mob.setSpeed(Math.max(this.mob.getSpeed() / 3.0F, 0.06F));
             }
         }
-        else if (this.mob.isOnGround()) {
+        else if (this.mob.onGround()) {
             this.mob.setSpeed(Math.max(this.mob.getSpeed(), 0.06F));
         }
     }

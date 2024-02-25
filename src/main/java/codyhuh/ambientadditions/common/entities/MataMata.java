@@ -21,11 +21,24 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -40,15 +53,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MataMata extends Animal implements IAnimatable, Bucketable {
+public class MataMata extends Animal implements GeoEntity, Bucketable {
     private static final EntityDataAccessor<ItemStack> EATING_ITEM = SynchedEntityData.defineId(MataMata.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(MataMata.class, EntityDataSerializers.BOOLEAN);
     private ItemStack eatingItem = ItemStack.EMPTY;
@@ -150,7 +164,7 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
     }
 
     @Override
-    public boolean equipItemIfPossible(ItemStack stack) {
+    public ItemStack equipItemIfPossible(ItemStack stack) {
         if (this.canHoldItem(stack)) {
             if (!eatingItem.isEmpty()) {
                 this.spawnAtLocation(eatingItem);
@@ -158,9 +172,9 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
 
             eatingItem = stack.copy();
             this.equipItemIfPossible(stack);
-            return true;
+            return stack;
         } else {
-            return false;
+            return ItemStack.EMPTY;
         }
     }
 
@@ -183,13 +197,13 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
 
         if (!eatingItem.isEmpty() && this.isFood(eatingItem)) {
             eatingTicks++;
-            if (eatingTicks % 5 == 0 && level.isClientSide) {
+            if (eatingTicks % 5 == 0 && level().isClientSide) {
                 Vec3 look = this.calculateViewVector(this.getViewXRot(1F), this.yBodyRot);
                 Vec3 pos = getPosition(1F);
                 Vec3 vec = pos.add(look.x, look.y, look.z);
                 ItemParticleOption type = new ItemParticleOption(ParticleTypes.ITEM, eatingItem);
                 for (int i = 0; i < 6; i++) {
-                    level.addParticle(type, true, vec.x, vec.y + 0.2F, vec.z, (-0.2F + random.nextFloat() / 2.5) * 0.4F, random.nextFloat() / 5, (-0.2F + random.nextFloat() / 2.5) * 0.4F);
+                    level().addParticle(type, true, vec.x, vec.y + 0.2F, vec.z, (-0.2F + random.nextFloat() / 2.5) * 0.4F, random.nextFloat() / 5, (-0.2F + random.nextFloat() / 2.5) * 0.4F);
                 }
             }
             if (eatingTicks % 5 == 0) {
@@ -198,12 +212,12 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
             if (eatingTicks >= 20 * 3) {
                 eatingItem = ItemStack.EMPTY;
                 eatingTicks = 0;
-                this.level.broadcastEntityEvent(this, (byte) 18);
+                this.level().broadcastEntityEvent(this, (byte) 18);
                 heal(4);
             }
         }
 
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             eatingItem = this.entityData.get(EATING_ITEM);
         } else {
             this.entityData.set(EATING_ITEM, eatingItem);
@@ -212,7 +226,7 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
 
     @Override
     protected PathNavigation createNavigation(Level worldIn) {
-        return new GroundAndSwimmerNavigator(this, level);
+        return new GroundAndSwimmerNavigator(this, level());
     }
 
     @Override
@@ -306,29 +320,28 @@ public class MataMata extends Animal implements IAnimatable, Bucketable {
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-    private <T extends IAnimatable> PlayState predicate(AnimationEvent<T> event) {
+    private <T extends GeoEntity> PlayState predicate(AnimationState<T> event) {
         if (isInWater() && event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.SWIM);
+            event.setAnimation(AAAnimations.SWIM);
         }
         else if (event.isMoving()) {
-            event.getController().setAnimation(AAAnimations.WALK);
+            event.setAnimation(AAAnimations.WALK);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-
 }

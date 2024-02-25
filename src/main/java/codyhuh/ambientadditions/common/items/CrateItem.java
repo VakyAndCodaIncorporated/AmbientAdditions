@@ -51,7 +51,7 @@ public class CrateItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        Level level = player.level;
+        Level level = player.level();
 
         if (containsEntity(stack)) return InteractionResult.PASS;
 

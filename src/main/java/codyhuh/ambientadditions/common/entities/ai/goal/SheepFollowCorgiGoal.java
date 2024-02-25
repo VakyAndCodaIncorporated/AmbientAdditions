@@ -29,8 +29,8 @@ public class SheepFollowCorgiGoal extends Goal {
     }
 
     public boolean canUse() {
-        List<PembrokeCorgi> list = sheep.level.getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
-        List<CardiganCorgi> list2 = sheep.level.getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<PembrokeCorgi> list = sheep.level().getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<CardiganCorgi> list2 = sheep.level().getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
         if (list.isEmpty() && !list2.isEmpty()) {
             return !(this.sheep.distanceToSqr(list2.get(0)) < (double) (this.startDistance * this.startDistance));
         }
@@ -41,8 +41,8 @@ public class SheepFollowCorgiGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        List<PembrokeCorgi> list = sheep.level.getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
-        List<CardiganCorgi> list2 = sheep.level.getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<PembrokeCorgi> list = sheep.level().getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<CardiganCorgi> list2 = sheep.level().getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
         if (this.navigation.isDone() && !list2.isEmpty()) {
             return !(this.sheep.distanceToSqr(list2.get(0)) <= (double) (this.stopDistance * this.stopDistance));
         } else if (this.navigation.isDone() && !list.isEmpty()) {
@@ -63,8 +63,8 @@ public class SheepFollowCorgiGoal extends Goal {
     }
 
     public void tick() {
-        List<PembrokeCorgi> list = sheep.level.getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
-        List<CardiganCorgi> list2 = sheep.level.getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<PembrokeCorgi> list = sheep.level().getEntitiesOfClass(PembrokeCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
+        List<CardiganCorgi> list2 = sheep.level().getEntitiesOfClass(CardiganCorgi.class, this.sheep.getBoundingBox().inflate(32.0D));
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
             if (!this.sheep.isLeashed() && !this.sheep.isPassenger()) {

@@ -15,30 +15,48 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class CardiganCorgi extends TamableAnimal implements IAnimatable {
+public class CardiganCorgi extends TamableAnimal implements GeoEntity {
    private static final EntityDataAccessor<Integer> DATA_COLLAR_COLOR = SynchedEntityData.defineId(CardiganCorgi.class, EntityDataSerializers.INT);
 
    public CardiganCorgi(EntityType<? extends CardiganCorgi> p_i50240_1_, Level p_i50240_2_) {
@@ -122,7 +140,7 @@ public class CardiganCorgi extends TamableAnimal implements IAnimatable {
    }
 
    public boolean doHurtTarget(Entity p_70652_1_) {
-      boolean flag = p_70652_1_.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+      boolean flag = p_70652_1_.hurt(this.level().damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
       if (flag) {
          this.doEnchantDamageEffects(this, p_70652_1_);
       }
@@ -143,7 +161,7 @@ public class CardiganCorgi extends TamableAnimal implements IAnimatable {
    public InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
       ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
       Item item = itemstack.getItem();
-      if (this.level.isClientSide) {
+      if (this.level().isClientSide) {
          boolean flag = this.isOwnedBy(p_230254_1_) || this.isTame() || item == Items.BONE && !this.isTame();
          return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
       } else {
@@ -188,9 +206,9 @@ public class CardiganCorgi extends TamableAnimal implements IAnimatable {
                this.navigation.stop();
                this.setTarget(null);
                this.setOrderedToSit(true);
-               this.level.broadcastEntityEvent(this, (byte)7);
+               this.level().broadcastEntityEvent(this, (byte)7);
             } else {
-               this.level.broadcastEntityEvent(this, (byte)6);
+               this.level().broadcastEntityEvent(this, (byte)6);
             }
 
             return InteractionResult.SUCCESS;
@@ -240,31 +258,31 @@ public class CardiganCorgi extends TamableAnimal implements IAnimatable {
    }
 
    @Override
-   public void registerControllers(AnimationData controller) {
-      controller.addAnimationController(new AnimationController<>(this, "controller", 5, this::predicate));
+   public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+      controllerRegistrar.add(new AnimationController<>(this, "controller", 5, this::predicate));
    }
 
-      private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+   private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
       if (isInSittingPose()) {
-         event.getController().setAnimation(AAAnimations.SIT);
+         event.setAnimation(AAAnimations.SIT);
          event.getController().setAnimationSpeed(1.0);
       }
       else if (event.isMoving()) {
-         event.getController().setAnimation(AAAnimations.WALK);
+         event.setAnimation(AAAnimations.WALK);
          event.getController().setAnimationSpeed(2.5);
       }
       else {
-         event.getController().setAnimation(AAAnimations.IDLE);
+         event.setAnimation(AAAnimations.IDLE);
          event.getController().setAnimationSpeed(1.0);
       }
 
       return PlayState.CONTINUE;
    }
 
-   private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+   private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
    @Override
-   public AnimationFactory getFactory() {
+   public AnimatableInstanceCache getAnimatableInstanceCache() {
       return factory;
    }
 }

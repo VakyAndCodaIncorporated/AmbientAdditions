@@ -144,7 +144,7 @@ public class AbstractFrog extends Animal {
             heldItem.shrink(1);
             ItemStack itemstack1 = new ItemStack(getBowlItem());
             this.setBucketData(itemstack1);
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, itemstack1);
             }
             if (heldItem.isEmpty()) {

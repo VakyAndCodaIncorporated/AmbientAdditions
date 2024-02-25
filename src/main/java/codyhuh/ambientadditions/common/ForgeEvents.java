@@ -74,7 +74,7 @@ public class ForgeEvents {
         CompoundTag tag = living.getPersistentData();
         var cap = living.getCapability(SedationProvider.SEDATION_CAP);
 
-        if (living.getLevel() instanceof ServerLevel serverLevel && living instanceof PathfinderMob mob) {
+        if (living.level() instanceof ServerLevel serverLevel && living instanceof PathfinderMob mob) {
             if (cap.isPresent()) {
                 var provider = cap.resolve().isPresent() ? cap.resolve().get() : null;
 

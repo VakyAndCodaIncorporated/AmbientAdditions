@@ -19,7 +19,7 @@ public class BottomFeederMoveControl extends MoveControl {
             this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, -0.001D, 0.0D));
         }
 
-        if (this.entity.horizontalCollision && this.entity.level.getBlockState(this.entity.blockPosition().above()).getBlock() == Blocks.WATER) {
+        if (this.entity.horizontalCollision && this.entity.level().getBlockState(this.entity.blockPosition().above()).getBlock() == Blocks.WATER) {
             this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.025D, 0.0D));
         }
 

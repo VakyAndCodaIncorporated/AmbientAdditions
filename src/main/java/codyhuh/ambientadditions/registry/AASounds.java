@@ -38,6 +38,6 @@ public class AASounds {
     public static final RegistryObject<SoundEvent> FROG_AMBIENT = create("frog.ambient");
 
     private static RegistryObject<SoundEvent> create(String name) {
-        return SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(AmbientAdditions.MOD_ID, name)));
+        return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(AmbientAdditions.MOD_ID, name)));
     }
 }

@@ -31,17 +31,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class YetiCrab extends NonSwimmer implements IAnimatable {
+public class YetiCrab extends NonSwimmer implements GeoEntity {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
 
@@ -131,7 +131,7 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
             itemstack.shrink(1);
             ItemStack itemstack1 = this.getFishBucket();
             this.setBucketData(itemstack1);
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) p_230254_1_, itemstack1);
             }
 
@@ -142,7 +142,7 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
             }
 
             this.discard();
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (itemstack.getItem() == Items.SEAGRASS) {
             if (random.nextFloat() > 0.9F) {
                 this.setSheared(false);
@@ -152,7 +152,7 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
                 itemstack.shrink(1);
             }
         }
-        else if (!isSheared() && item == Items.SHEARS && !level.isClientSide && !isBaby()) {
+        else if (!isSheared() && item == Items.SHEARS && !level().isClientSide && !isBaby()) {
             shear();
             playSound(SoundEvents.SHEEP_SHEAR, getSoundVolume(), 1);
             p_230254_1_.getItemInHand(p_230254_2_).hurtAndBreak(1, p_230254_1_, (p_213613_1_) -> {
@@ -165,7 +165,7 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
     }
 
     public void shear() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             setSheared(true);
         }
     }
@@ -185,26 +185,27 @@ public class YetiCrab extends NonSwimmer implements IAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimationData controller) {
-        controller.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoEntity>(this, "controller", 2, this::predicate));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoEntity> PlayState predicate(AnimationState<E> event) {
         boolean walking = !(event.getLimbSwingAmount() > -0.01F && event.getLimbSwingAmount() < 0.01F);
         if (walking) {
-            event.getController().setAnimation(AAAnimations.WALK);
+            event.setAnimation(AAAnimations.WALK);
         }
         else {
-            event.getController().setAnimation(AAAnimations.IDLE);
+            event.setAnimation(AAAnimations.IDLE);
         }
 
         return PlayState.CONTINUE;
     }
 
-    private final AnimationFactory cache = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
 }
