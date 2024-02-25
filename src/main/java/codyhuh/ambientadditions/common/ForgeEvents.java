@@ -35,9 +35,11 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
@@ -45,6 +47,27 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = AmbientAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEvents {
+
+    @SubscribeEvent
+    public static void lowerStunWhenHit(LivingHurtEvent e) {
+        LivingEntity living = e.getEntity();
+        CompoundTag tag = living.getPersistentData();
+        var cap = living.getCapability(SedationProvider.SEDATION_CAP);
+
+        if (e.getAmount() > 0.0F && living.level() instanceof ServerLevel && living instanceof PathfinderMob mob) {
+            if (cap.isPresent()) {
+                var provider = cap.resolve().isPresent() ? cap.resolve().get() : null;
+
+                if (provider != null) {
+                    provider.setLevel(0);
+                    tag.putBoolean("IsSedated", false);
+                    mob.goalSelector.enableControlFlag(Goal.Flag.LOOK);
+                    mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);
+                    mob.goalSelector.enableControlFlag(Goal.Flag.JUMP);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void attachCapabilitiesAnimal(AttachCapabilitiesEvent<Entity> e) {
@@ -162,7 +185,13 @@ public class ForgeEvents {
             }
 
             if (state.getBlock().defaultBlockState().is(AATags.STRIPPABLE_LOGS) && world.random.nextBoolean()) {
-                ItemStack stack = new ItemStack(AAItems.BARK.get());
+                ItemStack stack;
+                if (ModList.get().isLoaded("farmersdelight")) {
+                    stack = new ItemStack(AAItems.BARK.get()); // todo
+                }
+                else {
+                    stack = new ItemStack(AAItems.BARK.get());
+                }
                 ItemEntity entity = EntityType.ITEM.create(world);
 
                 entity.setItem(stack);

@@ -1,5 +1,5 @@
 {
-  "render_type": "minecraft:translucent",
+  "render_type": "minecraft:cutout",
   "ambientocclusion": false,
   "textures": {
     "particle": "ambientadditions:block/leaf_frogspawn",

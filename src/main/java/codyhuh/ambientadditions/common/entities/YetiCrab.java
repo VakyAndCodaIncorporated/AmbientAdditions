@@ -44,6 +44,7 @@ import javax.annotation.Nullable;
 public class YetiCrab extends NonSwimmer implements GeoEntity {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(YetiCrab.class, EntityDataSerializers.BOOLEAN);
+    public int regrowTime = this.random.nextInt(6000) + 6000;
 
     public YetiCrab(EntityType<? extends WaterAnimal> type, Level world) {
         super(type, world);
@@ -62,6 +63,16 @@ public class YetiCrab extends NonSwimmer implements GeoEntity {
         super.travel(p_213352_1_);
         if (isInWater()) {
             setSpeed(2.5F);
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (isSheared() && !this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.regrowTime <= 0) {
+            this.regrowTime = this.random.nextInt(6000) + 6000;
+            setSheared(false);
         }
     }
 
@@ -115,12 +126,16 @@ public class YetiCrab extends NonSwimmer implements GeoEntity {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("FromBucket", this.isFromBucket());
         compound.putBoolean("Sheared", this.isSheared());
+        compound.putInt("RegrowTime", this.regrowTime);
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setSheared(compound.getBoolean("Sheared"));
         this.setFromBucket(compound.getBoolean("FromBucket"));
+        if (compound.contains("RegrowTime")) {
+            this.regrowTime = compound.getInt("RegrowTime");
+        }
     }
 
     protected InteractionResult mobInteract(Player p_230254_1_, InteractionHand p_230254_2_) {
@@ -143,14 +158,6 @@ public class YetiCrab extends NonSwimmer implements GeoEntity {
 
             this.discard();
             return InteractionResult.sidedSuccess(this.level().isClientSide);
-        } else if (itemstack.getItem() == Items.SEAGRASS) {
-            if (random.nextFloat() > 0.9F) {
-                this.setSheared(false);
-            }
-            p_230254_1_.swing(p_230254_2_);
-            if (!p_230254_1_.getAbilities().instabuild) {
-                itemstack.shrink(1);
-            }
         }
         else if (!isSheared() && item == Items.SHEARS && !level().isClientSide && !isBaby()) {
             shear();
